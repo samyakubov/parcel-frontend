@@ -11,7 +11,6 @@ import MinimizedRelatedModalsBar from "../Components/Map/MinimizedRelatedModalsB
 import ModalContainer from "../Components/Map/ModalContainer"
 import PropertyInfoModal from "../Components/Map/PropertyInfoModal"
 import RelatedPropertiesModal from "../Components/Map/RelatedPropertiesModal"
-import RecentlySoldFilterDropdown from "../Components/Map/RecentlySoldFilterDropdown"
 import { useSearchContext } from "../Contexts/SearchContext"
 import SearchByBBLorBlockAndLot from "../Components/Search/TypesOfSearch/SearchByBBLorBlockAndLot"
 
@@ -64,10 +63,6 @@ function Map() {
 						</div>
 					)}
 				</div>
-			</div>
-
-			<div className="absolute bottom-4 left-20 z-10">
-				<RecentlySoldFilterDropdown />
 			</div>
 
 			<button

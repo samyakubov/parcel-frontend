@@ -100,7 +100,7 @@ class ModalManagerClass {
 
 	public addPropertyModal = action((coords: Coordinates, title: string, propertyData: PropertyDetails) => {
 		if (this.propertyModals.length >= 8) {
-			return toast.info("Close a modal to minimize modal")
+			return toast.info("Modal limit reached. Close one to open more")
 		}
 
 		const existingModal = this.propertyModals.find(modal => modal.title === title)
