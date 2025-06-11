@@ -1,0 +1,33 @@
+import React, {useEffect} from "react"
+import {Routes, Route} from "react-router"
+import Missing from "./Pages/Missing"
+import Map from "./Pages/Map"
+import Search from "./Pages/Search"
+import Landing from "./Pages/Landing"
+import DatabaseUpdating from "./Pages/DatabaseUpdating"
+import {useIsMaintenanceWindow} from "./Hooks/useIsMaintenanceWindow"
+import useTypedNavigate from "./Hooks/useTypedNavigate"
+import ComingSoon from "./Pages/ComingSoon"
+import Analytics from "./Pages/Analytics"
+
+export default function AppRoutes() {
+	const isMaintenanceWindow = useIsMaintenanceWindow()
+	const navigate = useTypedNavigate()
+
+	useEffect(() => {
+		if (!isMaintenanceWindow()) return
+		navigate("/database-updating")
+	}, [isMaintenanceWindow, navigate])
+
+	return (
+		<Routes>
+			<Route path="/" element={<Landing />} />
+			<Route path="/map" element={<Map />} />
+			<Route path="/search" element={<Search />} />
+			<Route path="/database-updating" element={<DatabaseUpdating /> } />
+			<Route path="/coming-soon" element={<ComingSoon />} />
+			<Route path="/analytics" element={<Analytics />} />
+			<Route path="*" element={<Missing />} />
+		</Routes>
+	)
+}
