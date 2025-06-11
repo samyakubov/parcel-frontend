@@ -43,7 +43,7 @@ function AddressSearchWithAutocomplete() {
 					query={searchContext.searchAddressQuery}
 					onQueryChange={searchContext.setAddressSearchQuery}
 					placeholder="Enter an address..."
-					inputClassName="w-full p-3 px-4 border border-gray-300 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 transition-all duration-200"
+					inputClassName="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 transition-all duration-200"
 				/>
 				{searchContext.suggestionsError && (
 					<div className="mt-2 text-red-500 text-sm">

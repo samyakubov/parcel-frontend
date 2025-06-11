@@ -36,7 +36,7 @@ function Map() {
 							</div>
 							<div className="text-center space-y-2">
 								<p className="text-sm font-semibold text-gray-700 dark:text-gray-200 animate-pulse">
-									Searching for your property...
+									Gathering property information...
 								</p>
 								<div className="flex space-x-1 justify-center">
 									<div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"></div>

@@ -41,9 +41,9 @@ export default function Stats() {
 							}}
 							className="text-center group"
 						>
-							<div className="relative p-8 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-500 hover:scale-105">
+							<div className="relative p-7 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-500">
 								<motion.div
-									className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-blue-200 via-indigo-200 to-purple-200 bg-clip-text text-transparent mb-4"
+									className="text-5xl font-bold bg-gradient-to-r from-blue-200 via-indigo-200 to-purple-200 bg-clip-text text-transparent mb-4"
 									initial={{ scale: 0 }}
 									whileInView={{ scale: 1 }}
 									viewport={{ once: true }}

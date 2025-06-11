@@ -70,9 +70,7 @@ export default function Sidebar() {
 			</div>
 
 			<div className="flex justify-center w-full py-4 border-t border-white/10 dark:border-slate-700/40">
-				<div className="p-2 rounded-xl bg-white/10 dark:bg-slate-800/50 backdrop-blur-sm border border-white/20 dark:border-slate-600/30 shadow-lg dark:shadow-slate-900/30">
-					<ThemeToggle />
-				</div>
+				<ThemeToggle />
 			</div>
 		</nav>
 	)

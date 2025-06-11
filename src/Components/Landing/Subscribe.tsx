@@ -36,7 +36,6 @@ export default function Subscribe() {
 					</div>
 				</div>
 			</div>
-
 			<div className="absolute inset-0 pointer-events-none">
 				{[...Array(200)].map((_, i) => (
 					<motion.div
