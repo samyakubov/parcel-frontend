@@ -209,37 +209,6 @@ export const STATS = [
 	{ id: 4, name: "Historical Records", value: "50+ Years" },
 ]
 
-export const TIERS = [
-	{
-		name: "Hobby",
-		id: "tier-hobby",
-		href: "/map",
-		priceMonthly: "Free",
-		description: "Start exploring with basic search features and advanced map visualization.",
-		features: [
-			"Advanced Map View",
-			"Basic Filtering",
-		],
-		featured: false,
-	},
-	{
-		name: "Enterprise",
-		id: "tier-enterprise",
-		href: "/coming-soon",
-		priceMonthly: "$30",
-		description: "Unlock unlimited AI-powered search with advanced analytics and exclusive features.",
-		features: [
-			"Advanced Map View",
-			"Unlimited search query's",
-			"Advanced Filtering and analytics",
-			"AI Chatbot",
-			"API Access",
-			"Detailed Reports"
-		],
-		featured: true,
-	},
-]
-
 export const MAPBOX_API_URL = "https://api.mapbox.com/geocoding/v5/mapbox.places"
 
 export const NYC_BOUNDS = [
@@ -295,16 +264,6 @@ export const FAQ = [
 		question: "How do I access property records?",
 		answer:
 			"We aggregate property records from multiple sources into one platform. Simply search by address, owner name, or parcel number to access comprehensive property information.",
-	},
-	{
-		question: "How does the AI enhance property research?",
-		answer:
-			"Our AI analyzes property records, market trends, and historical data to identify patterns and opportunities. It provides personalized insights on property values, ownership history, and market comparisons without compromising data privacy.",
-	},
-	{
-		question: "Can I cancel my subscription anytime?",
-		answer:
-			"Yes, you can cancel your subscription at any time from your account settings. If you cancel during your 14-day free trial period, you won't be charged at all.",
 	},
 	{
 		question: "Can I use this for commercial properties?",

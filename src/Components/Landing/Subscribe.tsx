@@ -1,4 +1,5 @@
 import React from "react"
+import {motion} from "framer-motion"
 
 export default function Subscribe() {
 	return (
@@ -34,6 +35,28 @@ export default function Subscribe() {
 						</button>
 					</div>
 				</div>
+			</div>
+
+			<div className="absolute inset-0 pointer-events-none">
+				{[...Array(200)].map((_, i) => (
+					<motion.div
+						key={i}
+						className="absolute w-1 h-1 bg-blue-400/30 rounded-full"
+						style={{
+							left: `${Math.random() * 100}%`,
+							top: `${Math.random() * 100}%`,
+						}}
+						animate={{
+							y: [-20, -100, -20],
+							opacity: [0, 1, 0],
+						}}
+						transition={{
+							duration: 3 + Math.random() * 2,
+							repeat: Infinity,
+							delay: Math.random() * 2,
+						}}
+					/>
+				))}
 			</div>
 		</div>
 	)

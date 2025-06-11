@@ -22,7 +22,7 @@ export default function Stats() {
 					<div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 border border-white/20 rounded-full text-white text-sm font-medium mb-6 backdrop-blur-sm">
 						By the Numbers
 					</div>
-					<h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-white via-blue-100 to-indigo-100 bg-clip-text text-transparent">
+					<h2 className="pb-3 text-4xl md:text-5xl font-bold bg-gradient-to-r from-white via-blue-100 to-indigo-100 bg-clip-text text-transparent">
 						Trusted by Thousands
 					</h2>
 				</motion.div>
@@ -63,6 +63,27 @@ export default function Stats() {
 						</motion.div>
 					))}
 				</div>
+			</div>
+			<div className="absolute inset-0 pointer-events-none">
+				{[...Array(200)].map((_, i) => (
+					<motion.div
+						key={i}
+						className="absolute w-1 h-1 bg-blue-400/30 rounded-full"
+						style={{
+							left: `${Math.random() * 100}%`,
+							top: `${Math.random() * 100}%`,
+						}}
+						animate={{
+							y: [-20, -100, -20],
+							opacity: [0, 1, 0],
+						}}
+						transition={{
+							duration: 3 + Math.random() * 2,
+							repeat: Infinity,
+							delay: Math.random() * 2,
+						}}
+					/>
+				))}
 			</div>
 		</section>
 	)

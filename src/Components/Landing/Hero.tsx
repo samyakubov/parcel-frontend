@@ -58,7 +58,7 @@ export default function Hero() {
 					<motion.div variants={itemVariants} className="space-y-8 py-6">
 						<h1 className="text-6xl sm:text-7xl md:text-8xl font-black tracking-tight leading-tight pb-2">
 							<motion.span
-								className="block bg-gradient-to-r from-white via-blue-100 to-blue-200 bg-clip-text text-transparent"
+								className="pb-3 block bg-gradient-to-r from-white via-blue-100 to-blue-200 bg-clip-text text-transparent"
 								initial={{ backgroundPosition: "0% 50%" }}
 								animate={{ backgroundPosition: "100% 50%" }}
 								transition={{ duration: 3, repeat: Infinity, repeatType: "reverse" }}
@@ -66,7 +66,7 @@ export default function Hero() {
 								Every Deed,
 							</motion.span>
 							<motion.span
-								className="block bg-gradient-to-r from-blue-400 via-indigo-400 to-blue-300 bg-clip-text text-transparent"
+								className="pb-3 block bg-gradient-to-r from-blue-400 via-indigo-400 to-blue-300 bg-clip-text text-transparent"
 								initial={{ backgroundPosition: "100% 50%" }}
 								animate={{ backgroundPosition: "0% 50%" }}
 								transition={{ duration: 3, repeat: Infinity, repeatType: "reverse" }}
@@ -130,7 +130,7 @@ export default function Hero() {
 				</motion.button>
 
 				<div className="absolute inset-0 pointer-events-none">
-					{[...Array(20)].map((_, i) => (
+					{[...Array(200)].map((_, i) => (
 						<motion.div
 							key={i}
 							className="absolute w-1 h-1 bg-blue-400/30 rounded-full"
