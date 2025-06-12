@@ -26,7 +26,6 @@ function Map() {
 			<div className="absolute top-6 left-20 right-20 z-10 flex items-center w-1/4">
 				<div className="flex flex-col flex-grow p-8 rounded-3xl bg-gradient-to-br from-white/95 via-white/90 to-gray-50/95 dark:from-gray-900/95 dark:via-gray-800/90 dark:to-gray-900/95 shadow-2xl border border-white/30 dark:border-gray-700/30 backdrop-blur-2xl transition-all duration-500 hover:shadow-3xl hover:scale-[1.01] group">
 					<div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-
 					{searchContext.isSearchResultLoading ? (
 						<div className="relative flex flex-col justify-center items-center h-36 space-y-4">
 							<div className="relative">
