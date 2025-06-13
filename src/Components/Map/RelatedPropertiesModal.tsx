@@ -3,10 +3,11 @@ import Modal from "../Modal"
 import React, { useCallback } from "react"
 import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
-import useSearchByFuzzyCoords from "../../Hooks/Search/useSearchByFuzzyCoords"
 import { motion } from "framer-motion"
 import { useModalManagerContext } from "../../Contexts/ModalManagerContext"
 import RelatedPropertyCard from "./RelatedPropertyModal/RelatedPropertyCard"
+import useSearchByPropertyBBL from "../../Hooks/Search/useSearchByPropertyBBL"
+import {useSearchContext} from "../../Contexts/SearchContext"
 
 interface RelatedPropertiesModalProps {
 	data: RelatedPropertyModal
@@ -17,14 +18,16 @@ function RelatedPropertiesModal(props: RelatedPropertiesModalProps) {
 	const modal = props.data
 	const baseClasses = "shadow-2xl fixed left-20 bottom-10 h-[70vh] overflow-y-auto overflow-hidden flex flex-col"
 	const mapContext = useMapContext()
+	const searchContext = useSearchContext()
 	const modalManagerContext = useModalManagerContext()
 	const properties = modal.relatedPropertyData
-	const searchByCoods = useSearchByFuzzyCoords()
+	const searchByBbl = useSearchByPropertyBBL()
 
 	const onClickProperty = useCallback(async (index: number) => {
 		mapContext.setCoords(mapContext.relatedPropertiesToOwnerCoords[index])
-		await searchByCoods()
-	}, [mapContext, searchByCoods])
+		searchContext.setSearchBblQuery(modal.relatedPropertyData[index].bbl)
+		await searchByBbl()
+	}, [mapContext, searchContext, modal.relatedPropertyData, searchByBbl])
 
 
 	if (isEmpty(properties) || modal.isMinimized || !modal.isOpen) {

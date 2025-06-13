@@ -10,11 +10,6 @@ interface ModalDragStart {
   dragY: number;
 }
 
-interface Coordinates {
-  latitude: number;
-  longitude: number;
-}
-
 interface PropertyModal {
   id: string;
   isOpen: boolean;
@@ -36,10 +31,4 @@ interface RelatedPropertyModal {
   position: ModalPosition;
   relatedPropertyData: RelatedPropertySummary[];
   zIndex: number;
-}
-interface RelatedPropertySummary {
-  address: string;
-  borough: string;
-  block: string;
-  lot: string;
 }

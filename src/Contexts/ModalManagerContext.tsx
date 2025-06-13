@@ -149,8 +149,8 @@ class ModalManagerClass {
 	})
 
 	public minimizeModal = action((id: string, isRelatedPropertyModal: boolean) => {
-		if (this.propertyModals.filter((modal)=>modal.isMinimized).length >= 5) {
-			return toast.info("Close a minimized modal to minimize modal")
+		if (this.propertyModals.filter((modal)=>modal.isMinimized).length >= 4) {
+			return toast.info("You can only have 4 minimized modals. Please close one before minimizing another.")
 		}
 		this.setModalState(id, { isMinimized: true }, isRelatedPropertyModal)
 	})

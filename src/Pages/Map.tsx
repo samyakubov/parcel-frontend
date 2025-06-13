@@ -26,7 +26,6 @@ function Map() {
 			<div className="absolute top-6 left-20 right-20 z-10 flex items-center w-1/4">
 				<div className="flex flex-col flex-grow p-8 rounded-3xl bg-gradient-to-br from-white/95 via-white/90 to-gray-50/95 dark:from-gray-900/95 dark:via-gray-800/90 dark:to-gray-900/95 shadow-2xl border border-white/30 dark:border-gray-700/30 backdrop-blur-2xl transition-all duration-500 hover:shadow-3xl hover:scale-[1.01] group">
 					<div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-
 					{searchContext.isSearchResultLoading ? (
 						<div className="relative flex flex-col justify-center items-center h-36 space-y-4">
 							<div className="relative">
@@ -72,7 +71,7 @@ function Map() {
 					setIsSearchByCurrentLocationLoading(false)
 				}}
 				disabled={isSearchByCurrentLocationLoading}
-				className="absolute bottom-8 right-8 group flex justify-center items-center bg-white/10 dark:bg-gray-900/10 backdrop-blur-2xl p-4 rounded-2xl shadow-2xl border border-white/20 dark:border-gray-700/20 z-10 transition-all duration-500 hover:scale-110 hover:shadow-3xl active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/20 dark:hover:bg-gray-800/20"
+				className="absolute bottom-8 right-8 group flex justify-center items-center bg-white dark:bg-gray-900/10 backdrop-blur-2xl p-4 rounded-2xl shadow-2xl border border-white/20 dark:border-gray-700/20 z-10 transition-all duration-500 hover:scale-110 hover:shadow-3xl active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/20 dark:hover:bg-gray-800/20"
 			>
 				<div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 				{isSearchByCurrentLocationLoading ? (
