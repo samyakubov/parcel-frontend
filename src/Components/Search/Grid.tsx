@@ -110,6 +110,7 @@ export default function Grid({ data }: GridProps) {
 		? [
 			{ field: "amount", label: "Amount" },
 			{ field: "party_name", label: "Party Name" },
+			{ field: "partytype_desc", label: "Party" },
 			{ field: "doc_type", label: "Document Type" },
 			{ field: "recordedfiled", label: "Recorded Date" }
 		]
@@ -121,6 +122,7 @@ export default function Grid({ data }: GridProps) {
 			{ field: "amount", label: "Amount" },
 			{ field: "prop_type", label: "Property Type" },
 			{ field: "party_name", label: "Party Name" },
+			{ field: "partytype_desc", label: "Party" },
 			{ field: "doc_type", label: "Document Type" },
 			{ field: "recordedfiled", label: "Recorded Date" }
 		]
@@ -136,7 +138,6 @@ export default function Grid({ data }: GridProps) {
 
 	return (
 		<div className="w-full h-full flex flex-col bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-xl overflow-hidden">
-			{/* Header with Search and Controls */}
 			<div className="flex-shrink-0 bg-gradient-to-r from-gray-50/90 to-white/90 dark:from-gray-700/90 dark:to-gray-800/90 backdrop-blur-sm p-4 border-b border-gray-200/50 dark:border-gray-700/50">
 				<div className="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-4">
 					<div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
@@ -162,7 +163,6 @@ export default function Grid({ data }: GridProps) {
 					</div>
 				</div>
 
-				{/* Compact Legend */}
 				<div className="flex flex-wrap items-center gap-2 mt-3 pt-3 border-t border-gray-200/30 dark:border-gray-700/30">
 					{legendItems.map(({ type, label }) => {
 						const badge = getDocumentTypeBadge(type)
@@ -176,7 +176,6 @@ export default function Grid({ data }: GridProps) {
 				</div>
 			</div>
 
-			{/* Scrollable Table Container */}
 			<div className="flex-1 overflow-hidden">
 				<div className="h-full overflow-auto">
 					<table className="w-full">
@@ -247,7 +246,6 @@ export default function Grid({ data }: GridProps) {
 				</div>
 			</div>
 
-			{/* Compact Footer */}
 			<div className="flex-shrink-0 bg-gradient-to-r from-gray-50/90 to-white/90 dark:from-gray-700/90 dark:to-gray-800/90 backdrop-blur-sm p-3 border-t border-gray-200/50 dark:border-gray-700/50">
 				<div className="flex flex-col sm:flex-row items-center justify-between gap-3">
 					<div className="text-xs font-medium text-gray-600 dark:text-gray-400">

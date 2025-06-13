@@ -27,7 +27,7 @@ function RelatedPropertiesModal(props: RelatedPropertiesModalProps) {
 		mapContext.setCoords(mapContext.relatedPropertiesToOwnerCoords[index])
 		searchContext.setSearchBblQuery(modal.relatedPropertyData[index].bbl)
 		await searchByBbl()
-	}, [mapContext, searchByBbl])
+	}, [mapContext, searchContext, modal.relatedPropertyData, searchByBbl])
 
 
 	if (isEmpty(properties) || modal.isMinimized || !modal.isOpen) {
