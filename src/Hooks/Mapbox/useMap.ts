@@ -9,7 +9,6 @@ export function useMap(containerId: string) {
 	const markersRef = useRef<mapboxgl.Marker[] | null>(null)
 	const mapRef = useMapInitialization({containerId, markersRef})
 	if (!accessToken) {
-		console.error("Mapbox access token is required")
 		toast.error("Unable to access map")
 	}
 	mapboxgl.accessToken = accessToken
