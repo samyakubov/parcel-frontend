@@ -4,11 +4,6 @@ import ThemeToggle from "./ThemeToggle"
 import useTypedNavigate from "../Hooks/useTypedNavigate"
 import { useLocation } from "react-router"
 
-interface NavItem {
-	icon: React.ReactNode
-	href: string
-}
-
 export default function Sidebar() {
 	const navigate = useTypedNavigate()
 	const location = useLocation()

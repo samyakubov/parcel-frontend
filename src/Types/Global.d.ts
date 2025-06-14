@@ -93,11 +93,8 @@ declare global {
     | "/"
     | "/map"
     | "/search"
-    | "/login"
     | "/database-updating"
-    | "/register"
-    | "/coming-soon"
-    | "/Analytics"
+    | "/analytics"
 }
 
 export { }

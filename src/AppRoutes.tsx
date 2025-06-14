@@ -7,7 +7,6 @@ import Landing from "./Pages/Landing"
 import DatabaseUpdating from "./Pages/DatabaseUpdating"
 import {useIsMaintenanceWindow} from "./Hooks/useIsMaintenanceWindow"
 import useTypedNavigate from "./Hooks/useTypedNavigate"
-import ComingSoon from "./Pages/ComingSoon"
 import Analytics from "./Pages/Analytics"
 
 export default function AppRoutes() {
@@ -25,7 +24,6 @@ export default function AppRoutes() {
 			<Route path="/map" element={<Map />} />
 			<Route path="/search" element={<Search />} />
 			<Route path="/database-updating" element={<DatabaseUpdating /> } />
-			<Route path="/coming-soon" element={<ComingSoon />} />
 			<Route path="/analytics" element={<Analytics />} />
 			<Route path="*" element={<Missing />} />
 		</Routes>
