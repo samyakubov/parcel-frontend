@@ -15,7 +15,6 @@ import isNull from "lodash-es/isNull"
 import ExportToExcelButton from "../ExportToExcelButton"
 import { useModalManagerContext } from "../../Contexts/ModalManagerContext"
 import Overview from "./PropertyInfoModal/Overview"
-import {Building2} from "lucide-react"
 import Grid from "../Search/Grid"
 
 interface PropertyInfoModalProps {
@@ -41,10 +40,6 @@ function PropertyInfoModal(props: PropertyInfoModalProps) {
 			? `fixed left-20 right-4 top-4 bottom-4 ${baseClasses}`
 			: `fixed right-4 top-4 w-11/12 max-w-md h-[95vh] ${baseClasses}`
 	}
-
-	const themeClass = localStorage.getItem("darkMode") === "true"
-		? "ag-theme-quartz-dark"
-		: "ag-theme-quartz"
 
 	return (
 		<Modal
@@ -157,7 +152,7 @@ function PropertyInfoModal(props: PropertyInfoModalProps) {
 
 										<motion.div
 											layout="preserve-aspect"
-											className={`${themeClass} w-full h-[600px] rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700`}
+											className={"w-full h-[600px] rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700"}
 										>
 											<Grid data={data.records} />
 										</motion.div>
