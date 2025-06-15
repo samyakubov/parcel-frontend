@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react"
 import {HEADER_TAGS} from "../../Constants/Constants"
+import useTypedNavigate from "../../Hooks/useTypedNavigate"
 
 export default function Header() {
 	const [isScrolled, setIsScrolled] = useState(false)
-
+	const navigate = useTypedNavigate()
 	useEffect(() => {
 		const handleScroll = () => {
 			setIsScrolled(window.scrollY > 20)
@@ -11,6 +12,10 @@ export default function Header() {
 		window.addEventListener("scroll", handleScroll)
 		return () => window.removeEventListener("scroll", handleScroll)
 	}, [])
+
+	const handleMapClick = () => {
+		navigate("/map")
+	}
 
 	return (
 		<header className="fixed top-5 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-7xl">
@@ -39,9 +44,17 @@ export default function Header() {
 								</a>
 							))
 						}
-
 					</nav>
-					<div/>
+
+					<div>
+						<button
+							onClick={handleMapClick}
+							className="relative px-6 py-2 text-sm font-semibold text-white bg-gradient-to-r from-blue-900 to-indigo-900 hover:from-blue-600 hover:to-indigo-600 transition-all duration-300 rounded-xl shadow-lg hover:shadow-xl hover:shadow-emerald-500/25 transform hover:scale-105 group overflow-hidden"
+						>
+							<span>See the Map</span>
+							<div className="absolute inset-0 bg-gradient-to-r from-white/10 to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+						</button>
+					</div>
 				</div>
 			</div>
 		</header>

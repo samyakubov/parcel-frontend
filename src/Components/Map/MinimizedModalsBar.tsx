@@ -39,28 +39,6 @@ function MinimizedModalsBar({isRelatedPropertyBar = false, position = "bottom-4 
 		}
 	}
 
-	const itemVariants = {
-		hidden: { opacity: 0, y: 10, scale: 0.9 },
-		visible: {
-			opacity: 1,
-			y: 0,
-			scale: 1,
-			transition: {
-				type: "spring",
-				damping: 12,
-				stiffness: 200
-			}
-		},
-		exit: {
-			opacity: 0,
-			y: 10,
-			scale: 0.9,
-			transition: {
-				duration: 0.2
-			}
-		}
-	}
-
 	const handleRestore = (id: string) => {
 		isRelatedPropertyBar
 			? modalStore.restoreModal(id, true)
@@ -87,7 +65,6 @@ function MinimizedModalsBar({isRelatedPropertyBar = false, position = "bottom-4 
 					<motion.div
 						key={modal.id}
 						className="group relative"
-						variants={itemVariants}
 					>
 						<motion.button
 							whileHover={{ scale: 1.1, y: -1 }}

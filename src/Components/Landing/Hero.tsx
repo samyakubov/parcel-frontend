@@ -28,18 +28,6 @@ export default function Hero() {
 		}
 	}
 
-	const itemVariants = {
-		hidden: { opacity: 0, y: 30 },
-		visible: {
-			opacity: 1,
-			y: 0,
-			transition: {
-				duration: 0.8,
-				ease: [0.32, 0.72, 0, 1]
-			}
-		}
-	}
-
 	return (
 		<div className="relative min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 overflow-hidden">
 			<div className="absolute inset-0">
@@ -56,7 +44,7 @@ export default function Hero() {
 					animate="visible"
 				>
 
-					<motion.div variants={itemVariants} className="space-y-8 py-6">
+					<motion.div className="space-y-8 py-6">
 						<h1 className="text-6xl sm:text-7xl md:text-8xl font-black tracking-tight leading-tight pb-2">
 							<motion.span
 								className="pb-3 block bg-gradient-to-r from-white via-blue-100 to-blue-200 bg-clip-text text-transparent"
@@ -78,13 +66,12 @@ export default function Hero() {
 
 						<motion.p
 							className="text-xl sm:text-2xl text-blue-100/80 max-w-3xl mx-auto leading-relaxed font-light"
-							variants={itemVariants}
 						>
 							Unlock the complete story behind every NYC property. From ownership history to market insights.
 						</motion.p>
 					</motion.div>
 
-					<motion.div variants={itemVariants} className="w-full max-w-3xl mx-auto">
+					<motion.div className="w-full max-w-3xl mx-auto">
 						<div className="relative group">
 							<div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
 							<div className="relative bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 p-8 shadow-2xl">
