@@ -2,20 +2,19 @@ import isEmpty from "lodash-es/isEmpty"
 import {Download} from "lucide-react"
 import React from "react"
 import {useExportToExcel} from "../Hooks/useExportToExcel"
-import {useSearchContext} from "../Contexts/SearchContext"
 import {observer} from "mobx-react"
 import {toast} from "react-toastify"
+import {searchStore} from "../Stores/SearchStore"
 
 
 function ExportToExcelButton() {
 	const exportToExcel = useExportToExcel()
-	const searchContext = useSearchContext()
 
 	const handleExport = () => {
-		if (isEmpty(searchContext.propertyResults.records)) {
+		if (isEmpty(searchStore.propertyResults.records)) {
 			return toast.warning("Nothing to export")
 		}
-		exportToExcel(searchContext.propertyResults, `${searchContext.searchAddressQuery.toLowerCase()} report`)
+		exportToExcel(searchStore.propertyResults, `${searchStore.searchAddressQuery.toLowerCase()} report`)
 	}
 
 	return (

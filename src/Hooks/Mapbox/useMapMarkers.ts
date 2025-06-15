@@ -4,7 +4,7 @@ import mapboxgl from "mapbox-gl"
 import get from "lodash-es/get"
 import isEmpty from "lodash-es/isEmpty"
 import {NYC_BOUNDS} from "../../Constants/Constants"
-import {useMapContext} from "../../Contexts/MapContext"
+import {mapStore} from "../../Stores/MapStore"
 
 interface MapMarkersProps {
     mapRef: React.RefObject<mapboxgl.Map | null>;
@@ -12,10 +12,9 @@ interface MapMarkersProps {
 }
 
 export default function useMapMarkers({mapRef, markersRef}: MapMarkersProps) {
-	const mapContext = useMapContext()
 
 	useEffect(() => {
-		if (isNull(mapRef.current) || isNull(mapContext.coords)) return
+		if (isNull(mapRef.current) || isNull(mapStore.coords)) return
 
 		if (isNull(markersRef.current)) {
 			markersRef.current = []
@@ -29,7 +28,7 @@ export default function useMapMarkers({mapRef, markersRef}: MapMarkersProps) {
 		}
 
 		try {
-			const coords = mapContext.coords
+			const coords = mapStore.coords
 			const mainLng = Number(coords.longitude)
 			const mainLat = Number(coords.latitude)
 
@@ -42,9 +41,9 @@ export default function useMapMarkers({mapRef, markersRef}: MapMarkersProps) {
 
 			markersRef.current.push(mainMarker)
 
-			const properties = get(mapContext, "relatedPropertiesToOwnerCoords", [])
+			const properties = get(mapStore, "relatedPropertiesToOwnerCoords", [])
 
-			if (!mapContext.isRelatedPropertiesLoading && !isEmpty(properties) && !isNull(properties)) {
+			if (!mapStore.isRelatedPropertiesLoading && !isEmpty(properties) && !isNull(properties)) {
 				const bounds = new mapboxgl.LngLatBounds(NYC_BOUNDS[0], NYC_BOUNDS[1])
 
 				properties.forEach((property, index) => {
@@ -92,5 +91,5 @@ export default function useMapMarkers({mapRef, markersRef}: MapMarkersProps) {
 		} catch (error) {
 			console.error("Error updating map:", error)
 		}
-	}, [mapContext.coords, mapContext.relatedPropertiesToOwnerCoords, mapContext.isRelatedPropertiesLoading, mapContext])
+	}, [mapStore.coords, mapStore.relatedPropertiesToOwnerCoords, mapStore.isRelatedPropertiesLoading, mapStore])
 }

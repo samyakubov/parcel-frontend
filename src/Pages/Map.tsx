@@ -11,12 +11,11 @@ import MinimizedRelatedModalsBar from "../Components/Map/MinimizedRelatedModalsB
 import ModalContainer from "../Components/Map/ModalContainer"
 import PropertyInfoModal from "../Components/Map/PropertyInfoModal"
 import RelatedPropertiesModal from "../Components/Map/RelatedPropertiesModal"
-import { useSearchContext } from "../Contexts/SearchContext"
 import SearchByBBLorBlockAndLot from "../Components/Search/TypesOfSearch/SearchByBBLorBlockAndLot"
+import {searchStore} from "../Stores/SearchStore"
 
 function Map() {
 	const searchByCurrentLocation = useCurrentLocation()
-	const searchContext = useSearchContext()
 	const [isSearchByCurrentLocationLoading, setIsSearchByCurrentLocationLoading] = useState(false)
 	useMap("map")
 
@@ -26,7 +25,7 @@ function Map() {
 			<div className="absolute top-6 left-20 right-20 z-10 flex items-center w-1/4">
 				<div className="flex flex-col flex-grow p-8 rounded-3xl bg-gradient-to-br from-white/95 via-white/90 to-gray-50/95 dark:from-gray-900/95 dark:via-gray-800/90 dark:to-gray-900/95 shadow-2xl border border-white/30 dark:border-gray-700/30 backdrop-blur-2xl transition-all duration-500 hover:shadow-3xl hover:scale-[1.01] group">
 					<div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-					{searchContext.isSearchResultLoading ? (
+					{searchStore.isSearchResultLoading ? (
 						<div className="relative flex flex-col justify-center items-center h-36 space-y-4">
 							<div className="relative">
 								<div className="absolute inset-0 w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 animate-pulse opacity-20"></div>

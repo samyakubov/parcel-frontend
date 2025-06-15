@@ -1,48 +1,44 @@
 import { useCallback } from "react"
-import { useApiClientContext } from "../../Contexts/ApiClientContext"
 import isHTTPError from "../../Utils/HTTPError"
 import { toast } from "react-toastify"
 import { API_RESPONSE_LIMIT } from "../../Constants/Constants"
 import isNull from "lodash-es/isNull"
-import { useMapContext } from "../../Contexts/MapContext"
-import { useSearchContext } from "../../Contexts/SearchContext"
-import { useModalManagerContext } from "../../Contexts/ModalManagerContext"
 import {NormalizeStreetName} from "../../Utils/NormalizeStreetName"
+import {apiClientStore} from "../../Stores/ApiClientStore"
+import {mapStore} from "../../Stores/MapStore"
+import {modalStore} from "../../Stores/ModalStore"
+import {searchStore} from "../../Stores/SearchStore"
 
 export default function useSearchByFuzzyCoords() {
-	const apiClientContext = useApiClientContext()
-	const mapContext = useMapContext()
-	const searchContext = useSearchContext()
-	const modalManager = useModalManagerContext()
 
 	return useCallback(async () => {
 		try {
-			if (isNull(mapContext.coords)) return
+			if (isNull(mapStore.coords)) return
 
-			searchContext.setIsSearchResultLoading(true)
-			const response = await apiClientContext.propertyService.searchByPropertyFuzzyCoords(
-				{ latitude: mapContext.coords.latitude, longitude: mapContext.coords.longitude },
+			searchStore.setIsSearchResultLoading(true)
+			const response = await apiClientStore.propertyService.searchByPropertyFuzzyCoords(
+				{ latitude: mapStore.coords.latitude, longitude: mapStore.coords.longitude },
 				API_RESPONSE_LIMIT
 			)
-			searchContext.setIsSearchResultLoading(false)
+			searchStore.setIsSearchResultLoading(false)
 
 			if (isHTTPError(response)) {
 				return toast.error(response.message)
 			}
 
-			searchContext.setPropertyResults(response)
+			searchStore.setPropertyResults(response)
 			const firstRecord = response.records[0]
 
-			searchContext.setAddressSearchQuery(`${firstRecord.prop_streetnumber.toLowerCase()} ${NormalizeStreetName(firstRecord.prop_streetname.toLowerCase())}`)
-			searchContext.setSearchBblQuery(firstRecord.bbl)
+			searchStore.setAddressSearchQuery(`${firstRecord.prop_streetnumber.toLowerCase()} ${NormalizeStreetName(firstRecord.prop_streetname.toLowerCase())}`)
+			searchStore.setSearchBblQuery(firstRecord.bbl)
 
-			mapContext.setCoords(response.coordinates)
+			mapStore.setCoords(response.coordinates)
 
-			modalManager.addPropertyModal(response.coordinates, `${firstRecord.prop_streetnumber} ${NormalizeStreetName(firstRecord.prop_streetname)}`, response)
+			modalStore.addPropertyModal(response.coordinates, `${firstRecord.prop_streetnumber} ${NormalizeStreetName(firstRecord.prop_streetname)}`, response)
 		} catch (e) {
 			console.error("error fetching records: " + e)
 			toast.error("An error occurred. Please try again later.")
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [apiClientContext.propertyService, mapContext, searchContext, mapContext.coords, modalManager])
+	}, [apiClientStore.propertyService, mapStore, searchStore, mapStore.coords, modalStore])
 }

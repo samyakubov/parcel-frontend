@@ -2,8 +2,8 @@ import React, {useEffect, useRef, useCallback} from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import ModalControls from "./Modal/ModalControls"
 import useModalDrag from "../Hooks/DialogModal/useModalDrag"
-import {useModalManagerContext} from "../Contexts/ModalManagerContext"
 import isUndefined from "lodash-es/isUndefined"
+import {modalStore} from "../Stores/ModalStore"
 
 interface DialogModalProps {
 	open: boolean;
@@ -15,7 +15,6 @@ interface DialogModalProps {
 }
 
 export default function Modal(props: DialogModalProps) {
-	const modalManagerContext = useModalManagerContext()
 	const {
 		children,
 		panelClassName,
@@ -24,7 +23,7 @@ export default function Modal(props: DialogModalProps) {
 		isRelatedPropertyModal = false
 	} = props
 
-	const currentModal = isRelatedPropertyModal ? modalManagerContext.getCurrentRelatedPropertyModal(modalId) : modalManagerContext.getCurrentPropertyModal(modalId)
+	const currentModal = isRelatedPropertyModal ? modalStore.getCurrentRelatedPropertyModal(modalId) : modalStore.getCurrentPropertyModal(modalId)
 
 	const modalPosition = currentModal?.position || { x: 0, y: 0 }
 	const isModalOpen = !!currentModal?.isOpen
@@ -39,28 +38,28 @@ export default function Modal(props: DialogModalProps) {
 
 	const handleClose = () => {
 		if (!isUndefined(currentModal)) {
-			modalManagerContext.closeModal(modalId, isRelatedPropertyModal)
+			modalStore.closeModal(modalId, isRelatedPropertyModal)
 		}
 	}
 
 	const handleMinimize = () => {
 		if (!isUndefined(currentModal)) {
-			modalManagerContext.minimizeModal(modalId, isRelatedPropertyModal)
+			modalStore.minimizeModal(modalId, isRelatedPropertyModal)
 		}
 	}
 
 	const handleExpand = () => {
 		if (!isUndefined(currentModal)) {
-			modalManagerContext.toggleModalExpand(modalId, isRelatedPropertyModal)
+			modalStore.toggleModalExpand(modalId, isRelatedPropertyModal)
 		}
 	}
 
 	const handlePositionChange = useCallback((newPosition: ModalPosition) => {
 		if (!isUndefined(currentModal) && (newPosition.x !== lastPositionRef.current.x || newPosition.y !== lastPositionRef.current.y)) {
 			lastPositionRef.current = newPosition
-			modalManagerContext.updateModalPosition(modalId, newPosition, isRelatedPropertyModal)
+			modalStore.updateModalPosition(modalId, newPosition, isRelatedPropertyModal)
 		}
-	}, [currentModal, modalId, modalManagerContext, isRelatedPropertyModal])
+	}, [currentModal, modalId, modalStore, isRelatedPropertyModal])
 
 	useEffect(() => {
 		if (!isDragging && (dragPosition.x !== 0 || dragPosition.y !== 0)) {

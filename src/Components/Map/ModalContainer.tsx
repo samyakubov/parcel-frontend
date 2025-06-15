@@ -1,6 +1,6 @@
 import React from "react"
 import { observer } from "mobx-react"
-import { useModalManagerContext } from "../../Contexts/ModalManagerContext"
+import {modalStore} from "../../Stores/ModalStore"
 
 interface ModalContainerProps {
 	isRelatedPropertyContainer?: boolean;
@@ -8,10 +8,9 @@ interface ModalContainerProps {
 }
 
 function ModalContainer({ isRelatedPropertyContainer = false, renderModal }: ModalContainerProps) {
-	const modalManagerContext = useModalManagerContext()
 	const modals = isRelatedPropertyContainer
-		? modalManagerContext.relatedPropertyModals.filter((modal)=>modal.isOpen && !modal.isMinimized)
-		: modalManagerContext.propertyModals.filter((modal)=>modal.isOpen && !modal.isMinimized)
+		? modalStore.relatedPropertyModals.filter((modal)=>modal.isOpen && !modal.isMinimized)
+		: modalStore.propertyModals.filter((modal)=>modal.isOpen && !modal.isMinimized)
 
 	const sortedModals = [...modals].sort((a, b) => a.zIndex - b.zIndex)
 	return (

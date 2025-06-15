@@ -1,15 +1,14 @@
 import React from "react"
 import {MapPin} from "lucide-react"
-import { useSearchContext } from "../../Contexts/SearchContext"
 import useHandleSuggestionClick from "../../Hooks/Mapbox/useHandleSuggestionClick"
 import useDarkMode from "../../Hooks/useDarkMode"
+import {searchStore} from "../../Stores/SearchStore"
 
 interface SuggestionsListProps {
 	suggestionsRef: React.RefObject<HTMLUListElement>
 }
 
 export default function SuggestionsList({ suggestionsRef }: SuggestionsListProps) {
-	const searchContext = useSearchContext()
 	const handleSuggestionClick = useHandleSuggestionClick()
 	const isDarkMode = useDarkMode()
 
@@ -25,9 +24,9 @@ export default function SuggestionsList({ suggestionsRef }: SuggestionsListProps
 	}
 
 	const handleClick = async (suggestion:MapboxFeature)=>{
-		searchContext.setIsSearchResultLoading(true)
+		searchStore.setIsSearchResultLoading(true)
 		await handleSuggestionClick(suggestion)
-		searchContext.setIsSearchResultLoading(false)
+		searchStore.setIsSearchResultLoading(false)
 	}
 	return (
 		<ul
@@ -38,7 +37,7 @@ export default function SuggestionsList({ suggestionsRef }: SuggestionsListProps
                 border
             `}
 		>
-			{searchContext.suggestions.map((suggestion, index) => (
+			{searchStore.suggestions.map((suggestion, index) => (
 				<li
 					key={suggestion.id}
 					onClick={() => handleClick(suggestion)}
@@ -47,7 +46,7 @@ export default function SuggestionsList({ suggestionsRef }: SuggestionsListProps
                         flex items-center gap-3
                         ${isDarkMode ? "text-gray-100" : "text-gray-900"}
                         ${getHoverClass()}
-                        ${getBackgroundClass(index === searchContext.selectedSuggestionIndex)}
+                        ${getBackgroundClass(index === searchStore.selectedSuggestionIndex)}
                     `}
 				>
 

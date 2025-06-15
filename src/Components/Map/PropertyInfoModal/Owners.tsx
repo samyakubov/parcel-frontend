@@ -6,10 +6,10 @@ import React, { useState, useMemo } from "react"
 import { Users, Loader2, Search } from "lucide-react"
 import { motion } from "framer-motion"
 import useSearchAllPropertiesToOwner from "../../../Hooks/Search/useSearchAllPropertiesToOwner"
-import { useSearchContext } from "../../../Contexts/SearchContext"
 import { observer } from "mobx-react"
-import { useMapContext } from "../../../Contexts/MapContext"
 import { NormalizeStreetName } from "../../../Utils/NormalizeStreetName"
+import {mapStore} from "../../../Stores/MapStore"
+import {searchStore} from "../../../Stores/SearchStore"
 
 interface OwnerProps {
 	owners: string[] | string;
@@ -20,18 +20,16 @@ function Owners(props: OwnerProps) {
 	const { owners } = props
 	const [loadingOwner, setLoadingOwner] = useState<string | null>(null)
 	const [searchTerm, setSearchTerm] = useState<string>("")
-	const searchContext = useSearchContext()
-	const mapContext = useMapContext()
 	const searchAllProperties = useSearchAllPropertiesToOwner()
-	const address = `${searchContext.propertyResults.records[0]?.prop_streetnumber || ""} ${NormalizeStreetName(searchContext.propertyResults.records[0]?.prop_streetname) || ""}`.trim() || "Address not found"
+	const address = `${searchStore.propertyResults.records[0]?.prop_streetnumber || ""} ${NormalizeStreetName(searchStore.propertyResults.records[0]?.prop_streetname) || ""}`.trim() || "Address not found"
 
 	const handleSearch = async (owner: string) => {
 		setLoadingOwner(owner)
-		mapContext.setIsRelatedPropertiesLoading(true)
+		mapStore.setIsRelatedPropertiesLoading(true)
 		await searchAllProperties(address, owner)
-		mapContext.setIsRelatedPropertiesLoading(false)
+		mapStore.setIsRelatedPropertiesLoading(false)
 		setLoadingOwner(null)
-		mapContext.setIsRelatedPropertySummaryModalOpen(true)
+		mapStore.setIsRelatedPropertySummaryModalOpen(true)
 	}
 
 	const filteredOwners = useMemo(() => {

@@ -3,11 +3,11 @@ import Layout from "../Components/Layout/Layout"
 import RenderSearch from "../Components/Search/RenderSearch"
 import { SEO_CONFIG } from "../Constants/Constants"
 import SEOHelmet from "../Components/SEOHelmet"
-import { useSearchContext } from "../Contexts/SearchContext"
 import { observer } from "mobx-react"
 import Grid from "../Components/Search/Grid"
 import isEmpty from "lodash-es/isEmpty"
 import ExportToExcelButton from "../Components/ExportToExcelButton"
+import {searchStore} from "../Stores/SearchStore"
 
 type SearchTab = "Address" | "BBL" | "Owner(s) Name" | "Advanced"
 
@@ -15,7 +15,6 @@ function Search() {
 	const [activeTab, setActiveTab] = useState<SearchTab>("Address")
 	const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
 	const tabs: SearchTab[] = ["Address", "BBL", "Owner(s) Name", "Advanced"]
-	const searchContext = useSearchContext()
 
 	const currentSEO = SEO_CONFIG[activeTab]
 
@@ -71,14 +70,14 @@ function Search() {
 					</div>
 
 					{(activeTab === "Address" || activeTab === "BBL") &&
-						!isEmpty(searchContext.propertyResults.records) &&
-						searchContext.propertyResults.records[0]?.bbl && (
+						!isEmpty(searchStore.propertyResults.records) &&
+						searchStore.propertyResults.records[0]?.bbl && (
 						<div className={`${sidebarCollapsed ? "opacity-0" : "opacity-100"} transition-opacity duration-300 p-6 border-t border-gray-200/50 dark:border-gray-700/50 bg-gradient-to-r from-blue-50/50 to-indigo-50/50 dark:from-gray-800/50 dark:to-gray-700/50`}>
 							<div className="space-y-3">
 								<a
 									target="_blank"
 									rel="noopener noreferrer"
-									href={`http://a836-acris.nyc.gov/bblsearch/bblsearch.asp?borough=${searchContext.propertyResults.records[0].bbl[0]}&block=${searchContext.propertyResults.records[0].prop_block}&lot=${searchContext.propertyResults.records[0].prop_lot}`}
+									href={`http://a836-acris.nyc.gov/bblsearch/bblsearch.asp?borough=${searchStore.propertyResults.records[0].bbl[0]}&block=${searchStore.propertyResults.records[0].prop_block}&lot=${searchStore.propertyResults.records[0].prop_lot}`}
 									className="flex items-center justify-between p-3 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl border border-gray-200/50 dark:border-gray-700/50 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 hover:shadow-lg transition-all duration-200 group"
 								>
 									<span className="text-sm font-medium">View on ACRIS</span>
@@ -89,7 +88,7 @@ function Search() {
 								<a
 									target="_blank"
 									rel="noopener noreferrer"
-									href={`http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?boro=${searchContext.propertyResults.records[0].bbl[0]}&block=${searchContext.propertyResults.records[0].prop_block}&lot=${searchContext.propertyResults.records[0].prop_lot}`}
+									href={`http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?boro=${searchStore.propertyResults.records[0].bbl[0]}&block=${searchStore.propertyResults.records[0].prop_block}&lot=${searchStore.propertyResults.records[0].prop_lot}`}
 									className="flex items-center justify-between p-3 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl border border-gray-200/50 dark:border-gray-700/50 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 hover:shadow-lg transition-all duration-200 group"
 								>
 									<span className="text-sm font-medium">View DOB Profile</span>
@@ -128,10 +127,10 @@ function Search() {
 							data={
 								// eslint-disable-next-line no-nested-ternary
 								activeTab === "Advanced"
-									? searchContext.advancedSearchResults
+									? searchStore.advancedSearchResults
 									: ["Address", "BBL"].includes(activeTab)
-										? searchContext.propertyResults.records
-										: searchContext.partyResults.records
+										? searchStore.propertyResults.records
+										: searchStore.partyResults.records
 							}
 						/>
 					</div>

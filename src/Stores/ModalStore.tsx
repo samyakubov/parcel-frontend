@@ -1,10 +1,9 @@
-import React, { createContext, useContext, useMemo } from "react"
 import { action, makeAutoObservable } from "mobx"
 import { v4 as uuidv4 } from "uuid"
 import isUndefined from "lodash-es/isUndefined"
 import {toast} from "react-toastify"
 
-class ModalManagerClass {
+class ModalStore {
 	constructor() {
 		makeAutoObservable(this)
 	}
@@ -192,16 +191,4 @@ class ModalManagerClass {
 	})
 }
 
-const ModalManagerContext = createContext(new ModalManagerClass())
-
-export function ModalManagerContextProvider({ children }: { children: React.ReactNode }) {
-	const modalManager = useMemo(() => new ModalManagerClass(), [])
-
-	return (
-		<ModalManagerContext.Provider value={modalManager}>
-			{children}
-		</ModalManagerContext.Provider>
-	)
-}
-
-export const useModalManagerContext = () => useContext(ModalManagerContext)
+export const modalStore = new ModalStore()
