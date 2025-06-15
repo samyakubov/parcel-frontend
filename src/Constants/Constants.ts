@@ -287,6 +287,24 @@ export const FAQ = [
 	}
 ]
 
+export const HEADER_TAGS = [
+	{
+		href:"/#stats",
+		name:"Stats"
+	},
+	{
+		href:"/#features",
+		name:"Features"
+	},
+	{
+		href:"/#faq",
+		name:"FAQ"
+	},
+	{
+		href:"/#subscribe",
+		name:"Subscribe"
+	},
+]
 
 export const FORMAT_PRICE = (price: number | string): string => {
 	if (!isNumber(price)) return price as string

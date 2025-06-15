@@ -4,7 +4,7 @@ import { STATS } from "../../Constants/Constants"
 
 export default function Stats() {
 	return (
-		<section className="relative py-24 sm:py-32 bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 dark:from-blue-800 dark:via-indigo-800 dark:to-purple-800 overflow-hidden">
+		<section className="relative py-24 sm:py-32 bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 dark:from-blue-800 dark:via-indigo-800 dark:to-purple-800 overflow-hidden" id="stats">
 			<div className="absolute inset-0">
 				<div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl animate-pulse" />
 				<div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-indigo-400/20 rounded-full blur-3xl animate-pulse delay-1000" />

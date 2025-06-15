@@ -2,6 +2,7 @@ import {animate, motion} from "framer-motion"
 import AddressSearchWithAutoComplete from "../AddressSearchWithAutoComplete/AddressSearchWithAutoComplete"
 import React, {useCallback} from "react"
 import {ChevronDownIcon, MapPinIcon, SearchIcon} from "lucide-react"
+import Header from "./Header"
 
 export default function Hero() {
 	const scrollDown = useCallback(async () => {
@@ -46,8 +47,8 @@ export default function Hero() {
 				<div className="absolute bottom-40 right-20 w-96 h-96 bg-indigo-400/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
 				<div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/5 rounded-full blur-3xl"></div>
 			</div>
-
-			<div className="relative flex flex-col items-center justify-center min-h-screen px-4 sm:px-6 pb-32">
+			<Header/>
+			<div className="relative flex flex-col items-center justify-center min-h-screen px-4 sm:px-6 pb-32 pt-28">
 				<motion.div
 					className="text-center space-y-12 max-w-6xl mx-auto"
 					variants={containerVariants}

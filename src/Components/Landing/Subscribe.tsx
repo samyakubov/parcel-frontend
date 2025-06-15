@@ -3,7 +3,7 @@ import {motion} from "framer-motion"
 
 export default function Subscribe() {
 	return (
-		<div className="relative bg-gradient-to-br from-pink-900 via-red-900 to-amber-900 py-16 sm:py-24 lg:py-32 overflow-hidden">
+		<div className="relative bg-gradient-to-br from-pink-900 via-red-900 to-amber-900 py-16 sm:py-24 lg:py-32 overflow-hidden" id="subscribe">
 			<div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(245,158,11,0.1)_1px,transparent_0)] bg-[size:50px_50px]" />
 
 			<div className="relative mx-auto max-w-7xl px-6 lg:px-8">

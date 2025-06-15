@@ -11,7 +11,7 @@ export default function Faq() {
 	}
 
 	return (
-		<section className="relative py-24 sm:py-32 bg-gradient-to-br from-purple-900 via-pink-900 to-red-900 overflow-hidden">
+		<section className="relative py-24 sm:py-32 bg-gradient-to-br from-purple-900 via-pink-900 to-red-900 overflow-hidden" id="faq">
 			<div className="absolute inset-0">
 				<div className="absolute top-20 left-20 w-96 h-96 bg-rose-400/10 rounded-full blur-3xl" />
 				<div className="absolute bottom-20 right-20 w-80 h-80 bg-red-400/10 rounded-full blur-3xl" />
