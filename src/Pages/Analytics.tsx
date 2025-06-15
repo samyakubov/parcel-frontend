@@ -3,12 +3,12 @@ import React from "react"
 import PriceChart from "../Components/Analytics/PriceChart"
 import RecentSales from "../Components/Analytics/RecentSales"
 import AnalyticsSearchPanel from "../Components/Analytics/AnalyticsSearchPanel"
-import {useAnalyticsContext} from "../Contexts/AnalyticsContext"
 import {Loader2} from "lucide-react"
 import {observer} from "mobx-react"
+import {analyticsStore} from "../Stores/AnalyticsStore"
 
 function Analytics() {
-	const { isGettingAnalytics } = useAnalyticsContext()
+	const { isGettingAnalytics } = analyticsStore
 
 	return (
 		<Layout>

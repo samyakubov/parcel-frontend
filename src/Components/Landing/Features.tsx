@@ -4,7 +4,7 @@ import { FEATURES } from "../../Constants/Constants"
 
 export default function Features() {
 	return (
-		<section className="relative py-24 sm:py-32 bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 overflow-hidden">
+		<section className="relative py-24 sm:py-32 bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 overflow-hidden" id="features">
 			<div className="absolute inset-0">
 				<div className="absolute top-1/4 left-1/4 w-96 h-96 bg-fuchsia-400/10 rounded-full blur-3xl animate-pulse" />
 				<div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-pink-400/10 rounded-full blur-3xl animate-pulse delay-1000" />

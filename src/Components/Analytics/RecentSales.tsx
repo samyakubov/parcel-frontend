@@ -1,9 +1,9 @@
 import React, { useState } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import useDarkMode from "../../Hooks/useDarkMode"
-import {useAnalyticsContext} from "../../Contexts/AnalyticsContext"
 import {observer} from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
+import {analyticsStore} from "../../Stores/AnalyticsStore"
 
 
 // eslint-disable-next-line complexity
@@ -12,9 +12,8 @@ function RecentSales() {
 	const [searchTerm, setSearchTerm] = useState("")
 	const [sortBy, setSortBy] = useState("date")
 	const isDarkMode = useDarkMode()
-	const analyticsContext = useAnalyticsContext()
-	const analyticsData = analyticsContext.analyticsData || { recent_sales: [] }
-	const filteredData = analyticsData.recent_sales || []
+	const analyticsData = analyticsStore.analyticsData
+	const filteredData = analyticsData.recent_sales
 	const itemsPerPage = 10
 
 

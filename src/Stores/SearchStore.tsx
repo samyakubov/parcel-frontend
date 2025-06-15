@@ -1,7 +1,6 @@
-import React, { createContext, useContext, useMemo } from "react"
 import { action, makeAutoObservable} from "mobx"
 
-class SearchContextClass {
+class SearchStore {
 	constructor() {
 		makeAutoObservable(this)
 	}
@@ -100,16 +99,4 @@ class SearchContextClass {
 	})
 }
 
-const SearchContext = createContext(new SearchContextClass())
-
-export default function SearchContextProvider ({ children }: { children: React.ReactNode }) {
-	const searchContextClass = useMemo(() => new SearchContextClass(), [])
-
-	return (
-		<SearchContext.Provider value={searchContextClass}>
-			{children}
-		</SearchContext.Provider>
-	)
-}
-
-export const useSearchContext = () => useContext(SearchContext)
+export const searchStore = new SearchStore()

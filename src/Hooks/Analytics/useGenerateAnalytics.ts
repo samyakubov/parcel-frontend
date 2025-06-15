@@ -1,30 +1,27 @@
 import {useCallback} from "react"
-import {useAnalyticsContext} from "../../Contexts/AnalyticsContext"
 import {toast} from "react-toastify"
 import isHTTPError from "../../Utils/HTTPError"
-import {useApiClientContext} from "../../Contexts/ApiClientContext"
+import {analyticsStore} from "../../Stores/AnalyticsStore"
+import {apiClientStore} from "../../Stores/ApiClientStore"
 
 
 export default function useGenerateAnalytics() {
-	const analyticsContext = useAnalyticsContext()
-	const apiClientContext = useApiClientContext()
-
 	return useCallback(async () => {
 		try {
-			analyticsContext.setGettingAnalytics(true)
-			const response = await apiClientContext.propertyService.generateAnalytics(analyticsContext.analyticsSearchQuery)
+			analyticsStore.setGettingAnalytics(true)
+			const response = await apiClientStore.propertyService.generateAnalytics(analyticsStore.analyticsSearchQuery)
 			if (isHTTPError(response)) {
 				toast.error(response.message)
-				analyticsContext.setGettingAnalytics(false)
+				analyticsStore.setGettingAnalytics(false)
 				return
 			}
-			analyticsContext.setAnalyticsData(response)
-			analyticsContext.setGettingAnalytics(false)
+			analyticsStore.setAnalyticsData(response)
+			analyticsStore.setGettingAnalytics(false)
 		} catch (e) {
 			console.error("error fetching records: " + e)
 			toast.error("An error occurred. Please try again later.")
-			analyticsContext.setGettingAnalytics(false)
+			analyticsStore.setGettingAnalytics(false)
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	},[apiClientContext.propertyService, analyticsContext.analyticsSearchQuery])
+	},[apiClientStore.propertyService, analyticsStore.analyticsSearchQuery])
 }

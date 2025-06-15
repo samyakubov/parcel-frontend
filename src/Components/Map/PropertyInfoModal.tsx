@@ -13,10 +13,9 @@ import isEmpty from "lodash-es/isEmpty"
 import getMortgageDetails from "../../Utils/GetMortgageDetails"
 import isNull from "lodash-es/isNull"
 import ExportToExcelButton from "../ExportToExcelButton"
-import { useModalManagerContext } from "../../Contexts/ModalManagerContext"
 import Overview from "./PropertyInfoModal/Overview"
-import {Building2} from "lucide-react"
 import Grid from "../Search/Grid"
+import {modalStore} from "../../Stores/ModalStore"
 
 interface PropertyInfoModalProps {
 	data: PropertyModal
@@ -24,12 +23,11 @@ interface PropertyInfoModalProps {
 
 function PropertyInfoModal(props: PropertyInfoModalProps) {
 	const modal = props.data
-	const modalManagerContext = useModalManagerContext()
 	useEffect(() => {
 		if (isEmpty(modal.propertyData.records)) {
-			modalManagerContext.closeModal(modal.id, false)
+			modalStore.closeModal(modal.id, false)
 		}
-	}, [modal.id, modalManagerContext, modal.propertyData])
+	}, [modal.id, modalStore, modal.propertyData])
 
 	const data = modal.propertyData
 
@@ -42,10 +40,6 @@ function PropertyInfoModal(props: PropertyInfoModalProps) {
 			: `fixed right-4 top-4 w-11/12 max-w-md h-[95vh] ${baseClasses}`
 	}
 
-	const themeClass = localStorage.getItem("darkMode") === "true"
-		? "ag-theme-quartz-dark"
-		: "ag-theme-quartz"
-
 	return (
 		<Modal
 			open={modal.isOpen}
@@ -55,7 +49,7 @@ function PropertyInfoModal(props: PropertyInfoModalProps) {
 			<motion.div
 				layout="preserve-aspect"
 				className="flex flex-col h-full overflow-hidden"
-				onClick={() => modalManagerContext.focusModal(modal.id, false)}
+				onClick={() => modalStore.focusModal(modal.id, false)}
 				style={{ zIndex: modal.zIndex }}
 			>
 				<motion.div
@@ -157,7 +151,7 @@ function PropertyInfoModal(props: PropertyInfoModalProps) {
 
 										<motion.div
 											layout="preserve-aspect"
-											className={`${themeClass} w-full h-[600px] rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700`}
+											className={"w-full h-[600px] rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700"}
 										>
 											<Grid data={data.records} />
 										</motion.div>

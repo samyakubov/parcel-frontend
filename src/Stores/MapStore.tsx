@@ -1,7 +1,6 @@
-import React, { createContext, useContext, useMemo } from "react"
 import { action, makeAutoObservable} from "mobx"
 
-class MapContextClass {
+class MapStore {
 	constructor() {
 		makeAutoObservable(this)
 	}
@@ -25,16 +24,4 @@ class MapContextClass {
 	})
 }
 
-const MapContext = createContext(new MapContextClass())
-
-export default function MapContextProvider ({ children }: { children: React.ReactNode }) {
-	const mapContextClass = useMemo(() => new MapContextClass(), [])
-
-	return (
-		<MapContext.Provider value={mapContextClass}>
-			{children}
-		</MapContext.Provider>
-	)
-}
-
-export const useMapContext = () => useContext(MapContext)
+export const mapStore = new MapStore()

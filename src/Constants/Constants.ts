@@ -270,8 +270,41 @@ export const FAQ = [
 		answer:
 			"Yes, we support both residential and commercial property research. Our platform includes specialized data fields for commercial properties including tenant information, NOI history, and cap rate comparisons for similar properties in the area.",
 	},
+	{
+		question: "Is the data updated in real time?",
+		answer:
+			"We update property records regularly, but not in real time. Data refresh cycles depend on the source, typically ranging from daily to monthly updates.",
+	},
+	{
+		question: "Can I export the data?",
+		answer:
+			"Yes, you can export property reports and data in Excel for offline analysis or sharing.",
+	},
+	{
+		question: "Do you offer API access?",
+		answer:
+			"Yes, we provide API access for enterprise clients. Contact support for documentation and pricing.",
+	}
 ]
 
+export const HEADER_TAGS = [
+	{
+		href:"/#stats",
+		name:"Stats"
+	},
+	{
+		href:"/#features",
+		name:"Features"
+	},
+	{
+		href:"/#faq",
+		name:"FAQ"
+	},
+	{
+		href:"/#subscribe",
+		name:"Subscribe"
+	},
+]
 
 export const FORMAT_PRICE = (price: number | string): string => {
 	if (!isNumber(price)) return price as string

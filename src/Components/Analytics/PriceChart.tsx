@@ -7,14 +7,13 @@ import {
 	YAxis,
 } from "recharts"
 import React from "react"
-import { useAnalyticsContext } from "../../Contexts/AnalyticsContext"
 import { observer } from "mobx-react"
 import useDarkMode from "../../Hooks/useDarkMode"
 import isEmpty from "lodash-es/isEmpty"
+import {analyticsStore} from "../../Stores/AnalyticsStore"
 
 function PriceChart() {
-	const analyticsContext = useAnalyticsContext()
-	const analyticsData = analyticsContext.analyticsData || { prices: [] }
+	const analyticsData = analyticsStore.analyticsData
 	const isDarkMode = useDarkMode()
 
 	const axisColor = isDarkMode ? "#cccccc" : "#888888"

@@ -1,5 +1,4 @@
 import React, {useState} from "react"
-import { useAnalyticsContext } from "../../Contexts/AnalyticsContext"
 import { observer } from "mobx-react"
 import StyledDropdown from "../StyledDropdown"
 import { PROPERTY_TYPES } from "../../Constants/Constants"
@@ -7,14 +6,14 @@ import StyledInput from "../StyledInput"
 import useGenerateAnalytics from "../../Hooks/Analytics/useGenerateAnalytics"
 import {toast} from "react-toastify"
 import isEmpty from "lodash-es/isEmpty"
+import {analyticsStore} from "../../Stores/AnalyticsStore"
 
 
 function GetTrackBackground (currentYear:number) {
-	const analyticsContext = useAnalyticsContext()
 	const min = 2003
 	const max = currentYear
-	const startPercentage = ((analyticsContext.analyticsSearchQuery.year_filed_start - min) / (max - min)) * 100
-	const endPercentage = ((analyticsContext.analyticsSearchQuery.year_filed_end - min) / (max - min)) * 100
+	const startPercentage = ((analyticsStore.analyticsSearchQuery.year_filed_start - min) / (max - min)) * 100
+	const endPercentage = ((analyticsStore.analyticsSearchQuery.year_filed_end - min) / (max - min)) * 100
 
 	return `linear-gradient(
             to right,
@@ -28,7 +27,7 @@ function GetTrackBackground (currentYear:number) {
 }
 
 function AnalyticsSearchPanel() {
-	const { setAnalyticsSearchQuery, analyticsSearchQuery, setGettingAnalytics } = useAnalyticsContext()
+	const { setAnalyticsSearchQuery, analyticsSearchQuery, setGettingAnalytics } = analyticsStore
 	const handleSearch = useGenerateAnalytics()
 	const currentYear = new Date().getFullYear()
 	const [zipCode, setZipCode] = useState("")

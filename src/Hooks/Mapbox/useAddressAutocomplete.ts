@@ -2,7 +2,7 @@ import {useCallback} from "react"
 import { debounce } from "lodash-es"
 import axios from "axios"
 import {MAPBOX_API_URL, NYC_BOUNDS} from "../../Constants/Constants"
-import {useSearchContext} from "../../Contexts/SearchContext"
+import {searchStore} from "../../Stores/SearchStore"
 
 const NYC_CENTER = {
 	longitude: -73.935242,
@@ -11,16 +11,15 @@ const NYC_CENTER = {
 
 export default function useAddressAutocomplete() {
 	const accessToken = process.env.REACT_APP_MAPBOX_API_KEY
-	const searchContext = useSearchContext()
 	const [southwest, northeast] = NYC_BOUNDS
 
 	return useCallback(
 		debounce(async () => {
-			const { searchAddressQuery } = searchContext
+			const { searchAddressQuery } = searchStore
 			if (searchAddressQuery.length < 2) {
 				return
 			}
-			searchContext.setSuggestionsError(null)
+			searchStore.setSuggestionsError(null)
 			try {
 				const encodedQuery = encodeURIComponent(searchAddressQuery)
 				const response = await axios.get(
@@ -38,16 +37,14 @@ export default function useAddressAutocomplete() {
 					}
 				)
 
-				searchContext.setSuggestions(response.data.features)
-				searchContext.setIsSuggestionsOpen(true)
-				searchContext.setSelectedSuggestionIndex(-1)
+				searchStore.setSuggestions(response.data.features)
+				searchStore.setIsSuggestionsOpen(true)
+				searchStore.setSelectedSuggestionIndex(-1)
 			} catch (error) {
-				searchContext.setSuggestionsError(
-					"Error fetching suggestions. Please try again."
-				)
-				searchContext.setSuggestions([])
+				searchStore.setSuggestionsError("Error fetching suggestions. Please try again.")
+				searchStore.setSuggestions([])
 			}
 		}, 300),
-		[searchContext, accessToken]
+		[searchStore, accessToken]
 	)
 }

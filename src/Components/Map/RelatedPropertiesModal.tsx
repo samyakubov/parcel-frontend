@@ -1,13 +1,13 @@
-import { useMapContext } from "../../Contexts/MapContext"
 import Modal from "../Modal"
 import React, { useCallback } from "react"
 import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
 import { motion } from "framer-motion"
-import { useModalManagerContext } from "../../Contexts/ModalManagerContext"
 import RelatedPropertyCard from "./RelatedPropertyModal/RelatedPropertyCard"
 import useSearchByPropertyBBL from "../../Hooks/Search/useSearchByPropertyBBL"
-import {useSearchContext} from "../../Contexts/SearchContext"
+import {searchStore} from "../../Stores/SearchStore"
+import {mapStore} from "../../Stores/MapStore"
+import {modalStore} from "../../Stores/ModalStore"
 
 interface RelatedPropertiesModalProps {
 	data: RelatedPropertyModal
@@ -17,17 +17,14 @@ interface RelatedPropertiesModalProps {
 function RelatedPropertiesModal(props: RelatedPropertiesModalProps) {
 	const modal = props.data
 	const baseClasses = "shadow-2xl fixed left-20 bottom-10 h-[70vh] overflow-y-auto overflow-hidden flex flex-col"
-	const mapContext = useMapContext()
-	const searchContext = useSearchContext()
-	const modalManagerContext = useModalManagerContext()
 	const properties = modal.relatedPropertyData
 	const searchByBbl = useSearchByPropertyBBL()
 
 	const onClickProperty = useCallback(async (index: number) => {
-		mapContext.setCoords(mapContext.relatedPropertiesToOwnerCoords[index])
-		searchContext.setSearchBblQuery(modal.relatedPropertyData[index].bbl)
+		mapStore.setCoords(mapStore.relatedPropertiesToOwnerCoords[index])
+		searchStore.setSearchBblQuery(modal.relatedPropertyData[index].bbl)
 		await searchByBbl()
-	}, [mapContext, searchContext, modal.relatedPropertyData, searchByBbl])
+	}, [mapStore, searchStore, modal.relatedPropertyData, searchByBbl])
 
 
 	if (isEmpty(properties) || modal.isMinimized || !modal.isOpen) {
@@ -51,7 +48,7 @@ function RelatedPropertiesModal(props: RelatedPropertiesModalProps) {
 				layout="preserve-aspect"
 				transition={transitionProps}
 				className="flex flex-col h-full"
-				onClick={()=>modalManagerContext.focusModal(modal.id, true)}
+				onClick={()=>modalStore.focusModal(modal.id, true)}
 				style={{ zIndex: modal.zIndex }}
 			>
 				<motion.div

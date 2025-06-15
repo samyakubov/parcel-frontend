@@ -1,8 +1,8 @@
 import React from "react"
 import { observer } from "mobx-react"
-import { useModalManagerContext } from "../../Contexts/ModalManagerContext"
 import { X, Maximize2 } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
+import {modalStore} from "../../Stores/ModalStore"
 
 interface MinimizedModalsBarProps {
 	isRelatedPropertyBar?: boolean;
@@ -10,11 +10,10 @@ interface MinimizedModalsBarProps {
 }
 
 function MinimizedModalsBar({isRelatedPropertyBar = false, position = "bottom-4 left-20" }: MinimizedModalsBarProps) {
-	const modalManagerContext = useModalManagerContext()
 
 	const minimizedModals = isRelatedPropertyBar
-		? modalManagerContext.relatedPropertyModals.filter(modal => modal.isMinimized)
-		: modalManagerContext.propertyModals.filter(modal => modal.isMinimized)
+		? modalStore.relatedPropertyModals.filter(modal => modal.isMinimized)
+		: modalStore.propertyModals.filter(modal => modal.isMinimized)
 
 	if (minimizedModals.length === 0) {
 		return null
@@ -40,38 +39,16 @@ function MinimizedModalsBar({isRelatedPropertyBar = false, position = "bottom-4 
 		}
 	}
 
-	const itemVariants = {
-		hidden: { opacity: 0, y: 10, scale: 0.9 },
-		visible: {
-			opacity: 1,
-			y: 0,
-			scale: 1,
-			transition: {
-				type: "spring",
-				damping: 12,
-				stiffness: 200
-			}
-		},
-		exit: {
-			opacity: 0,
-			y: 10,
-			scale: 0.9,
-			transition: {
-				duration: 0.2
-			}
-		}
-	}
-
 	const handleRestore = (id: string) => {
 		isRelatedPropertyBar
-			? modalManagerContext.restoreModal(id, true)
-			: modalManagerContext.restoreModal(id, false)
+			? modalStore.restoreModal(id, true)
+			: modalStore.restoreModal(id, false)
 	}
 
 	const handleClose = (id: string) => {
 		isRelatedPropertyBar
-			? modalManagerContext.closeModal(id, true)
-			: modalManagerContext.closeModal(id, false)
+			? modalStore.closeModal(id, true)
+			: modalStore.closeModal(id, false)
 	}
 
 	return (
@@ -88,7 +65,6 @@ function MinimizedModalsBar({isRelatedPropertyBar = false, position = "bottom-4 
 					<motion.div
 						key={modal.id}
 						className="group relative"
-						variants={itemVariants}
 					>
 						<motion.button
 							whileHover={{ scale: 1.1, y: -1 }}
