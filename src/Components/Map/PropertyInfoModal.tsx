@@ -105,7 +105,7 @@ function PropertyInfoModal(props: PropertyInfoModalProps) {
 							>
 								<ZoningSection zoning={data.zoning} />
 
-								<Owners owners={data.current_owner} />
+								<Owners owners={data.owners} />
 
 								<PropertyLastSold
 									lastSoldFor={data.last_sold_for}

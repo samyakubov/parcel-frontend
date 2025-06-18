@@ -39,7 +39,7 @@ export function useExportToExcel() {
 		}
 
 		const ownersWS = XLSX.utils.json_to_sheet(
-			data.current_owner.map(owner => ({owner}))
+			data.owners.current_owners.map(owner => ({owner}))
 		)
 
 		ownersWS["!cols"] = [{wch: 50}]

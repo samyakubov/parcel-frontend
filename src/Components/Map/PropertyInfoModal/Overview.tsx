@@ -9,8 +9,8 @@ interface OverviewProps {
 }
 
 export default function Overview({ propertyData }: OverviewProps) {
-	const { last_sold_for, current_owner, records, violations, complaints, zoning } = propertyData
-
+	const { last_sold_for, owners, records, violations, complaints, zoning } = propertyData
+	const currentOwners = owners.current_owners
 	return (
 		<motion.div
 			initial={{ opacity: 0, y: -20 }}
@@ -66,13 +66,13 @@ export default function Overview({ propertyData }: OverviewProps) {
 							<div className="text-sm font-medium text-indigo-700 dark:text-indigo-300 mb-1">
 								Current Owners
 							</div>
-							{current_owner.length > 6 ? (
+							{currentOwners.length > 6 ? (
 								<p className="text-sm text-gray-700 dark:text-gray-300">
-									<span className="font-semibold text-gray-900 dark:text-gray-100">{current_owner.length}</span> current owners
+									<span className="font-semibold text-gray-900 dark:text-gray-100">{currentOwners.length}</span> current owners
 								</p>
 							) : (
 								<p className="text-sm text-gray-700 dark:text-gray-300">
-									<span className="font-semibold text-gray-900 dark:text-gray-100">{current_owner.join(", ")}</span>
+									<span className="font-semibold text-gray-900 dark:text-gray-100">{currentOwners.join(", ")}</span>
 								</p>
 							)}
 						</div>

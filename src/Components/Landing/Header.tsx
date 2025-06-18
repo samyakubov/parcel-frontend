@@ -49,7 +49,7 @@ export default function Header() {
 					<div>
 						<button
 							onClick={handleMapClick}
-							className="relative px-6 py-2 text-sm font-semibold text-white bg-gradient-to-r from-blue-900 to-indigo-900 hover:from-blue-600 hover:to-indigo-600 transition-all duration-300 rounded-xl shadow-lg hover:shadow-xl hover:shadow-emerald-500/25 transform hover:scale-105 group overflow-hidden"
+							className="relative px-6 py-2 text-sm font-semibold text-white bg-gradient-to-r from-blue-900 to-indigo-900 hover:from-blue-600 hover:to-indigo-600 transition-all duration-300 rounded-2xl shadow-lg hover:shadow-xl hover:shadow-emerald-500/25 transform hover:scale-105 group overflow-hidden"
 						>
 							<span>See the Map</span>
 							<div className="absolute inset-0 bg-gradient-to-r from-white/10 to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>

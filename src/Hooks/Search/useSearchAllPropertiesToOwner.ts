@@ -23,5 +23,5 @@ export default function useSearchAllPropertiesToOwner(): (address:string, ownerN
 			console.error("error fetching records: " + e)
 			toast.error("An error occurred. Please try again later.")
 		}
-	},[apiClientStore.propertyService, modalStore])
+	},[])
 }
