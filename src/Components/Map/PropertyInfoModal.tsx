@@ -16,6 +16,7 @@ import ExportToExcelButton from "../ExportToExcelButton"
 import Overview from "./PropertyInfoModal/Overview"
 import Grid from "../Search/Grid"
 import {modalStore} from "../../Stores/ModalStore"
+import {MapPin} from "lucide-react"
 
 interface PropertyInfoModalProps {
 	data: PropertyModal
@@ -27,7 +28,7 @@ function PropertyInfoModal(props: PropertyInfoModalProps) {
 		if (isEmpty(modal.propertyData.records)) {
 			modalStore.closeModal(modal.id, false)
 		}
-	}, [modal.id, modalStore, modal.propertyData])
+	}, [modal.id, modal.propertyData])
 
 	const data = modal.propertyData
 
@@ -56,8 +57,12 @@ function PropertyInfoModal(props: PropertyInfoModalProps) {
 					layout="preserve-aspect"
 					whileHover={{ scale: 1.005 }}
 					transition={{ type: "spring", stiffness: 300, damping: 20 }}
-					className="flex-none flex items-center p-6 bg-gradient-to-r from-slate-50 to-blue-50/30 dark:from-gray-900/50 dark:to-blue-900/20 border-b border-slate-200/60 dark:border-gray-700/50 backdrop-blur-sm cursor-pointer"
+					className="flex-none flex items-center gap-3 p-6 bg-gradient-to-r from-slate-50 to-blue-50/30 dark:from-gray-900/50 dark:to-blue-900/20 border-b border-slate-200/60 dark:border-gray-700/50 backdrop-blur-sm cursor-pointer"
 				>
+					<div className="p-2 bg-indigo-50 dark:bg-indigo-900/20 rounded-xl flex-shrink-0">
+						<MapPin className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+					</div>
+
 					<div className="flex items-center w-full">
 						<a
 							target="_blank"
@@ -95,7 +100,7 @@ function PropertyInfoModal(props: PropertyInfoModalProps) {
 								<PropertyDetails first_record={data.records[0]} />
 								{
 									!isNull(latestMortgage) ? (
-										<MortgageDetails latestMortgage={latestMortgage} />
+										<MortgageDetails borrower={latestMortgage.borrower} lender={latestMortgage.lender} />
 									) : null
 								}
 							</motion.div>
