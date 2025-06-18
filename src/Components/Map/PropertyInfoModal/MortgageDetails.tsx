@@ -23,7 +23,6 @@ export default function MortgageDetails(props: MortgageDetailsProps) {
 			</div>
 
 			<div className="space-y-6">
-				{/* Lender - moved to top for prominence */}
 				<div className="flex items-start gap-4">
 					<div className="p-2 bg-teal-50 dark:bg-teal-900/20 rounded-xl flex-shrink-0">
 						<Landmark className="w-5 h-5 text-teal-600 dark:text-teal-400" />
