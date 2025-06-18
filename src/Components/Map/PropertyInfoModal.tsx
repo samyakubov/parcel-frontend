@@ -17,6 +17,7 @@ import Overview from "./PropertyInfoModal/Overview"
 import Grid from "../Search/Grid"
 import {modalStore} from "../../Stores/ModalStore"
 import {MapPin} from "lucide-react"
+import Permits from "./PropertyInfoModal/Permits"
 
 interface PropertyInfoModalProps {
 	data: PropertyModal
@@ -125,6 +126,7 @@ function PropertyInfoModal(props: PropertyInfoModalProps) {
 									animate={{ opacity: 1, height: "auto" }}
 									exit={{ opacity: 0, height: 0 }}
 								>
+									<Permits permits={data.permits}/>
 									<Complaints complaints={data.complaints} />
 									<Violations violations={data.violations} />
 									<div className="space-y-6">

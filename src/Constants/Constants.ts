@@ -259,6 +259,24 @@ export const VIOLATION_COLUMNS:string[] = [
 	"Paid"
 ]
 
+export const PERMIT_COLUMNS = [
+	"Job Filing #",
+	"Filing Reason",
+	"Work Type",
+	"Permittee License Type",
+	"Applicant License #",
+	"Applicant First Name",
+	"Applicant Last Name",
+	"Applicant Business Name",
+	"Applicant Business Address",
+	"Work Permit",
+	"Approved Date",
+	"Issued Date",
+	"Job Description",
+	"Estimated Job Costs",
+]
+
+
 export const FAQ = [
 	{
 		question: "How do I access property records?",

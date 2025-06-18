@@ -23,6 +23,7 @@ declare global {
 		last_sold_for: LastSoldFor;
 		owners: owners;
 		records: PropertyRecord[];
+		permits:PulledPermit[];
 		violations: Violation[];
 		complaints: Complaint[];
 		zoning: Zoning;

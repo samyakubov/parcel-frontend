@@ -19,6 +19,7 @@ class SearchStore {
 			previous_owners:[],
 		},
 		records: [],
+		permits:[],
 		violations: [],
 		complaints: [],
 		zoning: {
