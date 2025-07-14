@@ -3,7 +3,6 @@ import {Routes, Route} from "react-router"
 import Missing from "./Pages/Missing"
 import Map from "./Pages/Map"
 import Search from "./Pages/Search"
-import Landing from "./Pages/Landing"
 import DatabaseUpdating from "./Pages/DatabaseUpdating"
 import {useIsMaintenanceWindow} from "./Hooks/useIsMaintenanceWindow"
 import useTypedNavigate from "./Hooks/useTypedNavigate"
@@ -20,8 +19,7 @@ export default function AppRoutes() {
 
 	return (
 		<Routes>
-			<Route path="/" element={<Landing />} />
-			<Route path="/map" element={<Map />} />
+			<Route path="/" element={<Map />} />
 			<Route path="/search" element={<Search />} />
 			<Route path="/database-updating" element={<DatabaseUpdating /> } />
 			<Route path="/analytics" element={<Analytics />} />
