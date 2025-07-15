@@ -38,7 +38,6 @@ function RelatedPropertiesModal(props: RelatedPropertiesModalProps) {
 
 	return (
 		<Modal
-			open={modal.isOpen}
 			panelClassName={baseClasses}
 			isExpandable={false}
 			modalId={modal.id}

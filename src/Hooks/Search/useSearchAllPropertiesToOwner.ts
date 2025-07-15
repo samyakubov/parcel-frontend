@@ -1,7 +1,7 @@
 import { useCallback } from "react"
 import isHTTPError from "../../Utils/HTTPError"
 import {toast} from "react-toastify"
-import {apiClientStore} from "../../Stores/ApiClientStore"
+import {apiClientService} from "../../Services/ApiClientService"
 import {mapStore} from "../../Stores/MapStore"
 import {modalStore} from "../../Stores/ModalStore"
 
@@ -12,7 +12,7 @@ export default function useSearchAllPropertiesToOwner(): (address:string, ownerN
 				toast.info("Close a modal to open more")
 				return
 			}
-			const response = await apiClientStore.propertyService.searchAllPropertiesToOwner(address, ownerName)
+			const response = await apiClientService.propertyService.searchAllPropertiesToOwner(address, ownerName)
 			if (isHTTPError(response)) {
 				toast.error(response.message)
 				return

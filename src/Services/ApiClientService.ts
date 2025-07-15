@@ -1,8 +1,8 @@
 import HttpClient from "../Classes/HttpClient"
-import PartyService from "../Services/PartyService"
-import PropertyService from "../Services/PropertyService"
+import PartyService from "./PartyService"
+import PropertyService from "./PropertyService"
 
-export class ApiClientStore {
+export class ApiClientService {
 	public httpClient: HttpClient = new HttpClient()
 	public partyService: PartyService = new PartyService(this.httpClient)
 	public propertyService: PropertyService = new PropertyService(this.httpClient)
@@ -11,4 +11,4 @@ export class ApiClientStore {
 }
 
 
-export const apiClientStore = new ApiClientStore()
+export const apiClientService = new ApiClientService()

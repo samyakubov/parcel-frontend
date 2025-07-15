@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import { observer } from "mobx-react"
 import { useMap } from "../Hooks/Mapbox/useMap"
 import Layout from "../Components/Layout/Layout"
@@ -16,7 +16,6 @@ import {searchStore} from "../Stores/SearchStore"
 
 function Map() {
 	const searchByCurrentLocation = useCurrentLocation()
-	const [isSearchByCurrentLocationLoading, setIsSearchByCurrentLocationLoading] = useState(false)
 	useMap("map")
 
 	return (
@@ -65,15 +64,15 @@ function Map() {
 
 			<button
 				onClick={async () => {
-					setIsSearchByCurrentLocationLoading(true)
+					searchStore.setIsSearchResultLoading(true)
 					await searchByCurrentLocation()
-					setIsSearchByCurrentLocationLoading(false)
+					searchStore.setIsSearchResultLoading(false)
 				}}
-				disabled={isSearchByCurrentLocationLoading}
+				disabled={searchStore.isSearchResultLoading}
 				className="absolute bottom-8 right-8 group flex justify-center items-center bg-white dark:bg-gray-900/10 backdrop-blur-2xl p-4 rounded-2xl shadow-2xl border border-white/20 dark:border-gray-700/20 z-10 transition-all duration-500 hover:scale-110 hover:shadow-3xl active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/20 dark:hover:bg-gray-800/20"
 			>
 				<div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-				{isSearchByCurrentLocationLoading ? (
+				{searchStore.isSearchResultLoading ? (
 					<div className="relative">
 						<div className="absolute inset-0 w-7 h-7 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 animate-pulse opacity-20"></div>
 						<Loader2 className="relative h-7 w-7 text-gray-600 dark:text-gray-300 animate-spin" />

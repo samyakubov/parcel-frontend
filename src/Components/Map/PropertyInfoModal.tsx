@@ -44,7 +44,6 @@ function PropertyInfoModal(props: PropertyInfoModalProps) {
 
 	return (
 		<Modal
-			open={modal.isOpen}
 			panelClassName={getPanelClassName()}
 			isExpandable={true}
 			modalId={modal.id}>
