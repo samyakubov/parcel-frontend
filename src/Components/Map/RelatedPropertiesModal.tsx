@@ -27,7 +27,7 @@ function RelatedPropertiesModal(props: RelatedPropertiesModalProps) {
 	}, [mapStore, searchStore, modal.relatedPropertyData, searchByBbl])
 
 
-	if (isEmpty(properties) || modal.isMinimized || !modal.isOpen) {
+	if (isEmpty(properties)) {
 		return null
 	}
 
