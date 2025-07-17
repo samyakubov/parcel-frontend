@@ -11,7 +11,7 @@ export default function Sidebar() {
 	const navItems: NavItem[] = [
 		{
 			icon: <Map className="w-5 h-5" />,
-			href: "/map",
+			href: "/",
 		},
 		{
 			icon: <Search className="w-5 h-5" />,

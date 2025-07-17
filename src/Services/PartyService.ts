@@ -1,7 +1,7 @@
 import HttpClient from "../Classes/HttpClient"
 
 export default class PartyService {
-	private readonly serviceHeader = "/api/party"
+	private readonly serviceHeader = "/party"
 
 	constructor(private readonly httpClient: HttpClient) {}
 

@@ -10,9 +10,6 @@ export default function useHandleSuggestionClick() {
 	const navigate = useTypedNavigate()
 	const location = useLocation()
 	return useCallback(async (suggestion: MapboxFeature) => {
-		if (location.pathname === "/") {
-			navigate("/map")
-		}
 		const selectedSuggestion = suggestion.place_name.split(",")[0].split(" ")
 		searchStore.setAddressSearchQuery(selectedSuggestion[0] + " " + NormalizeStreetName(selectedSuggestion[1] + " " + selectedSuggestion[2]))
 		searchStore.setSuggestions([])
