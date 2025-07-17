@@ -6,7 +6,6 @@ import isUndefined from "lodash-es/isUndefined"
 import {modalStore} from "../Stores/ModalStore"
 
 interface DialogModalProps {
-	open: boolean;
 	children: React.ReactNode;
 	panelClassName?: string;
 	isExpandable: boolean;
@@ -26,8 +25,6 @@ export default function Modal(props: DialogModalProps) {
 	const currentModal = isRelatedPropertyModal ? modalStore.getCurrentRelatedPropertyModal(modalId) : modalStore.getCurrentPropertyModal(modalId)
 
 	const modalPosition = currentModal?.position || { x: 0, y: 0 }
-	const isModalOpen = !!currentModal?.isOpen
-	const isModalExpanded = !!currentModal?.isExpanded
 	const lastPositionRef = useRef<ModalPosition>(modalPosition)
 
 	const {
@@ -35,24 +32,6 @@ export default function Modal(props: DialogModalProps) {
 		isDragging,
 		handleMouseDown,
 	} = useModalDrag(modalPosition)
-
-	const handleClose = () => {
-		if (!isUndefined(currentModal)) {
-			modalStore.closeModal(modalId, isRelatedPropertyModal)
-		}
-	}
-
-	const handleMinimize = () => {
-		if (!isUndefined(currentModal)) {
-			modalStore.minimizeModal(modalId, isRelatedPropertyModal)
-		}
-	}
-
-	const handleExpand = () => {
-		if (!isUndefined(currentModal)) {
-			modalStore.toggleModalExpand(modalId, isRelatedPropertyModal)
-		}
-	}
 
 	const handlePositionChange = useCallback((newPosition: ModalPosition) => {
 		if (!isUndefined(currentModal) && (newPosition.x !== lastPositionRef.current.x || newPosition.y !== lastPositionRef.current.y)) {
@@ -87,11 +66,6 @@ export default function Modal(props: DialogModalProps) {
 		}
 	}
 
-
-	if (!isModalOpen) {
-		return null
-	}
-
 	return (
 		<AnimatePresence>
 			<motion.div
@@ -121,10 +95,22 @@ export default function Modal(props: DialogModalProps) {
 					<ModalControls
 						className="absolute top-4 right-4 z-10"
 						isExpandable={isExpandable}
-						isExpanded={isModalExpanded}
-						setIsExpanded={handleExpand}
-						onClose={handleClose}
-						onMinimize={handleMinimize}
+						isExpanded={currentModal?.isExpanded}
+						setIsExpanded={()=>{
+							if (!isUndefined(currentModal)) {
+								modalStore.toggleModalExpand(modalId, isRelatedPropertyModal)
+							}
+						}}
+						onClose={()=>{
+							if (!isUndefined(currentModal)) {
+								modalStore.closeModal(modalId, isRelatedPropertyModal)
+							}
+						}}
+						onMinimize={()=>{
+							if (!isUndefined(currentModal)) {
+								modalStore.minimizeModal(modalId, isRelatedPropertyModal)
+							}
+						}}
 					/>
 					<div className="overflow-y-auto" onClick={(e) => e.stopPropagation()}>
 						{children}

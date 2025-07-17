@@ -14,8 +14,12 @@ class SearchStore {
 			last_sold_price: 0,
 			sale_date: ""
 		},
-		current_owner: [],
+		owners: {
+			current_owners:[],
+			previous_owners:[],
+		},
 		records: [],
+		permits:[],
 		violations: [],
 		complaints: [],
 		zoning: {

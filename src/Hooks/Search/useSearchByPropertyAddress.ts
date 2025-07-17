@@ -5,7 +5,7 @@ import { API_RESPONSE_LIMIT } from "../../Constants/Constants"
 import isEmpty from "lodash-es/isEmpty"
 import { useLocation } from "react-router"
 import {NormalizeStreetName} from "../../Utils/NormalizeStreetName"
-import {apiClientStore} from "../../Stores/ApiClientStore"
+import {apiClientService} from "../../Services/ApiClientService"
 import {mapStore} from "../../Stores/MapStore"
 import {modalStore} from "../../Stores/ModalStore"
 import {searchStore} from "../../Stores/SearchStore"
@@ -18,7 +18,7 @@ export default function useSearchByPropertyAddress() {
 			if (isEmpty(searchStore.searchAddressQuery)) return
 
 			searchStore.setIsSearchResultLoading(true)
-			const response = await apiClientStore.propertyService.searchByPropertyAddress(searchStore.searchAddressQuery, API_RESPONSE_LIMIT)
+			const response = await apiClientService.propertyService.searchByPropertyAddress(searchStore.searchAddressQuery, API_RESPONSE_LIMIT)
 			searchStore.setIsSearchResultLoading(false)
 
 			if (isHTTPError(response)) {
@@ -34,5 +34,5 @@ export default function useSearchByPropertyAddress() {
 			toast.error("An error occurred. Please try again later.")
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [apiClientStore.propertyService, searchStore.searchAddressQuery, searchStore.setPropertyResults, mapStore, location.pathname, modalStore])
+	}, [apiClientService.propertyService, searchStore.searchAddressQuery, searchStore.setPropertyResults, mapStore, location.pathname, modalStore])
 }

@@ -1,7 +1,7 @@
 import HttpClient from "../Classes/HttpClient"
 
 export default class PropertyService {
-	private readonly serviceHeader = "/api/property"
+	private readonly serviceHeader = "/property"
 
 	constructor(private readonly httpClient: HttpClient) {}
 
@@ -20,12 +20,12 @@ export default class PropertyService {
 	}
 
 	async generateAnalytics(filters:AdvancedSearchFilter):Promise<Analytics | HTTPError> {
-		const response = await this.httpClient.http.post("/api/advancedSearch/generate_analytics/", filters)
+		const response = await this.httpClient.http.post("/advancedSearch/generate_analytics/", filters)
 		return response.data
 	}
 
 	async searchAdvancedSearch(filters:AdvancedSearchFilter, limit:number):Promise<AdvancedSearchResponse | HTTPError> {
-		const response = await this.httpClient.http.post(`/api/advancedSearch/query_acris_records/limit=${limit}`, filters)
+		const response = await this.httpClient.http.post(`/advancedSearch/query_acris_records/limit=${limit}`, filters)
 		return response.data
 	}
 

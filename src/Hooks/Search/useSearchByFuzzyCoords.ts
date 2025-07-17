@@ -4,7 +4,7 @@ import { toast } from "react-toastify"
 import { API_RESPONSE_LIMIT } from "../../Constants/Constants"
 import isNull from "lodash-es/isNull"
 import {NormalizeStreetName} from "../../Utils/NormalizeStreetName"
-import {apiClientStore} from "../../Stores/ApiClientStore"
+import {apiClientService} from "../../Services/ApiClientService"
 import {mapStore} from "../../Stores/MapStore"
 import {modalStore} from "../../Stores/ModalStore"
 import {searchStore} from "../../Stores/SearchStore"
@@ -16,7 +16,7 @@ export default function useSearchByFuzzyCoords() {
 			if (isNull(mapStore.coords)) return
 
 			searchStore.setIsSearchResultLoading(true)
-			const response = await apiClientStore.propertyService.searchByPropertyFuzzyCoords(
+			const response = await apiClientService.propertyService.searchByPropertyFuzzyCoords(
 				{ latitude: mapStore.coords.latitude, longitude: mapStore.coords.longitude },
 				API_RESPONSE_LIMIT
 			)
@@ -40,5 +40,5 @@ export default function useSearchByFuzzyCoords() {
 			toast.error("An error occurred. Please try again later.")
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [apiClientStore.propertyService, mapStore, searchStore, mapStore.coords, modalStore])
+	}, [apiClientService.propertyService, mapStore, searchStore, mapStore.coords, modalStore])
 }

@@ -1,9 +1,10 @@
 import isEmpty from "lodash-es/isEmpty"
+import isUndefined from "lodash-es/isUndefined"
 
 export default function getMortgageDetails(
 	records: PropertyRecord[],
 	sale_date: string
-): PropertyRecord | null {
+): { lender: PropertyRecord; borrower: PropertyRecord } | null {
 	if (isEmpty(records)) return null
 
 	const mortgageRecords = records.filter(record => record.doc_type === "MORTGAGE")
@@ -18,9 +19,24 @@ export default function getMortgageDetails(
 		return diffDays <= 7
 	})
 
-	return isEmpty(nearSaleRecords)
+	const selectedRecords = isEmpty(nearSaleRecords)
 		? mortgageRecords.sort((a, b) =>
 			new Date(b.recordedfiled).getTime() - new Date(a.recordedfiled).getTime()
-		)[0]
-		: nearSaleRecords[0]
+		)
+		: nearSaleRecords
+
+	const lenderParty = selectedRecords.find(
+		party => party.partytype_desc === "MORTGAGEE/LENDER"
+	)
+
+	const borrowerParty = selectedRecords.find(
+		party => party.partytype_desc === "MORTGAGOR/BORROWER"
+	)
+
+	if (isUndefined(lenderParty) || isUndefined(borrowerParty)) return null
+
+	return {
+		lender: lenderParty,
+		borrower: borrowerParty
+	}
 }

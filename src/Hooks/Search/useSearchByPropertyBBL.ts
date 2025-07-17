@@ -6,7 +6,7 @@ import isEmpty from "lodash-es/isEmpty"
 import {useLocation} from "react-router"
 import {modalStore} from "../../Stores/ModalStore"
 import {NormalizeStreetName} from "../../Utils/NormalizeStreetName"
-import {apiClientStore} from "../../Stores/ApiClientStore"
+import {apiClientService} from "../../Services/ApiClientService"
 import {mapStore} from "../../Stores/MapStore"
 import {searchStore} from "../../Stores/SearchStore"
 
@@ -21,7 +21,7 @@ export default function useSearchByPropertyBBL() {
 			}
 			searchStore.setIsSearchResultLoading(true)
 
-			const response = await apiClientStore.propertyService.searchByPropertyBBL(searchStore.searchBblQuery, API_RESPONSE_LIMIT)
+			const response = await apiClientService.propertyService.searchByPropertyBBL(searchStore.searchBblQuery, API_RESPONSE_LIMIT)
 			searchStore.setIsSearchResultLoading(false)
 			if (isHTTPError(response)) {
 				toast.error(response.message)
@@ -37,6 +37,6 @@ export default function useSearchByPropertyBBL() {
 			console.error("error fetching records: " + e)
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [apiClientStore.propertyService, searchStore.searchBblQuery, searchStore.setPropertyResults, mapStore, location.pathname, modalStore])
+	}, [apiClientService.propertyService, searchStore.searchBblQuery, searchStore.setPropertyResults, mapStore, location.pathname, modalStore])
 }
 

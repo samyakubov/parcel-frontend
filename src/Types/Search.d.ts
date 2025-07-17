@@ -14,10 +14,16 @@ declare global {
 		sale_date: string;
 	}
 
+	interface owners{
+		current_owners: string[];
+		previous_owners: string[];
+	}
+
 	interface PropertyDetails {
 		last_sold_for: LastSoldFor;
-		current_owner: string[];
+		owners: owners;
 		records: PropertyRecord[];
+		permits:PulledPermit[];
 		violations: Violation[];
 		complaints: Complaint[];
 		zoning: Zoning;

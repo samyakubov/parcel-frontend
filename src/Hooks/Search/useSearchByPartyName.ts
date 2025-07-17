@@ -3,7 +3,7 @@ import isHTTPError from "../../Utils/HTTPError"
 import {toast} from "react-toastify"
 import {API_RESPONSE_LIMIT} from "../../Constants/Constants"
 import isEmpty from "lodash-es/isEmpty"
-import {apiClientStore} from "../../Stores/ApiClientStore"
+import {apiClientService} from "../../Services/ApiClientService"
 import {searchStore} from "../../Stores/SearchStore"
 
 export default function useSearchByPartyName(): () => Promise<void> {
@@ -14,7 +14,7 @@ export default function useSearchByPartyName(): () => Promise<void> {
 				toast.error("Search query is empty. Please provide a valid name.")
 				return
 			}
-			const response = await apiClientStore.partyService.searchByPartyName(searchStore.searchNameQuery, API_RESPONSE_LIMIT)
+			const response = await apiClientService.partyService.searchByPartyName(searchStore.searchNameQuery, API_RESPONSE_LIMIT)
 			if (isHTTPError(response)) {
 				toast.error(response.message)
 				return
@@ -25,5 +25,5 @@ export default function useSearchByPartyName(): () => Promise<void> {
 			toast.error("An error occurred. Please try again later.")
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	},[apiClientStore.partyService, searchStore.searchNameQuery, searchStore])
+	},[apiClientService.partyService, searchStore.searchNameQuery, searchStore])
 }

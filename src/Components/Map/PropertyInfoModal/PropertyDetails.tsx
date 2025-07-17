@@ -1,5 +1,5 @@
 import React from "react"
-import { MapPin, Building2, Home, Hash } from "lucide-react"
+import { Building2, Home, Hash } from "lucide-react"
 import isEmpty from "lodash-es/isEmpty"
 
 interface PropertyDetailProps {
@@ -39,23 +39,6 @@ export default function PropertyDetails(props: PropertyDetailProps) {
 			</div>
 
 			<div className="space-y-6">
-				<div className="flex items-start gap-4">
-					<div className="p-2 bg-indigo-50 dark:bg-indigo-900/20 rounded-xl flex-shrink-0">
-						<MapPin className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
-					</div>
-					<div className="flex-1">
-						<div className="text-sm font-semibold text-indigo-700 dark:text-indigo-300 mb-2">
-							Address
-						</div>
-						<div className="text-gray-900 dark:text-gray-100 font-medium mb-1">
-							{record.prop_streetnumber} {record.prop_streetname}
-						</div>
-						<div className="text-gray-700 dark:text-gray-200">
-							{record.prop_borough}
-						</div>
-					</div>
-				</div>
-
 				<div className="flex items-start gap-4">
 					<div className="p-2 bg-indigo-50 dark:bg-indigo-900/20 rounded-xl flex-shrink-0">
 						<Home className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />

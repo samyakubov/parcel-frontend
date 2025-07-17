@@ -1,7 +1,7 @@
 import {Building, Clock, FileText, Search} from "lucide-react"
 import isNumber from "lodash-es/isNumber"
 
-export const API_RESPONSE_LIMIT = 200
+export const API_RESPONSE_LIMIT = 1000
 
 export const PROPERTY_TYPES: string[] = [
 	"1- 2 FAM WITH ATTCH GAR &/OR VACANT LAND",
@@ -258,6 +258,24 @@ export const VIOLATION_COLUMNS:string[] = [
 	"Penalty",
 	"Paid"
 ]
+
+export const PERMIT_COLUMNS = [
+	"Job Filing #",
+	"Filing Reason",
+	"Work Type",
+	"Permittee License Type",
+	"Applicant License #",
+	"Applicant First Name",
+	"Applicant Last Name",
+	"Applicant Business Name",
+	"Applicant Business Address",
+	"Work Permit",
+	"Approved Date",
+	"Issued Date",
+	"Job Description",
+	"Estimated Job Costs",
+]
+
 
 export const FAQ = [
 	{

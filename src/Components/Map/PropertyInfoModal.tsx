@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { observer } from "mobx-react"
 import Modal from "../Modal"
 import Owners from "./PropertyInfoModal/Owners"
@@ -9,13 +9,14 @@ import Violations from "./PropertyInfoModal/Violations"
 import Complaints from "./PropertyInfoModal/Complaints"
 import { motion, AnimatePresence } from "framer-motion"
 import ZoningSection from "./PropertyInfoModal/Zoning"
-import isEmpty from "lodash-es/isEmpty"
 import getMortgageDetails from "../../Utils/GetMortgageDetails"
 import isNull from "lodash-es/isNull"
 import ExportToExcelButton from "../ExportToExcelButton"
 import Overview from "./PropertyInfoModal/Overview"
 import Grid from "../Search/Grid"
 import {modalStore} from "../../Stores/ModalStore"
+import {MapPin} from "lucide-react"
+import Permits from "./PropertyInfoModal/Permits"
 
 interface PropertyInfoModalProps {
 	data: PropertyModal
@@ -23,15 +24,10 @@ interface PropertyInfoModalProps {
 
 function PropertyInfoModal(props: PropertyInfoModalProps) {
 	const modal = props.data
-	useEffect(() => {
-		if (isEmpty(modal.propertyData.records)) {
-			modalStore.closeModal(modal.id, false)
-		}
-	}, [modal.id, modalStore, modal.propertyData])
 
-	const data = modal.propertyData
+	const propertyDetails = modal.propertyData
 
-	const latestMortgage = getMortgageDetails(data.records, data.last_sold_for.sale_date)
+	const latestMortgage = getMortgageDetails(propertyDetails.records, propertyDetails.last_sold_for.sale_date)
 
 	const getPanelClassName = () => {
 		const baseClasses = "overflow-hidden flex flex-col"
@@ -42,7 +38,6 @@ function PropertyInfoModal(props: PropertyInfoModalProps) {
 
 	return (
 		<Modal
-			open={modal.isOpen}
 			panelClassName={getPanelClassName()}
 			isExpandable={true}
 			modalId={modal.id}>
@@ -56,14 +51,18 @@ function PropertyInfoModal(props: PropertyInfoModalProps) {
 					layout="preserve-aspect"
 					whileHover={{ scale: 1.005 }}
 					transition={{ type: "spring", stiffness: 300, damping: 20 }}
-					className="flex-none flex items-center p-6 bg-gradient-to-r from-slate-50 to-blue-50/30 dark:from-gray-900/50 dark:to-blue-900/20 border-b border-slate-200/60 dark:border-gray-700/50 backdrop-blur-sm cursor-pointer"
+					className="flex-none flex items-center gap-3 p-6 bg-gradient-to-r from-slate-50 to-blue-50/30 dark:from-gray-900/50 dark:to-blue-900/20 border-b border-slate-200/60 dark:border-gray-700/50 backdrop-blur-sm cursor-pointer"
 				>
+					<div className="p-2 bg-indigo-50 dark:bg-indigo-900/20 rounded-xl flex-shrink-0">
+						<MapPin className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+					</div>
+
 					<div className="flex items-center w-full">
 						<a
 							target="_blank"
 							rel="noopener noreferrer"
 							className="text-xl font-bold bg-gradient-to-r from-slate-800 to-blue-600 bg-clip-text text-transparent dark:from-slate-100 dark:to-blue-200 transition-all duration-300 ease-out group"
-							href={`http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?boro=${data.records[0].bbl[0]}&block=${data.records[0].prop_block}&lot=${data.records[0].prop_lot}`}
+							href={`http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?boro=${propertyDetails.records[0].bbl[0]}&block=${propertyDetails.records[0].prop_block}&lot=${propertyDetails.records[0].prop_lot}`}
 						>
 							<span>
 								{modal.title}
@@ -91,11 +90,11 @@ function PropertyInfoModal(props: PropertyInfoModalProps) {
 									src={`https://maps.googleapis.com/maps/api/streetview?size=800x300&location=${modal.coords.latitude},${modal.coords.longitude}&key=${process.env.REACT_APP_STREETVIEW_API_KEY}`}
 									alt="Google Street View"
 								/>
-								{!modal.isExpanded && (<Overview propertyData={data} />)}
-								<PropertyDetails first_record={data.records[0]} />
+								{!modal.isExpanded && (<Overview propertyData={propertyDetails} />)}
+								<PropertyDetails first_record={propertyDetails.records[0]} />
 								{
 									!isNull(latestMortgage) ? (
-										<MortgageDetails latestMortgage={latestMortgage} />
+										<MortgageDetails borrower={latestMortgage.borrower} lender={latestMortgage.lender} />
 									) : null
 								}
 							</motion.div>
@@ -103,12 +102,12 @@ function PropertyInfoModal(props: PropertyInfoModalProps) {
 								layout="preserve-aspect"
 								className={modal.isExpanded ? "w-1/2 space-y-4" : "space-y-4"}
 							>
-								<ZoningSection zoning={data.zoning} />
+								<ZoningSection zoning={propertyDetails.zoning} />
 
-								<Owners owners={data.current_owner} />
+								<Owners owners={propertyDetails.owners} />
 
 								<PropertyLastSold
-									lastSoldFor={data.last_sold_for}
+									lastSoldFor={propertyDetails.last_sold_for}
 								/>
 							</motion.div>
 						</motion.div>
@@ -120,8 +119,9 @@ function PropertyInfoModal(props: PropertyInfoModalProps) {
 									animate={{ opacity: 1, height: "auto" }}
 									exit={{ opacity: 0, height: 0 }}
 								>
-									<Complaints complaints={data.complaints} />
-									<Violations violations={data.violations} />
+									<Permits permits={propertyDetails.permits}/>
+									<Complaints complaints={propertyDetails.complaints} />
+									<Violations violations={propertyDetails.violations} />
 									<div className="space-y-6">
 										<div className="flex items-center gap-3 w-full">
 											<div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex-shrink-0">
@@ -143,7 +143,7 @@ function PropertyInfoModal(props: PropertyInfoModalProps) {
 												target="_blank"
 												rel="noopener noreferrer"
 												className="text-xl font-bold bg-gradient-to-r from-slate-800 to-blue-600 bg-clip-text text-transparent dark:from-slate-100 dark:to-blue-200 hover:from-blue-600 hover:to-blue-800 dark:hover:from-blue-300 dark:hover:to-blue-100 transition-all duration-300 ease-out group"
-												href={`http://a836-acris.nyc.gov/bblsearch/bblsearch.asp?borough=${data.records[0].bbl[0]}&block=${data.records[0].prop_block}&lot=${data.records[0].prop_lot}`}
+												href={`http://a836-acris.nyc.gov/bblsearch/bblsearch.asp?borough=${propertyDetails.records[0].bbl[0]}&block=${propertyDetails.records[0].prop_block}&lot=${propertyDetails.records[0].prop_lot}`}
 											>
 												<span>ACRIS Records</span>
 											</a>
@@ -153,7 +153,7 @@ function PropertyInfoModal(props: PropertyInfoModalProps) {
 											layout="preserve-aspect"
 											className={"w-full h-[600px] rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700"}
 										>
-											<Grid data={data.records} />
+											<Grid data={propertyDetails.records} />
 										</motion.div>
 									</div>
 								</motion.div>
