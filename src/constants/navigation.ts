@@ -6,16 +6,12 @@ export const HEADER_NAV_OPTIONS = [
 		href: "/",
 	},
 	{
-		label: "About Us",
-		href: "/about",
+		label: "Showcase",
+		href: "#showcase",
 	},
 	{
-		label: "For Homeowners",
-		href: "/homeowners",
-	},
-	{
-		label: "For Buyers",
-		href: "/buyers",
+		label: "FAQ",
+		href: "#faq",
 	},
 ]
 
