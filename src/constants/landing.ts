@@ -1,6 +1,5 @@
 
 /* eslint-disable max-len */
-
 export const STATS: Stat[] = [
 	{ value: "100%", label: "Satisfactions Clients" },
 	{ value: "500+", label: "Property sells" },
@@ -39,8 +38,21 @@ export const FAQ_QUESTIONS:FaqItem[] = [
 ]
 
 
-export const TIMELINE = [
-	{ title: "Step 1", desc: "Feature 1 explained.", img: "/step1.jpg" },
-	{ title: "Step 2", desc: "Feature 2 explained.", img: "/step2.jpg" },
-	{ title: "Step 3", desc: "Feature 3 explained.", img: "/step3.jpg" },
+export const TIMELINE: TimelineItem[] = [
+	{
+		title: "Create Your Home's Profile",
+		desc: "Start by creating a comprehensive profile for your home. Add basic details, photos, and any initial documents to build the foundation of your home's story.",
+		img: "/modern-exterior.jpg",
+	},
+	{
+		title: "Document Every Improvement",
+		desc: "Easily track and document every renovation, repair, or upgrade. Upload photos, store contractor details, and keep a record of costs and dates for a complete history.",
+		img: "/modern-interior.jpg",
+	},
+	{
+		title: "Share with Confidence",
+		desc: "When it's time to sell, share your home's detailed timeline with potential buyers. Provide transparency, build trust, and showcase the true value of your property.",
+		img: "/background-photo.jpg",
+	},
 ]
+

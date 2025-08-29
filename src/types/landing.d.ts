@@ -10,6 +10,11 @@ declare global {
         answer: string;
         hasImage?: boolean;
     }
+    interface TimelineItem {
+        title: string;
+        desc: string;
+        img: string;
+    }
 }
 
 export {}
