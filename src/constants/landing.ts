@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/naming-convention */
+
 /* eslint-disable max-len */
 
 export const STATS: Stat[] = [
@@ -36,4 +36,11 @@ export const FAQ_QUESTIONS:FaqItem[] = [
 		question: "How do buyers access the Home Timeline?",
 		answer: "When you list your property, you can share a unique link to your Home Timeline with potential buyers. This gives them a complete and transparent overview of your home's history, helping them make an informed decision.",
 	},
+]
+
+
+export const TIMELINE = [
+	{ title: "Step 1", desc: "Feature 1 explained.", img: "/step1.jpg" },
+	{ title: "Step 2", desc: "Feature 2 explained.", img: "/step2.jpg" },
+	{ title: "Step 3", desc: "Feature 3 explained.", img: "/step3.jpg" },
 ]

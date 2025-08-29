@@ -13,7 +13,6 @@ const compat = new FlatCompat({
 })
 
 const eslintConfig = [
-	...compat.extends("next/core-web-vitals", "next/typescript"),
 	{
 		ignores: [
 			"node_modules/**",
@@ -21,7 +20,11 @@ const eslintConfig = [
 			"out/**",
 			"build/**",
 			"next-env.d.ts",
+			"src/components/ui/**",
 		],
+	},
+	...compat.extends("next/core-web-vitals", "next/typescript"),
+	{
 		plugins: {
 			security,
 		},
@@ -48,7 +51,6 @@ const eslintConfig = [
 			"max-len": ["error", {
 				code: 140,
 			}],
-			"@typescript-eslint/explicit-function-return-type": "warn",
 			"require-await": "error",
 			"@typescript-eslint/no-explicit-any": "error",
 			"@typescript-eslint/prefer-as-const": "error",
@@ -71,21 +73,17 @@ const eslintConfig = [
 			}],
 			"@typescript-eslint/naming-convention": ["error", {
 				selector: "variable",
-				format: ["camelCase"],
-			}, {
-				selector: "variable",
-				modifiers: ["destructured"],
-				filter: {
-					regex: "GOOGLE_CLIENT_ID|GOOGLE_CLIENT_SECRET",
-					match: true,
-				},
-				format: null,
+				format: ["camelCase", "UPPER_CASE", "PascalCase"],
 			}, {
 				selector: "function",
-				format: ["PascalCase"],
+				format: ["camelCase", "PascalCase"],
 			}, {
 				selector: "parameter",
 				format: ["camelCase"],
+				leadingUnderscore: "allow",
+			}, {
+				selector: "enumMember",
+				format: ["UPPER_CASE"],
 			}, {
 				selector: "typeLike",
 				format: ["PascalCase"],
