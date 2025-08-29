@@ -1,12 +1,14 @@
+"use client"
 import React from "react"
 import { Button } from "@/components/ui/button"
 import { HEADER_NAV_OPTIONS } from "@/constants/navigation"
+import ThemeToggle from "@/components/theme-toggle"
 
 export default function Header() {
 	return (
 		<header className="absolute top-0 left-0 right-0 z-50 p-6">
 			<div className="flex items-center justify-between">
-				<div className="text-white text-3xl font-semibold">
+				<div className="text-white text-3xl">
                     Buildly
 				</div>
 
@@ -28,6 +30,8 @@ export default function Header() {
 				</nav>
 
 				<div className="flex items-center space-x-4">
+					<ThemeToggle />
+
 					<Button
 						variant="ghost"
 						className="text-white/80 hover:text-white hover:bg-white/10 rounded-full px-4 py-2"

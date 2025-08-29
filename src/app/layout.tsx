@@ -2,6 +2,8 @@ import type { Metadata } from "next"
 import { Inter, Geist_Mono } from "next/font/google"
 import "./globals.css"
 import Header from "@/components/header"
+import Footer from "@/components/footer"
+import {ThemeProvider} from "next-themes"
 
 const inter = Inter({
 	variable: "--font-inter",
@@ -25,12 +27,16 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en">
+	//TODO: figure out the hydration error from theme provider
+		<html lang="en" suppressHydrationWarning>
 			<body
 				className={`${inter.variable} ${geistMono.variable} antialiased`}
 			>
-				<Header />
-				{children}
+				<ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
+					<Header />
+					{children}
+					<Footer/>
+				</ThemeProvider>
 			</body>
 		</html>
 	)
