@@ -22,7 +22,7 @@ This project follows a **feature-driven modular architecture** using the Next.js
   - `app/`
   - `components/` - All components used in the pages
     - `ui/` - all shadcn components
-  - `tests/` - Unit & integration tests
+  - `__tests__/` - Unit & integration tests
   - `utils/` - Utility functions
   - `hooks/` - Custom hooks
 
@@ -67,8 +67,8 @@ This project follows a **feature-driven modular architecture** using the Next.js
 We use **Jest** for testing.
 
 - **Naming Convention**: All test files should follow the `*.test.tsx` or `*.test.ts` pattern.
-- **Unit Tests**: Place in `/src/tests/unit` for utilities and components.
-- **Integration Tests**: Place in `/src/tests/integration` for critical flows.
+- **Unit Tests**: Place in `/src/__tests__/unit` for utilities and components.
+- **Integration Tests**: Place in `/src/__tests__/integration` for critical flows.
 
 **Available Commands**:
 
