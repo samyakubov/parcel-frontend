@@ -6,7 +6,7 @@ export const HEADER_NAV_OPTIONS = [
 		href: "/",
 	},
 	{
-		label: "Showcase",
+		label: "Timeline",
 		href: "#showcase",
 	},
 	{
