@@ -25,7 +25,8 @@ This project follows a **feature-driven modular architecture** using the Next.js
   - `__tests__/` - Unit & integration tests
   - `utils/` - Utility functions
   - `hooks/` - Custom hooks
-
+  - `constants/` - Global constant variables
+  - `types/` - All types separated by where they are used (all new files have to use `*.d.ts`)
 
 - **Data Fetching**:
 - Prefer **Server Components** `async/await` in `page.tsx` or server components.

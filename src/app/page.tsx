@@ -1,9 +1,11 @@
+"use client"
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+import Hero from "@/components/landing/hero"
+
 export default function Landing() {
 	return (
-		<div>
-
+		<div className="min-h-screen">
+			<Hero/>
 		</div>
 	)
 }
