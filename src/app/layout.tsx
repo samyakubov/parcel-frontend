@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-	title: "Buildly | Building your properties history",
+	title: "Buildly | Building your home's timeline",
 	description: "Document every renovation, upgrade, and improvement. Give buyers the complete home history they deserve.",
 }
 
