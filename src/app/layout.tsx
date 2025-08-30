@@ -1,8 +1,6 @@
 import type { Metadata } from "next"
 import { Inter, Geist_Mono } from "next/font/google"
 import "./globals.css"
-import Header from "@/components/header"
-import Footer from "@/components/footer"
 import {ThemeProvider} from "next-themes"
 
 const inter = Inter({
@@ -20,7 +18,6 @@ export const metadata: Metadata = {
 	description: "Document every renovation, upgrade, and improvement. Give buyers the complete home history they deserve.",
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export default function RootLayout({
 	children,
 }: Readonly<{
@@ -33,9 +30,7 @@ export default function RootLayout({
 				className={`${inter.variable} ${geistMono.variable} antialiased`}
 			>
 				<ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-					<Header />
 					{children}
-					<Footer/>
 				</ThemeProvider>
 			</body>
 		</html>

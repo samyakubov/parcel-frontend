@@ -6,7 +6,7 @@ import {HEADER_NAV_OPTIONS} from "@/constants/navigation"
 
 export default function Footer() {
 	return (
-		<footer className="w-full bg-background border-t border-border">
+		<footer className="w-full">
 			<div className="max-w-7xl mx-auto px-6 py-8">
 				<div className="flex flex-col lg:flex-row items-center justify-between gap-8">
 					<nav className="flex flex-wrap items-center gap-2">

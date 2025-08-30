@@ -53,7 +53,7 @@ export const TIMELINE: TimelineItem[] = [
 	{
 		title: "Share with Confidence",
 		desc: "When it's time to sell, share your home's detailed timeline with potential buyers. Provide transparency, build trust, and showcase the true value of your property.",
-		img: "/background-photo.jpg",
+		img: "/hero-photo.jpg",
 	}
 ]
 
