@@ -4,7 +4,7 @@ This file provides guidance to Gemini when working with code in this project.
 
 ## What are we building?
 
-A platform where homeowners create a comprehensive profile for their home, documenting every renovation, upgrade, and improvement with photos, costs, and contractors. When it's time to sell, buyers get a complete 'resume' of the property instead of guessing what's been updated. Think of it as a CarFax report, but for your home's entire renovation history.
+A platform where homeowners create a comprehensive profile for their home, documenting every renovation, upgrade, and improvement with photos, costs, and contractors. When it's time to sell, buyers get a complete 'Timeline' of the property instead of guessing what's been updated. Think of it as a CarFax report, but for your home's entire renovation history.
 
 ---
 
@@ -25,7 +25,8 @@ This project follows a **feature-driven modular architecture** using the Next.js
   - `__tests__/` - Unit & integration tests
   - `utils/` - Utility functions
   - `hooks/` - Custom hooks
-
+  - `constants/` - Global constant variables
+  - `types/` - All types separated by where they are used (all new files have to use `*.d.ts`)
 
 - **Data Fetching**:
 - Prefer **Server Components** `async/await` in `page.tsx` or server components.
