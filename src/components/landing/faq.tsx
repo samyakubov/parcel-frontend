@@ -34,7 +34,8 @@ export default function FAQ() {
 				</motion.div>
 				<motion.div className="flex items-center">
 					<p className="text-lg text-muted-foreground leading-relaxed">
-                        Have questions? We've got answers. Explore the most common questions about creating your Home Timeline and how it can benefit you.
+                        Have questions? We&apos;ve got answers. Explore the most common questions
+                        about creating your Home Timeline and how it can benefit you.
 					</p>
 				</motion.div>
 			</div>
