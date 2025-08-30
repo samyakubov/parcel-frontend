@@ -34,8 +34,7 @@ export default function FAQ() {
 				</motion.div>
 				<motion.div className="flex items-center">
 					<p className="text-lg text-muted-foreground leading-relaxed">
-                        Our experts guide you in making informed investment decisions based on market insights.
-                        We offer residential, commercial, and luxury properties tailored to different preferences and budgets.
+                        Have questions? We've got answers. Explore the most common questions about creating your Home Timeline and how it can benefit you.
 					</p>
 				</motion.div>
 			</div>
