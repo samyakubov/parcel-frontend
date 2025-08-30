@@ -22,7 +22,7 @@ export default function Timeline() {
 	// eslint-disable-next-line react-hooks/rules-of-hooks
 		useTransform(stepProgress, (p) => {
 			const distance = Math.abs(p - i)
-			return distance < 0.5 ? 1 - distance * 2 : 0
+			return distance < 2 ? Math.max(0, 1 - distance * 0.8) : 0
 		})
 	)
 
@@ -35,8 +35,9 @@ export default function Timeline() {
 		<section ref={containerRef} className="relative w-full mx-auto px-8 py-40" id="timeline">
 			<div className="relative">
 				<div className="absolute top-0 left-1/2 -translate-x-1/2 w-1 h-full bg-border rounded-full" />
+
 				<motion.div
-					className="absolute left-1/2 -translate-x-1/2 w-8 h-8 bg-secondary rounded-full z-10"
+					className="absolute left-1/2 -translate-x-1/2 w-10 h-10 border-4 border-secondary rounded-full z-20"
 					style={{ top: markerY }}
 				/>
 
@@ -46,6 +47,9 @@ export default function Timeline() {
 						className="relative flex items-center justify-center mb-40 w-full"
 						style={{ opacity: stepOpacities[i], pointerEvents: stepPointerEvents[i] }}
 					>
+						<div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
+						w-8 h-8 border-2 border-border rounded-full z-10" />
+
 						<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 w-full">
 							<div
 								className={`order-1 flex gap-6 ${
@@ -56,7 +60,7 @@ export default function Timeline() {
 									<h3 className="text-3xl font-bold mb-4">{step.title}</h3>
 									<p className="text-lg text-muted-foreground mb-6">{step.desc}</p>
 								</div>
-								<div className="relative h-60 w-96 flex-shrink-0 rounded-2xl overflow-hidden bg-muted">
+								<div className="relative h-96 w-[32rem] flex-shrink-0 rounded-3xl overflow-hidden bg-muted">
 									<Image src={step.img} alt={step.title} fill className="object-cover" />
 								</div>
 							</div>
