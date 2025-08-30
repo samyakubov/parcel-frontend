@@ -4,7 +4,7 @@ export const STATS: Stat[] = [
 	{ value: "100%", label: "Satisfactions Clients" },
 	{ value: "500+", label: "Property sells" },
 	{ value: "150+", label: "Countries & Cities" },
-	{ value: "2,00+", label: "Positive reviews" }
+	{ value: "200+", label: "Positive reviews" }
 ]
 
 
@@ -48,6 +48,11 @@ export const TIMELINE: TimelineItem[] = [
 		title: "Document Every Improvement",
 		desc: "Easily track and document every renovation, repair, or upgrade. Upload photos, store contractor details, and keep a record of costs and dates for a complete history.",
 		img: "/modern-interior.jpg",
+	},
+	{
+		title: "Share with Confidence",
+		desc: "When it's time to sell, share your home's detailed timeline with potential buyers. Provide transparency, build trust, and showcase the true value of your property.",
+		img: "/background-photo.jpg",
 	},
 	{
 		title: "Share with Confidence",

@@ -16,7 +16,7 @@ export default function Search() {
 					<div className="flex gap-4">
 						<Input
 							placeholder="Enter property address"
-							className="bg-muted border-border flex-grow"
+							className="border-border flex-grow"
 						/>
 						<Button className="bg-primary hover:bg-primary/90 text-background px-8 py-3 rounded-full">
                             Search Address

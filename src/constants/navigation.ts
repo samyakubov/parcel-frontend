@@ -7,7 +7,7 @@ export const HEADER_NAV_OPTIONS = [
 	},
 	{
 		label: "Timeline",
-		href: "#showcase",
+		href: "#timeline",
 	},
 	{
 		label: "FAQ",

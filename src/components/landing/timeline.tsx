@@ -1,5 +1,4 @@
 "use client"
-
 import { useRef } from "react"
 import { motion, useScroll, useTransform, MotionValue } from "framer-motion"
 import Image from "next/image"
@@ -33,7 +32,7 @@ export default function Timeline() {
 	)
 
 	return (
-		<section ref={containerRef} className="relative w-full mx-auto px-8 py-40">
+		<section ref={containerRef} className="relative w-full mx-auto px-8 py-40" id="timeline">
 			<div className="relative">
 				<div className="absolute top-0 left-1/2 -translate-x-1/2 w-1 h-full bg-border rounded-full" />
 				<motion.div

@@ -17,7 +17,7 @@ export default function Hero() {
 					<div className="w-full grid lg:grid-cols-2 gap-12 items-center">
 						<div className="text-white">
 							<h1 className="text-6xl lg:text-7xl leading-tight mb-6 text-balance">
-                                Build Your <span className="text-secondary">Timeline</span>, One Picture at a Time.
+                                Build Your <span className="text-accent">Timeline</span>, One Picture at a Time.
 							</h1>
 						</div>
 
