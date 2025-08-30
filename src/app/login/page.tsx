@@ -3,6 +3,7 @@ import { useState } from "react"
 import { ArrowLeft, Eye, EyeOff } from "lucide-react"
 import {Button} from "@/components/ui/button"
 import { useRouter } from "next/navigation"
+import {Input} from "@/components/ui/input"
 
 
 export default function Login() {
@@ -27,7 +28,7 @@ export default function Login() {
 				<div className="absolute inset-0 backdrop-blur-md" />
 				<div className="relative z-10 h-full flex flex-col justify-center items-start p-8 text-left">
 					<h2 className="text-4xl md:text-5xl lg:text-6xl text-primary-foreground mb-6 leading-tight drop-shadow-lg">
-                        Start Your <span className="text-accent">Timeline</span>
+                        Continue Your <span className="text-accent">Timeline</span>
 					</h2>
 					<p className="text-xl md:text-2xl text-primary-foreground/90 max-w-lg leading-relaxed drop-shadow-md">
                         Document every upgrade and create a lasting story of your home&apos;s evolution
@@ -47,7 +48,7 @@ export default function Login() {
 					<h1 className="text-3xl font-bold text-card-foreground mb-2">Login</h1>
 					<p className="text-muted-foreground">
                         Don&apos;t already have an account?{" "}
-						<a href="#" className="text-primary hover:text-primary/80 font-medium transition-colors">
+						<a href="/sign-up" className="text-primary hover:text-primary/80 font-medium transition-colors">
                             Sign up
 						</a>
 					</p>
@@ -58,7 +59,7 @@ export default function Login() {
 						<label className="block text-sm font-medium text-card-foreground mb-2">
                             Email Address
 						</label>
-						<input
+						<Input
 							type="email"
 							value={formData.email}
 							onChange={(e) => handleInputChange("email", e.target.value)}
@@ -73,7 +74,7 @@ export default function Login() {
                             Password
 						</label>
 						<div className="relative">
-							<input
+							<Input
 								type={showPassword ? "text" : "password"}
 								value={formData.password}
 								onChange={(e) => handleInputChange("password", e.target.value)}

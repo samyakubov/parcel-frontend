@@ -70,7 +70,10 @@ export default function Header() {
 					>
                         Login
 					</Button>
-					<Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium rounded-full">
+					<Button
+						className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium rounded-full"
+						onClick={() => router.push("/sign-up")}
+					>
                         Sign Up
 					</Button>
 				</div>
