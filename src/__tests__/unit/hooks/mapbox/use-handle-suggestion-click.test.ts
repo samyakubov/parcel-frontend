@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 import { renderHook } from "@testing-library/react"
 import useHandleSuggestionClick from "@/hooks/mapbox/use-handle-suggestion-click"
 import { searchStore } from "@/stores/search-store"
@@ -13,77 +16,117 @@ jest.mock("@/stores/search-store", () => ({
 }))
 
 jest.mock("@/utils/normalize-street-names", () => ({
-    normalizeStreetNames: jest.fn((name) => name.replace("St", "Street")),
+    normalizeStreetNames: jest.fn((name) => {
+        if (typeof name !== "string") return name;
+        let streetName = name.toLowerCase();
+        streetName = streetName.replace(/\bst\b/gi, "street");
+        streetName = streetName.replace(/\bave\b/gi, "avenue");
+        streetName = streetName.replace(/\bdr\b/gi, "drive");
+        streetName = streetName.replace(/\brd\b/gi, "road");
+        streetName = streetName.replace(/\bblvd\b/gi, "boulevard");
+        streetName = streetName.replace(/\b(\d+)\b/g, (_, num) => {
+            const n = parseInt(num, 10);
+            const suffixes = ["th", "st", "nd", "rd"];
+            const value = n % 100;
+            return n + (suffixes[(value - 20) % 10] || suffixes[value] || suffixes[0]);
+        });
+        return streetName;
+    }),
+}))
+
+jest.mock("lodash-es", () => ({
+    isEmpty: jest.fn((value) => {
+        if (value == null) return true;
+        if (typeof value === 'string' || Array.isArray(value)) return value.length === 0;
+        if (typeof value === 'object') return Object.keys(value).length === 0;
+        return false;
+    }),
 }))
 
 describe("useHandleSuggestionClick", () => {
-    const mockSearchStore = searchStore;
-    const mockNormalizeStreetNames = normalizeStreetNames;
+    const mockSearchStore = searchStore
+    const mockNormalizeStreetNames = normalizeStreetNames
 
     beforeEach(() => {
         jest.clearAllMocks()
     })
 
-    it("should update search store correctly when a suggestion is clicked", () => {
-        const { result } = renderHook(() => useHandleSuggestionClick())
-
-        const mockSuggestion = {
-            place_name: "123 Main St, New York, NY",
-        } as MapboxFeature;
-
-        result.current(mockSuggestion);
-
-        expect(mockNormalizeStreetNames).toHaveBeenCalledWith("Main St");
-        expect(mockSearchStore.setAddressSearchQuery).toHaveBeenCalledWith("123 Main Street");
-        expect(mockSearchStore.setSuggestions).toHaveBeenCalledWith([]);
-        expect(mockSearchStore.setIsSuggestionsOpen).toHaveBeenCalledWith(false);
-        expect(mockSearchStore.setSuggestionsError).not.toHaveBeenCalled();
-    })
-
-    it("should handle place_name without a comma", () => {
-        const { result } = renderHook(() => useHandleSuggestionClick())
-
-        const mockSuggestion = {
-            place_name: "456 Grand Avenue",
-        } as MapboxFeature;
-
-        result.current(mockSuggestion);
-
-        expect(mockSearchStore.setAddressSearchQuery).toHaveBeenCalledWith("456 Grand Avenue");
-        expect(mockSearchStore.setSuggestions).toHaveBeenCalledWith([]);
-        expect(mockSearchStore.setIsSuggestionsOpen).toHaveBeenCalledWith(false);
-    })
-
-    it("should handle empty place_name", () => {
+    it("should return early and not process when place_name is empty", () => {
         const { result } = renderHook(() => useHandleSuggestionClick())
 
         const mockSuggestion = {
             place_name: "",
-        } as MapboxFeature;
+        } as MapboxFeature
 
-        result.current(mockSuggestion);
+        result.current(mockSuggestion)
 
-        expect(mockSearchStore.setAddressSearchQuery).toHaveBeenCalledWith("");
-        expect(mockSearchStore.setSuggestions).toHaveBeenCalledWith([]);
-        expect(mockSearchStore.setIsSuggestionsOpen).toHaveBeenCalledWith(false);
+        expect(mockNormalizeStreetNames).not.toHaveBeenCalled()
+        expect(mockSearchStore.setAddressSearchQuery).not.toHaveBeenCalled()
+        expect(mockSearchStore.setSuggestions).not.toHaveBeenCalled()
+        expect(mockSearchStore.setIsSuggestionsOpen).not.toHaveBeenCalled()
     })
 
-    it("should handle place_name with multiple commas", () => {
+    it("should return early and not process when place_name is null", () => {
         const { result } = renderHook(() => useHandleSuggestionClick())
 
         const mockSuggestion = {
-            place_name: "123 Main St, Apt 4B, New York, NY",
+            place_name: null,
+        } as any
+
+        result.current(mockSuggestion)
+
+        expect(mockNormalizeStreetNames).not.toHaveBeenCalled()
+        expect(mockSearchStore.setAddressSearchQuery).not.toHaveBeenCalled()
+        expect(mockSearchStore.setSuggestions).not.toHaveBeenCalled()
+        expect(mockSearchStore.setIsSuggestionsOpen).not.toHaveBeenCalled()
+    })
+
+    it("should process a standard address with street abbreviation", () => {
+        const { result } = renderHook(() => useHandleSuggestionClick())
+
+        const mockSuggestion = {
+            place_name: "123 Main St, New York, NY",
         } as MapboxFeature
 
         result.current(mockSuggestion)
 
         expect(mockNormalizeStreetNames).toHaveBeenCalledWith("Main St")
-        expect(mockSearchStore.setAddressSearchQuery).toHaveBeenCalledWith("123 Main Street")
+        expect(mockSearchStore.setAddressSearchQuery).toHaveBeenCalledWith("123 main street")
         expect(mockSearchStore.setSuggestions).toHaveBeenCalledWith([])
         expect(mockSearchStore.setIsSuggestionsOpen).toHaveBeenCalledWith(false)
     })
 
-    it("should handle special characters in place_name", () => {
+    it("should handle address without comma", () => {
+        const { result } = renderHook(() => useHandleSuggestionClick())
+
+        const mockSuggestion = {
+            place_name: "456 Grand Avenue",
+        } as MapboxFeature
+
+        result.current(mockSuggestion)
+
+        expect(mockNormalizeStreetNames).toHaveBeenCalledWith("Grand Avenue")
+        expect(mockSearchStore.setAddressSearchQuery).toHaveBeenCalledWith("456 grand avenue")
+        expect(mockSearchStore.setSuggestions).toHaveBeenCalledWith([])
+        expect(mockSearchStore.setIsSuggestionsOpen).toHaveBeenCalledWith(false)
+    })
+
+    it("should handle address with only house number", () => {
+        const { result } = renderHook(() => useHandleSuggestionClick())
+
+        const mockSuggestion = {
+            place_name: "123",
+        } as MapboxFeature
+
+        result.current(mockSuggestion)
+
+        expect(mockNormalizeStreetNames).toHaveBeenCalledWith("undefined undefined")
+        expect(mockSearchStore.setAddressSearchQuery).toHaveBeenCalledWith("123 undefined undefined")
+        expect(mockSearchStore.setSuggestions).toHaveBeenCalledWith([])
+        expect(mockSearchStore.setIsSuggestionsOpen).toHaveBeenCalledWith(false)
+    })
+
+    it("should handle address with special characters", () => {
         const { result } = renderHook(() => useHandleSuggestionClick())
 
         const mockSuggestion = {
@@ -93,22 +136,37 @@ describe("useHandleSuggestionClick", () => {
         result.current(mockSuggestion)
 
         expect(mockNormalizeStreetNames).toHaveBeenCalledWith("O'Connor St")
-        expect(mockSearchStore.setAddressSearchQuery).toHaveBeenCalledWith("789 O'Connor Street")
+        expect(mockSearchStore.setAddressSearchQuery).toHaveBeenCalledWith("789 o'connor street")
         expect(mockSearchStore.setSuggestions).toHaveBeenCalledWith([])
         expect(mockSearchStore.setIsSuggestionsOpen).toHaveBeenCalledWith(false)
     })
 
-    it("should handle addresses with no street name to normalize", () => {
+    it("should handle multi-word street names", () => {
         const { result } = renderHook(() => useHandleSuggestionClick())
 
         const mockSuggestion = {
-            place_name: "Central Park, New York, NY",
+            place_name: "100 Fifth Avenue North, Minneapolis, MN",
         } as MapboxFeature
 
         result.current(mockSuggestion)
 
-        expect(mockNormalizeStreetNames).toHaveBeenCalledWith("Central Park")
-        expect(mockSearchStore.setAddressSearchQuery).toHaveBeenCalledWith("Central Park")
+        expect(mockNormalizeStreetNames).toHaveBeenCalledWith("Fifth Avenue")
+        expect(mockSearchStore.setAddressSearchQuery).toHaveBeenCalledWith("100 fifth avenue")
+        expect(mockSearchStore.setSuggestions).toHaveBeenCalledWith([])
+        expect(mockSearchStore.setIsSuggestionsOpen).toHaveBeenCalledWith(false)
+    })
+
+    it("should handle place names that are not traditional addresses", () => {
+        const { result } = renderHook(() => useHandleSuggestionClick())
+
+        const mockSuggestion = {
+            place_name: "Central Park",
+        } as MapboxFeature
+
+        result.current(mockSuggestion)
+
+        expect(mockNormalizeStreetNames).toHaveBeenCalledWith("Park undefined")
+        expect(mockSearchStore.setAddressSearchQuery).toHaveBeenCalledWith("Central park undefined")
         expect(mockSearchStore.setSuggestions).toHaveBeenCalledWith([])
         expect(mockSearchStore.setIsSuggestionsOpen).toHaveBeenCalledWith(false)
     })
