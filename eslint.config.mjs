@@ -21,6 +21,8 @@ const eslintConfig = [
 			"build/**",
 			"next-env.d.ts",
 			"src/components/ui/**",
+			"src/__tests__/**",
+			"jest.config.js",
 		],
 	},
 	...compat.extends("next/core-web-vitals", "next/typescript"),

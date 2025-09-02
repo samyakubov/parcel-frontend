@@ -1,5 +1,4 @@
 "use client"
-
 import {STATS} from "@/constants/landing"
 import {motion} from "framer-motion"
 

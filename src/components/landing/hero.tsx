@@ -3,7 +3,7 @@ import Search from "@/components/landing/search"
 
 export default function Hero() {
 	return (
-		<section className="relative h-screen w-full flex flex-col overflow-hidden">
+		<section className="relative h-screen w-full flex flex-col">
 			<div
 				className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
 				style={{ backgroundImage: "url(landing-page-assets/hero-photo.jpg)" }}
