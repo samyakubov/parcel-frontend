@@ -4,10 +4,13 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { HEADER_NAV_OPTIONS } from "@/constants/navigation"
 import ThemeToggle from "@/components/theme-toggle"
+import { useRouter } from "next/navigation"
 
 export default function Header() {
 	const [isScrolled, setIsScrolled] = useState(false)
 	const [selectedIndex, setSelectedIndex] = useState(0)
+	const router = useRouter()
+
 	useEffect(() => {
 		const handleScroll = () => {
 			const scrollTop = window.scrollY
@@ -63,10 +66,14 @@ export default function Header() {
 								? "text-muted-foreground hover:text-foreground hover:bg-accent/50"
 								: "text-white/80 hover:text-white hover:bg-white/10"
 						}`}
+						onClick={() => router.push("/login")}
 					>
                         Login
 					</Button>
-					<Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium rounded-full">
+					<Button
+						className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium rounded-full"
+						onClick={() => router.push("/sign-up")}
+					>
                         Sign Up
 					</Button>
 				</div>
