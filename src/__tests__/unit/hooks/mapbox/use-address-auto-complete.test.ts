@@ -7,7 +7,6 @@ import axios from "axios"
 import useAddressAutocomplete from "@/hooks/mapbox/use-address-auto-complete"
 import { searchStore } from "@/stores/search-store"
 
-// Mock dependencies
 jest.mock("axios")
 jest.mock("lodash-es", () => ({
     debounce: (fn: any) => fn,
@@ -26,7 +25,7 @@ const mockedAxios = axios as jest.Mocked<typeof axios>
 describe("useAddressAutocomplete", () => {
     beforeEach(() => {
         jest.clearAllMocks()
-        searchStore.setSuggestionsError = jest.fn() // Reset mock function for error handling
+        searchStore.setSuggestionsError = jest.fn()
     })
 
     it("should not fetch suggestions if query is less than 2 characters", async () => {
