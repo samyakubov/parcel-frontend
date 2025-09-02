@@ -1,4 +1,5 @@
-import React, {useRef} from "react"
+"use client"
+import React, {useEffect, useRef} from "react"
 import {MapPin} from "lucide-react"
 import useHandleSuggestionClick from "@/hooks/mapbox/use-handle-suggestion-click"
 import {searchStore} from "@/stores/search-store"
@@ -8,9 +9,22 @@ export default function SuggestionsList() {
 	const handleSuggestionClick = useHandleSuggestionClick()
 	const suggestionsRef = useRef<HTMLUListElement>(null)
 
+	useEffect(() => {
+
+		const handleClickOutside = (event: MouseEvent) => {
+			if (suggestionsRef.current && !suggestionsRef.current.contains(event.target as Node)) {
+				searchStore.setIsSuggestionsOpen(false)
+			}
+		}
+
+		document.addEventListener("mousedown", handleClickOutside)
+		return () => document.removeEventListener("mousedown", handleClickOutside)
+	}, [searchStore])
+
 	const handleClick = async (suggestion:MapboxFeature)=>{
 		await handleSuggestionClick(suggestion)
 	}
+
 	return (
 		<ul
 			ref={suggestionsRef}
@@ -21,9 +35,8 @@ export default function SuggestionsList() {
 					key={suggestion.id}
 					onClick={() => handleClick(suggestion)}
 					className="px-4 py-3 cursor-pointer transition-colors duration-150
-					flex items-center gap-3 text-popover-foreground hover:bg-accent"
+					    flex items-center gap-3 text-popover-foreground hover:bg-accent"
 				>
-
 					<MapPin
 						size={18}
 						className="text-muted-foreground"

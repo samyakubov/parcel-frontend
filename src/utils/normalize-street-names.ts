@@ -47,7 +47,7 @@ function addSuffix(num: number): string {
 	return num + (suffixes[(value - 20) % 10] || suffixes[value] || suffixes[0])
 }
 
-export function NormalizeStreetNames(streetName: string): string {
+export function normalizeStreetNames(streetName: string): string {
 	if (typeof streetName !== "string") {
 		toast.error("Street name must be a string.")
 	}

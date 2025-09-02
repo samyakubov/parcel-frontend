@@ -1,12 +1,12 @@
 import { useCallback } from "react"
 import {searchStore} from "@/stores/search-store"
-import {NormalizeStreetNames} from "@/utils/normalize-street-names"
+import {normalizeStreetNames} from "@/utils/normalize-street-names"
 
 export default function useHandleSuggestionClick() {
 	return useCallback((suggestion: MapboxFeature) => {
 		const selectedSuggestion = suggestion.place_name.split(",")[0].split(" ")
 		searchStore.setAddressSearchQuery(selectedSuggestion[0] + " " +
-            NormalizeStreetNames(selectedSuggestion[1] + " " + selectedSuggestion[2]))
+            normalizeStreetNames(selectedSuggestion[1] + " " + selectedSuggestion[2]))
 		searchStore.setSuggestions([])
 		try {
 			//TODO: add the api call here
