@@ -23,7 +23,7 @@ export default function Login() {
 			<div className="flex-1 relative overflow-hidden bg-gradient-to-br from-primary/20 to-accent/30 rounded-r-3xl">
 				<div
 					className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
-					style={{ backgroundImage: "url(page-assets/login-background-photo.jpg)" }}
+					style={{ backgroundImage: "url(landing-page-assets/login-background-photo.jpg)" }}
 				/>
 				<div className="absolute inset-0 backdrop-blur-md" />
 				<div className="relative z-10 h-full flex flex-col justify-center items-start p-8 text-left">
@@ -93,10 +93,10 @@ export default function Login() {
 						</div>
 					</div>
 
-					<button className="w-full py-3 text-base font-medium bg-primary text-primary-foreground rounded-lg
+					<Button className="w-full py-3 text-base font-medium bg-primary text-primary-foreground rounded-lg
 					hover:bg-primary/90 transition-colors focus:outline-none focus:ring-2 focus:ring-ring">
                         Login
-					</button>
+					</Button>
 
 					<div className="relative my-6">
 						<div className="absolute inset-0 flex items-center">
@@ -107,10 +107,10 @@ export default function Login() {
 						</div>
 					</div>
 
-					<button className="w-full py-3 flex items-center justify-center gap-3 border border-border bg-card hover:bg-accent/50
+					<Button className="w-full py-3 flex items-center justify-center gap-3 border border-border bg-card hover:bg-accent/50
 					text-card-foreground rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-ring">
                         Continue with Google
-					</button>
+					</Button>
 				</div>
 			</div>
 		</div>
