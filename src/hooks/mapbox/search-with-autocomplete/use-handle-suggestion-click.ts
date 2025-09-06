@@ -18,5 +18,5 @@ export default function useHandleSuggestionClick() {
 		} catch (e) {
 			searchStore.setSuggestionsError("Error selecting address. Please try again.")
 		}
-	}, [searchStore])
+	}, [])
 }
