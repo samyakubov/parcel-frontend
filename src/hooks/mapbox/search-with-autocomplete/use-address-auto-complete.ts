@@ -5,7 +5,7 @@ import {searchStore} from "@/stores/search-store"
 import {NYC_BOUNDS, NYC_CENTER} from "@/constants/mapbox"
 
 export default function useAddressAutocomplete() {
-	const accessToken = process.env.NEXT_PUBLIC_MAPBOX_API_KEY
+	const accessToken = process.env.NEXT_PUBLIC_MAPBOX_API_KEY as string
 	const [southwest, northeast] = NYC_BOUNDS
 
 	return useCallback(

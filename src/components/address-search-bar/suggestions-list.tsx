@@ -1,7 +1,7 @@
 "use client"
 import React, {useEffect, useRef} from "react"
 import {MapPin} from "lucide-react"
-import useHandleSuggestionClick from "@/hooks/mapbox/use-handle-suggestion-click"
+import useHandleSuggestionClick from "@/hooks/mapbox/search-with-autocomplete/use-handle-suggestion-click"
 import {searchStore} from "@/stores/search-store"
 
 
@@ -10,7 +10,6 @@ export default function SuggestionsList() {
 	const suggestionsRef = useRef<HTMLUListElement>(null)
 
 	useEffect(() => {
-
 		const handleClickOutside = (event: MouseEvent) => {
 			if (suggestionsRef.current && !suggestionsRef.current.contains(event.target as Node)) {
 				searchStore.setIsSuggestionsOpen(false)
@@ -19,7 +18,7 @@ export default function SuggestionsList() {
 
 		document.addEventListener("mousedown", handleClickOutside)
 		return () => document.removeEventListener("mousedown", handleClickOutside)
-	}, [searchStore])
+	}, [])
 
 	const handleClick = async (suggestion:MapboxFeature)=>{
 		await handleSuggestionClick(suggestion)

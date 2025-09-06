@@ -3,7 +3,7 @@ import {Button} from "@/components/ui/button"
 import {Input} from "@/components/ui/input"
 import {useEffect} from "react"
 import {searchStore} from "@/stores/search-store"
-import useAddressAutocomplete from "@/hooks/mapbox/use-address-auto-complete"
+import useAddressAutocomplete from "@/hooks/mapbox/search-with-autocomplete/use-address-auto-complete"
 import SuggestionsList from "@/components/address-search-bar/suggestions-list"
 import {observer} from "mobx-react-lite"
 
