@@ -4,7 +4,7 @@
 
 import { renderHook } from "@testing-library/react"
 import axios from "axios"
-import useAddressAutocomplete from "@/hooks/mapbox/use-address-auto-complete"
+import useAddressAutocomplete from "@/hooks/mapbox/search-with-autocomplete/use-address-auto-complete"
 import { searchStore } from "@/stores/search-store"
 
 jest.mock("axios")

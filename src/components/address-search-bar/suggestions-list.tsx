@@ -1,7 +1,7 @@
 "use client"
 import React, {useEffect, useRef} from "react"
 import {MapPin} from "lucide-react"
-import useHandleSuggestionClick from "@/hooks/mapbox/use-handle-suggestion-click"
+import useHandleSuggestionClick from "@/hooks/mapbox/search-with-autocomplete/use-handle-suggestion-click"
 import {searchStore} from "@/stores/search-store"
 
 

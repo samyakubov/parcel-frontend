@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import { renderHook } from "@testing-library/react"
-import useHandleSuggestionClick from "@/hooks/mapbox/use-handle-suggestion-click"
+import useHandleSuggestionClick from "@/hooks/mapbox/search-with-autocomplete/use-handle-suggestion-click"
 import { searchStore } from "@/stores/search-store"
 import { normalizeStreetNames } from "@/utils/normalize-street-names"
 

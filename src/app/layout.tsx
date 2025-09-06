@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { Inter, Geist_Mono } from "next/font/google"
 import "./globals.css"
+import "mapbox-gl/dist/mapbox-gl.css"
 import {ThemeProvider} from "next-themes"
 
 const inter = Inter({
