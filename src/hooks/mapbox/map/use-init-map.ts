@@ -1,7 +1,7 @@
 import {useEffect, useRef} from "react"
 import mapboxgl from "mapbox-gl"
 import useHandleMapClick from "@/hooks/mapbox/map/use-handle-map-click"
-import {NYC_BOUNDS} from "@/constants/mapbox"
+import {NYC_BOUNDS, NYC_CENTER} from "@/constants/mapbox"
 
 
 export default function useInitMap(containerId:string) {
@@ -13,7 +13,7 @@ export default function useInitMap(containerId:string) {
 		mapRef.current = new mapboxgl.Map({
 			container: containerId,
 			style: "mapbox://styles/mapbox/satellite-streets-v12",
-			center: [-73.935242, 40.73061],
+			center: [NYC_CENTER.longitude, NYC_CENTER.latitude],
 			zoom: 10,
 		})
 
