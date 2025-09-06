@@ -2,10 +2,6 @@
 
 This file provides guidance to Gemini when working with code in this project.
 
-## What are we building?
-
-A platform where homeowners create a comprehensive profile for their home, documenting every renovation, upgrade, and improvement with photos, costs, and contractors. When it's time to sell, buyers get a complete 'Timeline' of the property instead of guessing what's been updated. Think of it as a CarFax report, but for your home's entire renovation history.
-
 ---
 
 ### Architecture
@@ -22,7 +18,6 @@ This project follows a **feature-driven modular architecture** using the Next.js
   - `app/`
   - `components/` - All components used in the pages
     - `ui/` - all shadcn components
-  - `__tests__/` - Unit & integration tests
   - `utils/` - Utility functions
   - `hooks/` - Custom hooks
   - `constants/` - Global constant variables
@@ -59,25 +54,6 @@ This project follows a **feature-driven modular architecture** using the Next.js
 - **Imports**: Use relative paths (`@/components/...`).
 - **Styling**: Use TailwindCSS. Avoid inline styles unless dynamic.
 - **Error Handling**: Always handle API and async errors gracefully with fallback UI or messages.
-- **Test for Every New File**: Every new component, utility, or module must have a corresponding test file following the `*.test.tsx` or `*.test.ts` naming convention. Place it in the appropriate folder (`/src/tests/unit` for unit tests, `/src/tests/integration` for integration tests).
-
----
-
-### Testing
-
-We use **Jest** for testing.
-
-- **Naming Convention**: All test files should follow the `*.test.tsx` or `*.test.ts` pattern.
-- **Unit Tests**: Place in `/src/__tests__/unit` for utilities and components.
-- **Integration Tests**: Place in `/src/__tests__/integration` for critical flows.
-
-**Available Commands**:
-
-- `npm test` — Run all Jest tests once.
-- `npm test:watch` — Run tests in **watch mode**, re-running affected tests on file changes.
-- `npm test:coverage` — Run all tests and generate a **coverage report** (shows which lines/functions are tested).
-- `npm test:verbose` — Show **detailed output**, listing each test result instead of only a summary.
-- `npm test:silent` — Run tests with **minimal output**, suppressing console logs.
 
 ---
 
