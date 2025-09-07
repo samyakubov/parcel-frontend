@@ -1,4 +1,3 @@
-import {DOCUMENT_TYPES, PROPERTY_TYPES} from "../Constants/Constants"
 
 declare global {
     interface Zoning {

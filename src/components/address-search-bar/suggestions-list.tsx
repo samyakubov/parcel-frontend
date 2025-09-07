@@ -29,7 +29,7 @@ export default function SuggestionsList() {
 			ref={suggestionsRef}
 			className="absolute w-10/12 mt-1 bg-popover border border-border rounded-lg shadow-lg max-h-60 overflow-auto"
 		>
-			{searchStore.suggestions.map((suggestion) => (
+			{searchStore._suggestions.map((suggestion) => (
 				<li
 					key={suggestion.id}
 					onClick={() => handleClick(suggestion)}

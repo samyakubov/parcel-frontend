@@ -11,11 +11,11 @@ function Search() {
 	const addressAutocomplete = useAddressAutocomplete()
 
 	useEffect(() => {
-		if (searchStore.addressSearchQuery.length < 2) {
+		if (searchStore._addressSearchQuery.length < 2) {
 			return searchStore.setIsSuggestionsOpen(false)
 		}
 		void addressAutocomplete()
-	}, [addressAutocomplete, searchStore.addressSearchQuery])
+	}, [addressAutocomplete, searchStore._addressSearchQuery])
 
 	return (
 		<div className="mx-auto">
@@ -32,7 +32,7 @@ function Search() {
 							<Input
 								placeholder="Enter property address"
 								className="border-border flex-grow"
-								value={searchStore.addressSearchQuery}
+								value={searchStore._addressSearchQuery}
 								onChange={(e)=> searchStore.setAddressSearchQuery(e.target.value)}
 							/>
 							<Button className="bg-primary hover:bg-primary/90 text-background px-8 py-3 rounded-full">
@@ -40,7 +40,7 @@ function Search() {
 							</Button>
 						</div>
 
-						{searchStore.isSuggestionsOpen && searchStore.suggestions.length > 0 && (
+						{searchStore._isSuggestionsOpen && searchStore._suggestions.length > 0 && (
 							<div className="absolute top-full left-0 right-0 mt-1">
 								<SuggestionsList/>
 							</div>

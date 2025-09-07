@@ -10,13 +10,13 @@ export default function useAddressAutocomplete() {
 
 	return useCallback(
 		debounce(async () => {
-			const { addressSearchQuery } = searchStore
-			if (addressSearchQuery.length < 2) {
+			const { _addressSearchQuery } = searchStore
+			if (_addressSearchQuery.length < 2) {
 				return
 			}
 			searchStore.setSuggestionsError(null)
 			try {
-				const encodedQuery = encodeURIComponent(addressSearchQuery)
+				const encodedQuery = encodeURIComponent(_addressSearchQuery)
 				const response = await axios.get(
 					`${process.env.NEXT_PUBLIC_MAPBOX_API_URL}/${encodedQuery}.json`,
 					{
@@ -39,6 +39,6 @@ export default function useAddressAutocomplete() {
 				searchStore.setSuggestions([])
 			}
 		}, 300),
-		[searchStore.addressSearchQuery, accessToken]
+		[searchStore._addressSearchQuery, accessToken]
 	)
 }

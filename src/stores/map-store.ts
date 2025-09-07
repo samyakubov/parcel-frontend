@@ -5,10 +5,10 @@ class MapStore {
 		makeAutoObservable(this)
 	}
 
-	public coords:Coordinates | null = null
+	public _coords:Coordinates | null = null
 
 	public setCoords = action((coords: Coordinates | null) => {
-		this.coords = coords
+		this._coords = coords
 	})
 }
 

@@ -8,26 +8,26 @@ class ModalStore {
 		makeAutoObservable(this)
 	}
 
-	private currentZIndex = 100
+	private _currentZIndex = 100
 
-	public propertyModals: PropertyModal[] = []
+	public _propertyModals: PropertyModal[] = []
 
 	private getNextZIndex = (): number => {
-		return ++this.currentZIndex
+		return ++this._currentZIndex
 	}
 
 	private setModalState = action((id: string, updates: Partial<PropertyModal>) => {
-		const modalIndex = this.propertyModals.findIndex(modal => modal.id === id)
+		const modalIndex = this._propertyModals.findIndex(modal => modal.id === id)
 		if (modalIndex !== -1) {
-			this.propertyModals[modalIndex] = {
-				...this.propertyModals[modalIndex],
+			this._propertyModals[modalIndex] = {
+				...this._propertyModals[modalIndex],
 				...updates as Partial<PropertyModal>
 			}
 		}
 	})
 
-	private getModal = (id: string): PropertyModal | undefined => {
-		return this.propertyModals.find(modal => modal.id === id)
+	public getModal = (id: string): PropertyModal | undefined => {
+		return this._propertyModals.find(modal => modal.id === id)
 	}
 
 	private calculateNewModalPosition = (): { x: number, y: number } => {
@@ -35,7 +35,7 @@ class ModalStore {
 		const START_X = 0
 		const START_Y = 0
 
-		const activeModals = this.propertyModals.filter(modal =>
+		const activeModals = this._propertyModals.filter(modal =>
 			modal.isOpen && !modal.isMinimized
 		)
 
@@ -57,11 +57,11 @@ class ModalStore {
 	}
 
 	public addPropertyModal = action((coords: Coordinates, title: string, propertyData: PropertyDetails) => {
-		if (this.propertyModals.length >= 8) {
+		if (this._propertyModals.length >= 8) {
 			return toast.info("Modal limit reached. Close one to open more")
 		}
 
-		const existingModal = this.propertyModals.find(modal => modal.title === title)
+		const existingModal = this._propertyModals.find(modal => modal.title === title)
 
 		if (!isUndefined(existingModal)) {
 			if (existingModal.isMinimized) {
@@ -87,13 +87,9 @@ class ModalStore {
 			zIndex: this.getNextZIndex()
 		}
 
-		this.propertyModals.push(newModal)
+		this._propertyModals.push(newModal)
 		return newModal.id
 	})
-
-	public getCurrentPropertyModal = (modalId: string) => {
-		return this.getModal(modalId)
-	}
 
 	public focusModal = action((id: string) => {
 		const modal = this.getModal(id)
@@ -103,7 +99,7 @@ class ModalStore {
 	})
 
 	public minimizeModal = action((id: string) => {
-		if (this.propertyModals.filter((modal)=>modal.isMinimized).length >= 4) {
+		if (this._propertyModals.filter((modal)=>modal.isMinimized).length >= 4) {
 			return toast.info("You can only have 4 minimized modals. Please close one before minimizing another.")
 		}
 		this.setModalState(id, { isMinimized: true })
@@ -132,9 +128,9 @@ class ModalStore {
 	})
 
 	public closeModal = action((id: string, ) => {
-		const propertyIndex = this.propertyModals.findIndex(modal => modal.id === id)
+		const propertyIndex = this._propertyModals.findIndex(modal => modal.id === id)
 		if (propertyIndex !== -1) {
-			this.propertyModals.splice(propertyIndex, 1)
+			this._propertyModals.splice(propertyIndex, 1)
 		}
 	})
 }
