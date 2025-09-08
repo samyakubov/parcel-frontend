@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useCallback} from "react"
+import React, {useEffect, useRef, useCallback, useState} from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import isUndefined from "lodash-es/isUndefined"
 import {modalStore} from "@/stores/modal-store"
@@ -24,12 +24,55 @@ export default function Modal(props: ModalProps) {
 
 	const modalPosition = currentModal?.position || { x: 0, y: 0 }
 	const lastPositionRef = useRef<ModalPosition>(modalPosition)
+	const dragStartRef = useRef<ModalDragStart>({ x: 0, y: 0, dragX: 0, dragY: 0 })
+	const [dragPosition, setDragPosition] = useState<ModalPosition>(modalPosition || { x: 0, y: 0 })
 
-	const {
-		dragPosition,
-		isDragging,
-		handleMouseDown,
-	} = useModalDrag(modalPosition)
+	const [isDragging, setIsDragging] = useState(false)
+	const prevPositionRef = useRef<ModalPosition | null>(null)
+
+	const handleMouseMove = useCallback((e: MouseEvent) => {
+		if (isDragging) {
+			const newX = e.clientX - dragStartRef.current.x
+			const newY = e.clientY - dragStartRef.current.y
+			setDragPosition({ x: newX, y: newY })
+		}
+	}, [isDragging])
+
+	useEffect(() => {
+		if (modalPosition &&
+            (!prevPositionRef.current ||
+                (prevPositionRef.current.x !== modalPosition.x ||
+                    prevPositionRef.current.y !== modalPosition.y)) &&
+            !isDragging) {
+			prevPositionRef.current = modalPosition
+			setDragPosition(modalPosition)
+		}
+	}, [modalPosition?.x, modalPosition?.y, isDragging])
+
+	useEffect(() => {
+		if (isDragging) {
+			window.addEventListener("mousemove", handleMouseMove)
+		}
+		return () => {
+			window.removeEventListener("mousemove", handleMouseMove)
+		}
+	}, [isDragging, handleMouseMove])
+
+	const handleMouseDown = (e: React.MouseEvent) => {
+		if (e.target instanceof Element &&
+            !e.target.closest("button") &&
+            !e.target.closest("input") &&
+            !e.target.closest("select") &&
+            !e.target.closest("textarea")) {
+			setIsDragging(true)
+			dragStartRef.current = {
+				x: e.clientX - dragPosition.x,
+				y: e.clientY - dragPosition.y,
+				dragX: dragPosition.x,
+				dragY: dragPosition.y
+			}
+		}
+	}
 
 	const handlePositionChange = useCallback((newPosition: ModalPosition) => {
 		if (!isUndefined(currentModal) && (newPosition.x !== lastPositionRef.current.x || newPosition.y !== lastPositionRef.current.y)) {
