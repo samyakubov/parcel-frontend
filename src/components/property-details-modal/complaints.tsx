@@ -53,8 +53,8 @@ export default function Complaints({ complaints }: ComplaintsProps) {
 	}
 
 	return (
-		<Card className="border-amber-200 bg-amber-50 dark:border-amber-800 dark:bg-amber-950">
-			<CardContent className="p-6">
+		<Card className="border-amber-200 bg-amber-50 dark:border-amber-800 dark:bg-amber-950 mb-3">
+			<CardContent className="p-2">
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}

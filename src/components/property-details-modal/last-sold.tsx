@@ -1,3 +1,4 @@
+"use client"
 import React from "react"
 import { DollarSign, Calendar, TrendingUp } from "lucide-react"
 import { motion } from "framer-motion"

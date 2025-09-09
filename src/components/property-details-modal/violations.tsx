@@ -73,7 +73,7 @@ export default function Violations({ violations }: ViolationsProps) {
 					<CardContent className="p-0">
 						<Collapsible open={isExpanded} onOpenChange={setIsExpanded}>
 							<CollapsibleTrigger asChild>
-								<Button variant="ghost" className="w-full justify-between p-6 h-auto rounded-none">
+								<Button variant="ghost" className="w-full justify-between p-3 h-auto rounded-none">
 									<div className="flex items-center gap-2">
 										<div className="p-2 rounded-full bg-destructive/10">
 											<AlertTriangle className="h-4 w-4 text-destructive" />

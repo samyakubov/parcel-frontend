@@ -41,8 +41,8 @@ export default function Permits({ permits }: PermitsProps) {
 	}
 
 	return (
-		<Card className="border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-950">
-			<CardContent className="p-6">
+		<Card className="border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-950 mb-3">
+			<CardContent className="p-2">
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
