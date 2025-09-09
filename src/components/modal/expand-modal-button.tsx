@@ -1,7 +1,9 @@
-import isUndefined from "lodash-es/isUndefined"
-import {motion} from "framer-motion"
-import {Maximize2, Minimize2} from "lucide-react"
+"use client"
 import React from "react"
+import { motion } from "framer-motion"
+import { Maximize2, Minimize2 } from "lucide-react"
+import isUndefined from "lodash-es/isUndefined"
+import { Button } from "@/components/ui/button"
 
 interface ExpandModalButtonProps {
     isExpanded?: boolean
@@ -10,24 +12,25 @@ interface ExpandModalButtonProps {
 }
 
 export default function ExpandModalButton(props: ExpandModalButtonProps) {
-	const {isExpanded, setIsExpanded, isExpandable} = props
+	const { isExpanded, setIsExpanded, isExpandable } = props
 
 	if (!isExpandable || isUndefined(setIsExpanded)) return null
 
 	return (
-		<motion.button
-			onClick={() => setIsExpanded(!isExpanded)}
-			className={"modal-control-btn modal-control-btn--expand"}
+		<Button
+			asChild
+			size="icon"
+			variant="ghost"
 			aria-label={isExpanded ? "Restore" : "Maximize"}
-			whileHover={{ scale: 1.05, y: -1 }}
-			whileTap={{ scale: 0.95 }}
-			transition={{ duration: 0.15 }}
 		>
-			{isExpanded ? (
-				<Minimize2 size={16} />
-			) : (
-				<Maximize2 size={16} />
-			)}
-		</motion.button>
+			<motion.div
+				onClick={() => setIsExpanded(!isExpanded)}
+				whileHover={{ scale: 1.05, y: -1 }}
+				whileTap={{ scale: 0.95 }}
+				transition={{ duration: 0.15 }}
+			>
+				{isExpanded ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
+			</motion.div>
+		</Button>
 	)
 }

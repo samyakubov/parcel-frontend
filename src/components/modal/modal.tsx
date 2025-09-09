@@ -104,7 +104,7 @@ export default function Modal(props: ModalProps) {
 					animate="visible"
 					exit="exit"
 					transition={{ x: { duration: 0 }, y: { duration: 0 } }}
-					className={`bg-white dark:bg-gray-900 rounded-lg shadow-lg ${panelClassName}`}
+					className={`bg-background rounded-lg shadow-lg ${panelClassName}`}
 					style={{
 						pointerEvents: "auto",
 						transformOrigin: "center top"

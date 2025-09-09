@@ -83,7 +83,7 @@ export default function LastSold(props: PropertyLastSaleProps) {
 								</div>
 							) : (
 								<div className="text-lg font-bold text-green-600 dark:text-green-400">
-                                    ${FORMAT_PRICE(lastSoldFor.last_sold_price)}
+									{FORMAT_PRICE(lastSoldFor.last_sold_price)}
 								</div>
 							)}
 						</div>
