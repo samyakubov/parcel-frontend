@@ -14,54 +14,54 @@ export default function Mortgage(props: MortgageDetailsProps) {
 	const lenderName = props.lender.party_name
 
 	return (
-		<div className="bg-white/80 backdrop-blur-sm border border-teal-200/60 dark:bg-gray-900/80 dark:border-teal-800/60 rounded-2xl p-6 mb-6 shadow-xl shadow-teal-500/10 dark:shadow-teal-500/20">
-			<div className="flex items-center gap-3 mb-6">
-				<div className="p-2 bg-teal-100 dark:bg-teal-900/30 rounded-xl">
-					<Building2 className="w-6 h-6 text-teal-600 dark:text-teal-400" />
+		<div className="mortgage-container">
+			<div className="mortgage-header">
+				<div className="mortgage-icon-container">
+					<Building2 className="mortgage-icon" />
 				</div>
-				<h3 className="text-xl font-semibold bg-gradient-to-r from-teal-700 to-teal-900 bg-clip-text text-transparent dark:from-teal-100 dark:to-teal-300">
+				<h3 className="mortgage-title">
                     Mortgage Details
 				</h3>
 			</div>
 
-			<div className="space-y-6">
-				<div className="flex items-start gap-4">
-					<div className="p-2 bg-teal-50 dark:bg-teal-900/20 rounded-xl flex-shrink-0">
-						<Landmark className="w-5 h-5 text-teal-600 dark:text-teal-400" />
+			<div className="mortgage-content">
+				<div className="mortgage-item">
+					<div className="mortgage-item-icon-container">
+						<Landmark className="mortgage-item-icon" />
 					</div>
-					<div className="flex-1">
-						<div className="text-sm font-semibold text-teal-700 dark:text-teal-300 mb-2">
+					<div className="mortgage-item-content">
+						<div className="mortgage-item-label">
                             Lender
 						</div>
-						<div className="text-lg font-bold text-gray-900 dark:text-gray-100">
+						<div className="mortgage-lender-name">
 							{lenderName}
 						</div>
 					</div>
 				</div>
 
-				<div className="flex items-start gap-4">
-					<div className="p-2 bg-teal-50 dark:bg-teal-900/20 rounded-xl flex-shrink-0">
-						<DollarSign className="w-5 h-5 text-teal-600 dark:text-teal-400" />
+				<div className="mortgage-item">
+					<div className="mortgage-item-icon-container">
+						<DollarSign className="mortgage-item-icon" />
 					</div>
-					<div className="flex-1">
-						<div className="text-sm font-semibold text-teal-700 dark:text-teal-300 mb-2">
+					<div className="mortgage-item-content">
+						<div className="mortgage-item-label">
                             Amount
 						</div>
-						<div className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+						<div className="mortgage-amount">
                             ${FORMAT_PRICE(amount)}
 						</div>
 					</div>
 				</div>
 
-				<div className="flex items-start gap-4">
-					<div className="p-2 bg-teal-50 dark:bg-teal-900/20 rounded-xl flex-shrink-0">
-						<Calendar className="w-5 h-5 text-teal-600 dark:text-teal-400" />
+				<div className="mortgage-item">
+					<div className="mortgage-item-icon-container">
+						<Calendar className="mortgage-item-icon" />
 					</div>
-					<div className="flex-1">
-						<div className="text-sm font-semibold text-teal-700 dark:text-teal-300 mb-2">
+					<div className="mortgage-item-content">
+						<div className="mortgage-item-label">
                             Recorded On
 						</div>
-						<div className="text-gray-900 dark:text-gray-100 font-medium">
+						<div className="mortgage-date">
 							{FORMAT_DATE(recordedfiled)}
 						</div>
 					</div>

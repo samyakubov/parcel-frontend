@@ -3,24 +3,24 @@ import { Building2, Home, Hash } from "lucide-react"
 import isEmpty from "lodash-es/isEmpty"
 
 interface PropertyDetailProps {
-    first_record: PropertyRecord
+    firstRecord: PropertyRecord
 }
 
 export default function Details(props: PropertyDetailProps) {
-	const record = props.first_record
+	const record = props.firstRecord
 
 	if (isEmpty(record)) {
 		return (
-			<div className="bg-white/80 backdrop-blur-sm border border-rose-200/60 dark:bg-gray-900/80 dark:border-rose-800/60 rounded-2xl p-6 mb-6 shadow-lg shadow-rose-500/5 dark:shadow-rose-500/10">
-				<div className="flex items-center gap-3 mb-4">
-					<div className="p-2 bg-rose-100 dark:bg-rose-900/30 rounded-xl">
-						<Building2 className="w-6 h-6 text-rose-600 dark:text-rose-400" />
+			<div className="property-details-card property-details-card--error">
+				<div className="property-details-header property-details-header--error">
+					<div className="property-details-icon property-details-icon--error">
+						<Building2 className="property-details-icon-svg--error" />
 					</div>
-					<h3 className="text-xl font-semibold bg-gradient-to-r from-rose-700 to-rose-900 bg-clip-text text-transparent dark:from-rose-100 dark:to-rose-300">
+					<h3 className="property-details-title property-details-title--error">
                         Property Details
 					</h3>
 				</div>
-				<p className="text-sm text-gray-600 dark:text-gray-400">
+				<p className="property-details-error-text">
                     No property details available.
 				</p>
 			</div>
@@ -28,40 +28,40 @@ export default function Details(props: PropertyDetailProps) {
 	}
 
 	return (
-		<div className="bg-white/80 backdrop-blur-sm border border-indigo-200/60 dark:bg-gray-900/80 dark:border-indigo-800/60 rounded-2xl p-6 mb-6 shadow-xl shadow-indigo-500/10 dark:shadow-indigo-500/20">
-			<div className="flex items-center gap-3 mb-6">
-				<div className="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-xl">
-					<Building2 className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
+		<div className="property-details-card property-details-card--success">
+			<div className="property-details-header property-details-header--success">
+				<div className="property-details-icon property-details-icon--success">
+					<Building2 className="property-details-icon-svg--success" />
 				</div>
-				<h3 className="text-xl font-semibold bg-gradient-to-r from-indigo-700 to-indigo-900 bg-clip-text text-transparent dark:from-indigo-100 dark:to-indigo-300">
+				<h3 className="property-details-title property-details-title--success">
                     Property Details
 				</h3>
 			</div>
 
-			<div className="space-y-6">
-				<div className="flex items-start gap-4">
-					<div className="p-2 bg-indigo-50 dark:bg-indigo-900/20 rounded-xl flex-shrink-0">
-						<Home className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+			<div className="property-details-content">
+				<div className="property-details-item">
+					<div className="property-details-item-icon">
+						<Home className="property-details-item-icon-svg" />
 					</div>
-					<div className="flex-1">
-						<div className="text-sm font-semibold text-indigo-700 dark:text-indigo-300 mb-2">
+					<div className="property-details-item-content">
+						<div className="property-details-item-label">
                             Property Type
 						</div>
-						<div className="text-gray-900 dark:text-gray-100 font-medium">
+						<div className="property-details-item-value">
 							{record.prop_type}
 						</div>
 					</div>
 				</div>
 
-				<div className="flex items-start gap-4">
-					<div className="p-2 bg-indigo-50 dark:bg-indigo-900/20 rounded-xl flex-shrink-0">
-						<Hash className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+				<div className="property-details-item">
+					<div className="property-details-item-icon">
+						<Hash className="property-details-item-icon-svg" />
 					</div>
-					<div className="flex-1">
-						<div className="text-sm font-semibold text-indigo-700 dark:text-indigo-300 mb-2">
+					<div className="property-details-item-content">
+						<div className="property-details-item-label">
                             BBL
 						</div>
-						<div className="text-gray-900 dark:text-gray-100 font-medium font-mono">
+						<div className="property-details-item-value property-details-item-value--mono">
 							{record.bbl}
 						</div>
 					</div>

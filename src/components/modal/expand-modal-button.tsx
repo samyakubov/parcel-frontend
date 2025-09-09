@@ -17,7 +17,7 @@ export default function ExpandModalButton(props: ExpandModalButtonProps) {
 	return (
 		<motion.button
 			onClick={() => setIsExpanded(!isExpanded)}
-			// className={""}
+			className={"modal-control-btn modal-control-btn--expand"}
 			aria-label={isExpanded ? "Restore" : "Maximize"}
 			whileHover={{ scale: 1.05, y: -1 }}
 			whileTap={{ scale: 0.95 }}

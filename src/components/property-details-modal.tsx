@@ -14,17 +14,18 @@ import Permits from "@/components/property-details-modal/permits"
 import Complaints from "@/components/property-details-modal/complaints"
 import Violations from "@/components/property-details-modal/violations"
 import Owners from "@/components/property-details-modal/owners"
+import {observer} from "mobx-react"
 
 interface PropertyInfoModalProps {
-    data: PropertyModal
+    id: string
 }
 
-export default function PropertyDetailsModal(props: PropertyInfoModalProps) {
-	const modal = props.data
+function PropertyDetailsModal(props: PropertyInfoModalProps) {
+	const { id } = props
 
-	const propertyDetails = modal.propertyData
-
-	const latestMortgage = getMortgageDetails(propertyDetails.records, propertyDetails.last_sold_for.sale_date)
+	const modal = modalStore._propertyModals.filter(propertyModal => propertyModal.id === id)[0]
+	const details = modal.propertyData
+	const latestMortgage = getMortgageDetails(details.records, details.last_sold_for.sale_date)
 
 	const getPanelClassName = () => {
 		const baseClasses = "overflow-hidden flex flex-col"
@@ -59,7 +60,7 @@ export default function PropertyDetailsModal(props: PropertyInfoModalProps) {
 							target="_blank"
 							rel="noopener noreferrer"
 							className="text-xl font-bold bg-gradient-to-r from-slate-800 to-blue-600 bg-clip-text text-transparent dark:from-slate-100 dark:to-blue-200 transition-all duration-300 ease-out group"
-							href={`http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?boro=${propertyDetails.records[0].bbl[0]}&block=${propertyDetails.records[0].prop_block}&lot=${propertyDetails.records[0].prop_lot}`}
+							href={`http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?boro=${details.records[0].bbl[0]}&block=${details.records[0].prop_block}&lot=${details.records[0].prop_lot}`}
 						>
 							<span>
 								{modal.title}
@@ -84,10 +85,11 @@ export default function PropertyDetailsModal(props: PropertyInfoModalProps) {
 								<motion.img
 									layout="preserve-aspect"
 									className="rounded-lg w-full h-64 object-cover mb-4"
-									src={`https://maps.googleapis.com/maps/api/streetview?size=800x300&location=${modal.coords.latitude},${modal.coords.longitude}&key=${process.env.REACT_APP_STREETVIEW_API_KEY}`}
+									src={`https://maps.googleapis.com/maps/api/streetview?size=800x300&location=
+									${modal.coords.latitude},${modal.coords.longitude}&key=${process.env.NEXT_PUBLIC_STREETVIEW_API_KEY}`}
 									alt="Google Street View"
 								/>
-								<Details first_record={propertyDetails.records[0]} />
+								<Details firstRecord={details.records[0]} />
 								{
 									!isNull(latestMortgage) ? (
 										<Mortgage borrower={latestMortgage.borrower} lender={latestMortgage.lender} />
@@ -98,11 +100,11 @@ export default function PropertyDetailsModal(props: PropertyInfoModalProps) {
 								layout="preserve-aspect"
 								className={modal.isExpanded ? "w-1/2 space-y-4" : "space-y-4"}
 							>
-								<Zoning zoning={propertyDetails.zoning} />
+								<Zoning zoning={details.zoning} />
 
-								<Owners owners={propertyDetails.owners} />
+								<Owners currentOwners={details.owners.current_owners} previousOwners={details.owners.previous_owners}/>
 
-								<LastSold lastSoldFor={propertyDetails.last_sold_for}/>
+								<LastSold lastSoldFor={details.last_sold_for}/>
 							</motion.div>
 						</motion.div>
 
@@ -113,9 +115,9 @@ export default function PropertyDetailsModal(props: PropertyInfoModalProps) {
 									animate={{ opacity: 1, height: "auto" }}
 									exit={{ opacity: 0, height: 0 }}
 								>
-									<Permits permits={propertyDetails.permits}/>
-									<Complaints complaints={propertyDetails.complaints} />
-									<Violations violations={propertyDetails.violations} />
+									<Permits permits={details.permits}/>
+									<Complaints complaints={details.complaints} />
+									<Violations violations={details.violations} />
 									<div className="space-y-6">
 										<div className="flex items-center gap-3 w-full">
 											<div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex-shrink-0">
@@ -137,7 +139,7 @@ export default function PropertyDetailsModal(props: PropertyInfoModalProps) {
 												target="_blank"
 												rel="noopener noreferrer"
 												className="text-xl font-bold bg-gradient-to-r from-slate-800 to-blue-600 bg-clip-text text-transparent dark:from-slate-100 dark:to-blue-200 hover:from-blue-600 hover:to-blue-800 dark:hover:from-blue-300 dark:hover:to-blue-100 transition-all duration-300 ease-out group"
-												href={`http://a836-acris.nyc.gov/bblsearch/bblsearch.asp?borough=${propertyDetails.records[0].bbl[0]}&block=${propertyDetails.records[0].prop_block}&lot=${propertyDetails.records[0].prop_lot}`}
+												href={`http://a836-acris.nyc.gov/bblsearch/bblsearch.asp?borough=${details.records[0].bbl[0]}&block=${details.records[0].prop_block}&lot=${details.records[0].prop_lot}`}
 											>
 												<span>ACRIS Records</span>
 											</a>
@@ -147,7 +149,7 @@ export default function PropertyDetailsModal(props: PropertyInfoModalProps) {
 										{/*	layout="preserve-aspect"*/}
 										{/*	className={"w-full h-[600px] rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700"}*/}
 										{/*>*/}
-										{/*	<Grid data={propertyDetails.records} />*/}
+										{/*	<Grid data={details.records} />*/}
 										{/*</motion.div>*/}
 									</div>
 								</motion.div>
@@ -160,3 +162,4 @@ export default function PropertyDetailsModal(props: PropertyInfoModalProps) {
 	)
 }
 
+export default observer(PropertyDetailsModal)
