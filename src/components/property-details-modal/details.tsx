@@ -1,6 +1,8 @@
 import React from "react"
 import { Building2, Home, Hash } from "lucide-react"
 import isEmpty from "lodash-es/isEmpty"
+import { Card, CardHeader, CardContent } from "@/components/ui/card"
+import { Alert, AlertDescription } from "@/components/ui/alert"
 
 interface PropertyDetailProps {
     firstRecord: PropertyRecord
@@ -11,62 +13,70 @@ export default function Details(props: PropertyDetailProps) {
 
 	if (isEmpty(record)) {
 		return (
-			<div className="property-details-card property-details-card--error">
-				<div className="property-details-header property-details-header--error">
-					<div className="property-details-icon property-details-icon--error">
-						<Building2 className="property-details-icon-svg--error" />
+			<Card className="w-full">
+				<CardHeader>
+					<div className="flex items-center gap-2">
+						<div className="p-2 rounded-full bg-destructive/10">
+							<Building2 className="h-4 w-4 text-destructive" />
+						</div>
+						<h3 className="text-lg font-semibold text-destructive">
+                            Property Details
+						</h3>
 					</div>
-					<h3 className="property-details-title property-details-title--error">
-                        Property Details
-					</h3>
-				</div>
-				<p className="property-details-error-text">
-                    No property details available.
-				</p>
-			</div>
+				</CardHeader>
+				<CardContent>
+					<Alert variant="destructive">
+						<AlertDescription>
+                            No property details available.
+						</AlertDescription>
+					</Alert>
+				</CardContent>
+			</Card>
 		)
 	}
 
 	return (
-		<div className="property-details-card property-details-card--success">
-			<div className="property-details-header property-details-header--success">
-				<div className="property-details-icon property-details-icon--success">
-					<Building2 className="property-details-icon-svg--success" />
-				</div>
-				<h3 className="property-details-title property-details-title--success">
-                    Property Details
-				</h3>
-			</div>
-
-			<div className="property-details-content">
-				<div className="property-details-item">
-					<div className="property-details-item-icon">
-						<Home className="property-details-item-icon-svg" />
+		<Card className="w-full">
+			<CardHeader>
+				<div className="flex items-center gap-2">
+					<div className="p-2 rounded-full bg-primary/10">
+						<Building2 className="h-4 w-4 text-primary" />
 					</div>
-					<div className="property-details-item-content">
-						<div className="property-details-item-label">
+					<h3 className="text-lg font-semibold">
+                        Property Details
+					</h3>
+				</div>
+			</CardHeader>
+
+			<CardContent className="space-y-4">
+				<div className="flex items-center gap-3 p-3 rounded-lg border bg-card">
+					<div className="p-2 rounded-full bg-muted">
+						<Home className="h-4 w-4 text-muted-foreground" />
+					</div>
+					<div className="flex-1">
+						<div className="text-sm font-medium text-muted-foreground">
                             Property Type
 						</div>
-						<div className="property-details-item-value">
+						<div className="text-sm font-semibold">
 							{record.prop_type}
 						</div>
 					</div>
 				</div>
 
-				<div className="property-details-item">
-					<div className="property-details-item-icon">
-						<Hash className="property-details-item-icon-svg" />
+				<div className="flex items-center gap-3 p-3 rounded-lg border bg-card">
+					<div className="p-2 rounded-full bg-muted">
+						<Hash className="h-4 w-4 text-muted-foreground" />
 					</div>
-					<div className="property-details-item-content">
-						<div className="property-details-item-label">
+					<div className="flex-1">
+						<div className="text-sm font-medium text-muted-foreground">
                             BBL
 						</div>
-						<div className="property-details-item-value property-details-item-value--mono">
+						<div className="text-sm font-semibold font-mono">
 							{record.bbl}
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
+			</CardContent>
+		</Card>
 	)
 }

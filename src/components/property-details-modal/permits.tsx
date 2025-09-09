@@ -1,12 +1,20 @@
 "use client"
-import {useState} from "react"
-import {isEmpty} from "lodash-es"
-import {Card, CardContent} from "@/components/ui/card"
-import {ChevronDown, FileWarning, HardHat} from "lucide-react"
-import {Button} from "@/components/ui/button"
-import {AnimatePresence, motion} from "framer-motion"
-import {ScrollArea} from "@/components/ui/scroll-area"
-import {PERMIT_COLUMNS} from "@/constants/property"
+import { useState } from "react"
+import { isEmpty } from "lodash-es"
+import { Card, CardContent } from "@/components/ui/card"
+import { ChevronDown, FileWarning, HardHat } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { AnimatePresence, motion } from "framer-motion"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow,
+} from "@/components/ui/table"
+import { PERMIT_COLUMNS } from "@/constants/property"
 
 interface PermitsProps {
     permits: PulledPermit[]
@@ -17,13 +25,13 @@ export default function Permits({ permits }: PermitsProps) {
 
 	if (isEmpty(permits)) {
 		return (
-			<Card className="permits-card permits-card--empty">
-				<CardContent className="permits-card-content">
-					<motion.div className="permits-empty-header">
-						<div className="permits-empty-icon">
-							<FileWarning className="permits-empty-icon-svg" />
+			<Card className="border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-950">
+				<CardContent className="p-6">
+					<motion.div className="flex items-center gap-3">
+						<div className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-900">
+							<FileWarning className="h-6 w-6 text-slate-600 dark:text-slate-400" />
 						</div>
-						<h3 className="permits-empty-title">
+						<h3 className="text-lg font-semibold text-slate-800 dark:text-slate-200">
                             No Permits found
 						</h3>
 					</motion.div>
@@ -33,31 +41,32 @@ export default function Permits({ permits }: PermitsProps) {
 	}
 
 	return (
-		<Card className="permits-card permits-card--success">
-			<CardContent className="permits-card-content">
+		<Card className="border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-950">
+			<CardContent className="p-6">
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
 				>
 					<Button
 						variant="ghost"
-						className="permits-expand-btn"
+						className="w-full justify-between p-0 h-auto hover:bg-transparent"
 						onClick={() => setIsExpanded(!isExpanded)}
 					>
-						<div className="permits-expand-btn-content">
-							<div className="permits-expand-icon">
-								<HardHat className="permits-expand-icon-svg" />
+						<div className="flex items-center gap-3">
+							<div className="flex h-10 w-10 items-center justify-center rounded-full bg-green-100 dark:bg-green-900
+							 transition-colors group-hover:bg-green-200 dark:group-hover:bg-green-800">
+								<HardHat className="h-6 w-6 text-green-600 dark:text-green-400" />
 							</div>
-							<h3 className="permits-title">
+							<h3 className="text-lg font-semibold text-green-800 dark:text-green-200">
                                 Permits ({permits.length})
 							</h3>
 						</div>
 						<motion.div
 							initial={false}
 							animate={{ rotate: isExpanded ? 180 : 0 }}
-							className="permits-chevron-wrapper"
+							transition={{ duration: 0.2 }}
 						>
-							<ChevronDown className="permits-chevron" />
+							<ChevronDown className="h-5 w-5 text-muted-foreground" />
 						</motion.div>
 					</Button>
 
@@ -67,24 +76,25 @@ export default function Permits({ permits }: PermitsProps) {
 								initial={{ height: 0, opacity: 0 }}
 								animate={{ height: "auto", opacity: 1 }}
 								exit={{ height: 0, opacity: 0 }}
-								className="permits-expanded-content"
+								transition={{ duration: 0.3 }}
+								className="overflow-hidden"
 							>
-								<Card className="permits-table-card">
-									<ScrollArea className="permits-scroll-area">
-										<table className="permits-table">
-											<thead className="permits-table-header">
-												<tr className="permits-table-header-row">
-													{PERMIT_COLUMNS.map((col) => (
-														<th
-															key={col}
-															className="permits-table-header-cell"
+								<Card className="mt-4 border-border">
+									<ScrollArea className="h-96">
+										<Table>
+											<TableHeader>
+												<TableRow className="hover:bg-transparent">
+													{PERMIT_COLUMNS.map((column) => (
+														<TableHead
+															key={column}
+															className="font-semibold text-foreground whitespace-nowrap"
 														>
-															{col}
-														</th>
+															{column}
+														</TableHead>
 													))}
-												</tr>
-											</thead>
-											<tbody className="permits-table-body">
+												</TableRow>
+											</TableHeader>
+											<TableBody>
 												<AnimatePresence>
 													{permits.map((permit, index) => (
 														<motion.tr
@@ -92,55 +102,68 @@ export default function Permits({ permits }: PermitsProps) {
 															initial={{ opacity: 0, x: -20 }}
 															animate={{ opacity: 1, x: 0 }}
 															transition={{ delay: index * 0.05 }}
-															className="permits-table-row"
+															className="border-b transition-colors hover:bg-muted/50"
 														>
-															<td className="permits-table-cell permits-table-cell--primary">
+															<TableCell className="py-3 font-medium">
 																{permit.job_filing_number}
-															</td>
-															<td className="permits-table-cell permits-table-cell--secondary">
+															</TableCell>
+															<TableCell className="py-3 text-muted-foreground">
 																{permit.filing_reason}
-															</td>
-															<td className="permits-table-cell permits-table-cell--secondary">
+															</TableCell>
+															<TableCell className="py-3 text-muted-foreground">
 																{permit.work_type}
-															</td>
-															<td className="permits-table-cell permits-table-cell--secondary">
+															</TableCell>
+															<TableCell className="py-3 text-muted-foreground">
 																{permit.permittee_s_license_type}
-															</td>
-															<td className="permits-table-cell permits-table-cell--secondary">
+															</TableCell>
+															<TableCell className="py-3 text-muted-foreground">
 																{permit.applicant_license_number}
-															</td>
-															<td className="permits-table-cell permits-table-cell--secondary">
+															</TableCell>
+															<TableCell className="py-3 text-muted-foreground">
 																{permit.applicant_first_name}
-															</td>
-															<td className="permits-table-cell permits-table-cell--secondary">
+															</TableCell>
+															<TableCell className="py-3 text-muted-foreground">
 																{permit.applicant_last_name}
-															</td>
-															<td className="permits-table-cell permits-table-cell--secondary">
-																{permit.applicant_business_name}
-															</td>
-															<td className="permits-table-cell permits-table-cell--secondary">
-																{permit.applicant_business_address}
-															</td>
-															<td className="permits-table-cell permits-table-cell--secondary">
+															</TableCell>
+															<TableCell className="py-3 text-muted-foreground">
+																{permit.applicant_business_name || (
+																	<span className="text-muted-foreground/50">—</span>
+																)}
+															</TableCell>
+															<TableCell className="py-3 text-muted-foreground">
+																{permit.applicant_business_address || (
+																	<span className="text-muted-foreground/50">—</span>
+																)}
+															</TableCell>
+															<TableCell className="py-3 text-muted-foreground">
 																{permit.work_permit}
-															</td>
-															<td className="permits-table-cell permits-table-cell--secondary">
-																{permit.approved_date}
-															</td>
-															<td className="permits-table-cell permits-table-cell--secondary">
-																{permit.issued_date}
-															</td>
-															<td className="permits-table-cell permits-table-cell--secondary">
-																{permit.job_description}
-															</td>
-															<td className="permits-table-cell permits-table-cell--secondary">
-																{permit.estimated_job_costs}
-															</td>
+															</TableCell>
+															<TableCell className="py-3 text-muted-foreground">
+																{permit.approved_date || (
+																	<span className="text-muted-foreground/50">—</span>
+																)}
+															</TableCell>
+															<TableCell className="py-3 text-muted-foreground">
+																{permit.issued_date || (
+																	<span className="text-muted-foreground/50">—</span>
+																)}
+															</TableCell>
+															<TableCell className="py-3 text-muted-foreground max-w-xs truncate">
+																<span title={permit.job_description}>
+																	{permit.job_description}
+																</span>
+															</TableCell>
+															<TableCell className="py-3 text-muted-foreground">
+																{permit.estimated_job_costs ?
+																	`$${Number(permit.estimated_job_costs).toLocaleString()}` :
+																	<span className="text-muted-foreground/50">—</span>
+																}
+															</TableCell>
 														</motion.tr>
 													))}
 												</AnimatePresence>
-											</tbody>
-										</table>
+											</TableBody>
+										</Table>
 									</ScrollArea>
 								</Card>
 							</motion.div>

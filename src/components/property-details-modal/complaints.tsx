@@ -1,25 +1,34 @@
 "use client"
 import React, { useState } from "react"
 import isEmpty from "lodash-es/isEmpty"
-import {AlertCircle, Badge, ChevronDown, CircleAlert} from "lucide-react"
+import { AlertCircle, ChevronDown, CircleAlert } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
-import {Button} from "@/components/ui/button"
-import { Card ,CardContent} from "@/components/ui/card"
-import {COMPLAINT_COLUMNS} from "@/constants/property"
-import {ScrollArea} from "@/components/ui/scroll-area"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow,
+} from "@/components/ui/table"
+import { COMPLAINT_COLUMNS } from "@/constants/property"
 
 interface ComplaintsProps {
     complaints: Complaint[];
 }
 
-const getStatusClassName = (status: string): string => {
+const getStatusVariant = (status: string) => {
 	switch (status) {
 	case "CLOSED":
-		return "status-badge--closed"
+		return "secondary" as const
 	case "OPEN":
-		return "status-badge--open"
+		return "destructive" as const
 	default:
-		return "status-badge--default"
+		return "outline" as const
 	}
 }
 
@@ -28,13 +37,13 @@ export default function Complaints({ complaints }: ComplaintsProps) {
 
 	if (isEmpty(complaints)) {
 		return (
-			<Card className="complaints-card complaints-card--success">
+			<Card className="border-emerald-200 bg-emerald-50 dark:border-emerald-800 dark:bg-emerald-950">
 				<CardContent className="p-6">
-					<motion.div className="complaints-header">
-						<div className="complaints-icon complaints-icon--success">
-							<CircleAlert className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
+					<motion.div className="flex items-center gap-3">
+						<div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-900">
+							<CircleAlert className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
 						</div>
-						<h3 className="complaints-title complaints-title--success">
+						<h3 className="text-lg font-semibold text-emerald-800 dark:text-emerald-200">
                             No Complaints found
 						</h3>
 					</motion.div>
@@ -44,7 +53,7 @@ export default function Complaints({ complaints }: ComplaintsProps) {
 	}
 
 	return (
-		<Card className="complaints-card complaints-card--warning">
+		<Card className="border-amber-200 bg-amber-50 dark:border-amber-800 dark:bg-amber-950">
 			<CardContent className="p-6">
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
@@ -52,23 +61,23 @@ export default function Complaints({ complaints }: ComplaintsProps) {
 				>
 					<Button
 						variant="ghost"
-						className="complaints-expand-btn"
+						className="w-full justify-between p-0 h-auto hover:bg-transparent"
 						onClick={() => setIsExpanded(!isExpanded)}
 					>
-						<div className="complaints-header">
-							<div className="complaints-icon complaints-icon--warning complaints-icon--hover">
-								<AlertCircle className="w-6 h-6 text-amber-600 dark:text-amber-400" />
+						<div className="flex items-center gap-3">
+							<div className="flex h-10 w-10 items-center justify-center rounded-full bg-amber-100 dark:bg-amber-900 transition-colors group-hover:bg-amber-200 dark:group-hover:bg-amber-800">
+								<AlertCircle className="h-6 w-6 text-amber-600 dark:text-amber-400" />
 							</div>
-							<h3 className="complaints-title complaints-title--warning">
+							<h3 className="text-lg font-semibold text-amber-800 dark:text-amber-200">
                                 Complaints ({complaints.length})
 							</h3>
 						</div>
 						<motion.div
 							initial={false}
 							animate={{ rotate: isExpanded ? 180 : 0 }}
-							className="complaints-chevron"
+							transition={{ duration: 0.2 }}
 						>
-							<ChevronDown className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+							<ChevronDown className="h-5 w-5 text-muted-foreground" />
 						</motion.div>
 					</Button>
 
@@ -78,68 +87,68 @@ export default function Complaints({ complaints }: ComplaintsProps) {
 								initial={{ height: 0, opacity: 0 }}
 								animate={{ height: "auto", opacity: 1 }}
 								exit={{ height: 0, opacity: 0 }}
+								transition={{ duration: 0.3 }}
 								className="overflow-hidden"
 							>
-								<Card className="complaints-table-container">
+								<Card className="mt-4 border-border">
 									<ScrollArea className="h-96">
-										<table className="w-full">
-											<thead className="complaints-table-header">
-												<tr className="complaints-table-header-row">
-													{COMPLAINT_COLUMNS.map((item) => (
-														<th
-															key={item}
-															className="complaints-table-header-cell"
+										<Table>
+											<TableHeader>
+												<TableRow className="hover:bg-transparent">
+													{COMPLAINT_COLUMNS.map((column) => (
+														<TableHead
+															key={column}
+															className="font-semibold text-foreground"
 														>
-															{item}
-														</th>
+															{column}
+														</TableHead>
 													))}
-												</tr>
-											</thead>
-											<tbody className="complaints-table-body">
+												</TableRow>
+											</TableHeader>
+											<TableBody>
 												<AnimatePresence>
 													{complaints.map((complaint, index) => (
 														<motion.tr
-															key={index}
+															key={`${complaint.date_entered}-${index}`}
 															initial={{ opacity: 0, x: -20 }}
 															animate={{ opacity: 1, x: 0 }}
-															className="complaints-table-row"
+															transition={{ delay: index * 0.05 }}
+															className="border-b transition-colors hover:bg-muted/50"
 														>
-															<td className="complaints-table-cell">
-																<Badge
-																	className={getStatusClassName(complaint.status)}
-																>
+															<TableCell className="py-3">
+																<Badge variant={getStatusVariant(complaint.status)}>
 																	{complaint.status}
 																</Badge>
-															</td>
-															<td className="complaints-table-cell complaints-table-cell--primary">
+															</TableCell>
+															<TableCell className="py-3 font-medium">
 																{complaint.date_entered}
-															</td>
-															<td className="complaints-table-cell complaints-table-cell--secondary">
+															</TableCell>
+															<TableCell className="py-3 text-muted-foreground">
 																{complaint.complaint_category}
-															</td>
-															<td className="complaints-table-cell complaints-table-cell--secondary">
+															</TableCell>
+															<TableCell className="py-3 text-muted-foreground">
 																{complaint.unit}
-															</td>
-															<td className="complaints-table-cell complaints-table-cell--secondary">
+															</TableCell>
+															<TableCell className="py-3 text-muted-foreground">
 																{complaint.disposition_date || (
-																	<span className="complaints-table-cell--empty">—</span>
+																	<span className="text-muted-foreground/50">—</span>
 																)}
-															</td>
-															<td className="complaints-table-cell complaints-table-cell--secondary">
+															</TableCell>
+															<TableCell className="py-3 text-muted-foreground">
 																{complaint.disposition_code || (
-																	<span className="complaints-table-cell--empty">—</span>
+																	<span className="text-muted-foreground/50">—</span>
 																)}
-															</td>
-															<td className="complaints-table-cell complaints-table-cell--secondary">
+															</TableCell>
+															<TableCell className="py-3 text-muted-foreground">
 																{complaint.inspection_date || (
-																	<span className="complaints-table-cell--empty">—</span>
+																	<span className="text-muted-foreground/50">—</span>
 																)}
-															</td>
+															</TableCell>
 														</motion.tr>
 													))}
 												</AnimatePresence>
-											</tbody>
-										</table>
+											</TableBody>
+										</Table>
 									</ScrollArea>
 								</Card>
 							</motion.div>

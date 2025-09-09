@@ -3,7 +3,10 @@ import React from "react"
 import { Hash, Map, Building2, Clock } from "lucide-react"
 import isNull from "lodash-es/isNull"
 import isUndefined from "lodash-es/isUndefined"
-import {FORMAT_DATE} from "@/utils/format-date"
+import { Card, CardHeader, CardContent } from "@/components/ui/card"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Badge } from "@/components/ui/badge"
+import { FORMAT_DATE } from "@/utils/format-date"
 
 interface ZoningSectionProps {
     zoning: Zoning
@@ -20,92 +23,112 @@ export default function Zoning({ zoning }: ZoningSectionProps) {
 
 	if (hasNoZoningData) {
 		return (
-			<div className="zoning-card zoning-card--error">
-				<div className="zoning-header zoning-header--error">
-					<div className="zoning-icon zoning-icon--error">
-						<Map className="zoning-icon-svg--error" />
+			<Card className="w-full">
+				<CardHeader>
+					<div className="flex items-center gap-2">
+						<div className="p-2 rounded-full bg-destructive/10">
+							<Map className="h-4 w-4 text-destructive" />
+						</div>
+						<h3 className="text-lg font-semibold text-destructive">
+                            Zoning Information
+						</h3>
 					</div>
-					<h3 className="zoning-title zoning-title--error">
-                        Zoning Information
-					</h3>
-				</div>
-				<p className="zoning-error-text">
-                    No zoning information available.
-				</p>
-			</div>
+				</CardHeader>
+				<CardContent>
+					<Alert variant="destructive">
+						<AlertDescription>
+                            No zoning information available.
+						</AlertDescription>
+					</Alert>
+				</CardContent>
+			</Card>
 		)
 	}
 
 	return (
-		<div className="zoning-card zoning-card--success">
-			<div className="zoning-header zoning-header--success">
-				<div className="zoning-icon zoning-icon--success">
-					<Map className="zoning-icon-svg--success" />
+		<Card className="w-full">
+			<CardHeader>
+				<div className="flex items-center gap-2">
+					<div className="p-2 rounded-full bg-primary/10">
+						<Map className="h-4 w-4 text-primary" />
+					</div>
+					<h3 className="text-lg font-semibold">
+                        Zoning Information
+					</h3>
 				</div>
-				<h3 className="zoning-title zoning-title--success">
-                    Zoning Information
-				</h3>
-			</div>
+			</CardHeader>
 
-			<div className="zoning-content">
+			<CardContent className="space-y-4">
 				{zoning.zoning_districts.length > 0 && (
-					<div className="zoning-item">
-						<div className="zoning-item-icon">
-							<Map className="zoning-item-icon-svg" />
+					<div className="flex items-start gap-3 p-3 rounded-lg border bg-card">
+						<div className="p-2 rounded-full bg-muted mt-1">
+							<Map className="h-4 w-4 text-muted-foreground" />
 						</div>
-						<div className="zoning-item-content">
-							<div className="zoning-item-label">
+						<div className="flex-1">
+							<div className="text-sm font-medium text-muted-foreground mb-2">
                                 Zoning Districts
 							</div>
-							<div className="zoning-item-value">
-								{zoning.zoning_districts.join(", ")}
+							<div className="flex flex-wrap gap-1">
+								{zoning.zoning_districts.map((district, index) => (
+									<Badge key={index} variant="default" className="text-xs">
+										{district}
+									</Badge>
+								))}
 							</div>
 						</div>
 					</div>
 				)}
 
 				{zoning.commercial_overlays.length > 0 && (
-					<div className="zoning-item">
-						<div className="zoning-item-icon">
-							<Building2 className="zoning-item-icon-svg" />
+					<div className="flex items-start gap-3 p-3 rounded-lg border bg-card">
+						<div className="p-2 rounded-full bg-muted mt-1">
+							<Building2 className="h-4 w-4 text-muted-foreground" />
 						</div>
-						<div className="zoning-item-content">
-							<div className="zoning-item-label">
+						<div className="flex-1">
+							<div className="text-sm font-medium text-muted-foreground mb-2">
                                 Commercial Overlays
 							</div>
-							<div className="zoning-item-value">
-								{zoning.commercial_overlays.join(", ")}
+							<div className="flex flex-wrap gap-1">
+								{zoning.commercial_overlays.map((overlay, index) => (
+									<Badge key={index} variant="secondary" className="text-xs">
+										{overlay}
+									</Badge>
+								))}
 							</div>
 						</div>
 					</div>
 				)}
 
 				{zoning.special_districts.length > 0 && (
-					<div className="zoning-item">
-						<div className="zoning-item-icon">
-							<Hash className="zoning-item-icon-svg" />
+					<div className="flex items-start gap-3 p-3 rounded-lg border bg-card">
+						<div className="p-2 rounded-full bg-muted mt-1">
+							<Hash className="h-4 w-4 text-muted-foreground" />
 						</div>
-						<div className="zoning-item-content">
-							<div className="zoning-item-label">
+						<div className="flex-1">
+							<div className="text-sm font-medium text-muted-foreground mb-2">
                                 Special Districts
 							</div>
-							<div className="zoning-item-value">
-								{zoning.special_districts.join(", ")}
+							<div className="flex flex-wrap gap-1">
+								{zoning.special_districts.map((district, index) => (
+									<Badge key={index} variant="outline" className="text-xs">
+										{district}
+									</Badge>
+								))}
 							</div>
 						</div>
 					</div>
 				)}
 
 				{zoning.limited_height_district && (
-					<div className="zoning-item">
-						<div className="zoning-item-icon">
-							<Building2 className="zoning-item-icon-svg" />
+					<div className="flex items-center gap-3 p-3 rounded-lg border bg-card">
+						<div className="p-2 rounded-full bg-muted">
+							<Building2 className="h-4 w-4 text-muted-foreground" />
 						</div>
-						<div className="zoning-item-content">
-							<div className="zoning-item-label">
+						<div className="flex-1">
+							<div className="text-sm font-medium text-muted-foreground">
                                 Limited Height District
 							</div>
-							<div className="zoning-item-value">
+							<div className="text-sm font-semibold">
 								{zoning.limited_height_district}
 							</div>
 						</div>
@@ -113,21 +136,21 @@ export default function Zoning({ zoning }: ZoningSectionProps) {
 				)}
 
 				{zoning.last_updated && (
-					<div className="zoning-item">
-						<div className="zoning-item-icon">
-							<Clock className="zoning-item-icon-svg" />
+					<div className="flex items-center gap-3 p-3 rounded-lg border bg-card">
+						<div className="p-2 rounded-full bg-muted">
+							<Clock className="h-4 w-4 text-muted-foreground" />
 						</div>
-						<div className="zoning-item-content">
-							<div className="zoning-item-label">
+						<div className="flex-1">
+							<div className="text-sm font-medium text-muted-foreground">
                                 Last Updated
 							</div>
-							<div className="zoning-item-value">
+							<div className="text-sm font-semibold font-mono">
 								{FORMAT_DATE(zoning.last_updated)}
 							</div>
 						</div>
 					</div>
 				)}
-			</div>
-		</div>
+			</CardContent>
+		</Card>
 	)
 }
