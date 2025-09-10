@@ -1,7 +1,7 @@
 "use client"
 import useInitMap from "@/hooks/mapbox/map/use-init-map"
 import ModalContainer from "@/components/modal/modal-container"
-import MinimizedModalsBar from "@/components/modal/minimized-modal-bar"
+import MinimizedModalsBar from "@/components/minimized-modal-bar"
 import SearchBarWithAutocomplete from "@/components/address-search-bar/search-bar-with-autocomplete"
 
 export default function Map() {

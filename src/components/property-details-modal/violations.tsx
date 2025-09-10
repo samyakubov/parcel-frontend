@@ -1,3 +1,4 @@
+"use client"
 import React, { useState } from "react"
 import isEmpty from "lodash-es/isEmpty"
 import { AlertTriangle, ChevronDown } from "lucide-react"

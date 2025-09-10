@@ -35,7 +35,7 @@ export default function useHandleMapClick(mapRef: React.RefObject<mapboxgl.Map |
 				curve: 1.42,
 			})
 
-			modalStore.addPropertyModal({latitude: 40.7589, longitude: -73.9851}, "test" + Math.floor(Math.random() * 1000), {
+			modalStore.addPropertyModal({latitude: lat, longitude: lng}, "test" + Math.floor(Math.random() * 1000), {
 				last_sold_for: {
 					last_sold_price: 2850000,
 					sale_date: "2022-03-15"

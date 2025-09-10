@@ -15,6 +15,7 @@ import Complaints from "@/components/property-details-modal/complaints"
 import Violations from "@/components/property-details-modal/violations"
 import Owners from "@/components/property-details-modal/owners"
 import {observer} from "mobx-react"
+import {Card, CardContent, CardHeader} from "@/components/ui/card"
 
 interface PropertyInfoModalProps {
     id: string
@@ -90,10 +91,16 @@ function PropertyDetailsModal(props: PropertyInfoModalProps) {
 									alt="Google Street View"
 								/>
 								<Details firstRecord={details.records[0]} />
+								<LastSold lastSoldFor={details.last_sold_for}/>
 								{
 									!isNull(latestMortgage) ? (
 										<Mortgage borrower={latestMortgage.borrower} lender={latestMortgage.lender} />
-									) : null
+									) : (
+										<Card>
+											<CardHeader>Mortgage Details</CardHeader>
+											<CardContent>No mortgage on record</CardContent>
+										</Card>
+									)
 								}
 							</motion.div>
 							<motion.div
@@ -104,7 +111,6 @@ function PropertyDetailsModal(props: PropertyInfoModalProps) {
 
 								<Owners currentOwners={details.owners.current_owners} previousOwners={details.owners.previous_owners}/>
 
-								<LastSold lastSoldFor={details.last_sold_for}/>
 							</motion.div>
 						</motion.div>
 
@@ -120,26 +126,13 @@ function PropertyDetailsModal(props: PropertyInfoModalProps) {
 									<Violations violations={details.violations} />
 									<div className="space-y-6">
 										<div className="flex items-center gap-3 w-full">
-											<div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex-shrink-0">
-												<svg
-													className="w-6 h-6 text-blue-600 dark:text-blue-400"
-													fill="none"
-													stroke="currentColor"
-													viewBox="0 0 24 24"
-												>
-													<path
-														strokeLinecap="round"
-														strokeLinejoin="round"
-														strokeWidth={2}
-														d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-													/>
-												</svg>
-											</div>
 											<a
 												target="_blank"
 												rel="noopener noreferrer"
-												className="text-xl font-bold bg-gradient-to-r from-slate-800 to-blue-600 bg-clip-text text-transparent dark:from-slate-100 dark:to-blue-200 hover:from-blue-600 hover:to-blue-800 dark:hover:from-blue-300 dark:hover:to-blue-100 transition-all duration-300 ease-out group"
-												href={`http://a836-acris.nyc.gov/bblsearch/bblsearch.asp?borough=${details.records[0].bbl[0]}&block=${details.records[0].prop_block}&lot=${details.records[0].prop_lot}`}
+												// className="text-xl font-bold bg-gradient-to-r from-slate-800 to-blue-600 bg-clip-text text-transparent dark:from-slate-100 dark:to-blue-200 hover:from-blue-600 hover:to-blue-800 dark:hover:from-blue-300 dark:hover:to-blue-100 transition-all duration-300 ease-out group"
+												href={`http://a836-acris.nyc.gov/bblsearch/bblsearch.asp?borough=
+												${details.records[0].bbl[0]}&block=${details.records[0].prop_block}
+												&lot=${details.records[0].prop_lot}`}
 											>
 												<span>ACRIS Records</span>
 											</a>
