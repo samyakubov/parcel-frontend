@@ -65,7 +65,6 @@ class ModalStore {
 			return existingModal.id
 		}
 
-		const newPosition = this.calculateNewModalPosition()
 		const newModal: PropertyModal = {
 			id: uuidv4(),
 			isOpen: true,
@@ -73,7 +72,7 @@ class ModalStore {
 			isExpanded: false,
 			coords,
 			title,
-			position: newPosition,
+			position: this.calculateNewModalPosition(),
 			propertyData,
 			zIndex: this.getNextZIndex()
 		}
@@ -100,7 +99,8 @@ class ModalStore {
 		this.setModalState(id, {
 			isMinimized: false,
 			isOpen: true,
-			zIndex: this.getNextZIndex()
+			zIndex: this.getNextZIndex(),
+			position:this.calculateNewModalPosition()
 		})
 	})
 
@@ -112,10 +112,6 @@ class ModalStore {
 				position: { x: 0, y: 0 }
 			})
 		}
-	})
-
-	public updateModalPosition = action((id: string, position: ModalPosition) => {
-		this.setModalState(id, { position })
 	})
 
 	public closeModal = action((id: string, ) => {
