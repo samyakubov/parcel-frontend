@@ -14,10 +14,26 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table"
+import { Badge } from "@/components/ui/badge"
 import { VIOLATION_COLUMNS } from "@/constants/property"
 
 interface ViolationsProps {
     violations: Violation[]
+}
+
+const getSeverityVariant = (severity: string): "default" | "secondary" | "destructive" => {
+	switch (severity) {
+	case "CLASS - 1":
+		return "destructive"
+	case "CLASS - 2":
+		return "secondary"
+	default:
+		return "default"
+	}
+}
+
+const getStatusVariant = (status: string): "default" | "secondary" => {
+	return status === "RESOLVE" ? "secondary" : "default"
 }
 
 export default function Violations({ violations }: ViolationsProps) {
@@ -54,7 +70,7 @@ export default function Violations({ violations }: ViolationsProps) {
 					>
 						<div className="flex items-center gap-3">
 							<div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-100 dark:bg-red-900
-							 transition-colors group-hover:bg-red-200 dark:group-hover:bg-red-800">
+							transition-colors group-hover:bg-red-200 dark:group-hover:bg-red-800">
 								<AlertTriangle className="h-6 w-6 text-red-600 dark:text-red-400" />
 							</div>
 							<h3 className="text-lg font-semibold text-red-800 dark:text-red-200">
@@ -98,14 +114,16 @@ export default function Violations({ violations }: ViolationsProps) {
 												<AnimatePresence>
 													{violations.map((violation, index) => (
 														<motion.tr
-															key={index}
+															key={violation.violationid || index}
 															initial={{ opacity: 0, x: -20 }}
 															animate={{ opacity: 1, x: 0 }}
 															transition={{ delay: index * 0.05 }}
 															className="border-b transition-colors hover:bg-muted/50"
 														>
-															<TableCell className="py-3 font-medium">
-																{violation.violation_status}
+															<TableCell className="py-3">
+																<Badge variant={getStatusVariant(violation.violation_status)}>
+																	{violation.violation_status}
+																</Badge>
 															</TableCell>
 															<TableCell className="py-3 text-muted-foreground">
 																{violation.issuedate}
@@ -118,8 +136,10 @@ export default function Violations({ violations }: ViolationsProps) {
 																	{violation.description}
 																</span>
 															</TableCell>
-															<TableCell className="py-3 text-muted-foreground">
-																{violation.severity}
+															<TableCell className="py-3">
+																<Badge variant={getSeverityVariant(violation.severity)}>
+																	{violation.severity}
+																</Badge>
 															</TableCell>
 															<TableCell className="py-3 text-muted-foreground">
 																{violation.penalty_amount ?
