@@ -15,7 +15,7 @@ export default function useHandleSuggestionClick() {
 		try {
 			//TODO: add the api call here
 			searchStore.setIsSuggestionsOpen(false)
-		} catch (e) {
+		} catch {
 			searchStore.setSuggestionsError("Error selecting address. Please try again.")
 		}
 	}, [])

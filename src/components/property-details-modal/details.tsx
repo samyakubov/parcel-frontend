@@ -3,6 +3,7 @@ import { Building2, Home, Hash } from "lucide-react"
 import isEmpty from "lodash-es/isEmpty"
 import { Card, CardHeader, CardContent } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
+import PropertyDetailItem from "@/components/property-details-modal/mortgage/property-detail-item"
 
 interface PropertyDetailProps {
     firstRecord: PropertyRecord
@@ -49,33 +50,16 @@ export default function Details(props: PropertyDetailProps) {
 			</CardHeader>
 
 			<CardContent className="space-y-4">
-				<div className="flex items-center gap-3 p-3 rounded-lg border bg-card">
-					<div className="p-2 rounded-full bg-muted">
-						<Home className="h-4 w-4 text-muted-foreground" />
-					</div>
-					<div className="flex-1">
-						<div className="text-sm font-medium text-muted-foreground">
-                            Property Type
-						</div>
-						<div className="text-sm font-semibold">
-							{record.prop_type}
-						</div>
-					</div>
-				</div>
-
-				<div className="flex items-center gap-3 p-3 rounded-lg border bg-card">
-					<div className="p-2 rounded-full bg-muted">
-						<Hash className="h-4 w-4 text-muted-foreground" />
-					</div>
-					<div className="flex-1">
-						<div className="text-sm font-medium text-muted-foreground">
-                            BBL
-						</div>
-						<div className="text-sm font-semibold font-mono">
-							{record.bbl}
-						</div>
-					</div>
-				</div>
+				<PropertyDetailItem
+					icon={<Home className="h-4 w-4 text-muted-foreground" />}
+					label="Property Type"
+					value={record.prop_type}
+				/>
+				<PropertyDetailItem
+					icon={<Hash className="h-4 w-4 text-muted-foreground" />}
+					label="BBL"
+					value={record.bbl}
+				/>
 			</CardContent>
 		</Card>
 	)

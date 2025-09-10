@@ -15,6 +15,13 @@ declare global {
         desc: string;
         img: string;
     }
+
+    interface Benefit {
+        icon:LucideIcon
+        title: string;
+        description: string;
+        gradient:string;
+    }
 }
 
 export {}

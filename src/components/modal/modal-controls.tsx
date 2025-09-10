@@ -1,10 +1,8 @@
 "use client"
-
 import React from "react"
-import { Minus, X } from "lucide-react"
-import { motion } from "framer-motion"
-import ExpandModalButton from "@/components/modal/expand-modal-button"
-import { Button } from "@/components/ui/button"
+import ExpandModalButton from "@/components/modal/modal-control-buttons/expand-modal-button"
+import MinimizeButton from "@/components/modal/modal-control-buttons/minimize-button"
+import CloseButton from "@/components/modal/modal-control-buttons/close-button"
 
 interface ModalControlsProps {
     isExpandable?: boolean
@@ -15,35 +13,18 @@ interface ModalControlsProps {
     className?: string
 }
 
-export default function ModalControls(props: ModalControlsProps) {
-	const {
-		isExpandable = false,
-		isExpanded,
-		setIsExpanded,
-		onClose,
-		onMinimize,
-		className = "",
-	} = props
+export default function ModalControls({
+	isExpandable = false,
+	isExpanded,
+	setIsExpanded,
+	onClose,
+	onMinimize,
+	className = "",
+}: ModalControlsProps) {
 
 	return (
 		<div className={`flex gap-2 ${className}`}>
-			{onMinimize && (
-				<Button
-					asChild
-					size="icon"
-					variant="ghost"
-					aria-label="Minimize window"
-				>
-					<motion.div
-						onClick={onMinimize}
-						whileHover={{ scale: 1.05, y: -1 }}
-						whileTap={{ scale: 0.95 }}
-						transition={{ duration: 0.15 }}
-					>
-						<Minus size={16} />
-					</motion.div>
-				</Button>
-			)}
+			<MinimizeButton onMinimize={onMinimize} />
 
 			<ExpandModalButton
 				setIsExpanded={setIsExpanded}
@@ -51,21 +32,7 @@ export default function ModalControls(props: ModalControlsProps) {
 				isExpanded={isExpanded}
 			/>
 
-			<Button
-				asChild
-				size="icon"
-				variant="ghost"
-				aria-label="Close modal"
-			>
-				<motion.div
-					onClick={onClose}
-					whileHover={{ scale: 1.05, y: -1 }}
-					whileTap={{ scale: 0.95 }}
-					transition={{ duration: 0.15 }}
-				>
-					<X size={16} />
-				</motion.div>
-			</Button>
+			<CloseButton onClose={onClose} />
 		</div>
 	)
 }

@@ -15,7 +15,7 @@ function SearchBarWithAutocomplete() {
 			return searchStore.setIsSuggestionsOpen(false)
 		}
 		void addressAutocomplete()
-	}, [addressAutocomplete, searchStore._addressSearchQuery])
+	}, [addressAutocomplete])
 
 	return (
 		<div className="relative">
