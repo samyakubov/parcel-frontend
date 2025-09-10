@@ -114,7 +114,7 @@ export default function Violations({ violations }: ViolationsProps) {
 												<AnimatePresence>
 													{violations.map((violation, index) => (
 														<motion.tr
-															key={violation.violationid || index}
+															key={index}
 															initial={{ opacity: 0, x: -20 }}
 															animate={{ opacity: 1, x: 0 }}
 															transition={{ delay: index * 0.05 }}
