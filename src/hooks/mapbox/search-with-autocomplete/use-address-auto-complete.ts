@@ -10,6 +10,7 @@ export default function useAddressAutocomplete() {
 
 	return useCallback(
 		debounce(async () => {
+			// eslint-disable-next-line @typescript-eslint/naming-convention
 			const { _addressSearchQuery } = searchStore
 			if (_addressSearchQuery.length < 2) {
 				return

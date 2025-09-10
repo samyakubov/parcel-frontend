@@ -32,10 +32,6 @@ const getSeverityVariant = (severity: string): "default" | "secondary" | "destru
 	}
 }
 
-const getStatusVariant = (status: string): "default" | "secondary" => {
-	return status === "RESOLVE" ? "secondary" : "default"
-}
-
 export default function Violations({ violations }: ViolationsProps) {
 	const [isExpanded, setIsExpanded] = useState(false)
 
@@ -121,7 +117,8 @@ export default function Violations({ violations }: ViolationsProps) {
 															className="border-b transition-colors hover:bg-muted/50"
 														>
 															<TableCell className="py-3">
-																<Badge variant={getStatusVariant(violation.violation_status)}>
+																<Badge variant={violation.violation_status === "RESOLVE"
+																	? "secondary" : "default"}>
 																	{violation.violation_status}
 																</Badge>
 															</TableCell>
