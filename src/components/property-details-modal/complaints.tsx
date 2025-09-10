@@ -65,7 +65,8 @@ export default function Complaints({ complaints }: ComplaintsProps) {
 						onClick={() => setIsExpanded(!isExpanded)}
 					>
 						<div className="flex items-center gap-3">
-							<div className="flex h-10 w-10 items-center justify-center rounded-full bg-amber-100 dark:bg-amber-900 transition-colors group-hover:bg-amber-200 dark:group-hover:bg-amber-800">
+							<div className="flex h-10 w-10 items-center justify-center rounded-full bg-amber-100 dark:bg-amber-900 t
+							ransition-colors group-hover:bg-amber-200 dark:group-hover:bg-amber-800">
 								<AlertCircle className="h-6 w-6 text-amber-600 dark:text-amber-400" />
 							</div>
 							<h3 className="text-lg font-semibold text-amber-800 dark:text-amber-200">

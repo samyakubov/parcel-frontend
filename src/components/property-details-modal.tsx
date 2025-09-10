@@ -16,6 +16,7 @@ import Violations from "@/components/property-details-modal/violations"
 import Owners from "@/components/property-details-modal/owners"
 import {observer} from "mobx-react"
 import {Card, CardContent, CardHeader} from "@/components/ui/card"
+import PropertyRecordGrid from "@/components/property-details-modal/property-records-grid"
 
 interface PropertyInfoModalProps {
     id: string
@@ -124,27 +125,7 @@ function PropertyDetailsModal(props: PropertyInfoModalProps) {
 									<Permits permits={details.permits}/>
 									<Complaints complaints={details.complaints} />
 									<Violations violations={details.violations} />
-									<div className="space-y-6">
-										<div className="flex items-center gap-3 w-full">
-											<a
-												target="_blank"
-												rel="noopener noreferrer"
-												// className="text-xl font-bold bg-gradient-to-r from-slate-800 to-blue-600 bg-clip-text text-transparent dark:from-slate-100 dark:to-blue-200 hover:from-blue-600 hover:to-blue-800 dark:hover:from-blue-300 dark:hover:to-blue-100 transition-all duration-300 ease-out group"
-												href={`http://a836-acris.nyc.gov/bblsearch/bblsearch.asp?borough=
-												${details.records[0].bbl[0]}&block=${details.records[0].prop_block}
-												&lot=${details.records[0].prop_lot}`}
-											>
-												<span>ACRIS Records</span>
-											</a>
-										</div>
-
-										{/*<motion.div*/}
-										{/*	layout="preserve-aspect"*/}
-										{/*	className={"w-full h-[600px] rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700"}*/}
-										{/*>*/}
-										{/*	<Grid data={details.records} />*/}
-										{/*</motion.div>*/}
-									</div>
+									<PropertyRecordGrid data={details.records} />
 								</motion.div>
 							)}
 						</AnimatePresence>
