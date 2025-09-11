@@ -1,3 +1,4 @@
+"use client"
 import React from "react"
 import PropertyRecordGridHeader from "@/components/property-details-modal/property-record-grid-header"
 import PropertyRecordGridTable from "@/components/property-details-modal/property-record-grid-table"
