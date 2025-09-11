@@ -6,7 +6,7 @@ interface TimelineStepProps {
     step: TimelineItem;
     i: number;
     stepOpacities: MotionValue<number>[];
-    stepPointerEvents: MotionValue<string>[];
+    stepPointerEvents: MotionValue<"auto" | "none">[]
 }
 
 export default function TimelineStep({ step, i, stepOpacities, stepPointerEvents }: TimelineStepProps) {

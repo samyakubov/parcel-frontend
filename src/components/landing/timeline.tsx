@@ -42,7 +42,7 @@ export default function Timeline() {
 				/>
 
 				{TIMELINE.map((step, i) => (
-					<TimelineStep key={i} step={step} i={i} stepOpacities={stepOpacities} stepPointerEvents={stepPointerEvents} />
+					<TimelineStep key={i} step={step} i={i} stepOpacities={stepOpacities} stepPointerEvents={stepPointerEvents } />
 				))}
 			</div>
 		</section>
