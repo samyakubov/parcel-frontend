@@ -1,7 +1,7 @@
 "use client"
 import React from "react"
 
-export default function SignUpHero () {
+export default function SignUpHero() {
 	return (
 		<div className="flex-1 relative overflow-hidden bg-gradient-to-br rounded-l-3xl">
 			<div

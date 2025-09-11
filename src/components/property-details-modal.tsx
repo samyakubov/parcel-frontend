@@ -12,9 +12,7 @@ interface PropertyInfoModalProps {
     id: string
 }
 
-function PropertyDetailsModal(props: PropertyInfoModalProps) {
-	const { id } = props
-
+function PropertyDetailsModal({ id }: PropertyInfoModalProps) {
 	const modal = modalStore._propertyModals.filter(propertyModal => propertyModal.id === id)[0]
 
 	const getPanelClassName = () => {
