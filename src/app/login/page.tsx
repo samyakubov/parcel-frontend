@@ -1,6 +1,6 @@
 "use client"
-import { LoginHero } from "@/components/login/login-hero"
-import { LoginForm } from "@/components/login/login-form"
+import LoginHero from "@/components/login/login-hero"
+import LoginForm from "@/components/login/login-form"
 
 export default function Login() {
 	return (
