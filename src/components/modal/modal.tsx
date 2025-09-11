@@ -11,13 +11,12 @@ interface ModalProps {
     modalId: string;
 }
 
-export default function Modal(props: ModalProps) {
-	const {
-		children,
-		panelClassName,
-		isExpandable,
-		modalId,
-	} = props
+export default function Modal({
+  children,
+  panelClassName,
+  isExpandable,
+  modalId,
+}: ModalProps) {
 
 
 	const currentModal = modalStore.getModal(modalId)

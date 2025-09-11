@@ -9,10 +9,9 @@ interface PropertyDetailProps {
     firstRecord: PropertyRecord
 }
 
-export default function Details(props: PropertyDetailProps) {
-	const record = props.firstRecord
+export default function Details({firstRecord}: PropertyDetailProps) {
 
-	if (isEmpty(record)) {
+	if (isEmpty(firstRecord)) {
 		return (
 			<Card className="w-full">
 				<CardHeader>
@@ -53,12 +52,12 @@ export default function Details(props: PropertyDetailProps) {
 				<PropertyDetailItem
 					icon={<Home className="h-4 w-4 text-muted-foreground" />}
 					label="Property Type"
-					value={record.prop_type}
+					value={firstRecord.prop_type}
 				/>
 				<PropertyDetailItem
 					icon={<Hash className="h-4 w-4 text-muted-foreground" />}
 					label="BBL"
-					value={record.bbl}
+					value={firstRecord.bbl}
 				/>
 			</CardContent>
 		</Card>

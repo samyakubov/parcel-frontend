@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Checkbox } from "@/components/ui/checkbox"
 import { useRouter } from "next/navigation"
 
-export const SignUpForm = () => {
+export default function SignUpForm() {
 	const [formData, setFormData] = useState({
 		firstName: "",
 		lastName: "",

@@ -2,8 +2,9 @@
 import React, {useEffect, useRef} from "react"
 import {searchStore} from "@/stores/search-store"
 import SuggestionItem from "@/components/address-search-bar/suggestion-item"
+import {observer} from "mobx-react"
 
-export default function SuggestionsList() {
+function SuggestionsList() {
 	const suggestionsRef = useRef<HTMLUListElement>(null)
 
 	useEffect(() => {
@@ -28,3 +29,5 @@ export default function SuggestionsList() {
 		</ul>
 	)
 }
+
+export default observer(SuggestionsList)

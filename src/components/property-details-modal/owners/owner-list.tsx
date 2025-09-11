@@ -1,13 +1,14 @@
 "use client"
 import React from "react"
 import { Search } from "lucide-react"
+import {isEmpty} from "lodash-es"
 
 interface OwnerListProps {
     owners: string[];
 }
 
 export default function OwnerList({ owners }: OwnerListProps) {
-	if (owners.length === 0) {
+	if (isEmpty(owners)) {
 		return (
 			<div className="flex flex-col items-center justify-center py-8 text-center">
 				<div className="p-3 rounded-full bg-muted mb-3">

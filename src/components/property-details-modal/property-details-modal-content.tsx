@@ -16,11 +16,10 @@ import getMortgageDetails from "@/utils/get-mortgage-details"
 
 interface PropertyDetailsModalContentProps {
     modal: PropertyModal;
-    details: PropertyDetails;
 }
 
-export default function PropertyDetailsModalContent({ modal, details }: PropertyDetailsModalContentProps) {
-	const latestMortgage = getMortgageDetails(details.records, details.last_sold_for.sale_date)
+export default function PropertyDetailsModalContent({ modal }: PropertyDetailsModalContentProps) {
+	const latestMortgage = getMortgageDetails(modal.propertyData.records, modal.propertyData.last_sold_for.sale_date)
 
 	return (
 		<motion.div
@@ -43,8 +42,8 @@ export default function PropertyDetailsModalContent({ modal, details }: Property
 							${modal.coords.latitude},${modal.coords.longitude}&key=${process.env.NEXT_PUBLIC_STREETVIEW_API_KEY}`}
 							alt="Google Street View"
 						/>
-						<Details firstRecord={details.records[0]} />
-						<LastSold lastSoldFor={details.last_sold_for}/>
+						<Details firstRecord={modal.propertyData.records[0]} />
+						<LastSold lastSoldFor={modal.propertyData.last_sold_for}/>
 						{
 							!isNull(latestMortgage) ? (
 								<Mortgage borrower={latestMortgage.borrower} lender={latestMortgage.lender} />
@@ -60,9 +59,11 @@ export default function PropertyDetailsModalContent({ modal, details }: Property
 						layout="preserve-aspect"
 						className={modal.isExpanded ? "w-1/2 space-y-4" : "space-y-4"}
 					>
-						<Zoning zoning={details.zoning} />
+						<Zoning zoning={modal.propertyData.zoning} />
 
-						<Owners currentOwners={details.owners.current_owners} previousOwners={details.owners.previous_owners}/>
+						<Owners currentOwners={modal.propertyData.owners.current_owners}
+                                previousOwners={modal.propertyData.owners.previous_owners}
+                        />
 
 					</motion.div>
 				</motion.div>
@@ -74,10 +75,10 @@ export default function PropertyDetailsModalContent({ modal, details }: Property
 							animate={{ opacity: 1, height: "auto" }}
 							exit={{ opacity: 0, height: 0 }}
 						>
-							<Permits permits={details.permits}/>
-							<Complaints complaints={details.complaints} />
-							<Violations violations={details.violations} />
-							<PropertyRecordGrid data={details.records} />
+							<Permits permits={modal.propertyData.permits}/>
+							<Complaints complaints={modal.propertyData.complaints} />
+							<Violations violations={modal.propertyData.violations} />
+							<PropertyRecordGrid data={modal.propertyData.records} />
 						</motion.div>
 					)}
 				</AnimatePresence>

@@ -11,9 +11,9 @@ interface MortgageDetailsProps {
     lender: PropertyRecord
 }
 
-export default function Mortgage(props: MortgageDetailsProps) {
-	const { recordedfiled, amount } = props.borrower
-	const lenderName = props.lender.party_name
+export default function Mortgage({borrower, lender}: MortgageDetailsProps) {
+	const { recordedfiled, amount } = borrower
+	const lenderName = lender.party_name
 
 	return (
 		<Card className="w-full">

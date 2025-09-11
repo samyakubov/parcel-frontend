@@ -14,7 +14,6 @@ export default function Footer() {
 					<SocialLinks />
 				</div>
 			</div>
-
 		</footer>
 	)
 }

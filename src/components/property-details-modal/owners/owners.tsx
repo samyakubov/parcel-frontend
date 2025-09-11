@@ -17,8 +17,7 @@ interface OwnerProps {
     previousOwners: string[];
 }
 
-export default function Owners(props: OwnerProps) {
-	const { currentOwners, previousOwners } = props
+export default function Owners({ currentOwners, previousOwners }: OwnerProps) {
 
 	const [searchTerm, setSearchTerm] = useState<string>("")
 

@@ -6,10 +6,9 @@ import { modalStore } from "@/stores/modal-store"
 
 interface PropertyDetailsModalHeaderProps {
     modal: PropertyModal;
-    details: PropertyDetails;
 }
 
-export default function PropertyDetailsModalHeader ({ modal, details }: PropertyDetailsModalHeaderProps) {
+export default function PropertyDetailsModalHeader ({ modal }: PropertyDetailsModalHeaderProps) {
 	return (
 		<motion.div
 			layout="preserve-aspect"
@@ -27,8 +26,10 @@ export default function PropertyDetailsModalHeader ({ modal, details }: Property
 					target="_blank"
 					rel="noopener noreferrer"
 					className="text-xl font-bold text-primary bg-clip-text transition-all duration-300 ease-out group"
-					href={`http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?boro=
-					${details.records[0].bbl[0]}&block=${details.records[0].prop_block}&lot=${details.records[0].prop_lot}`}
+					href={`http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet
+					?boro=${modal.propertyData.records[0].bbl[0]}
+					&block=${modal.propertyData.records[0].prop_block}
+					&lot=${modal.propertyData.records[0].prop_lot}`}
 				>
 					<span>
 						{modal.title}

@@ -16,7 +16,6 @@ function PropertyDetailsModal(props: PropertyInfoModalProps) {
 	const { id } = props
 
 	const modal = modalStore._propertyModals.filter(propertyModal => propertyModal.id === id)[0]
-	const details = modal.propertyData
 
 	const getPanelClassName = () => {
 		const baseClasses = "overflow-hidden flex flex-col"
@@ -35,8 +34,8 @@ function PropertyDetailsModal(props: PropertyInfoModalProps) {
 				className="flex flex-col h-full overflow-hidden"
 				style={{ zIndex: modal.zIndex }}
 			>
-				<PropertyDetailsModalHeader modal={modal} details={details} />
-				<PropertyDetailsModalContent modal={modal} details={details} />
+				<PropertyDetailsModalHeader modal={modal}/>
+				<PropertyDetailsModalContent modal={modal}/>
 			</motion.div>
 		</Modal>
 	)

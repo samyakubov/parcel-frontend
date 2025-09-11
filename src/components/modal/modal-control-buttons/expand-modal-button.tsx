@@ -11,8 +11,7 @@ interface ExpandModalButtonProps {
     isExpandable: boolean
 }
 
-export default function ExpandModalButton(props: ExpandModalButtonProps) {
-	const { isExpanded, setIsExpanded, isExpandable } = props
+export default function ExpandModalButton({ isExpanded, setIsExpanded, isExpandable }: ExpandModalButtonProps) {
 
 	if (!isExpandable || isUndefined(setIsExpanded)) return null
 

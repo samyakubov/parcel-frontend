@@ -7,7 +7,7 @@ import {NYC_BOUNDS, NYC_CENTER} from "@/constants/mapbox"
 export default function useAddressAutocomplete() {
 	const accessToken = process.env.NEXT_PUBLIC_MAPBOX_API_KEY as string
 
-	const debouncedFetch = debounce(async (addressSearchQuery: string, accessToken: string) => {
+	const debouncedFetch = debounce(async (addressSearchQuery: string, token: string) => {
 
 		if (addressSearchQuery.length < 2) {
 			return
@@ -19,7 +19,7 @@ export default function useAddressAutocomplete() {
 				`${process.env.NEXT_PUBLIC_MAPBOX_API_URL}/${encodedQuery}.json`,
 				{
 					params: {
-						access_token: accessToken,
+						access_token: token,
 						types: "address",
 						limit: 5,
 						bbox: `${NYC_BOUNDS[0][0]},${NYC_BOUNDS[0][1]},${NYC_BOUNDS[1][0]},${NYC_BOUNDS[1][1]}`,
@@ -40,5 +40,5 @@ export default function useAddressAutocomplete() {
 
 	return useCallback(() => {
 		debouncedFetch(searchStore._addressSearchQuery, accessToken)
-	}, [searchStore._addressSearchQuery, accessToken])
+	}, [searchStore._addressSearchQuery, accessToken, debouncedFetch])
 }

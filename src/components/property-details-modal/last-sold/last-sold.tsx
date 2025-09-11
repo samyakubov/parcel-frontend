@@ -11,8 +11,7 @@ interface PropertyLastSaleProps {
     lastSoldFor: LastSoldFor
 }
 
-export default function LastSold(props: PropertyLastSaleProps) {
-	const {lastSoldFor} = props
+export default function LastSold({lastSoldFor}: PropertyLastSaleProps) {
 	const hasNoSaleData = !lastSoldFor.last_sold_price && !lastSoldFor.sale_date
 
 	if (hasNoSaleData) {

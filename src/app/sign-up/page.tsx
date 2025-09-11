@@ -1,6 +1,6 @@
 "use client"
-import { SignUpHero } from "@/components/sign-up/sign-up-hero"
-import { SignUpForm } from "@/components/sign-up/sign-up-form"
+import SignUpForm from "@/components/sign-up/sign-up-form"
+import SignUpHero from "@/components/sign-up/sign-up-hero"
 
 export default function SignUp() {
 	return (
