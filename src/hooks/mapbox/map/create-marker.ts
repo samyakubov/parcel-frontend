@@ -1,6 +1,6 @@
 import mapboxgl from "mapbox-gl"
 
-export const createMarker = (lng: number, lat: number, map: mapboxgl.Map) => {
+export default function createMarker(lng: number, lat: number, map: mapboxgl.Map) {
 	const mainMarker = new mapboxgl.Marker()
 	const mainEl = mainMarker.getElement()
 	mainEl.style.opacity = "0"
