@@ -2,6 +2,9 @@ import { useCallback, useRef } from "react"
 import isNull from "lodash-es/isNull"
 import { mapStore } from "@/stores/map-store"
 import mapboxgl from "mapbox-gl"
+import { createMarker } from "./create-marker"
+import { flyTo } from "./fly-to"
+import { addPropertyModal } from "./add-property-modal"
 
 export default function useHandleMapClick(mapRef: React.RefObject<mapboxgl.Map | null>) {
 	const markerRef = useRef<mapboxgl.Marker | null>(null)
@@ -12,28 +15,15 @@ export default function useHandleMapClick(mapRef: React.RefObject<mapboxgl.Map |
 
 		try {
 			mapStore.setCoords({ latitude: lat, longitude: lng })
-
 			if (!isNull(markerRef.current)) {
 				markerRef.current.remove()
 			}
 
-			const mainMarker = new mapboxgl.Marker()
-			const mainEl = mainMarker.getElement()
-			mainEl.style.opacity = "0"
-			mainEl.style.transition = "opacity 0.5s"
+			markerRef.current = createMarker(lng, lat, mapRef.current)
 
-			mainMarker.setLngLat([lng, lat]).addTo(mapRef.current)
-			setTimeout(() => (mainEl.style.opacity = "1"), 50)
+			flyTo(lng, lat, mapRef.current)
 
-			markerRef.current = mainMarker
-
-			mapRef.current.flyTo({
-				center: [lng, lat],
-				zoom: 18,
-				duration: 3000,
-				essential: true,
-				curve: 1.42,
-			})
+			addPropertyModal(lat, lng)
 		} catch (error) {
 			console.error("Error handling map click:", error)
 		}

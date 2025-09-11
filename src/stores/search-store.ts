@@ -5,26 +5,26 @@ class SearchStore {
 		makeAutoObservable(this)
 	}
 
-	public addressSearchQuery = ""
+	public _addressSearchQuery = ""
 
-	public suggestions: MapboxFeature[] = []
-	public isSuggestionsOpen = false
-	public suggestionsError: string | null = null
+	public _suggestions: MapboxFeature[] = []
+	public _isSuggestionsOpen = false
+	public _suggestionsError: string | null = null
 
 	public setAddressSearchQuery = action((query: string) =>{
-		this.addressSearchQuery = query
+		this._addressSearchQuery = query
 	})
 
 	public setSuggestions = action((newSuggestions: MapboxFeature[]) =>{
-		this.suggestions = newSuggestions
+		this._suggestions = newSuggestions
 	})
 
 	public setIsSuggestionsOpen = action((isSuggestionsOpen: boolean) => {
-		this.isSuggestionsOpen = isSuggestionsOpen
+		this._isSuggestionsOpen = isSuggestionsOpen
 	})
 
 	public setSuggestionsError = action((error: string | null) => {
-		this.suggestionsError = error
+		this._suggestionsError = error
 	})
 
 }
