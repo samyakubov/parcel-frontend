@@ -2,13 +2,14 @@
 import React from "react"
 import { Building2 } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
+import {isEmpty} from "lodash-es"
 
 interface CommercialOverlaysProps {
     overlays: string[];
 }
 
 export default function CommercialOverlays({ overlays }: CommercialOverlaysProps) {
-	if (overlays.length === 0) return null
+	if (isEmpty(overlays)) return null
 
 	return (
 		<div className="flex items-start gap-3 p-3 rounded-lg border bg-card">

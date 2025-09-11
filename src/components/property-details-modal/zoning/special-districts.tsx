@@ -2,13 +2,14 @@
 import React from "react"
 import { Hash } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
+import {isEmpty} from "lodash-es"
 
 interface SpecialDistrictsProps {
     districts: string[];
 }
 
 export default function SpecialDistricts({ districts }: SpecialDistrictsProps) {
-	if (districts.length === 0) return null
+	if (isEmpty(districts)) return null
 
 	return (
 		<div className="flex items-start gap-3 p-3 rounded-lg border bg-card">

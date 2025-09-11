@@ -10,17 +10,17 @@ import CommercialOverlays from "@/components/property-details-modal/zoning/comme
 import LimitedHeightDistrict from "@/components/property-details-modal/zoning/limited-height-district"
 import LastUpdated from "@/components/property-details-modal/zoning/last-updated"
 import ZoningDistricts from "@/components/property-details-modal/zoning/zoning-districts"
+import {isEmpty} from "lodash-es"
 
 interface ZoningSectionProps {
     zoning: Zoning
 }
 
 export default function Zoning({ zoning }: ZoningSectionProps) {
-
 	const hasNoZoningData = isNull(zoning.zoning_districts) || isUndefined(zoning.zoning_districts) || (
-		zoning.zoning_districts.length === 0 &&
-        zoning.commercial_overlays.length === 0 &&
-        zoning.special_districts.length === 0 &&
+		isEmpty(zoning.zoning_districts) &&
+        isEmpty(zoning.commercial_overlays) &&
+        isEmpty(zoning.special_districts) &&
         !zoning.limited_height_district
 	)
 
