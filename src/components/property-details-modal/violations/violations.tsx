@@ -17,8 +17,8 @@ export default function Violations({ violations }: ViolationsProps) {
 
 	if (isEmpty(violations)) {
 		return (
-			<Card className="border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-950">
-				<CardContent className="p-6">
+			<Card className="border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-950 mb-3">
+				<CardContent className="p-2">
 					<motion.div className="flex items-center gap-3">
 						<div className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-900">
 							<AlertTriangle className="h-6 w-6 text-slate-600 dark:text-slate-400" />

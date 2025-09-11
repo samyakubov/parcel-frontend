@@ -17,8 +17,8 @@ export default function Complaints({ complaints }: ComplaintsProps) {
 
 	if (isEmpty(complaints)) {
 		return (
-			<Card className="border-emerald-200 bg-emerald-50 dark:border-emerald-800 dark:bg-emerald-950">
-				<CardContent className="p-6">
+			<Card className="border-emerald-200 bg-emerald-50 dark:border-emerald-800 dark:bg-emerald-950 mb-3">
+				<CardContent className="p-2">
 					<motion.div className="flex items-center gap-3">
 						<div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-900">
 							<CircleAlert className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
