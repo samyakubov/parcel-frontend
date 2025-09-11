@@ -6,6 +6,7 @@ import {mapStore} from "@/stores/map-store"
 import {normalizeStreetNames} from "@/utils/normalize-street-names"
 import {apiClient} from "@/api/api-client"
 import {modalStore} from "@/stores/modal-store"
+import isHTTPError from "@/api/is-http-error"
 
 export default function useSearchByFuzzyCoords() {
 
@@ -13,17 +14,16 @@ export default function useSearchByFuzzyCoords() {
         try {
             if (isNull(mapStore._coords)) return
 
-            // searchStore.setIsSearchResultLoading(true)
+            mapStore.setIsPropertyDataLoading(true)
             const response = await apiClient.propertyService.searchByPropertyFuzzyCoords(
                 { latitude: mapStore._coords.latitude, longitude: mapStore._coords.longitude }
             )
-            // searchStore.setIsSearchResultLoading(false)
+            mapStore.setIsPropertyDataLoading(false)
 
-            // if (isHTTPError(response)) {
-            //     return toast.error(response.message)
-            // }
+            if (isHTTPError(response)) {
+                return toast.error(response.message)
+            }
 
-            // searchStore.setPropertyResults(response)
             const firstRecord = response.records[0]
 
             mapStore.setCoords(response.coordinates)

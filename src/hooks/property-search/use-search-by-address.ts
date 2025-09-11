@@ -6,6 +6,7 @@ import {mapStore} from "@/stores/map-store"
 import {apiClient} from "@/api/api-client"
 import {normalizeStreetNames} from "@/utils/normalize-street-names"
 import {modalStore} from "@/stores/modal-store"
+import isHTTPError from "@/api/is-http-error"
 
 export default function useSearchByAddress() {
     // const location = useLocation()
@@ -14,13 +15,13 @@ export default function useSearchByAddress() {
         try {
             if (isEmpty(searchStore._addressSearchQuery)) return
 
-            // searchStore.setIsSearchResultLoading(true)
+            mapStore.setIsPropertyDataLoading(true)
             const response = await apiClient.propertyService.searchByPropertyAddress(searchStore._addressSearchQuery)
-            // searchStore.setIsSearchResultLoading(false)
+            mapStore.setIsPropertyDataLoading(false)
 
-            // if (isHTTPError(response)) {
-            //     return toast.error(response.message)
-            // }
+            if (isHTTPError(response)) {
+                return toast.error(response.message)
+            }
             mapStore.setCoords(response.coordinates)
             const firstRecord = response.records[0]
             modalStore.addPropertyModal(
