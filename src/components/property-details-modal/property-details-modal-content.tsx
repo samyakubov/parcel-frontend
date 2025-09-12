@@ -48,11 +48,15 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
 							!isNull(latestMortgage) ? (
 								<Mortgage borrower={latestMortgage.borrower} lender={latestMortgage.lender} />
 							) : (
-								<Card>
-									<CardHeader>Mortgage Details</CardHeader>
-									<CardContent>No mortgage on record</CardContent>
-								</Card>
-							)
+                                <Card className="rounded-2xl shadow-md border p-4">
+                                    <CardHeader className="text-xl font-semibold text-gray-800">
+                                        Mortgage Details
+                                    </CardHeader>
+                                    <CardContent className="text-gray-600">
+                                        No mortgage on record
+                                    </CardContent>
+                                </Card>
+                            )
 						}
 					</motion.div>
 					<motion.div
