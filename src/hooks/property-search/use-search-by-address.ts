@@ -1,4 +1,4 @@
-import { useCallback } from "react"
+import {useCallback, useRef} from "react"
 import { toast } from "react-toastify"
 import isEmpty from "lodash-es/isEmpty"
 import {searchStore} from "@/stores/search-store"
@@ -7,9 +7,14 @@ import {apiClient} from "@/api/api-client"
 import {normalizeStreetNames} from "@/utils/normalize-street-names"
 import {modalStore} from "@/stores/modal-store"
 import isHTTPError from "@/api/is-http-error"
+import createMarker from "@/hooks/mapbox/map/create-marker"
+import isNull from "lodash-es/isNull"
+import useFlyTo from "@/hooks/mapbox/map/fly-to"
+
 
 export default function useSearchByAddress() {
-    // const location = useLocation()
+    const markerRef = useRef<mapboxgl.Marker | null>(null)
+    const flyTo = useFlyTo()
 
     return useCallback(async () => {
         try {
@@ -29,10 +34,16 @@ export default function useSearchByAddress() {
                 `${firstRecord.prop_streetnumber} ${normalizeStreetNames(firstRecord.prop_streetname)}`,
                 response
             )
+            if (!isNull(mapStore._map) && !isNull(mapStore._coords)) {
+                if (!isNull(markerRef.current)) {
+                    markerRef.current.remove()
+                }
+                markerRef.current = createMarker(mapStore._coords.longitude, mapStore._coords.latitude)
+                flyTo(mapStore._map)
+            }
         } catch (e) {
             console.error("Error fetching records:", e)
             toast.error("An error occurred. Please try again later.")
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [apiClient.propertyService, searchStore._addressSearchQuery, mapStore, location.pathname, modalStore])
+    }, [flyTo])
 }

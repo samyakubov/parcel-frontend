@@ -1,13 +1,14 @@
 import { useCallback, useRef } from "react"
 import isNull from "lodash-es/isNull"
 import { mapStore } from "@/stores/map-store"
-import flyTo from "@/hooks/mapbox/map/fly-to"
 import useSearchByFuzzyCoords from "@/hooks/property-search/use-search-by-fuzzy-coords"
 import createMarker from "@/hooks/mapbox/map/create-marker"
+import useFlyTo from "@/hooks/mapbox/map/fly-to"
 
 export default function useHandleMapClick(mapRef: React.RefObject<mapboxgl.Map | null>) {
 	const markerRef = useRef<mapboxgl.Marker | null>(null)
     const searchByFuzzyCoords = useSearchByFuzzyCoords()
+    const flyTo = useFlyTo()
 
 	return useCallback(async (e: mapboxgl.MapMouseEvent) => {
 		if (isNull(mapRef.current)) return
@@ -18,10 +19,9 @@ export default function useHandleMapClick(mapRef: React.RefObject<mapboxgl.Map |
 			if (!isNull(markerRef.current)) {
 				markerRef.current.remove()
 			}
+			markerRef.current = createMarker(lng, lat)
 
-			markerRef.current = createMarker(lng, lat, mapRef.current)
-
-			flyTo(lng, lat, mapRef.current)
+			flyTo(mapRef.current)
 
             await searchByFuzzyCoords()
 		} catch (error) {
