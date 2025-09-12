@@ -56,13 +56,7 @@ class ModalStore {
 		const existingModal = this._propertyModals.find(modal => modal.title === title)
 
 		if (!isUndefined(existingModal)) {
-			if (existingModal.isMinimized) {
-				existingModal.isMinimized = false
-				existingModal.isOpen = true
-			}
-			existingModal.propertyData = propertyData
-			existingModal.zIndex = this.getNextZIndex()
-			return existingModal.id
+			this.restoreModal(existingModal.id)
 		}
 
 		const newModal: PropertyModal = {
@@ -78,7 +72,6 @@ class ModalStore {
 		}
 
 		this._propertyModals.push(newModal)
-		return newModal.id
 	})
 
 	public focusModal = action((id: string) => {

@@ -3,10 +3,10 @@ import { mapStore } from "@/stores/map-store"
 import isNull from "lodash-es/isNull"
 
 export default function useFlyTo() {
-    return useCallback((map: mapboxgl.Map) => {
+    return useCallback(() => {
         const coords = mapStore._coords
-
-        if (isNull(coords)) {
+        const map = mapStore._map
+        if (isNull(coords) || isNull(map)) {
             console.warn("No coordinates available for flyTo")
             return
         }

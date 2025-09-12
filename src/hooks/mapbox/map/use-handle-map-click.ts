@@ -21,7 +21,7 @@ export default function useHandleMapClick(mapRef: React.RefObject<mapboxgl.Map |
 			}
 			markerRef.current = createMarker(lng, lat)
 
-			flyTo(mapRef.current)
+			flyTo()
 
             await searchByFuzzyCoords()
 		} catch (error) {

@@ -10,6 +10,7 @@ import isHTTPError from "@/api/is-http-error"
 import createMarker from "@/hooks/mapbox/map/create-marker"
 import isNull from "lodash-es/isNull"
 import useFlyTo from "@/hooks/mapbox/map/fly-to"
+import isUndefined from "lodash-es/isUndefined"
 
 
 export default function useSearchByAddress() {
@@ -19,6 +20,13 @@ export default function useSearchByAddress() {
     return useCallback(async () => {
         try {
             if (isEmpty(searchStore._addressSearchQuery)) return
+
+            const existingModal = modalStore._propertyModals.find(modal => modal.title === searchStore._addressSearchQuery)
+
+            if (!isUndefined(existingModal)) {
+                modalStore.restoreModal(existingModal.id)
+                return
+            }
 
             mapStore.setIsPropertyDataLoading(true)
             const response = await apiClient.propertyService.searchByPropertyAddress(searchStore._addressSearchQuery)
@@ -39,7 +47,7 @@ export default function useSearchByAddress() {
                     markerRef.current.remove()
                 }
                 markerRef.current = createMarker(mapStore._coords.longitude, mapStore._coords.latitude)
-                flyTo(mapStore._map)
+                flyTo()
             }
         } catch (e) {
             console.error("Error fetching records:", e)
