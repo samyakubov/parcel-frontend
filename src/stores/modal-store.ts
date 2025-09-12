@@ -102,7 +102,7 @@ class ModalStore {
 		if (modal) {
 			this.setModalState(id, {
 				isExpanded: !modal.isExpanded,
-				position: { x: 0, y: 0 }
+				position: !modal.isExpanded ? { x: 0, y: 0 } : this.calculateNewModalPosition()
 			})
 		}
 	})
