@@ -23,7 +23,7 @@ function PropertyDetailsModal({ id }: PropertyInfoModalProps) {
 	return (
 		<Modal
 			isExpandable={true}
-			modalId={modal.id}>
+			currentModal={modal}>
 			<motion.div
 				layout="preserve-aspect"
 				className="flex flex-col h-full overflow-hidden"

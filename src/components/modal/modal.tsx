@@ -1,23 +1,19 @@
 "use client"
 import React from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { modalStore } from "@/stores/modal-store"
 import ModalContent from "@/components/modal/modal-content"
 
 interface ModalProps {
     children: React.ReactNode;
     isExpandable: boolean;
-    modalId: string;
+    currentModal: PropertyModal;
 }
 
 export default function Modal({
   children,
   isExpandable,
-  modalId,
+  currentModal,
 }: ModalProps) {
-
-
-	const currentModal = modalStore.getModal(modalId)
 
 	return (
 		<AnimatePresence>
@@ -35,7 +31,7 @@ export default function Modal({
 			>
 				<ModalContent
 					isExpandable={isExpandable}
-					modalId={modalId}
+					currentModal={currentModal}
 				>
 					{children}
 				</ModalContent>

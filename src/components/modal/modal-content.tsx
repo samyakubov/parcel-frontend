@@ -1,26 +1,19 @@
 "use client"
 import React from "react"
 import { motion } from "framer-motion"
-import isUndefined from "lodash-es/isUndefined"
-import { modalStore } from "@/stores/modal-store"
 import ModalControls from "@/components/modal/modal-controls"
 
 interface ModalContentProps {
     children: React.ReactNode;
     isExpandable: boolean;
-    modalId: string;
+    currentModal: PropertyModal;
 }
 
 export default function ModalContent ({
 	children,
 	isExpandable,
-	modalId,
+	currentModal,
 } : ModalContentProps) {
-
-	const currentModal = modalStore.getModal(modalId)
-    if (isUndefined(currentModal)) {
-        return
-    }
 
     const getPanelClassName = () => {
         const baseClasses = "overflow-hidden flex flex-col"
@@ -45,10 +38,11 @@ export default function ModalContent ({
 				transformOrigin: "center top",
 			}}
 		>
-			<ModalControls
+            <ModalControls
                 currentModal={currentModal}
-				isExpandable={isExpandable}
-			/>
+                isExpandable={isExpandable}
+            />
+
 			<div className="overflow-y-auto" onClick={(e) => e.stopPropagation()}>
 				{children}
 			</div>
