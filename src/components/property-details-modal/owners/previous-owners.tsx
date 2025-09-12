@@ -4,6 +4,7 @@ import { Search, Clock } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import OwnerList from "@/components/property-details-modal/owners/owner-list"
+import {isEmpty} from "lodash-es"
 
 interface PreviousOwnersProps {
     previousOwners: string[];
@@ -23,7 +24,7 @@ export default function PreviousOwners({ previousOwners }: PreviousOwnersProps) 
         return filteredPreviousOwners.slice().sort((a, b) => a.localeCompare(b))
     }, [filteredPreviousOwners])
 
-    if (previousOwners.length === 0) return null
+    if (isEmpty(previousOwners)) return null
 
     return (
         <div className="space-y-4">

@@ -92,9 +92,9 @@ class ModalStore {
 		this.setModalState(id, {
 			isMinimized: false,
 			isOpen: true,
-			zIndex: this.getNextZIndex(),
 			position:this.calculateNewModalPosition()
 		})
+        this.focusModal(id)
 	})
 
 	public toggleModalExpand = action((id: string) => {

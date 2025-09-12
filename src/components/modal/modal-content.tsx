@@ -7,21 +7,30 @@ import ModalControls from "@/components/modal/modal-controls"
 
 interface ModalContentProps {
     children: React.ReactNode;
-    panelClassName?: string;
     isExpandable: boolean;
     modalId: string;
 }
 
 export default function ModalContent ({
 	children,
-	panelClassName,
 	isExpandable,
 	modalId,
 } : ModalContentProps) {
 
-
 	const currentModal = modalStore.getModal(modalId)
+    if (isUndefined(currentModal)) {
+        return
+    }
 
+    const getPanelClassName = () => {
+        const baseClasses = "overflow-hidden flex flex-col"
+        if (isExpandable) {
+            return currentModal.isExpanded
+                ? `fixed left-20 right-4 top-4 bottom-4 ${baseClasses}`
+                : `fixed right-4 top-4 w-11/12 max-w-md h-[95vh] ${baseClasses}`
+        }
+        return `fixed right-4 top-4 w-11/12 max-w-md h-[95vh] ${baseClasses}`
+    }
 	return (
 		<motion.div
 			drag
@@ -30,31 +39,15 @@ export default function ModalContent ({
 			animate="visible"
 			exit="exit"
 			transition={{ x: { duration: 0 }, y: { duration: 0 } }}
-			className={`bg-background rounded-lg shadow-lg ${panelClassName}`}
+			className={`bg-background rounded-lg shadow-lg ${getPanelClassName()}`}
 			style={{
 				pointerEvents: "auto",
 				transformOrigin: "center top",
 			}}
 		>
 			<ModalControls
-				className="absolute top-4 right-4 z-10"
+                currentModal={currentModal}
 				isExpandable={isExpandable}
-				isExpanded={currentModal?.isExpanded}
-				setIsExpanded={()=>{
-					if (!isUndefined(currentModal)) {
-						modalStore.toggleModalExpand(modalId)
-					}
-				}}
-				onClose={()=>{
-					if (!isUndefined(currentModal)) {
-						modalStore.closeModal(modalId)
-					}
-				}}
-				onMinimize={()=>{
-					if (!isUndefined(currentModal)) {
-						modalStore.minimizeModal(modalId)
-					}
-				}}
 			/>
 			<div className="overflow-y-auto" onClick={(e) => e.stopPropagation()}>
 				{children}

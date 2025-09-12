@@ -6,14 +6,12 @@ import ModalContent from "@/components/modal/modal-content"
 
 interface ModalProps {
     children: React.ReactNode;
-    panelClassName?: string;
     isExpandable: boolean;
     modalId: string;
 }
 
 export default function Modal({
   children,
-  panelClassName,
   isExpandable,
   modalId,
 }: ModalProps) {
@@ -36,7 +34,6 @@ export default function Modal({
 				}}
 			>
 				<ModalContent
-					panelClassName={panelClassName}
 					isExpandable={isExpandable}
 					modalId={modalId}
 				>
