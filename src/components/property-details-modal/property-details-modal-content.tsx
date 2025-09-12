@@ -13,6 +13,8 @@ import Owners from "@/components/property-details-modal/owners/owners"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import PropertyRecordGrid from "@/components/property-details-modal/property-records-grid"
 import getMortgageDetails from "@/utils/get-mortgage-details"
+import {Landmark} from "lucide-react"
+import {Alert, AlertDescription} from "@/components/ui/alert"
 
 interface PropertyDetailsModalContentProps {
     modal: PropertyModal;
@@ -39,7 +41,9 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
 							layout="preserve-aspect"
 							className="rounded-lg w-full h-64 object-cover mb-4"
 							src={`https://maps.googleapis.com/maps/api/streetview?size=800x300&location=
-							${modal.coords.latitude},${modal.coords.longitude}&key=${process.env.NEXT_PUBLIC_STREETVIEW_API_KEY}`}
+							${modal.coords.latitude},${modal.coords.longitude}
+							&key=${process.env.NEXT_PUBLIC_STREETVIEW_API_KEY}`
+                        }
 							alt="Google Street View"
 						/>
 						<Details firstRecord={modal.propertyData.records[0]} />
@@ -48,14 +52,32 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
 							!isNull(latestMortgage) ? (
 								<Mortgage borrower={latestMortgage.borrower} lender={latestMortgage.lender} />
 							) : (
-                                <Card className="rounded-2xl shadow-md border p-4">
-                                    <CardHeader className="text-xl font-semibold text-gray-800">
-                                        Mortgage Details
-                                    </CardHeader>
-                                    <CardContent className="text-gray-600">
-                                        No mortgage on record
-                                    </CardContent>
-                                </Card>
+                                <motion.div
+                                    initial={{ opacity: 0, y: -20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    className="w-full"
+                                    >
+                                    <Card>
+                                        <CardHeader>
+                                            <div className="flex items-center gap-2">
+                                                <div className="p-2 rounded-full bg-destructive/10">
+                                                    <Landmark className="h-4 w-4 text-muted-foreground" />
+                                                </div>
+                                                <h3 className="text-lg font-semibold text-destructive">
+                                                    Mortgage Details
+                                                </h3>
+                                            </div>
+                                        </CardHeader>
+                                        <CardContent>
+                                            <Alert variant="destructive">
+                                                <AlertDescription>
+                                                    No mortgage on record
+                                                </AlertDescription>
+                                            </Alert>
+                                        </CardContent>
+                                    </Card>
+                                </motion.div>
+
                             )
 						}
 					</motion.div>

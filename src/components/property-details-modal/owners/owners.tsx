@@ -64,7 +64,7 @@ export default function Owners({ currentOwners, previousOwners }: OwnerProps) {
 					<OwnerList owners={sortedOwners} />
 				</CardContent>
 
-				<CardContent className="pt-0">
+				<CardContent>
 					<PreviousOwners previousOwners={previousOwners} />
 				</CardContent>
 			</Card>
