@@ -34,7 +34,6 @@ export default function ModalContent ({
 			className={`bg-background rounded-lg shadow-lg ${getPanelClassName()}`}
 			style={{
 				pointerEvents: "auto",
-				transformOrigin: "center top",
 				x: currentModal.position.x,
 				y: currentModal.position.y,
 			}}

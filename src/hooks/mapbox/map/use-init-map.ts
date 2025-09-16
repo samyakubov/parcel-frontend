@@ -2,7 +2,7 @@ import {useEffect, useRef} from "react"
 import mapboxgl from "mapbox-gl"
 import useHandleMapClick from "@/hooks/mapbox/map/use-handle-map-click"
 import {NYC_BOUNDS, NYC_CENTER} from "@/constants/mapbox"
-import {mapStore} from "@/stores/map-store";
+import {mapStore} from "@/stores/map-store"
 
 
 export default function useInitMap(containerId:string) {
