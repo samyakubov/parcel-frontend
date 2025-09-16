@@ -6,13 +6,13 @@ import ModalContent from "@/components/modal/modal-content"
 interface ModalProps {
     children: React.ReactNode;
     isExpandable: boolean;
-    currentModal: PropertyModal;
+    modal: PropertyModal;
 }
 
 export default function Modal({
   children,
   isExpandable,
-  currentModal,
+  modal,
 }: ModalProps) {
 
 	return (
@@ -22,16 +22,15 @@ export default function Modal({
 				animate="visible"
 				exit="exit"
 				transition={{ duration: 0.2 }}
-				className="fixed inset-0 z-50 overflow-hidden"
-				style={{
+				className={"fixed inset-0 overflow-hidden"}
+                style={{
 					pointerEvents: "none",
-					x: currentModal?.position.x,
-					y: currentModal?.position.y,
+                    zIndex: modal.zIndex
 				}}
 			>
 				<ModalContent
 					isExpandable={isExpandable}
-					currentModal={currentModal}
+					currentModal={modal}
 				>
 					{children}
 				</ModalContent>

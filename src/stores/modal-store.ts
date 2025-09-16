@@ -77,7 +77,7 @@ class ModalStore {
 	public focusModal = action((id: string) => {
 		const modal = this.getModal(id)
 		if (modal && !modal.isMinimized) {
-			modal.zIndex = this.getNextZIndex()
+			this.setModalState(id, { zIndex: this.getNextZIndex() })
 		}
 	})
 
@@ -102,7 +102,7 @@ class ModalStore {
 		if (modal) {
 			this.setModalState(id, {
 				isExpanded: !modal.isExpanded,
-				position: !modal.isExpanded ? { x: 0, y: 0 } : this.calculateNewModalPosition()
+				position: { x: 0, y: 0 }
 			})
 		}
 	})

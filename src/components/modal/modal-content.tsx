@@ -19,10 +19,9 @@ export default function ModalContent ({
         const baseClasses = "overflow-hidden flex flex-col"
         if (isExpandable) {
             return currentModal.isExpanded
-                ? `fixed w-[90vw] h-[90vh] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ${baseClasses}`
+                ? `fixed w-[90vw] h-[90vh] ${baseClasses}`
                 : `fixed right-4 top-4 w-11/12 max-w-md h-[95vh] ${baseClasses}`
         }
-        return `fixed right-4 top-4 w-11/12 max-w-md h-[95vh] ${baseClasses}`
     }
 	return (
 		<motion.div
@@ -36,6 +35,8 @@ export default function ModalContent ({
 			style={{
 				pointerEvents: "auto",
 				transformOrigin: "center top",
+				x: currentModal.position.x,
+				y: currentModal.position.y,
 			}}
 		>
             <ModalControls

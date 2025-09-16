@@ -23,11 +23,10 @@ function PropertyDetailsModal({ id }: PropertyInfoModalProps) {
 	return (
 		<Modal
 			isExpandable={true}
-			currentModal={modal}>
+			modal={modal}>
 			<motion.div
 				layout="preserve-aspect"
 				className="flex flex-col h-full overflow-hidden"
-				style={{ zIndex: modal.zIndex }}
 			>
 				<PropertyDetailsModalHeader modal={modal}/>
 				<PropertyDetailsModalContent modal={modal}/>
