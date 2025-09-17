@@ -22,7 +22,7 @@ function SearchBarWithAutocomplete() {
 			<div className="flex gap-4">
 				<Input
 					placeholder="Enter property address"
-					className="border-border flex-grow bg-white"
+					className="border-border flex-grow bg-background"
 					value={searchStore._addressSearchQuery}
 					onChange={(e)=> searchStore.setAddressSearchQuery(e.target.value)}
 				/>

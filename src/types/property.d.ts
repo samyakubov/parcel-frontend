@@ -22,7 +22,7 @@ declare global {
         last_sold_for: LastSoldFor;
         owners: Owners;
         records: PropertyRecord[];
-        permits:PulledPermit[];
+        job_filings:JobFiled[];
         violations: Violation[];
         complaints: Complaint[];
         zoning: Zoning;
@@ -92,7 +92,7 @@ declare global {
         dobrun_date: string;
     }
 
-    interface PulledPermit{
+    interface JobFiled {
         job_filing_number: string;
         job_description: string;
         filing_reason: string;

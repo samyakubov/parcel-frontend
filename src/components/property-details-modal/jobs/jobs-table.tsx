@@ -13,11 +13,11 @@ import {
 } from "@/components/ui/table"
 import { PERMIT_COLUMNS } from "@/constants/property"
 
-interface PermitsTableProps {
-    permits: PulledPermit[];
+interface JobsTableProps {
+    jobs: JobFiled[];
 }
 
-export default function PermitsTable({ permits }: PermitsTableProps) {
+export default function JobsTable({ jobs }: JobsTableProps) {
 	return (
 		<motion.div
 			initial={{ height: 0, opacity: 0 }}
@@ -43,66 +43,66 @@ export default function PermitsTable({ permits }: PermitsTableProps) {
 						</TableHeader>
 						<TableBody>
 							<AnimatePresence>
-								{permits.map((permit, index) => (
+								{jobs.map((job, index) => (
 									<motion.tr
-										key={permit.job_filing_number}
+										key={job.job_filing_number}
 										initial={{ opacity: 0, x: -20 }}
 										animate={{ opacity: 1, x: 0 }}
 										transition={{ delay: index * 0.05 }}
 										className="border-b transition-colors hover:bg-muted/50"
 									>
 										<TableCell className="py-3 font-medium">
-											{permit.job_filing_number}
+											{job.job_filing_number}
 										</TableCell>
 										<TableCell className="py-3 text-muted-foreground">
-											{permit.filing_reason}
+											{job.filing_reason}
 										</TableCell>
 										<TableCell className="py-3 text-muted-foreground">
-											{permit.work_type}
+											{job.work_type}
 										</TableCell>
 										<TableCell className="py-3 text-muted-foreground">
-											{permit.permittee_s_license_type}
+											{job.permittee_s_license_type}
 										</TableCell>
 										<TableCell className="py-3 text-muted-foreground">
-											{permit.applicant_license_number}
+											{job.applicant_license_number}
 										</TableCell>
 										<TableCell className="py-3 text-muted-foreground">
-											{permit.applicant_first_name}
+											{job.applicant_first_name}
 										</TableCell>
 										<TableCell className="py-3 text-muted-foreground">
-											{permit.applicant_last_name}
+											{job.applicant_last_name}
 										</TableCell>
 										<TableCell className="py-3 text-muted-foreground">
-											{permit.applicant_business_name || (
+											{job.applicant_business_name || (
 												<span className="text-muted-foreground/50">—</span>
 											)}
 										</TableCell>
 										<TableCell className="py-3 text-muted-foreground">
-											{permit.applicant_business_address || (
+											{job.applicant_business_address || (
 												<span className="text-muted-foreground/50">—</span>
 											)}
 										</TableCell>
 										<TableCell className="py-3 text-muted-foreground">
-											{permit.work_permit}
+											{job.work_permit}
 										</TableCell>
 										<TableCell className="py-3 text-muted-foreground">
-											{permit.approved_date || (
+											{job.approved_date || (
 												<span className="text-muted-foreground/50">—</span>
 											)}
 										</TableCell>
 										<TableCell className="py-3 text-muted-foreground">
-											{permit.issued_date || (
+											{job.issued_date || (
 												<span className="text-muted-foreground/50">—</span>
 											)}
 										</TableCell>
 										<TableCell className="py-3 text-muted-foreground max-w-xs truncate">
-											<span title={permit.job_description}>
-												{permit.job_description}
+											<span title={job.job_description}>
+												{job.job_description}
 											</span>
 										</TableCell>
 										<TableCell className="py-3 text-muted-foreground">
-											{permit.estimated_job_costs ?
-												`$${Number(permit.estimated_job_costs).toLocaleString()}` :
+											{job.estimated_job_costs ?
+												`$${Number(job.estimated_job_costs).toLocaleString()}` :
 												<span className="text-muted-foreground/50">—</span>
 											}
 										</TableCell>

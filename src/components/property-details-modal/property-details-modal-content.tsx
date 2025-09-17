@@ -6,12 +6,12 @@ import Details from "@/components/property-details-modal/details"
 import Mortgage from "@/components/property-details-modal/mortgage/mortgage"
 import Zoning from "@/components/property-details-modal/zoning/zoning"
 import LastSold from "@/components/property-details-modal/last-sold/last-sold"
-import Permits from "@/components/property-details-modal/permits/permits"
+import Jobs from "@/components/property-details-modal/jobs/jobs"
 import Complaints from "@/components/property-details-modal/complaints/complaints"
 import Violations from "@/components/property-details-modal/violations/violations"
 import Owners from "@/components/property-details-modal/owners/owners"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import PropertyRecordGrid from "@/components/property-details-modal/property-records-grid"
+import PropertyRecordGrid from "@/components/property-details-modal/property-record-grid/property-records-grid"
 import getMortgageDetails from "@/utils/get-mortgage-details"
 import {Landmark} from "lucide-react"
 import {Alert, AlertDescription} from "@/components/ui/alert"
@@ -101,7 +101,7 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
 							animate={{ opacity: 1, height: "auto" }}
 							exit={{ opacity: 0, height: 0 }}
 						>
-							<Permits permits={modal.propertyData.permits}/>
+							<Jobs jobsFiled={modal.propertyData.job_filings}/>
 							<Complaints complaints={modal.propertyData.complaints} />
 							<Violations violations={modal.propertyData.violations} />
 							<PropertyRecordGrid data={modal.propertyData.records} />

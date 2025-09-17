@@ -4,18 +4,18 @@ import { isEmpty } from "lodash-es"
 import { Card, CardContent } from "@/components/ui/card"
 import { FileWarning } from "lucide-react"
 import { AnimatePresence, motion } from "framer-motion"
-import PermitsHeader from "@/components/property-details-modal/permits/permits-header"
-import PermitsTable from "@/components/property-details-modal/permits/permits-table"
+import JobsHeader from "@/components/property-details-modal/jobs/jobs-header"
+import JobsTable from "@/components/property-details-modal/jobs/jobs-table"
 
 
-interface PermitsProps {
-    permits: PulledPermit[]
+interface JobsProps {
+    jobsFiled: JobFiled[]
 }
 
-export default function Permits({ permits }: PermitsProps) {
+export default function Jobs({ jobsFiled }: JobsProps) {
 	const [isExpanded, setIsExpanded] = useState(false)
 
-	if (isEmpty(permits)) {
+	if (isEmpty(jobsFiled)) {
 		return (
 			<Card className="border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-950 mb-3">
 				<CardContent className="p-2">
@@ -39,14 +39,14 @@ export default function Permits({ permits }: PermitsProps) {
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
 				>
-					<PermitsHeader
+					<JobsHeader
 						isExpanded={isExpanded}
 						setIsExpanded={setIsExpanded}
-						permitsCount={permits.length}
+						jobCount={jobsFiled.length}
 					/>
 
 					<AnimatePresence>
-						{isExpanded && <PermitsTable permits={permits} />}
+						{isExpanded && <JobsTable jobs={jobsFiled} />}
 					</AnimatePresence>
 				</motion.div>
 			</CardContent>

@@ -4,13 +4,13 @@ import { ChevronDown, HardHat } from "lucide-react"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 
-interface PermitsHeaderProps {
+interface JobsHeaderProps {
     isExpanded: boolean;
     setIsExpanded: (isExpanded: boolean) => void;
-    permitsCount: number;
+    jobCount: number;
 }
 
-export default function PermitsHeader({ isExpanded, setIsExpanded, permitsCount }: PermitsHeaderProps) {
+export default function JobsHeader({ isExpanded, setIsExpanded, jobCount }: JobsHeaderProps) {
 	return (
 		<Button
 			variant="ghost"
@@ -23,7 +23,7 @@ export default function PermitsHeader({ isExpanded, setIsExpanded, permitsCount 
 					<HardHat className="h-6 w-6 text-green-600 dark:text-green-400" />
 				</div>
 				<h3 className="text-lg font-semibold text-green-800 dark:text-green-200">
-					Permits ({permitsCount})
+					Permits ({jobCount})
 				</h3>
 			</div>
 			<motion.div
