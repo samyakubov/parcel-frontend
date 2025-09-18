@@ -23,7 +23,7 @@ export default function JobsHeader({ isExpanded, setIsExpanded, jobCount }: Jobs
 					<HardHat className="h-6 w-6 text-green-600 dark:text-green-400" />
 				</div>
 				<h3 className="text-lg font-semibold text-green-800 dark:text-green-200">
-					Permits ({jobCount})
+					Job Filings ({jobCount})
 				</h3>
 			</div>
 			<motion.div

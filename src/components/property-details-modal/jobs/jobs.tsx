@@ -24,7 +24,7 @@ export default function Jobs({ jobsFiled }: JobsProps) {
 							<FileWarning className="h-6 w-6 text-slate-600 dark:text-slate-400" />
 						</div>
 						<h3 className="text-lg font-semibold text-slate-800 dark:text-slate-200">
-                            No Permits found
+                            No Jobs found
 						</h3>
 					</motion.div>
 				</CardContent>

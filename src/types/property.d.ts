@@ -93,20 +93,10 @@ declare global {
     }
 
     interface JobFiled {
-        job_filing_number: string;
-        job_description: string;
-        filing_reason: string;
-        work_type: string;
-        permittee_s_license_type: string;
-        applicant_license_number: string;
-        applicant_first_name: string;
-        applicant_last_name: string;
-        applicant_business_name: string;
-        applicant_business_address: string;
-        work_permit: string;
-        approved_date: string;
-        issued_date: string;
-        estimated_job_costs: string;
+        job: number;
+        jobdescription: string;
+        approved: string;
+        bin: string;
     }
 }
 
