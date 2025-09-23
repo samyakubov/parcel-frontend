@@ -55,13 +55,10 @@ export default function JobsTable({ jobs }: JobsTableProps) {
 											{job.job}
 										</TableCell>
 										<TableCell className="py-3 text-muted-foreground">
-											{job.jobdescription}
+											{job.job_description}
 										</TableCell>
 										<TableCell className="py-3 text-muted-foreground">
 											{job.approved}
-										</TableCell>
-										<TableCell className="py-3 text-muted-foreground">
-											{job.bin}
 										</TableCell>
 									</motion.tr>
 								))}

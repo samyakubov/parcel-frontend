@@ -54,6 +54,7 @@ declare global {
         party_state: string;
         party_zip: string;
         doc_type: string;
+        recordedfiled:string;
     }
 
     interface Violation {
@@ -75,15 +76,9 @@ declare global {
 
     interface Complaint {
         complaint_number: number;
-        status: string;
-        date_entered: string;
-        house_number: string;
-        house_street: string;
         bin: string;
-        community_board: number;
         special_district: string;
         complaint_category: string;
-        unit: string;
         disposition_date: string;
         disposition_code: string;
         inspection_date: string;
