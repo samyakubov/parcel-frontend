@@ -54,20 +54,19 @@ declare global {
         party_state: string;
         party_zip: string;
         doc_type: string;
-        recordedfiled: string;
     }
 
     interface Violation {
         bbl: string;
         violation_status: string;
-        issuedate: string;
-        violationtype: string;
+        issue_date: string;
+        violation_type: string;
         description: string;
         severity: string;
         penalty_amount: number;
-        amountpaid: number;
-        balancedue: number;
-        respondentname: string;
+        amount_paid: number;
+        balance_due: number;
+        respondent_name: string;
         house_number: string;
         street: string;
         city: string;
@@ -79,7 +78,6 @@ declare global {
         status: string;
         date_entered: string;
         house_number: string;
-        zipcode: string;
         house_street: string;
         bin: string;
         community_board: number;
@@ -94,7 +92,7 @@ declare global {
 
     interface JobFiled {
         job: number;
-        jobdescription: string;
+        job_description: string;
         approved: string;
         bin: string;
     }
