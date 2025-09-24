@@ -83,12 +83,12 @@ declare global {
         disposition_code: string;
         inspection_date: string;
         dobrun_date: string;
+        status: string;
     }
 
     interface JobFiled {
         job: number;
         job_description: string;
-        approved: string;
         bin: string;
     }
 }

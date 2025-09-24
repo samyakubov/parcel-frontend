@@ -70,10 +70,10 @@ export default function ViolationsTable ({ violations }: ViolationsTableProps) {
 											</Badge>
 										</TableCell>
 										<TableCell className="py-3 text-muted-foreground">
-											{violation.issuedate}
+											{violation.issue_date}
 										</TableCell>
 										<TableCell className="py-3 text-muted-foreground">
-											{violation.violationtype}
+											{violation.violation_type}
 										</TableCell>
 										<TableCell className="py-3 text-muted-foreground max-w-xs truncate">
 											<span title={violation.description}>
@@ -92,8 +92,8 @@ export default function ViolationsTable ({ violations }: ViolationsTableProps) {
 											}
 										</TableCell>
 										<TableCell className="py-3 text-muted-foreground">
-											{violation.amountpaid ?
-												`$${Number(violation.amountpaid).toLocaleString()}` :
+											{violation.amount_paid ?
+												`$${Number(violation.amount_paid).toLocaleString()}` :
 												<span className="text-muted-foreground/50">—</span>
 											}
 										</TableCell>
