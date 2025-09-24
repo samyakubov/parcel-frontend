@@ -19,21 +19,11 @@ export const VIOLATION_COLUMNS:string[] = [
 	"Paid"
 ]
 
-export const PERMIT_COLUMNS = [
+export const JOBS_COLUMNS = [
 	"Job Filing #",
-	"Filing Reason",
-	"Work Type",
-	"Permittee License Type",
-	"Applicant License #",
-	"Applicant First Name",
-	"Applicant Last Name",
-	"Applicant Business Name",
-	"Applicant Business Address",
-	"Work Permit",
-	"Approved Date",
-	"Issued Date",
-	"Job Description",
-	"Estimated Job Costs",
+    "Job Description",
+    "Approved Date",
+    "Bin",
 ]
 
 

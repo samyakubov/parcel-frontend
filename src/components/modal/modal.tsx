@@ -1,25 +1,19 @@
 "use client"
 import React from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { modalStore } from "@/stores/modal-store"
 import ModalContent from "@/components/modal/modal-content"
 
 interface ModalProps {
     children: React.ReactNode;
-    panelClassName?: string;
     isExpandable: boolean;
-    modalId: string;
+    modal: PropertyModal;
 }
 
 export default function Modal({
   children,
-  panelClassName,
   isExpandable,
-  modalId,
+  modal,
 }: ModalProps) {
-
-
-	const currentModal = modalStore.getModal(modalId)
 
 	return (
 		<AnimatePresence>
@@ -28,17 +22,15 @@ export default function Modal({
 				animate="visible"
 				exit="exit"
 				transition={{ duration: 0.2 }}
-				className="fixed inset-0 z-50 overflow-hidden"
-				style={{
+				className={"fixed inset-0 overflow-hidden"}
+                style={{
 					pointerEvents: "none",
-					x: currentModal?.position.x,
-					y: currentModal?.position.y,
+                    zIndex: modal.zIndex
 				}}
 			>
 				<ModalContent
-					panelClassName={panelClassName}
 					isExpandable={isExpandable}
-					modalId={modalId}
+					currentModal={modal}
 				>
 					{children}
 				</ModalContent>

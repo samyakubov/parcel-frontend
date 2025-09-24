@@ -3,14 +3,13 @@ import React from "react"
 import { Minus } from "lucide-react"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
+import {modalStore} from "@/stores/modal-store"
 
 interface MinimizeButtonProps {
-    onMinimize?: () => void
+    currentModal: PropertyModal
 }
 
-export default function MinimizeButton ({ onMinimize }: MinimizeButtonProps) {
-	if (!onMinimize) return null
-
+export default function MinimizeButton ({ currentModal }: MinimizeButtonProps) {
 	return (
 		<Button
 			asChild
@@ -19,7 +18,7 @@ export default function MinimizeButton ({ onMinimize }: MinimizeButtonProps) {
 			aria-label="Minimize window"
 		>
 			<motion.div
-				onClick={onMinimize}
+				onClick={()=>modalStore.minimizeModal(currentModal.id)}
 				whileHover={{ scale: 1.05, y: -1 }}
 				whileTap={{ scale: 0.95 }}
 				transition={{ duration: 0.15 }}

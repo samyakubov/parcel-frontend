@@ -56,13 +56,7 @@ class ModalStore {
 		const existingModal = this._propertyModals.find(modal => modal.title === title)
 
 		if (!isUndefined(existingModal)) {
-			if (existingModal.isMinimized) {
-				existingModal.isMinimized = false
-				existingModal.isOpen = true
-			}
-			existingModal.propertyData = propertyData
-			existingModal.zIndex = this.getNextZIndex()
-			return existingModal.id
+			this.restoreModal(existingModal.id)
 		}
 
 		const newModal: PropertyModal = {
@@ -78,13 +72,12 @@ class ModalStore {
 		}
 
 		this._propertyModals.push(newModal)
-		return newModal.id
 	})
 
 	public focusModal = action((id: string) => {
 		const modal = this.getModal(id)
 		if (modal && !modal.isMinimized) {
-			modal.zIndex = this.getNextZIndex()
+			this.setModalState(id, { zIndex: this.getNextZIndex() })
 		}
 	})
 
@@ -99,9 +92,9 @@ class ModalStore {
 		this.setModalState(id, {
 			isMinimized: false,
 			isOpen: true,
-			zIndex: this.getNextZIndex(),
 			position:this.calculateNewModalPosition()
 		})
+        this.focusModal(id)
 	})
 
 	public toggleModalExpand = action((id: string) => {

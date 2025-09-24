@@ -22,7 +22,7 @@ declare global {
         last_sold_for: LastSoldFor;
         owners: Owners;
         records: PropertyRecord[];
-        permits:PulledPermit[];
+        job_filings:JobFiled[];
         violations: Violation[];
         complaints: Complaint[];
         zoning: Zoning;
@@ -54,20 +54,20 @@ declare global {
         party_state: string;
         party_zip: string;
         doc_type: string;
-        recordedfiled: string;
+        recordedfiled:string;
     }
 
     interface Violation {
         bbl: string;
         violation_status: string;
-        issuedate: string;
-        violationtype: string;
+        issue_date: string;
+        violation_type: string;
         description: string;
         severity: string;
         penalty_amount: number;
-        amountpaid: number;
-        balancedue: number;
-        respondentname: string;
+        amount_paid: number;
+        balance_due: number;
+        respondent_name: string;
         house_number: string;
         street: string;
         city: string;
@@ -76,37 +76,20 @@ declare global {
 
     interface Complaint {
         complaint_number: number;
-        status: string;
-        date_entered: string;
-        house_number: string;
-        zipcode: string;
-        house_street: string;
         bin: string;
-        community_board: number;
         special_district: string;
         complaint_category: string;
-        unit: string;
         disposition_date: string;
         disposition_code: string;
         inspection_date: string;
         dobrun_date: string;
+        status: string;
     }
 
-    interface PulledPermit{
-        job_filing_number: string;
+    interface JobFiled {
+        job: number;
         job_description: string;
-        filing_reason: string;
-        work_type: string;
-        permittee_s_license_type: string;
-        applicant_license_number: string;
-        applicant_first_name: string;
-        applicant_last_name: string;
-        applicant_business_name: string;
-        applicant_business_address: string;
-        work_permit: string;
-        approved_date: string;
-        issued_date: string;
-        estimated_job_costs: string;
+        bin: string;
     }
 }
 

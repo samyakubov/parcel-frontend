@@ -6,33 +6,24 @@ import CloseButton from "@/components/modal/modal-control-buttons/close-button"
 
 interface ModalControlsProps {
     isExpandable?: boolean
-    isExpanded?: boolean
-    setIsExpanded?: (isExpanded: boolean) => void
-    onClose: () => void
-    onMinimize?: () => void
-    className?: string
+    currentModal: PropertyModal
 }
 
 export default function ModalControls({
 	isExpandable = false,
-	isExpanded,
-	setIsExpanded,
-	onClose,
-	onMinimize,
-	className = "",
+    currentModal,
 }: ModalControlsProps) {
 
 	return (
-		<div className={`flex gap-2 ${className}`}>
-			<MinimizeButton onMinimize={onMinimize} />
+		<div className={"flex gap-2 absolute top-4 right-4 z-10"}>
+			<MinimizeButton currentModal={currentModal} />
 
 			<ExpandModalButton
-				setIsExpanded={setIsExpanded}
 				isExpandable={isExpandable}
-				isExpanded={isExpanded}
+                currentModal={currentModal}
 			/>
 
-			<CloseButton onClose={onClose} />
+			<CloseButton currentModal={currentModal} />
 		</div>
 	)
 }

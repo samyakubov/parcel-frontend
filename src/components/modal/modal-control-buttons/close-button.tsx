@@ -3,12 +3,13 @@ import React from "react"
 import { X } from "lucide-react"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
+import {modalStore} from "@/stores/modal-store"
 
 interface CloseButtonProps {
-    onClose: () => void
+    currentModal: PropertyModal
 }
 
-export default function CloseButton({ onClose }: CloseButtonProps) {
+export default function CloseButton({ currentModal }: CloseButtonProps) {
 	return (
 		<Button
 			asChild
@@ -17,7 +18,7 @@ export default function CloseButton({ onClose }: CloseButtonProps) {
 			aria-label="Close modal"
 		>
 			<motion.div
-				onClick={onClose}
+				onClick={()=>modalStore.closeModal(currentModal.id)}
 				whileHover={{ scale: 1.05, y: -1 }}
 				whileTap={{ scale: 0.95 }}
 				transition={{ duration: 0.15 }}

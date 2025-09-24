@@ -57,7 +57,7 @@ export default function ComplaintsTable({ complaints }: ComplaintsTableProps) {
 							<AnimatePresence>
 								{complaints.map((complaint, index) => (
 									<motion.tr
-										key={`${complaint.date_entered}-${index}`}
+										key={`${complaint.bin}-${index}`}
 										initial={{ opacity: 0, x: -20 }}
 										animate={{ opacity: 1, x: 0 }}
 										transition={{ delay: index * 0.05 }}
@@ -68,14 +68,8 @@ export default function ComplaintsTable({ complaints }: ComplaintsTableProps) {
 												{complaint.status}
 											</Badge>
 										</TableCell>
-										<TableCell className="py-3 font-medium">
-											{complaint.date_entered}
-										</TableCell>
 										<TableCell className="py-3 text-muted-foreground">
 											{complaint.complaint_category}
-										</TableCell>
-										<TableCell className="py-3 text-muted-foreground">
-											{complaint.unit}
 										</TableCell>
 										<TableCell className="py-3 text-muted-foreground">
 											{complaint.disposition_date || (

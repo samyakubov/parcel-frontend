@@ -3,13 +3,6 @@ interface ModalPosition {
     y: number;
 }
 
-interface ModalDragStart {
-    x: number;
-    y: number;
-    dragX: number;
-    dragY: number;
-}
-
 interface PropertyModal {
     id: string;
     isOpen: boolean;
@@ -21,4 +14,3 @@ interface PropertyModal {
     propertyData: PropertyDetails;
     zIndex: number;
 }
-

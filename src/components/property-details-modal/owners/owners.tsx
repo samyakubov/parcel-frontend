@@ -1,13 +1,9 @@
 "use client"
-import isNull from "lodash-es/isNull"
-import isEmpty from "lodash-es/isEmpty"
 import isArray from "lodash-es/isArray"
-import isUndefined from "lodash-es/isUndefined"
 import React, { useState, useMemo } from "react"
 import { Users, Search } from "lucide-react"
 import { motion } from "framer-motion"
 import { Card, CardHeader, CardContent } from "@/components/ui/card"
-import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Input } from "@/components/ui/input"
 import PreviousOwners from "@/components/property-details-modal/owners/previous-owners"
 import OwnerList from "@/components/property-details-modal/owners/owner-list"
@@ -34,36 +30,6 @@ export default function Owners({ currentOwners, previousOwners }: OwnerProps) {
 	const sortedOwners = useMemo(() => {
 		return filteredOwners.slice().sort((a, b) => a.localeCompare(b))
 	}, [filteredOwners])
-
-	if (isNull(currentOwners) || isEmpty(currentOwners) || isUndefined(currentOwners)) {
-		return (
-			<motion.div
-				initial={{ opacity: 0, y: -20 }}
-				animate={{ opacity: 1, y: 0 }}
-				className="w-full"
-			>
-				<Card>
-					<CardHeader>
-						<div className="flex items-center gap-2">
-							<div className="p-2 rounded-full bg-destructive/10">
-								<Users className="h-4 w-4 text-destructive" />
-							</div>
-							<h3 className="text-lg font-semibold text-destructive">
-                                Owners
-							</h3>
-						</div>
-					</CardHeader>
-					<CardContent>
-						<Alert variant="destructive">
-							<AlertDescription>
-                                No owners found.
-							</AlertDescription>
-						</Alert>
-					</CardContent>
-				</Card>
-			</motion.div>
-		)
-	}
 
 	return (
 		<motion.div
@@ -98,7 +64,7 @@ export default function Owners({ currentOwners, previousOwners }: OwnerProps) {
 					<OwnerList owners={sortedOwners} />
 				</CardContent>
 
-				<CardContent className="pt-0">
+				<CardContent>
 					<PreviousOwners previousOwners={previousOwners} />
 				</CardContent>
 			</Card>

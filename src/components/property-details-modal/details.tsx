@@ -1,3 +1,4 @@
+"use client"
 import React from "react"
 import { Building2, Home, Hash } from "lucide-react"
 import isEmpty from "lodash-es/isEmpty"

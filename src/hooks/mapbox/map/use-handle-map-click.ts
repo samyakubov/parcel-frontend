@@ -1,15 +1,16 @@
 import { useCallback, useRef } from "react"
 import isNull from "lodash-es/isNull"
 import { mapStore } from "@/stores/map-store"
-import mapboxgl from "mapbox-gl"
-import { createMarker } from "./create-marker"
-import { flyTo } from "./fly-to"
-import { addPropertyModal } from "./add-property-modal"
+import useSearchByFuzzyCoords from "@/hooks/property-search/use-search-by-fuzzy-coords"
+import createMarker from "@/hooks/mapbox/map/create-marker"
+import useFlyTo from "@/hooks/mapbox/map/fly-to"
 
 export default function useHandleMapClick(mapRef: React.RefObject<mapboxgl.Map | null>) {
 	const markerRef = useRef<mapboxgl.Marker | null>(null)
+    const searchByFuzzyCoords = useSearchByFuzzyCoords()
+    const flyTo = useFlyTo()
 
-	return useCallback((e: mapboxgl.MapMouseEvent) => {
+	return useCallback(async (e: mapboxgl.MapMouseEvent) => {
 		if (isNull(mapRef.current)) return
 		const { lng, lat } = e.lngLat
 
@@ -18,14 +19,13 @@ export default function useHandleMapClick(mapRef: React.RefObject<mapboxgl.Map |
 			if (!isNull(markerRef.current)) {
 				markerRef.current.remove()
 			}
+			markerRef.current = createMarker(lng, lat)
 
-			markerRef.current = createMarker(lng, lat, mapRef.current)
+			flyTo()
 
-			flyTo(lng, lat, mapRef.current)
-
-			addPropertyModal(lat, lng)
+            await searchByFuzzyCoords()
 		} catch (error) {
 			console.error("Error handling map click:", error)
 		}
-	}, [mapRef])
+	}, [mapRef, searchByFuzzyCoords])
 }

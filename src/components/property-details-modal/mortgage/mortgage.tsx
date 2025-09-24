@@ -37,7 +37,7 @@ export default function Mortgage({borrower, lender}: MortgageDetailsProps) {
 				<MortgageDetailItem
 					icon={<DollarSign className="h-4 w-4 text-muted-foreground" />}
 					label="Amount"
-					value={`$${FORMAT_PRICE(amount)}`}
+					value={`${FORMAT_PRICE(amount)}`}
 				/>
 				<MortgageDetailItem
 					icon={<Calendar className="h-4 w-4 text-muted-foreground" />}

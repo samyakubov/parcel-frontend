@@ -20,7 +20,7 @@ export default function OwnerList({ owners }: OwnerListProps) {
 	}
 
 	return (
-		<div className="space-y-2">
+		<div className="space-y-2 overflow-y-auto max-h-80">
 			{owners.map((owner, index) => (
 				<div
 					key={index}
@@ -35,3 +35,4 @@ export default function OwnerList({ owners }: OwnerListProps) {
 		</div>
 	)
 }
+

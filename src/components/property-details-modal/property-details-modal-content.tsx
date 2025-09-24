@@ -6,13 +6,15 @@ import Details from "@/components/property-details-modal/details"
 import Mortgage from "@/components/property-details-modal/mortgage/mortgage"
 import Zoning from "@/components/property-details-modal/zoning/zoning"
 import LastSold from "@/components/property-details-modal/last-sold/last-sold"
-import Permits from "@/components/property-details-modal/permits/permits"
+import Jobs from "@/components/property-details-modal/jobs/jobs"
 import Complaints from "@/components/property-details-modal/complaints/complaints"
 import Violations from "@/components/property-details-modal/violations/violations"
 import Owners from "@/components/property-details-modal/owners/owners"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import PropertyRecordGrid from "@/components/property-details-modal/property-records-grid"
+import PropertyRecordGrid from "@/components/property-details-modal/property-record-grid/property-records-grid"
 import getMortgageDetails from "@/utils/get-mortgage-details"
+import {Landmark} from "lucide-react"
+import {Alert, AlertDescription} from "@/components/ui/alert"
 
 interface PropertyDetailsModalContentProps {
     modal: PropertyModal;
@@ -39,7 +41,9 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
 							layout="preserve-aspect"
 							className="rounded-lg w-full h-64 object-cover mb-4"
 							src={`https://maps.googleapis.com/maps/api/streetview?size=800x300&location=
-							${modal.coords.latitude},${modal.coords.longitude}&key=${process.env.NEXT_PUBLIC_STREETVIEW_API_KEY}`}
+							${modal.coords.latitude},${modal.coords.longitude}
+							&key=${process.env.NEXT_PUBLIC_STREETVIEW_API_KEY}`
+                        }
 							alt="Google Street View"
 						/>
 						<Details firstRecord={modal.propertyData.records[0]} />
@@ -48,11 +52,33 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
 							!isNull(latestMortgage) ? (
 								<Mortgage borrower={latestMortgage.borrower} lender={latestMortgage.lender} />
 							) : (
-								<Card>
-									<CardHeader>Mortgage Details</CardHeader>
-									<CardContent>No mortgage on record</CardContent>
-								</Card>
-							)
+                                <motion.div
+                                    initial={{ opacity: 0, y: -20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    className="w-full"
+                                    >
+                                    <Card>
+                                        <CardHeader>
+                                            <div className="flex items-center gap-2">
+                                                <div className="p-2 rounded-full bg-destructive/10">
+                                                    <Landmark className="h-4 w-4 text-muted-foreground" />
+                                                </div>
+                                                <h3 className="text-lg font-semibold text-destructive">
+                                                    Mortgage Details
+                                                </h3>
+                                            </div>
+                                        </CardHeader>
+                                        <CardContent>
+                                            <Alert variant="destructive">
+                                                <AlertDescription>
+                                                    No mortgage on record
+                                                </AlertDescription>
+                                            </Alert>
+                                        </CardContent>
+                                    </Card>
+                                </motion.div>
+
+                            )
 						}
 					</motion.div>
 					<motion.div
@@ -75,7 +101,7 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
 							animate={{ opacity: 1, height: "auto" }}
 							exit={{ opacity: 0, height: 0 }}
 						>
-							<Permits permits={modal.propertyData.permits}/>
+							<Jobs jobsFiled={modal.propertyData.job_filings}/>
 							<Complaints complaints={modal.propertyData.complaints} />
 							<Violations violations={modal.propertyData.violations} />
 							<PropertyRecordGrid data={modal.propertyData.records} />
