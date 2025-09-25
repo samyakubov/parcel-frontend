@@ -6,15 +6,14 @@ import { Card, CardHeader, CardContent } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import LastSoldDate from "@/components/property-details-modal/last-sold/last-sold-date"
 import LastSoldPrice from "@/components/property-details-modal/last-sold/last-sold-price"
+import isNull from "lodash-es/isNull"
 
 interface PropertyLastSaleProps {
     lastSoldFor: LastSold
 }
 
 export default function LastSold({lastSoldFor}: PropertyLastSaleProps) {
-	const hasNoSaleData = !lastSoldFor.last_sold_price && !lastSoldFor.sale_date
-
-	if (hasNoSaleData) {
+	if (isNull(lastSoldFor)) {
 		return (
 			<motion.div
 				initial={{ opacity: 0, y: -20 }}

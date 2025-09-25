@@ -21,7 +21,7 @@ interface PropertyDetailsModalContentProps {
 }
 
 export default function PropertyDetailsModalContent({ modal }: PropertyDetailsModalContentProps) {
-	const latestMortgage = getMortgageDetails(modal.propertyData.records, modal.propertyData.last_sold.sale_date)
+	const latestMortgage = getMortgageDetails(modal.propertyData.records, modal.propertyData.last_sold)
 
 	return (
 		<motion.div
