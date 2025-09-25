@@ -8,9 +8,15 @@ declare global {
         last_updated: string;
     }
 
-    interface LastSoldFor {
+    interface LastSold {
         last_sold_price: number;
         sale_date: string;
+    }
+
+    interface LastSoldWithSqft extends LastSold {
+        year_built:string;
+        land_sqft:string;
+        gross_sqft:string;
     }
 
     interface Owners {
@@ -19,7 +25,7 @@ declare global {
     }
 
     interface PropertyDetails {
-        last_sold_for: LastSoldFor;
+        last_sold: LastSold | LastSoldWithSqft;
         owners: Owners;
         records: PropertyRecord[];
         job_filings:JobFiled[];
@@ -54,7 +60,7 @@ declare global {
         party_state: string;
         party_zip: string;
         doc_type: string;
-        recordedfiled:string;
+        record_filed: string;
     }
 
     interface Violation {

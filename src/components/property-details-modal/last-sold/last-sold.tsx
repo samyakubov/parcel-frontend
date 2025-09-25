@@ -8,7 +8,7 @@ import LastSoldDate from "@/components/property-details-modal/last-sold/last-sol
 import LastSoldPrice from "@/components/property-details-modal/last-sold/last-sold-price"
 
 interface PropertyLastSaleProps {
-    lastSoldFor: LastSoldFor
+    lastSoldFor: LastSold
 }
 
 export default function LastSold({lastSoldFor}: PropertyLastSaleProps) {

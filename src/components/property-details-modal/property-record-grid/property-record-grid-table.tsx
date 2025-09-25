@@ -27,7 +27,7 @@ const renderCellValue = (field: keyof PropertyRecord, record: PropertyRecord) =>
         return formatCurrency(value as number)
     }
 
-    if (field === "recordedfiled") {
+    if (field === "record_filed") {
         return formatDate(value as string)
     }
 
