@@ -21,7 +21,7 @@ interface PropertyDetailsModalContentProps {
 }
 
 export default function PropertyDetailsModalContent({ modal }: PropertyDetailsModalContentProps) {
-	const latestMortgage = getMortgageDetails(modal.propertyData.records, modal.propertyData.last_sold_for.sale_date)
+	const latestMortgage = getMortgageDetails(modal.propertyData.records, modal.propertyData.last_sold)
 
 	return (
 		<motion.div
@@ -46,17 +46,33 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
                         }
 							alt="Google Street View"
 						/>
-						<Details firstRecord={modal.propertyData.records[0]} />
-						<LastSold lastSoldFor={modal.propertyData.last_sold_for}/>
-						{
-							!isNull(latestMortgage) ? (
-								<Mortgage borrower={latestMortgage.borrower} lender={latestMortgage.lender} />
-							) : (
+
+                        <Details
+                            firstRecord={modal.propertyData.records[0]}
+                            lastSold={modal.propertyData.last_sold}
+                        />
+
+
+                        <LastSold lastSoldFor={modal.propertyData.last_sold}/>
+					</motion.div>
+					<motion.div
+						layout="preserve-aspect"
+						className={modal.isExpanded ? "w-1/2 space-y-4" : "space-y-4"}
+					>
+						<Zoning zoning={modal.propertyData.zoning} />
+
+						<Owners currentOwners={modal.propertyData.owners.current_owners}
+                                previousOwners={modal.propertyData.owners.previous_owners}
+                        />
+                        {
+                            !isNull(latestMortgage) ? (
+                                <Mortgage borrower={latestMortgage.borrower} lender={latestMortgage.lender} />
+                            ) : (
                                 <motion.div
                                     initial={{ opacity: 0, y: -20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     className="w-full"
-                                    >
+                                >
                                     <Card>
                                         <CardHeader>
                                             <div className="flex items-center gap-2">
@@ -79,18 +95,7 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
                                 </motion.div>
 
                             )
-						}
-					</motion.div>
-					<motion.div
-						layout="preserve-aspect"
-						className={modal.isExpanded ? "w-1/2 space-y-4" : "space-y-4"}
-					>
-						<Zoning zoning={modal.propertyData.zoning} />
-
-						<Owners currentOwners={modal.propertyData.owners.current_owners}
-                                previousOwners={modal.propertyData.owners.previous_owners}
-                        />
-
+                        }
 					</motion.div>
 				</motion.div>
 

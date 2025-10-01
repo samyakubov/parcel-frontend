@@ -37,5 +37,5 @@ export const PROPERTY_RECORD_GRID_COLUMNS = [
 	{ field: "party_name", label: "Party Name" },
 	{ field: "partytype_desc", label: "Party" },
 	{ field: "doc_type", label: "Document Type" },
-	{ field: "recordedfiled", label: "Recorded Date" }
+	{ field: "record_filed", label: "Recorded Date" }
 ] as const

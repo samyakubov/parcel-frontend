@@ -12,7 +12,8 @@ interface MortgageDetailsProps {
 }
 
 export default function Mortgage({borrower, lender}: MortgageDetailsProps) {
-	const { recordedfiled, amount } = borrower
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+	const { record_filed, amount } = borrower
 	const lenderName = lender.party_name
 
 	return (
@@ -42,7 +43,7 @@ export default function Mortgage({borrower, lender}: MortgageDetailsProps) {
 				<MortgageDetailItem
 					icon={<Calendar className="h-4 w-4 text-muted-foreground" />}
 					label="Recorded On"
-					value={FORMAT_DATE(recordedfiled)}
+					value={FORMAT_DATE(record_filed)}
 				/>
 			</CardContent>
 		</Card>
