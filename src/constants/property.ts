@@ -20,10 +20,12 @@ export const VIOLATION_COLUMNS:string[] = [
 ]
 
 export const JOBS_COLUMNS = [
-	"Job Filing #",
     "Job Description",
-    "Approved Date",
     "Bin",
+	"Applicant First Name",
+	"Applicant Last Name",
+	"Applicant Professional"
+
 ]
 
 
