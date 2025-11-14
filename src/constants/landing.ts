@@ -2,57 +2,57 @@
 import {Briefcase, DollarSign, ShieldCheck, Star, TrendingUp, Zap} from "lucide-react"
 
 export const STATS: Stat[] = [
-	{ value: "15%+", label: "Increased Home Value" },
-	{ value: "30%", label: "Faster Sale Time" },
-	{ value: "10k+", label: "Happy Homeowners" },
-	{ value: "500k+", label: "Projects Documented" }
+	{ value: "10M+", label: "Property Records" },
+	{ value: "50+", label: "Cities Covered" },
+	{ value: "100k+", label: "Active Users" },
+	{ value: "24/7", label: "Data Updates" }
 ]
 
 
 export const FAQ_QUESTIONS:FaqItem[] = [
 	{
 		id: "1",
-		question: "What is a Home Timeline?",
-		answer: "A Home Timeline is a digital record of your home's history, documenting every renovation, repair, and upgrade. It includes photos, costs, contractor details, and dates, giving you a comprehensive overview of your property.",
+		question: "What information can I find about a property?",
+		answer: "You can access comprehensive property records including ownership history, sale prices, building permits, violations, complaints, zoning information, mortgage details, and more. All data is sourced from official public records.",
 		hasImage: true,
 	},
 	{
 		id: "2",
-		question: "How does a Home Timeline benefit me as a seller?",
-		answer: "A detailed Home Timeline builds trust with potential buyers by providing a transparent history of your home's maintenance and improvements. This can lead to a faster sale and a higher selling price.",
+		question: "How accurate and up-to-date is the property data?",
+		answer: "Our platform aggregates data from official government sources and public records databases. We update our records regularly to ensure you have access to the most current information available.",
 	},
 	{
 		id: "3",
-		question: "Is it difficult to create a Home Timeline?",
-		answer: "Not at all. Our platform is designed for ease of use. You can quickly add projects, upload photos and receipts, and organize your home's information in one place. We guide you through each step.",
+		question: "Can I search for any property address?",
+		answer: "Yes! Simply enter any property address in the search bar to access its complete record history. Our database covers millions of properties across multiple cities and continues to expand.",
 	},
 	{
 		id: "4",
-		question: "What should I include in my Home Timeline?",
-		answer: "Document any significant updates to your home. This includes everything from major renovations like a new kitchen to smaller improvements like painting or landscaping. The more details you add, the more valuable your timeline becomes.",
+		question: "Is this service free to use?",
+		answer: "We offer both free and premium tiers. Basic property information is available to all users, while detailed reports and advanced features are available with a premium subscription.",
 	},
 	{
 		id: "5",
-		question: "How do I share my Home Timeline with buyers?",
-		answer: "When you're ready to sell, you can generate a unique, shareable link to your Home Timeline. This allows real estate agents and potential buyers to view your home's detailed history online.",
+		question: "How can property records help me make better decisions?",
+		answer: "Access to comprehensive property records helps you make informed decisions whether you're buying, selling, or managing property. Discover potential issues, verify claims, understand property value, and gain insights into neighborhood trends.",
 	},
 ]
 
 
 export const TIMELINE: TimelineItem[] = [
 	{
-		title: "Create Your Home's Profile",
-		desc: "Start by setting up a profile for your home. Add basic information, photos, and any existing documents to begin building your home's story.",
+		title: "Search Any Property",
+		desc: "Enter any property address to instantly access comprehensive records. Our intuitive search makes it easy to find the information you need.",
 		img: "/modern-exterior.jpg",
 	},
 	{
-		title: "Document Every Improvement",
-		desc: "Easily track and document every renovation, repair, or upgrade. Upload photos, store contractor details, and keep a record of costs and dates for a complete history.",
+		title: "Explore Detailed Records",
+		desc: "View ownership history, sale prices, building permits, violations, complaints, zoning details, and more. All official records in one place.",
 		img: "/modern-interior.jpg",
 	},
 	{
-		title: "Share with Confidence",
-		desc: "When it's time to sell, share your home's detailed timeline with potential buyers. Provide transparency, build trust, and showcase the true value of your property.",
+		title: "Make Informed Decisions",
+		desc: "Use comprehensive property data to make confident decisions about buying, selling, or managing real estate. Knowledge is power.",
 		img: "/hero-photo.jpg",
 	}
 ]
@@ -60,38 +60,38 @@ export const TIMELINE: TimelineItem[] = [
 export const BENEFITS = [
 	{
 		icon: TrendingUp,
-		title: "Increase Property Value",
-		description: "A detailed and well-documented home history can significantly increase your property's market value.",
+		title: "Comprehensive Property Data",
+		description: "Access complete property records including ownership history, sales data, permits, violations, and more in one place.",
 		gradient: "from-green-500/20 to-emerald-500/20"
 	},
 	{
 		icon: ShieldCheck,
-		title: "Build Buyer Confidence",
-		description: "Provide transparency and build trust with potential buyers by showcasing a complete history of your home.",
+		title: "Verified Public Records",
+		description: "All data is sourced from official government databases and public records, ensuring accuracy and reliability.",
 		gradient: "from-blue-500/20 to-cyan-500/20"
 	},
 	{
 		icon: Briefcase,
-		title: "Simplify Home Management",
-		description: "Keep all your home-related documents, contractor information, and project details in one organized place.",
+		title: "Smart Property Search",
+		description: "Easily search any property address and instantly access detailed records with our intuitive interface.",
 		gradient: "from-purple-500/20 to-pink-500/20"
 	},
 	{
 		icon: Star,
-		title: "Showcase Your Investment",
-		description: "Highlight the care, quality, and financial investment you've put into your home over the years.",
+		title: "Uncover Hidden Issues",
+		description: "Discover violations, complaints, and potential problems before making important property decisions.",
 		gradient: "from-rose-500/20 to-red-500/20"
 	},
 	{
 		icon: Zap,
-		title: "Streamline the Sale Process",
-		description: "A comprehensive home timeline can help expedite the selling process by providing all necessary information upfront.",
+		title: "Real-Time Updates",
+		description: "Stay informed with regularly updated property records and notifications about changes to properties you track.",
 		gradient: "from-yellow-500/20 to-orange-500/20"
 	},
 	{
 		icon: DollarSign,
-		title: "Preserve Your Home's Story",
-		description: "Create a lasting digital record of your home's evolution, preserving its unique story for future owners.",
+		title: "Make Informed Decisions",
+		description: "Use comprehensive data to evaluate property value, assess risks, and make confident real estate decisions.",
 		gradient: "from-indigo-500/20 to-blue-500/20"
 	}
 ]

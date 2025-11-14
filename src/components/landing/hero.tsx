@@ -17,15 +17,15 @@ export default function Hero() {
 					<div className="w-full grid lg:grid-cols-2 gap-12 items-center">
 						<div className="text-white">
 							<h1 className="text-6xl lg:text-7xl leading-tight mb-6 text-balance">
-                                Build Your <span className="text-accent">Home&apos;s Story</span>, One Project at a Time.
+                                Uncover Every <span className="text-accent">Property&apos;s History</span> in Seconds
 							</h1>
 						</div>
 
 
 						<div className="text-white/90 text-lg leading-relaxed">
 							<p className="text-pretty">
-                                Document every renovation, upgrade, and improvement.
-                                Create a complete &apos;Timeline&apos; of your property to showcase its true value.
+                                Access comprehensive property records, sale history, violations, permits, and more.
+                                Make informed real estate decisions with verified public data.
 							</p>
 						</div>
 					</div>

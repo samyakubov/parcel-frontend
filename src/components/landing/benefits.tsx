@@ -19,8 +19,8 @@ export default function Benefits() {
                         Why Choose <span className="text-primary">Buildly</span>?
 					</h2>
 					<p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                        Transform the way you capture and share your life&apos;s moments with powerful features
-                        designed for modern storytelling.
+                        Access the most comprehensive property records database with powerful search tools
+                        designed to help you make confident real estate decisions.
 					</p>
 				</motion.div>
 

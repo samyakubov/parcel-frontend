@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-	title: "Buildly | Building your home's timeline",
-	description: "Document every renovation, upgrade, and improvement. Give buyers the complete home history they deserve.",
+	title: "Buildly | Comprehensive Property Records & History",
+	description: "Access detailed property records, sale history, violations, permits, and more. Make informed real estate decisions with verified public data.",
 }
 
 export default function RootLayout({
