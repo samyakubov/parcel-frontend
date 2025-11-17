@@ -2,7 +2,9 @@ import type { Metadata } from "next"
 import { Inter, Geist_Mono } from "next/font/google"
 import "./globals.css"
 import "mapbox-gl/dist/mapbox-gl.css"
+import "react-toastify/dist/ReactToastify.css"
 import {ThemeProvider} from "next-themes"
+import { ToastContainer } from "react-toastify"
 
 const inter = Inter({
 	variable: "--font-inter",
@@ -32,6 +34,18 @@ export default function RootLayout({
 			>
 				<ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
 					{children}
+					<ToastContainer
+						position="top-right"
+						autoClose={3000}
+						hideProgressBar={false}
+						newestOnTop
+						closeOnClick
+						rtl={false}
+						pauseOnFocusLoss
+						draggable
+						pauseOnHover
+						theme="colored"
+					/>
 				</ThemeProvider>
 			</body>
 		</html>
