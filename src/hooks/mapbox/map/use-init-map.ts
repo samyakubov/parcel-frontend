@@ -32,6 +32,18 @@ export default function useInitMap(containerId:string) {
 		mapRef.current.setMaxBounds(NYC_BOUNDS as mapboxgl.LngLatBoundsLike)
 		mapRef.current.on("click", handleMapClick)
 
+		mapRef.current.on("load", () => {
+			if (!mapRef.current) return
+			const layers = mapRef.current.getStyle().layers
+			if (layers) {
+				layers.forEach((layer) => {
+					if (layer.id.includes("poi-label") || layer.id.includes("place-label")) {
+						mapRef.current?.setLayoutProperty(layer.id, "visibility", "none")
+					}
+				})
+			}
+		})
+
 	}, [containerId, handleMapClick])
 
 	return mapRef

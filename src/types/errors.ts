@@ -1,4 +1,3 @@
-// HTTP Status Code enum
 export enum HttpStatusCode {
   BAD_REQUEST = 400,
   UNAUTHORIZED = 401,
@@ -8,51 +7,47 @@ export enum HttpStatusCode {
   SERVICE_UNAVAILABLE = 503,
 }
 
-// Backend error categories
 export enum ErrorCategory {
-  VALIDATION = 'VALIDATION',
-  AUTHENTICATION = 'AUTHENTICATION',
-  AUTHORIZATION = 'AUTHORIZATION',
-  NOT_FOUND = 'NOT_FOUND',
-  SERVER_ERROR = 'SERVER_ERROR',
-  NETWORK_ERROR = 'NETWORK_ERROR',
-  GEOLOCATION = 'GEOLOCATION',
+  VALIDATION = "VALIDATION",
+  AUTHENTICATION = "AUTHENTICATION",
+  AUTHORIZATION = "AUTHORIZATION",
+  NOT_FOUND = "NOT_FOUND",
+  SERVER_ERROR = "SERVER_ERROR",
+  NETWORK_ERROR = "NETWORK_ERROR",
+  GEOLOCATION = "GEOLOCATION",
 }
 
-// Backend error types (matching FastAPI exceptions)
 export enum BackendErrorType {
   // Property Search Errors
-  INVALID_BBL = 'InvalidBBLError',
-  BBL_NOT_FOUND = 'BBLNotFoundError',
-  INVALID_ADDRESS = 'InvalidAddressError',
-  ADDRESS_NOT_FOUND = 'AddressNotFoundError',
-  
+  INVALID_BBL = "InvalidBBLError",
+  BBL_NOT_FOUND = "BBLNotFoundError",
+  INVALID_ADDRESS = "InvalidAddressError",
+  ADDRESS_NOT_FOUND = "AddressNotFoundError",
+
   // API Key Errors
-  MISSING_API_KEY = 'MissingApiKeyError',
-  INVALID_API_KEY = 'InvalidApiKeyError',
-  INVALID_ADMIN_KEY = 'InvalidAdminKeyError',
-  API_KEY_NOT_FOUND = 'APIKeyNotFoundError',
-  INVALID_UPDATE = 'InvalidUpdateError',
-  FAILED_TO_CREATE_API_KEY = 'FailedToCreateApiKeyError',
-  FAILED_TO_DELETE_API_KEY = 'FailedToDeleteApiKeyError',
-  MISSING_ADMIN_KEY = 'MissingAdminKeyError',
-  
+  MISSING_API_KEY = "MissingApiKeyError",
+  INVALID_API_KEY = "InvalidApiKeyError",
+  INVALID_ADMIN_KEY = "InvalidAdminKeyError",
+  API_KEY_NOT_FOUND = "APIKeyNotFoundError",
+  INVALID_UPDATE = "InvalidUpdateError",
+  FAILED_TO_CREATE_API_KEY = "FailedToCreateApiKeyError",
+  FAILED_TO_DELETE_API_KEY = "FailedToDeleteApiKeyError",
+  MISSING_ADMIN_KEY = "MissingAdminKeyError",
+
   // Geolocation Errors
-  GEOLOCATION_ERROR = 'GeolocationError',
-  ADDRESS_NOT_IN_NEW_YORK = 'AddressNotInNewYorkError',
-  
+  GEOLOCATION_ERROR = "GeolocationError",
+  ADDRESS_NOT_IN_NEW_YORK = "AddressNotInNewYorkError",
+
   // Generic Errors
-  DATABASE_ERROR = 'DatabaseError',
-  HTTP_EXCEPTION = 'HTTPException',
-  UNKNOWN_ERROR = 'UnknownError',
+  DATABASE_ERROR = "DatabaseError",
+  HTTP_EXCEPTION = "HTTPException",
+  UNKNOWN_ERROR = "UnknownError",
 }
 
-// Base error response from backend
 export interface BackendErrorResponse {
   message: string;
 }
 
-// Structured error object used in frontend
 export interface ApiError {
   statusCode: HttpStatusCode | number;
   message: string;
@@ -64,33 +59,23 @@ export interface ApiError {
   originalError?: unknown;
 }
 
-// Network-specific error
 export interface NetworkError extends ApiError {
   category: ErrorCategory.NETWORK_ERROR;
   isTimeout: boolean;
   isConnectionError: boolean;
 }
 
-// Type guard functions
 export function isApiError(error: unknown): error is ApiError {
   return (
-    typeof error === 'object' &&
+    typeof error === "object" &&
     error !== null &&
-    'statusCode' in error &&
-    'message' in error &&
-    'userMessage' in error &&
-    'category' in error &&
-    'errorType' in error &&
-    'isRetryable' in error &&
-    'timestamp' in error
-  );
+    "statusCode" in error &&
+    "message" in error &&
+    "userMessage" in error &&
+    "category" in error &&
+    "errorType" in error &&
+    "isRetryable" in error &&
+    "timestamp" in error
+  )
 }
 
-export function isNetworkError(error: unknown): error is NetworkError {
-  return (
-    isApiError(error) &&
-    error.category === ErrorCategory.NETWORK_ERROR &&
-    'isTimeout' in error &&
-    'isConnectionError' in error
-  );
-}

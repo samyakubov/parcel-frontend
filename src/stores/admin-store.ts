@@ -9,7 +9,7 @@ class AdminStore {
     }
 
     public _isAuthenticated = false
-    public _key = ""
+    public _password = ""
     public _error: ApiError | null = null
 
 
@@ -19,35 +19,28 @@ class AdminStore {
             const isAuthenticated = await apiClient.adminService.login(apiKey)
             if (isAuthenticated) {
                 this._isAuthenticated = true
-                this._key = apiKey
+                this._password = apiKey
                 return true
             }
 
             this._isAuthenticated = false
             return false
         } catch (error) {
-            // Error is already transformed and notification shown by interceptor
-            // Just update state
             this._isAuthenticated = false
-            this._key = ""
-            
+            this._password = ""
             if (isApiError(error)) {
                 this._error = error
-                
-                // Handle specific error cases
                 if (error.category === ErrorCategory.AUTHORIZATION) {
-                    // Clear any stored credentials
                     this.clearAuth()
                 }
             }
-            
             return false
         }
     }
 
     private clearAuth(): void {
         this._isAuthenticated = false
-        this._key = ""
+        this._password = ""
     }
 
 }

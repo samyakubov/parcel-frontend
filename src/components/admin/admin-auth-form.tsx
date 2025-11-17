@@ -11,15 +11,15 @@ interface AdminAuthFormProps {
 }
 
 function AdminAuthForm({ onAuthenticated }: AdminAuthFormProps) {
-	const [apiKey, setApiKey] = useState("")
-	const [showApiKey, setShowApiKey] = useState(false)
+	const [password, setPassword] = useState("")
+	const [showPassword, setShowPassword] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 		setIsLoading(true)
 		try {
-			const isAuthenticated = await adminStore.authenticate(apiKey)
+			const isAuthenticated = await adminStore.authenticate(password)
 			if (isAuthenticated) {
 				onAuthenticated()
 			}
@@ -36,36 +36,36 @@ function AdminAuthForm({ onAuthenticated }: AdminAuthFormProps) {
 						Admin Authentication
 					</h1>
 					<p className="text-muted-foreground">
-						Enter your admin API key to access the management interface
+						Enter the admin password to access the management interface
 					</p>
 				</div>
 
 				<form onSubmit={handleSubmit} className="space-y-6">
 					<div>
 						<label
-							htmlFor="api-key"
+							htmlFor="password"
 							className="block text-sm font-medium text-foreground mb-2"
 						>
-							Admin API Key
+							Admin Password
 						</label>
 						<div className="relative">
 							<Input
-								id="api-key"
-								type={showApiKey ? "text" : "password"}
-								value={apiKey}
-								onChange={(e) => setApiKey(e.target.value)}
-								placeholder="Enter admin API key"
+								id="password"
+								type={showPassword ? "text" : "password"}
+								value={password}
+								onChange={(e) => setPassword(e.target.value)}
+								placeholder="Enter admin password"
 								className="w-full pr-10"
 								required
 							/>
 							<button
 								type="button"
-								onClick={() => setShowApiKey(!showApiKey)}
+								onClick={() => setShowPassword(!showPassword)}
 								className="absolute right-3 top-1/2 transform -translate-y-1/2
 								text-muted-foreground hover:text-foreground transition-colors"
-								aria-label={showApiKey ? "Hide API key" : "Show API key"}
+								aria-label={showPassword ? "Hide password" : "Show password"}
 							>
-								{showApiKey ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+								{showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
 							</button>
 						</div>
 					</div>
@@ -73,7 +73,7 @@ function AdminAuthForm({ onAuthenticated }: AdminAuthFormProps) {
 					<Button
 						type="submit"
 						className="w-full"
-						disabled={!apiKey.trim() || isLoading}
+						disabled={!password.trim() || isLoading}
 					>
 						{isLoading ? "Authenticating..." : "Authenticate"}
 					</Button>

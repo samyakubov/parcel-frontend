@@ -10,7 +10,7 @@ export function ApiKeyHeader() {
   return (
     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
       <div className="min-w-0">
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Buildly API Key Management System</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">API Key Management System</h1>
         <p className="text-muted-foreground mt-1 text-sm sm:text-base">
           Manage API keys
         </p>
