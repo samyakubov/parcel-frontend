@@ -5,21 +5,19 @@ import { Eye, EyeOff } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { apiKeyStore } from "@/stores/api-key-store"
-import { observer } from "mobx-react-lite"
+import { observer } from "mobx-react"
 
 interface AdminAuthFormProps {
 	onAuthenticated: () => void
 }
 
-const AdminAuthForm = observer(({ onAuthenticated }: AdminAuthFormProps) => {
+function AdminAuthForm({ onAuthenticated }: AdminAuthFormProps) {
 	const [apiKey, setApiKey] = useState("")
 	const [showApiKey, setShowApiKey] = useState(false)
 
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
-		
 		const isAuthenticated = apiKeyStore.authenticate(apiKey)
-		
 		if (isAuthenticated) {
 			onAuthenticated()
 		}
@@ -39,8 +37,8 @@ const AdminAuthForm = observer(({ onAuthenticated }: AdminAuthFormProps) => {
 
 				<form onSubmit={handleSubmit} className="space-y-6">
 					<div>
-						<label 
-							htmlFor="api-key" 
+						<label
+							htmlFor="api-key"
 							className="block text-sm font-medium text-foreground mb-2"
 						>
 							Admin API Key
@@ -59,13 +57,14 @@ const AdminAuthForm = observer(({ onAuthenticated }: AdminAuthFormProps) => {
 							<button
 								type="button"
 								onClick={() => setShowApiKey(!showApiKey)}
-								className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+								className="absolute right-3 top-1/2 transform -translate-y-1/2
+								text-muted-foreground hover:text-foreground transition-colors"
 								aria-label={showApiKey ? "Hide API key" : "Show API key"}
 							>
 								{showApiKey ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
 							</button>
 						</div>
-						
+
 						{apiKeyStore._error && (
 							<p className="mt-2 text-sm text-destructive" role="alert">
 								{apiKeyStore._error}
@@ -73,8 +72,8 @@ const AdminAuthForm = observer(({ onAuthenticated }: AdminAuthFormProps) => {
 						)}
 					</div>
 
-					<Button 
-						type="submit" 
+					<Button
+						type="submit"
 						className="w-full"
 						disabled={!apiKey.trim()}
 					>
@@ -84,8 +83,6 @@ const AdminAuthForm = observer(({ onAuthenticated }: AdminAuthFormProps) => {
 			</div>
 		</div>
 	)
-})
+}
 
-AdminAuthForm.displayName = "AdminAuthForm"
-
-export default AdminAuthForm
+export default observer(AdminAuthForm)

@@ -1,5 +1,4 @@
 "use client"
-
 import { useState } from "react"
 import { observer } from "mobx-react"
 import { toast } from "react-toastify"
@@ -49,7 +48,7 @@ const useDeleteApiKey = (apiKeyId: number, onSuccess: () => void) => {
   return { handleDelete, isDeleting }
 }
 
-const DeleteApiKeyDialogComponent = ({ apiKey, open, onOpenChange }: DeleteApiKeyDialogProps) => {
+function DeleteApiKeyDialog({ apiKey, open, onOpenChange }: DeleteApiKeyDialogProps){
   const { handleDelete, isDeleting } = useDeleteApiKey(apiKey.id, () => onOpenChange(false))
 
   return (
@@ -80,4 +79,4 @@ const DeleteApiKeyDialogComponent = ({ apiKey, open, onOpenChange }: DeleteApiKe
   )
 }
 
-export const DeleteApiKeyDialog = observer(DeleteApiKeyDialogComponent)
+export default observer(DeleteApiKeyDialog)

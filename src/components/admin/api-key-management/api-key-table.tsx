@@ -9,10 +9,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { ApiKeyRow } from "./api-key-row"
-import { ApiKeyTableSkeleton } from "./api-key-table-skeleton"
+import ApiKeyRow from "./api-key-row"
+import ApiKeyTableSkeleton from "./api-key-table-skeleton"
 
-export const ApiKeyTable = observer(() => {
+function ApiKeyTable() {
   if (apiKeyStore._isLoading && apiKeyStore._apiKeys.length === 0) {
     return <ApiKeyTableSkeleton />
   }
@@ -29,13 +29,10 @@ export const ApiKeyTable = observer(() => {
   }
 
   return (
-    <>
-      {/* Desktop and Tablet: Table View */}
-      <div className="hidden md:block border rounded-lg overflow-x-auto">
+    <div className="hidden md:block border rounded-lg overflow-x-auto">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[80px]">ID</TableHead>
               <TableHead>Name</TableHead>
               <TableHead className="w-[100px]">Status</TableHead>
               <TableHead className="hidden lg:table-cell w-[140px]">Created Date</TableHead>
@@ -49,14 +46,9 @@ export const ApiKeyTable = observer(() => {
             ))}
           </TableBody>
         </Table>
-      </div>
-
-      {/* Mobile: Card View */}
-      <div className="md:hidden space-y-4">
-        {apiKeyStore._apiKeys.map((apiKey) => (
-          <ApiKeyRow key={apiKey.id} apiKey={apiKey} />
-        ))}
-      </div>
-    </>
+    </div>
   )
-})
+}
+
+
+export default observer(ApiKeyTable)

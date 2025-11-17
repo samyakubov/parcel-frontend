@@ -1,5 +1,4 @@
 "use client"
-
 import { useState, useEffect } from "react"
 import { observer } from "mobx-react"
 import { toast } from "react-toastify"
@@ -23,12 +22,11 @@ interface EditApiKeyDialogProps {
   onOpenChange: (open: boolean) => void
 }
 
-export const EditApiKeyDialog = observer(({ apiKey, open, onOpenChange }: EditApiKeyDialogProps) => {
+function EditApiKeyDialog({ apiKey, open, onOpenChange }: EditApiKeyDialogProps) {
   const [name, setName] = useState(apiKey.name)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [validationError, setValidationError] = useState<string | null>(null)
 
-  // Update name when apiKey changes or dialog opens
   useEffect(() => {
     if (open) {
       setName(apiKey.name)
@@ -44,14 +42,12 @@ export const EditApiKeyDialog = observer(({ apiKey, open, onOpenChange }: EditAp
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
-    // Validation
+
     if (!name.trim()) {
       setValidationError("Name is required")
       return
     }
 
-    // No change
     if (name.trim() === apiKey.name) {
       handleClose()
       return
@@ -62,7 +58,6 @@ export const EditApiKeyDialog = observer(({ apiKey, open, onOpenChange }: EditAp
 
     try {
       const success = await apiKeyStore.updateApiKey(apiKey.id, { name: name.trim() })
-      
       if (success) {
         toast.success("API key updated successfully")
         handleClose()
@@ -127,4 +122,7 @@ export const EditApiKeyDialog = observer(({ apiKey, open, onOpenChange }: EditAp
       </DialogContent>
     </Dialog>
   )
-})
+}
+
+
+export default observer(EditApiKeyDialog)

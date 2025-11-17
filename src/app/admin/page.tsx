@@ -1,12 +1,12 @@
 "use client"
 
 import { useState } from "react"
-import { observer } from "mobx-react-lite"
 import { apiKeyStore } from "@/stores/api-key-store"
 import AdminAuthForm from "@/components/admin/admin-auth-form"
-import { ApiKeyManagement } from "@/components/admin/api-key-management"
+import  ApiKeyManagement from "@/components/admin/api-key-management/api-key-management"
+import {observer} from "mobx-react"
 
-const AdminApiKeysPage = observer(() => {
+function AdminApiKeysPage() {
 	const [isAuthChecked, setIsAuthChecked] = useState(false)
 
 	const handleAuthenticated = () => {
@@ -20,8 +20,7 @@ const AdminApiKeysPage = observer(() => {
 
 	// Show API key management interface when authenticated
 	return <ApiKeyManagement />
-})
+}
 
-AdminApiKeysPage.displayName = "AdminApiKeysPage"
 
-export default AdminApiKeysPage
+export default observer(AdminApiKeysPage)

@@ -22,15 +22,15 @@ interface CreateApiKeyDialogProps {
   onOpenChange: (open: boolean) => void
 }
 
-export const CreateApiKeyDialog = observer(({ open, onOpenChange }: CreateApiKeyDialogProps) => {
-  const [username, setUsername] = useState("")
+function CreateApiKeyDialog ({ open, onOpenChange }: CreateApiKeyDialogProps) {
+  const [name, setName] = useState("")
   const [generatedKey, setGeneratedKey] = useState<string | null>(null)
   const [copied, setCopied] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [validationError, setValidationError] = useState<string | null>(null)
 
   const handleClose = () => {
-    setUsername("")
+    setName("")
     setGeneratedKey(null)
     setCopied(false)
     setValidationError(null)
@@ -52,10 +52,9 @@ export const CreateApiKeyDialog = observer(({ open, onOpenChange }: CreateApiKey
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
-    // Validation
-    if (!username.trim()) {
-      setValidationError("Username is required")
+
+    if (!name.trim()) {
+      setValidationError("name is required")
       return
     }
 
@@ -63,14 +62,12 @@ export const CreateApiKeyDialog = observer(({ open, onOpenChange }: CreateApiKey
     setIsSubmitting(true)
 
     try {
-      const result = await apiKeyStore.createApiKey(username.trim())
-      
+      const result = await apiKeyStore.createApiKey(name.trim())
+
       if (result) {
         setGeneratedKey(result.key)
         toast.success("API key created successfully")
-        setUsername("")
-      } else {
-        toast.error(apiKeyStore._error || "Failed to create API key")
+        setName("")
       }
     } catch (error) {
       toast.error("An unexpected error occurred")
@@ -89,7 +86,7 @@ export const CreateApiKeyDialog = observer(({ open, onOpenChange }: CreateApiKey
           <DialogDescription>
             {generatedKey
               ? "Save this key securely. You won't be able to see it again."
-              : "Enter a username to generate a new API key."}
+              : "Enter a name to generate a new API key."}
           </DialogDescription>
         </DialogHeader>
 
@@ -97,15 +94,15 @@ export const CreateApiKeyDialog = observer(({ open, onOpenChange }: CreateApiKey
           <form onSubmit={handleSubmit}>
             <div className="space-y-4 py-4">
               <div className="space-y-2">
-                <label htmlFor="username" className="text-sm font-medium">
-                  Username
+                <label htmlFor="name" className="text-sm font-medium">
+                  API Name
                 </label>
                 <Input
-                  id="username"
-                  placeholder="Enter username"
-                  value={username}
+                  id="name"
+                  placeholder="Enter Name"
+                  value={name}
                   onChange={(e) => {
-                    setUsername(e.target.value)
+                    setName(e.target.value)
                     setValidationError(null)
                   }}
                   disabled={isSubmitting}
@@ -137,7 +134,7 @@ export const CreateApiKeyDialog = observer(({ open, onOpenChange }: CreateApiKey
             <Alert variant="destructive">
               <AlertCircle className="h-4 w-4" />
               <AlertDescription>
-                <strong>Important:</strong> This is the only time you'll see this key. 
+                <strong>Important:</strong> This is the only time you'll see this key.
                 Make sure to copy it now and store it securely.
               </AlertDescription>
             </Alert>
@@ -174,4 +171,6 @@ export const CreateApiKeyDialog = observer(({ open, onOpenChange }: CreateApiKey
       </DialogContent>
     </Dialog>
   )
-})
+}
+
+export default observer(CreateApiKeyDialog)

@@ -2,9 +2,9 @@ export interface ApiKey {
   id: number;
   name: string;
   enabled: boolean;
-  createdAt: string;
-  updatedAt: string;
-  lastUsedAt: string | null;
+  created_at: string;
+  updated_at: string;
+  last_used_at: string | null;
 }
 
 export interface ApiKeyWithKey extends ApiKey {
