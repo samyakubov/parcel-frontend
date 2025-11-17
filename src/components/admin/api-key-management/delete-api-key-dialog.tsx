@@ -35,11 +35,10 @@ const useDeleteApiKey = (apiKeyId: number, onSuccess: () => void) => {
         toast.success("API key deleted successfully")
         onSuccess()
       } else {
-        toast.error(apiKeyStore._error || "Failed to delete API key")
+        toast.error(apiKeyStore._error?.userMessage || "Failed to delete API key")
       }
     } catch (error) {
       toast.error("An unexpected error occurred")
-      console.error("Error deleting API key:", error)
     } finally {
       setIsDeleting(false)
     }

@@ -62,7 +62,7 @@ function EditApiKeyDialog({ apiKey, open, onOpenChange }: EditApiKeyDialogProps)
         toast.success("API key updated successfully")
         handleClose()
       } else {
-        toast.error(apiKeyStore._error || "Failed to update API key")
+        toast.error(apiKeyStore._error?.userMessage || "Failed to update API key")
       }
     } catch (error) {
       toast.error("An unexpected error occurred")

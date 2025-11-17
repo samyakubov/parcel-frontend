@@ -1,12 +1,10 @@
 import {useCallback, useRef} from "react"
-import { toast } from "react-toastify"
 import isEmpty from "lodash-es/isEmpty"
 import {searchStore} from "@/stores/search-store"
 import {mapStore} from "@/stores/map-store"
 import {apiClient} from "@/api/api-client"
 import {normalizeStreetNames} from "@/utils/normalize-street-names"
 import {modalStore} from "@/stores/modal-store"
-import isHTTPError from "@/api/is-http-error"
 import createMarker from "@/hooks/mapbox/map/create-marker"
 import isNull from "lodash-es/isNull"
 import useFlyTo from "@/hooks/mapbox/map/fly-to"
@@ -32,9 +30,6 @@ export default function useSearchByAddress() {
             const response = await apiClient.propertyService.searchByPropertyAddress(searchStore._addressSearchQuery)
             mapStore.setIsPropertyDataLoading(false)
 
-            if (isHTTPError(response)) {
-                return toast.error(response.message)
-            }
             mapStore.setCoords(response.coordinates)
             const firstRecord = response.records[0]
             modalStore.addPropertyModal(
@@ -50,8 +45,8 @@ export default function useSearchByAddress() {
                 flyTo()
             }
         } catch (e) {
-            console.error("Error fetching records:", e)
-            toast.error("An error occurred. Please try again later.")
+            // Error is already handled by interceptors
+            mapStore.setIsPropertyDataLoading(false)
         }
     }, [flyTo])
 }

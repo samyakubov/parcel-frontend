@@ -1,12 +1,10 @@
 import { useCallback } from "react"
-import { toast } from "react-toastify"
 import isNull from "lodash-es/isNull"
 import {searchStore} from "@/stores/search-store"
 import {mapStore} from "@/stores/map-store"
 import {normalizeStreetNames} from "@/utils/normalize-street-names"
 import {apiClient} from "@/api/api-client"
 import {modalStore} from "@/stores/modal-store"
-import isHTTPError from "@/api/is-http-error"
 
 export default function useSearchByFuzzyCoords() {
 
@@ -20,10 +18,6 @@ export default function useSearchByFuzzyCoords() {
             )
             mapStore.setIsPropertyDataLoading(false)
 
-            if (isHTTPError(response)) {
-                return toast.error(response.message)
-            }
-
             const firstRecord = response.records[0]
 
             mapStore.setCoords(response.coordinates)
@@ -35,8 +29,8 @@ export default function useSearchByFuzzyCoords() {
             )
 
         } catch (e) {
-            console.error("error fetching records: " + e)
-            toast.error("An error occurred. Please try again later.")
+            // Error is already handled by interceptors
+            mapStore.setIsPropertyDataLoading(false)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [apiClient.propertyService, mapStore, searchStore, mapStore._coords, modalStore])

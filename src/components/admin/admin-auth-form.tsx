@@ -1,11 +1,10 @@
 "use client"
-
 import { useState, FormEvent } from "react"
 import { Eye, EyeOff } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { apiKeyStore } from "@/stores/api-key-store"
 import { observer } from "mobx-react"
+import {adminStore} from "@/stores/admin-store"
 
 interface AdminAuthFormProps {
 	onAuthenticated: () => void
@@ -14,12 +13,18 @@ interface AdminAuthFormProps {
 function AdminAuthForm({ onAuthenticated }: AdminAuthFormProps) {
 	const [apiKey, setApiKey] = useState("")
 	const [showApiKey, setShowApiKey] = useState(false)
+	const [isLoading, setIsLoading] = useState(false)
 
-	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
-		const isAuthenticated = apiKeyStore.authenticate(apiKey)
-		if (isAuthenticated) {
-			onAuthenticated()
+		setIsLoading(true)
+		try {
+			const isAuthenticated = await adminStore.authenticate(apiKey)
+			if (isAuthenticated) {
+				onAuthenticated()
+			}
+		} finally {
+			setIsLoading(false)
 		}
 	}
 
@@ -52,7 +57,6 @@ function AdminAuthForm({ onAuthenticated }: AdminAuthFormProps) {
 								placeholder="Enter admin API key"
 								className="w-full pr-10"
 								required
-								aria-invalid={!!apiKeyStore._error}
 							/>
 							<button
 								type="button"
@@ -64,20 +68,14 @@ function AdminAuthForm({ onAuthenticated }: AdminAuthFormProps) {
 								{showApiKey ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
 							</button>
 						</div>
-
-						{apiKeyStore._error && (
-							<p className="mt-2 text-sm text-destructive" role="alert">
-								{apiKeyStore._error}
-							</p>
-						)}
 					</div>
 
 					<Button
 						type="submit"
 						className="w-full"
-						disabled={!apiKey.trim()}
+						disabled={!apiKey.trim() || isLoading}
 					>
-						Authenticate
+						{isLoading ? "Authenticating..." : "Authenticate"}
 					</Button>
 				</form>
 			</div>

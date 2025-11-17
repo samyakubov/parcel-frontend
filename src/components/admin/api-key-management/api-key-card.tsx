@@ -26,7 +26,7 @@ function ApiKeyCard({ apiKey }: ApiKeyCardProps){
     if (success) {
       toast.success(`API key ${checked ? "enabled" : "disabled"} successfully`)
     } else {
-      toast.error(apiKeyStore._error || "Failed to update API key status")
+      toast.error(apiKeyStore._error?.userMessage || "Failed to update API key status")
     }
   }
 

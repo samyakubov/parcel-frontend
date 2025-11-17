@@ -16,7 +16,7 @@ function ApiKeyManagement() {
 
       {apiKeyStore._error && (
         <div className="mb-4 p-3 sm:p-4 bg-destructive/10 border border-destructive rounded-md">
-          <p className="text-xs sm:text-sm text-destructive">{apiKeyStore._error}</p>
+          <p className="text-xs sm:text-sm text-destructive">{apiKeyStore._error.userMessage}</p>
         </div>
       )}
       <ApiKeyTable />

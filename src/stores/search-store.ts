@@ -1,4 +1,5 @@
 import { action, makeAutoObservable} from "mobx"
+import {type ApiError} from "@/types/errors"
 
 class SearchStore {
 	constructor() {
@@ -10,6 +11,7 @@ class SearchStore {
 	public _suggestions: MapboxFeature[] = []
 	public _isSuggestionsOpen = false
 	public _suggestionsError: string | null = null
+	public _error: ApiError | null = null
 
 	public setAddressSearchQuery = action((query: string) =>{
 		this._addressSearchQuery = query
