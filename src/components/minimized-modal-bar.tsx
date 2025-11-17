@@ -21,8 +21,8 @@ function MinimizedModalsBar() {
 				exit={{ opacity: 0, y: 20 }}
 				className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex gap-2 p-2 max-w-screen-xl overflow-x-auto"
 			>
-				{minimizedModals.map((modal, index) => (
-					<MinimizedModal modal={modal} key={index}/>
+				{minimizedModals.map((modal) => (
+					<MinimizedModal modal={modal} key={modal.id}/>
 				))}
 			</motion.div>
 		</AnimatePresence>

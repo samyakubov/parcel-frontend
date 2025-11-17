@@ -11,7 +11,7 @@ interface PropertyModal {
     coords: Coordinates;
     title: string;
     position: ModalPosition;
-    previousPosition?: ModalPosition;
+    savedPosition?: ModalPosition; // Store position before expanding
     propertyData: PropertyDetails;
     zIndex: number;
 }

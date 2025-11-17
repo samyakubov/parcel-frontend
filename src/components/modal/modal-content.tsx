@@ -2,6 +2,7 @@
 import React from "react"
 import { motion } from "framer-motion"
 import ModalControls from "@/components/modal/modal-controls"
+import { modalStore } from "@/stores/modal-store"
 
 interface ModalContentProps {
     children: React.ReactNode;
@@ -19,14 +20,26 @@ export default function ModalContent ({
         const baseClasses = "overflow-hidden flex flex-col"
         if (isExpandable) {
             return currentModal.isExpanded
-                ? `fixed w-[90vw] h-[90vh] ${baseClasses}`
+                ? `fixed w-[90vw] h-[90vh] top-[5vh] left-[5vw] ${baseClasses}`
                 : `fixed right-4 top-4 w-11/12 max-w-md h-[95vh] ${baseClasses}`
         }
     }
+
 	return (
 		<motion.div
-			drag
+			drag={!currentModal.isExpanded}
 			dragMomentum={false}
+			dragConstraints={{ left: -window.innerWidth + 100, right: 100, top: 0, bottom: window.innerHeight - 100 }}
+			onMouseDown={() => modalStore.focusModal(currentModal.id)}
+			onDragEnd={(_, info) => {
+				// Save drag position so it's preserved when expanding/collapsing
+				if (!currentModal.isExpanded) {
+					modalStore.updateModalPosition(currentModal.id, {
+						x: currentModal.position.x + info.offset.x,
+						y: currentModal.position.y + info.offset.y
+					})
+				}
+			}}
 			initial="hidden"
 			animate="visible"
 			exit="exit"

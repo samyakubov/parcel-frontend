@@ -57,6 +57,7 @@ class ModalStore {
 
 		if (!isUndefined(existingModal)) {
 			this.restoreModal(existingModal.id)
+			return // Fixed: prevent duplicate modal creation
 		}
 
 		const newModal: PropertyModal = {
@@ -81,6 +82,10 @@ class ModalStore {
 		}
 	})
 
+	public updateModalPosition = action((id: string, position: ModalPosition) => {
+		this.setModalState(id, { position })
+	})
+
 	public minimizeModal = action((id: string) => {
 		if (this._propertyModals.filter((modal)=>modal.isMinimized).length >= 4) {
 			return toast.info("You can only have 4 minimized modals. Please close one before minimizing another.")
@@ -100,10 +105,20 @@ class ModalStore {
 	public toggleModalExpand = action((id: string) => {
 		const modal = this.getModal(id)
 		if (modal) {
-			this.setModalState(id, {
-				isExpanded: !modal.isExpanded,
-				position: { x: 0, y: 0 }
-			})
+			if (modal.isExpanded) {
+				// Collapsing: restore saved position
+				this.setModalState(id, {
+					isExpanded: false,
+					position: modal.savedPosition || this.calculateNewModalPosition()
+				})
+			} else {
+				// Expanding: save current position and center modal
+				this.setModalState(id, {
+					isExpanded: true,
+					savedPosition: modal.position,
+					position: { x: 0, y: 0 }
+				})
+			}
 		}
 	})
 
