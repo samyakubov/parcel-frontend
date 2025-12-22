@@ -45,17 +45,26 @@ export default function JobsTable({ jobs }: JobsTableProps) {
 							<AnimatePresence>
 								{jobs.map((job, index) => (
 									<motion.tr
-										key={job.job + " " + index.toString()}
+										key={job.bin + " " + index.toString()}
 										initial={{ opacity: 0, x: -20 }}
 										animate={{ opacity: 1, x: 0 }}
 										transition={{ delay: index * 0.05 }}
 										className="border-b transition-colors hover:bg-muted/50"
 									>
-										<TableCell className="py-3 font-medium">
-											{job.job}
-										</TableCell>
 										<TableCell className="py-3 text-muted-foreground">
 											{job.job_description}
+										</TableCell>
+										<TableCell className="py-3 text-muted-foreground">
+											{job.applicant_first_name} {job.applicant_last_name}
+										</TableCell>
+										<TableCell className="py-3 text-muted-foreground">
+											{job.applicant_professional_title}
+										</TableCell>
+										<TableCell className="py-3 text-muted-foreground">
+											{job.job_status}
+										</TableCell>
+										<TableCell className="py-3 text-muted-foreground">
+											{job.job_type}
 										</TableCell>
 									</motion.tr>
 								))}

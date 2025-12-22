@@ -20,19 +20,6 @@ const formatCurrency = (amount: number) =>
 
 const formatDate = (date: string) => new Date(date).toLocaleDateString()
 
-const renderCellValue = (field: keyof PropertyRecord, record: PropertyRecord) => {
-    const value = record[field]
-
-    if (field === "amount") {
-        return formatCurrency(value as number)
-    }
-
-    if (field === "record_filed") {
-        return formatDate(value as string)
-    }
-
-    return String(value || "--")
-}
 
 export default function PropertyRecordGridTable ({ data }: GridProps) {
     return (
@@ -41,9 +28,9 @@ export default function PropertyRecordGridTable ({ data }: GridProps) {
                 <Table>
                     <TableHeader className="sticky top-0 bg-background">
                         <TableRow>
-                            {PROPERTY_RECORD_GRID_COLUMNS.map(({ field, label }) => (
-                                <TableHead key={field} className="font-semibold">
-                                    {label}
+                            {PROPERTY_RECORD_GRID_COLUMNS.map((column) => (
+                                <TableHead key={column} className="font-semibold">
+                                    {column}
                                 </TableHead>
                             ))}
                         </TableRow>
@@ -51,11 +38,36 @@ export default function PropertyRecordGridTable ({ data }: GridProps) {
                     <TableBody>
                         {data.map((record, index) => (
                             <TableRow key={record.documentid + index} className="hover:bg-muted/50">
-                                {PROPERTY_RECORD_GRID_COLUMNS.map(({ field }) => (
-                                    <TableCell key={field} className="py-2">
-                                        {renderCellValue(field, record)}
-                                    </TableCell>
-                                ))}
+                                <TableCell className="py-2">
+                                    {record.prop_streetnumber}
+                                </TableCell>
+                                <TableCell className="py-2">
+                                    {record.prop_streetname}
+                                </TableCell>
+                                <TableCell className="py-2">
+                                    {record.prop_unit}
+                                </TableCell>
+                                <TableCell className="py-2">
+                                    {record.bbl}
+                                </TableCell>
+                                <TableCell className="py-2">
+                                    {formatCurrency(record.amount)}
+                                </TableCell>
+                                <TableCell className="py-2">
+                                    {record.prop_type}
+                                </TableCell>
+                                <TableCell className="py-2">
+                                    {record.party_name}
+                                </TableCell>
+                                <TableCell className="py-2">
+                                    {record.partytype_desc}
+                                </TableCell>
+                                <TableCell className="py-2">
+                                    {record.doc_type}
+                                </TableCell>
+                                <TableCell className="py-2">
+                                    {formatDate(record.record_filed)}
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

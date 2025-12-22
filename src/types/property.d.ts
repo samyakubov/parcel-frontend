@@ -93,9 +93,13 @@ declare global {
     }
 
     interface JobFiled {
-        job: number;
+        bin: number;
         job_description: string;
-        bin: string;
+        applicant_first_name: string;
+        applicant_last_name: string;
+        applicant_professional_title:string;
+        job_status: string;
+        job_type: string;
     }
 }
 
