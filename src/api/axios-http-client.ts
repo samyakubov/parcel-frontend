@@ -9,6 +9,7 @@ export default class AxiosHttpClient {
             headers: {
                 "Content-Type": "application/json",
                 "Access-Control-Allow-Origin": "*",
+                "x-api-key": process.env.NEXT_PUBLIC_API_KEY,
             }
         })
     }

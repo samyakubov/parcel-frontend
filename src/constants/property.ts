@@ -1,9 +1,7 @@
 
 export const COMPLAINT_COLUMNS:string[] = [
 	"Status",
-	"Date Entered",
 	"Category",
-	"Unit",
 	"Disposition Date",
 	"Disposition Code",
 	"Inspection Date"
@@ -20,10 +18,11 @@ export const VIOLATION_COLUMNS:string[] = [
 ]
 
 export const JOBS_COLUMNS = [
-	"Job Filing #",
     "Job Description",
-    "Approved Date",
-    "Bin",
+    "Applicant Name",
+	"Applicant Professional Title",
+	"Job Status",
+	"Job Type"
 ]
 
 
