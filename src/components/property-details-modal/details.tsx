@@ -18,15 +18,21 @@ interface PropertyDetailProps {
     lastSold: LastSoldWithSqft | LastSold
 }
 
-function isLastSoldWithSqft(data: LastSold | LastSoldWithSqft): data is LastSoldWithSqft {
+function isLastSoldWithSqft(
+    data: LastSold | LastSoldWithSqft
+): data is LastSoldWithSqft {
+    if (typeof data !== "object" || data === null) return false
+
     return (
-        typeof data === "object" &&
-        data !== null &&
         "gross_sqft" in data &&
         "land_sqft" in data &&
-        "year_built" in data
+        "year_built" in data &&
+        data.gross_sqft !== null &&
+        data.land_sqft !== null &&
+        data.year_built !== null
     )
 }
+
 
 export default function Details({ firstRecord, lastSold }: PropertyDetailProps) {
     if (isEmpty(firstRecord)) {
