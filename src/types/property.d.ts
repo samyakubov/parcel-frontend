@@ -24,8 +24,15 @@ declare global {
         previous_owners: string[];
     }
 
+    interface Mortgage {
+        lender: string;
+        borrower: string;
+        amount: number;
+    }
+
     interface PropertyDetails {
         last_sold: LastSold | LastSoldWithSqft;
+        mortgage: Mortgage | null;
         owners: Owners;
         records: PropertyRecord[];
         job_filings:JobFiled[];

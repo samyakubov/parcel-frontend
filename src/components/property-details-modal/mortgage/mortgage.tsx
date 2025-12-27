@@ -1,20 +1,17 @@
 "use client"
 import React from "react"
-import { DollarSign, Calendar, Building2, Landmark } from "lucide-react"
+import { DollarSign, Building2, Landmark, User } from "lucide-react"
 import { Card, CardHeader, CardContent } from "@/components/ui/card"
 import { FORMAT_PRICE } from "@/utils/format-price"
-import { FORMAT_DATE } from "@/utils/format-date"
 import MortgageDetailItem from "@/components/property-details-modal/mortgage/mortgage-detail-item"
 
 interface MortgageDetailsProps {
-    borrower: PropertyRecord
-    lender: PropertyRecord
+	borrower: string
+	lender: string
+	amount: number
 }
 
-export default function Mortgage({borrower, lender}: MortgageDetailsProps) {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-	const { record_filed, amount } = borrower
-	const lenderName = lender.party_name
+export default function Mortgage({ borrower, lender, amount }: MortgageDetailsProps) {
 
 	return (
 		<Card className="w-full">
@@ -24,26 +21,26 @@ export default function Mortgage({borrower, lender}: MortgageDetailsProps) {
 						<Building2 className="h-4 w-4 text-primary" />
 					</div>
 					<h3 className="text-lg font-semibold">
-                        Mortgage Details
+						Mortgage Details
 					</h3>
 				</div>
 			</CardHeader>
 
 			<CardContent className="space-y-4">
 				<MortgageDetailItem
+					icon={<User className="h-4 w-4 text-muted-foreground" />}
+					label="Borrower"
+					value={borrower}
+				/>
+				<MortgageDetailItem
 					icon={<Landmark className="h-4 w-4 text-muted-foreground" />}
 					label="Lender"
-					value={lenderName}
+					value={lender}
 				/>
 				<MortgageDetailItem
 					icon={<DollarSign className="h-4 w-4 text-muted-foreground" />}
 					label="Amount"
 					value={`${FORMAT_PRICE(amount)}`}
-				/>
-				<MortgageDetailItem
-					icon={<Calendar className="h-4 w-4 text-muted-foreground" />}
-					label="Recorded On"
-					value={FORMAT_DATE(record_filed)}
 				/>
 			</CardContent>
 		</Card>
