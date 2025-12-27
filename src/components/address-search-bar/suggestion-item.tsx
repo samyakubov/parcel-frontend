@@ -4,21 +4,21 @@ import { MapPin } from "lucide-react"
 import useHandleSuggestionClick from "@/hooks/mapbox/search-with-autocomplete/use-handle-suggestion-click"
 
 interface SuggestionItemProps {
-    suggestion: MapboxFeature;
+	suggestion: MapboxFeature;
 }
 
-export default function SuggestionItem ({ suggestion }: SuggestionItemProps) {
+export default function SuggestionItem({ suggestion }: SuggestionItemProps) {
 	const handleSuggestionClick = useHandleSuggestionClick()
 
 
 	return (
 		<li
 			key={suggestion.id}
-			onClick={ () => {
+			onClick={() => {
 				handleSuggestionClick(suggestion)
 			}}
-			className="px-4 py-3 cursor-pointer transition-colors duration-150
-			    flex items-center gap-3 text-popover-foreground hover:bg-accent"
+			className="px-4 py-3 cursor-pointer transition-all duration-300 rounded-lg
+			    flex items-center gap-3 text-popover-foreground hover:bg-accent/50 hover:pl-5"
 		>
 			<MapPin
 				size={18}

@@ -5,12 +5,12 @@ import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 
 interface ViolationsHeaderProps {
-    isExpanded: boolean;
-    setIsExpanded: (isExpanded: boolean) => void;
-    violationsCount: number;
+	isExpanded: boolean;
+	setIsExpanded: (isExpanded: boolean) => void;
+	violationsCount: number;
 }
 
-export default function ViolationsHeader ({ isExpanded, setIsExpanded, violationsCount }: ViolationsHeaderProps) {
+export default function ViolationsHeader({ isExpanded, setIsExpanded, violationsCount }: ViolationsHeaderProps) {
 	return (
 		<Button
 			variant="ghost"
@@ -18,11 +18,11 @@ export default function ViolationsHeader ({ isExpanded, setIsExpanded, violation
 			onClick={() => setIsExpanded(!isExpanded)}
 		>
 			<div className="flex items-center gap-3">
-				<div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-100 dark:bg-red-900
-				transition-colors group-hover:bg-red-200 dark:group-hover:bg-red-800">
-					<AlertTriangle className="h-6 w-6 text-red-600 dark:text-red-400" />
+				<div className="flex h-10 w-10 items-center justify-center rounded-xl bg-red-100/80 dark:bg-red-900/50
+				transition-colors shadow-sm">
+					<AlertTriangle className="h-5 w-5 text-red-600 dark:text-red-400" />
 				</div>
-				<h3 className="text-lg font-semibold text-red-800 dark:text-red-200">
+				<h3 className="text-base font-semibold text-red-700 dark:text-red-300">
 					Violations ({violationsCount})
 				</h3>
 			</div>

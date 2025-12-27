@@ -9,7 +9,7 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import {PROPERTY_RECORD_GRID_COLUMNS} from "@/constants/property"
+import { PROPERTY_RECORD_GRID_COLUMNS } from "@/constants/property"
 
 interface GridProps {
     data: PropertyRecord[];
@@ -21,12 +21,12 @@ const formatCurrency = (amount: number) =>
 const formatDate = (date: string) => new Date(date).toLocaleDateString()
 
 
-export default function PropertyRecordGridTable ({ data }: GridProps) {
+export default function PropertyRecordGridTable({ data }: GridProps) {
     return (
-        <div className="rounded-md border">
+        <div className="rounded-xl border border-border/50 bg-background/50 backdrop-blur-sm shadow-lg overflow-hidden">
             <ScrollArea className="h-[500px] w-full">
                 <Table>
-                    <TableHeader className="sticky top-0 bg-background">
+                    <TableHeader className="sticky top-0 bg-muted/50 backdrop-blur-sm z-10">
                         <TableRow>
                             {PROPERTY_RECORD_GRID_COLUMNS.map((column) => (
                                 <TableHead key={column} className="font-semibold">

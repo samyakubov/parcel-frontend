@@ -15,21 +15,21 @@ import { Badge } from "@/components/ui/badge"
 import { VIOLATION_COLUMNS } from "@/constants/property"
 
 interface ViolationsTableProps {
-    violations: Violation[];
+	violations: Violation[];
 }
 
 const getSeverityVariant = (severity: string): "default" | "secondary" | "destructive" => {
 	switch (severity) {
-	case "CLASS - 1":
-		return "destructive"
-	case "CLASS - 2":
-		return "secondary"
-	default:
-		return "default"
+		case "CLASS - 1":
+			return "destructive"
+		case "CLASS - 2":
+			return "secondary"
+		default:
+			return "default"
 	}
 }
 
-export default function ViolationsTable ({ violations }: ViolationsTableProps) {
+export default function ViolationsTable({ violations }: ViolationsTableProps) {
 	return (
 		<motion.div
 			initial={{ height: 0, opacity: 0 }}
@@ -38,7 +38,7 @@ export default function ViolationsTable ({ violations }: ViolationsTableProps) {
 			transition={{ duration: 0.3 }}
 			className="overflow-hidden"
 		>
-			<Card className="mt-4 border-border">
+			<Card className="mt-4 border-border/50 bg-background/50 backdrop-blur-sm shadow-inner">
 				<ScrollArea className="h-96">
 					<Table>
 						<TableHeader>
