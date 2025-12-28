@@ -20,8 +20,6 @@ interface PropertyDetailsModalContentProps {
 }
 
 export default function PropertyDetailsModalContent({ modal }: PropertyDetailsModalContentProps) {
-
-
 	return (
 		<motion.div
 			layout="preserve-aspect"
