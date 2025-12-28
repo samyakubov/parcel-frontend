@@ -33,7 +33,8 @@ export default function Complaints({ complaints }: ComplaintsProps) {
 	}
 
 	return (
-		<Card className="border-amber-200/50 dark:border-amber-800/30 bg-amber-50/50 dark:bg-amber-950/30 backdrop-blur-sm mb-3 shadow-lg shadow-amber-500/5">
+		<Card className="border-amber-200/50 dark:border-amber-800/30 bg-amber-50/50
+		dark:bg-amber-950/30 backdrop-blur-sm mb-3 shadow-lg shadow-amber-500/5">
 			<CardContent className="p-3">
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
