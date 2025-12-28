@@ -32,6 +32,11 @@ export default function useInitMap(containerId:string) {
 		mapRef.current.setMaxBounds(NYC_BOUNDS as mapboxgl.LngLatBoundsLike)
 		mapRef.current.on("click", handleMapClick)
 
+		// Cleanup function to remove markers when component unmounts
+		return () => {
+			mapStore.cleanup()
+		}
+
 	}, [containerId, handleMapClick])
 
 	return mapRef

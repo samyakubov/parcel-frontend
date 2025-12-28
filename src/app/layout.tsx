@@ -35,7 +35,11 @@ export default function RootLayout({
 				<ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
 					{children}
 					<ToastContainer
-					position="bottom-right"/>
+					position="bottom-right"
+					hideProgressBar={true}
+					pauseOnHover
+					theme="colored"
+					/>
 				</ThemeProvider>
 			</body>
 		</html>

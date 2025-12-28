@@ -1,5 +1,6 @@
 import { action, makeAutoObservable} from "mobx"
 import mapboxgl from "mapbox-gl"
+import createMarker from "@/hooks/mapbox/map/create-marker"
 
 class MapStore {
 	constructor() {
@@ -9,6 +10,7 @@ class MapStore {
 	public _coords:Coordinates | null = null
     public _isPropertyDataLoading = false
 	public _map: mapboxgl.Map | null = null
+	private _currentMarker: mapboxgl.Marker | null = null
 
 	public setCoords = action((coords: Coordinates | null) => {
 		this._coords = coords
@@ -18,6 +20,30 @@ class MapStore {
     })
 	public setMap = action((map: mapboxgl.Map | null) => {
 		this._map = map
+	})
+
+	public setMarker = action((longitude: number, latitude: number) => {
+		// Clean up previous marker if it exists
+		if (this._currentMarker) {
+			this._currentMarker.remove()
+			this._currentMarker = null
+		}
+
+		// Create new marker if map is available
+		if (this._map) {
+			this._currentMarker = createMarker(longitude, latitude)
+		}
+	})
+
+	public clearMarker = action(() => {
+		if (this._currentMarker) {
+			this._currentMarker.remove()
+			this._currentMarker = null
+		}
+	})
+
+	public cleanup = action(() => {
+		this.clearMarker()
 	})
 }
 

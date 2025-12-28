@@ -1,18 +1,16 @@
-import { useCallback, useRef } from "react"
+import { useCallback } from "react"
 import isEmpty from "lodash-es/isEmpty"
 import { searchStore } from "@/stores/search-store"
 import { mapStore } from "@/stores/map-store"
 import { apiClient } from "@/api/api-client"
 import { normalizeStreetNames } from "@/utils/normalize-street-names"
 import { modalStore } from "@/stores/modal-store"
-import createMarker from "@/hooks/mapbox/map/create-marker"
 import isNull from "lodash-es/isNull"
 import useFlyTo from "@/hooks/mapbox/map/fly-to"
 import isUndefined from "lodash-es/isUndefined"
 
 
 export default function useSearchByAddress() {
-    const markerRef = useRef<mapboxgl.Marker | null>(null)
     const flyTo = useFlyTo()
 
     return useCallback(async () => {
@@ -40,10 +38,7 @@ export default function useSearchByAddress() {
                 data
             )
             if (!isNull(mapStore._map) && !isNull(mapStore._coords)) {
-                if (!isNull(markerRef.current)) {
-                    markerRef.current.remove()
-                }
-                markerRef.current = createMarker(mapStore._coords.longitude, mapStore._coords.latitude)
+                mapStore.setMarker(mapStore._coords.longitude, mapStore._coords.latitude)
                 flyTo()
             }
         } catch {
