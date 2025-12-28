@@ -1,23 +1,11 @@
 "use client"
 import React from "react"
-import { isEmpty } from "lodash-es"
-import { Alert, AlertDescription } from "@/components/ui/alert"
 
 interface OwnerListProps {
 	owners: string[];
 }
 
 export default function OwnerList({ owners }: OwnerListProps) {
-	if (isEmpty(owners)) {
-		return (
-			<Alert variant="destructive">
-				<AlertDescription>
-					No owners on record
-				</AlertDescription>
-			</Alert>
-		)
-	}
-
 	return (
 		<div className="space-y-2 overflow-y-auto max-h-80">
 			{owners.map((owner, index) => (
