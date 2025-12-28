@@ -3,19 +3,23 @@ import { searchStore } from "@/stores/search-store"
 import { Button } from "@/components/ui/button"
 import SuggestionsList from "@/components/address-search-bar/suggestions-list"
 import useAddressAutocomplete from "@/hooks/mapbox/search-with-autocomplete/use-address-auto-complete"
-import { useEffect } from "react"
 import { observer } from "mobx-react"
 
 
 function SearchBarWithAutocomplete() {
-	const addressAutocomplete = useAddressAutocomplete()
+	const { fetch: addressAutocomplete } = useAddressAutocomplete()
 
-	useEffect(() => {
-		if (searchStore._addressSearchQuery.length < 2) {
-			return searchStore.setIsSuggestionsOpen(false)
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const value = e.target.value
+		searchStore.setAddressSearchQuery(value)
+
+		if (value.length < 2) {
+			searchStore.setIsSuggestionsOpen(false)
+			return
 		}
-		void addressAutocomplete()
-	}, [addressAutocomplete])
+
+		addressAutocomplete()
+	}
 
 	return (
 		<div className="relative shadow-xl rounded-full">
@@ -27,7 +31,7 @@ function SearchBarWithAutocomplete() {
 					className="flex-grow bg-transparent border-none shadow-none
 					focus-visible:ring-0 px-4 h-11 text-base placeholder:text-muted-foreground/70"
 					value={searchStore._addressSearchQuery}
-					onChange={(e) => searchStore.setAddressSearchQuery(e.target.value)}
+					onChange={handleInputChange}
 				/>
 				<Button className="rounded-full px-6 h-11 text-base font-semibold shadow-lg
 				shadow-primary/20 hover:shadow-primary/40 transition-all duration-300">
