@@ -1,8 +1,8 @@
-import {useCallback} from "react"
+import { useCallback } from "react"
 import { debounce } from "lodash-es"
 import axios from "axios"
-import {searchStore} from "@/stores/search-store"
-import {NYC_BOUNDS, NYC_CENTER} from "@/constants/mapbox"
+import { searchStore } from "@/stores/search-store"
+import { NYC_BOUNDS, NYC_CENTER } from "@/constants/mapbox"
 
 export default function useAddressAutocomplete() {
 	const accessToken = process.env.NEXT_PUBLIC_MAPBOX_API_KEY as string
@@ -40,5 +40,5 @@ export default function useAddressAutocomplete() {
 
 	return useCallback(() => {
 		debouncedFetch(searchStore._addressSearchQuery, accessToken)
-	}, [searchStore._addressSearchQuery, accessToken, debouncedFetch])
+	}, [accessToken, debouncedFetch])
 }

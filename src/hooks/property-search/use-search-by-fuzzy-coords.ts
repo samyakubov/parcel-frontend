@@ -31,7 +31,7 @@ export default function useSearchByFuzzyCoords() {
                 data
             )
 
-        } catch (e) {
+        } catch {
             mapStore.setIsPropertyDataLoading(false)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

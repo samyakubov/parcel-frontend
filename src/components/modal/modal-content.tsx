@@ -43,7 +43,8 @@ export default function ModalContent({
 			}}
 			exit="exit"
 			transition={{ x: { duration: 0 }, y: { duration: 0 } }}
-			className={`bg-background/80 dark:bg-background/80 backdrop-blur-2xl border border-white/20 dark:border-white/10 rounded-xl shadow-2xl ${getPanelClassName()}`}
+			className={`bg-background/80 dark:bg-background/80 backdrop-blur-2xl border border-white/20
+			dark:border-white/10 rounded-xl shadow-2xl ${getPanelClassName()}`}
 			style={{
 				pointerEvents: "auto",
 			}}

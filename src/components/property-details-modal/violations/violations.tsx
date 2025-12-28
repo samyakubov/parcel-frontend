@@ -33,7 +33,8 @@ export default function Violations({ violations }: ViolationsProps) {
 	}
 
 	return (
-		<Card className="border-red-200/50 dark:border-red-800/30 bg-red-50/50 dark:bg-red-950/30 backdrop-blur-sm mb-3 shadow-lg shadow-red-500/5">
+		<Card className="border-red-200/50 dark:border-red-800/30 bg-red-50/50 dark:bg-red-950/30
+		backdrop-blur-sm mb-3 shadow-lg shadow-red-500/5">
 			<CardContent className="p-3">
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}

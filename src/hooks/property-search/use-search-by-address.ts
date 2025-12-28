@@ -46,7 +46,7 @@ export default function useSearchByAddress() {
                 markerRef.current = createMarker(mapStore._coords.longitude, mapStore._coords.latitude)
                 flyTo()
             }
-        } catch (e) {
+        } catch {
             mapStore.setIsPropertyDataLoading(false)
         }
     }, [flyTo])
