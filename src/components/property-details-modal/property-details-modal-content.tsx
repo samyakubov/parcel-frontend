@@ -12,16 +12,15 @@ import Violations from "@/components/property-details-modal/violations/violation
 import Owners from "@/components/property-details-modal/owners/owners"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import PropertyRecordGrid from "@/components/property-details-modal/property-record-grid/property-records-grid"
-import getMortgageDetails from "@/utils/get-mortgage-details"
-import {Landmark} from "lucide-react"
-import {Alert, AlertDescription} from "@/components/ui/alert"
+import { Landmark } from "lucide-react"
+import { Alert, AlertDescription } from "@/components/ui/alert"
 
 interface PropertyDetailsModalContentProps {
-    modal: PropertyModal;
+	modal: PropertyModal;
 }
 
 export default function PropertyDetailsModalContent({ modal }: PropertyDetailsModalContentProps) {
-	const latestMortgage = getMortgageDetails(modal.propertyData.records, modal.propertyData.last_sold)
+
 
 	return (
 		<motion.div
@@ -39,21 +38,21 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
 					>
 						<motion.img
 							layout="preserve-aspect"
-							className="rounded-lg w-full h-64 object-cover mb-4"
+							className="rounded-xl shadow-lg w-full h-64 object-cover mb-4 border border-white/10"
 							src={`https://maps.googleapis.com/maps/api/streetview?size=800x300&location=
 							${modal.coords.latitude},${modal.coords.longitude}
 							&key=${process.env.NEXT_PUBLIC_STREETVIEW_API_KEY}`
-                        }
+							}
 							alt="Google Street View"
 						/>
 
-                        <Details
-                            firstRecord={modal.propertyData.records[0]}
-                            lastSold={modal.propertyData.last_sold}
-                        />
+						<Details
+							firstRecord={modal.propertyData.records[0]}
+							lastSold={modal.propertyData.last_sold}
+						/>
 
 
-                        <LastSold lastSoldFor={modal.propertyData.last_sold}/>
+						<LastSold lastSoldFor={modal.propertyData.last_sold} />
 					</motion.div>
 					<motion.div
 						layout="preserve-aspect"
@@ -62,40 +61,44 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
 						<Zoning zoning={modal.propertyData.zoning} />
 
 						<Owners currentOwners={modal.propertyData.owners.current_owners}
-                                previousOwners={modal.propertyData.owners.previous_owners}
-                        />
-                        {
-                            !isNull(latestMortgage) ? (
-                                <Mortgage borrower={latestMortgage.borrower} lender={latestMortgage.lender} />
-                            ) : (
-                                <motion.div
-                                    initial={{ opacity: 0, y: -20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    className="w-full"
-                                >
-                                    <Card>
-                                        <CardHeader>
-                                            <div className="flex items-center gap-2">
-                                                <div className="p-2 rounded-full bg-destructive/10">
-                                                    <Landmark className="h-4 w-4 text-muted-foreground" />
-                                                </div>
-                                                <h3 className="text-lg font-semibold text-destructive">
-                                                    Mortgage Details
-                                                </h3>
-                                            </div>
-                                        </CardHeader>
-                                        <CardContent>
-                                            <Alert variant="destructive">
-                                                <AlertDescription>
-                                                    No mortgage on record
-                                                </AlertDescription>
-                                            </Alert>
-                                        </CardContent>
-                                    </Card>
-                                </motion.div>
+							previousOwners={modal.propertyData.owners.previous_owners}
+						/>
+						{
+							!isNull(modal.propertyData.mortgage) ? (
+								<Mortgage
+									borrower={modal.propertyData.mortgage.borrower}
+									lender={modal.propertyData.mortgage.lender}
+									amount={modal.propertyData.mortgage.amount}
+								/>
+							) : (
+								<motion.div
+									initial={{ opacity: 0, y: -20 }}
+									animate={{ opacity: 1, y: 0 }}
+									className="w-full"
+								>
+									<Card>
+										<CardHeader>
+											<div className="flex items-center gap-2">
+												<div className="p-2 rounded-full bg-destructive/10">
+													<Landmark className="h-4 w-4 text-muted-foreground" />
+												</div>
+												<h3 className="text-lg font-semibold text-destructive">
+													Mortgage Details
+												</h3>
+											</div>
+										</CardHeader>
+										<CardContent>
+											<Alert variant="destructive">
+												<AlertDescription>
+													No mortgage on record
+												</AlertDescription>
+											</Alert>
+										</CardContent>
+									</Card>
+								</motion.div>
 
-                            )
-                        }
+							)
+						}
 					</motion.div>
 				</motion.div>
 
@@ -106,7 +109,7 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
 							animate={{ opacity: 1, height: "auto" }}
 							exit={{ opacity: 0, height: 0 }}
 						>
-							<Jobs jobsFiled={modal.propertyData.job_filings}/>
+							<Jobs jobsFiled={modal.propertyData.job_filings} />
 							<Complaints complaints={modal.propertyData.complaints} />
 							<Violations violations={modal.propertyData.violations} />
 							<PropertyRecordGrid data={modal.propertyData.records} />

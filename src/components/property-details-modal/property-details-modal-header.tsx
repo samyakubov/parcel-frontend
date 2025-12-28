@@ -1,37 +1,33 @@
 "use client"
 import React from "react"
 import { motion } from "framer-motion"
-import { MapPin } from "lucide-react"
 import { modalStore } from "@/stores/modal-store"
 
 interface PropertyDetailsModalHeaderProps {
-    modal: PropertyModal;
+	modal: PropertyModal;
 }
 
-export default function PropertyDetailsModalHeader ({ modal }: PropertyDetailsModalHeaderProps) {
+export default function PropertyDetailsModalHeader({ modal }: PropertyDetailsModalHeaderProps) {
 	return (
 		<motion.div
 			layout="preserve-aspect"
 			whileHover={{ scale: 1.005 }}
 			transition={{ type: "spring", stiffness: 300, damping: 20 }}
-			className="flex-none flex items-center gap-3 p-6 bg-background border-b border-border backdrop-blur-sm cursor-pointer"
+			className="flex-none flex items-center gap-4 p-5 bg-gradient-to-r from-primary/5 via-transparent to-transparent
+			 border-b border-border/50 backdrop-blur-sm cursor-pointer"
 			onClick={() => modalStore.focusModal(modal.id)}
 		>
-			<div className="p-2 bg-indigo-50 dark:bg-indigo-900/20 rounded-xl flex-shrink-0">
-				<MapPin className="w-5 h-5 text-secondary " />
-			</div>
-
 			<div className="flex items-center w-full">
 				<a
 					target="_blank"
 					rel="noopener noreferrer"
-					className="text-xl font-bold text-primary bg-clip-text transition-all duration-300 ease-out group"
+					className="text-xl font-bold text-foreground hover:text-primary transition-colors duration-300 group"
 					href={`http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet
 					?boro=${modal.propertyData.records[0].bbl[0]}
 					&block=${modal.propertyData.records[0].prop_block}
 					&lot=${modal.propertyData.records[0].prop_lot}`}
 				>
-					<span>
+					<span className="group-hover:underline underline-offset-4 decoration-primary/50">
 						{modal.title}
 					</span>
 				</a>

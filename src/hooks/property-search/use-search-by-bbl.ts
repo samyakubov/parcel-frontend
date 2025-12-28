@@ -11,15 +11,17 @@ import useFlyTo from "@/hooks/mapbox/map/fly-to"
 import isUndefined from "lodash-es/isUndefined"
 
 
-export default function useSearchByAddress() {
+export default function useSearchByBbl() {
     const markerRef = useRef<mapboxgl.Marker | null>(null)
     const flyTo = useFlyTo()
 
     return useCallback(async () => {
         try {
-            if (isEmpty(searchStore._addressSearchQuery)) return
+            if (isEmpty(searchStore._bblSearchQuery)) return
 
-            const existingModal = modalStore._propertyModals.find(modal => modal.title === searchStore._addressSearchQuery)
+            const existingModal = modalStore._propertyModals.find(modal =>
+                modal.propertyData.records[0]?.bbl === searchStore._bblSearchQuery
+            )
 
             if (!isUndefined(existingModal)) {
                 modalStore.restoreModal(existingModal.id)
@@ -27,7 +29,7 @@ export default function useSearchByAddress() {
             }
 
             mapStore.setIsPropertyDataLoading(true)
-            const response = await apiClient.propertyService.searchByPropertyAddress(searchStore._addressSearchQuery)
+            const response = await apiClient.propertyService.searchByPropertyBbl(searchStore._bblSearchQuery)
             mapStore.setIsPropertyDataLoading(false)
 
             const data = response as PropertyDetailsWithCoords

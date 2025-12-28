@@ -9,7 +9,7 @@ import ComplaintsTable from "@/components/property-details-modal/complaints/comp
 
 
 interface ComplaintsProps {
-    complaints: Complaint[];
+	complaints: Complaint[];
 }
 
 export default function Complaints({ complaints }: ComplaintsProps) {
@@ -17,14 +17,14 @@ export default function Complaints({ complaints }: ComplaintsProps) {
 
 	if (isEmpty(complaints)) {
 		return (
-			<Card className="border-emerald-200 bg-emerald-50 dark:border-emerald-800 dark:bg-emerald-950 mb-3">
-				<CardContent className="p-2">
+			<Card className="border-muted/50 bg-muted/30 backdrop-blur-sm mb-3">
+				<CardContent className="p-3">
 					<motion.div className="flex items-center gap-3">
-						<div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-900">
-							<CircleAlert className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
+						<div className="flex h-10 w-10 items-center justify-center rounded-xl bg-muted/50 shadow-sm">
+							<CircleAlert className="h-5 w-5 text-muted-foreground" />
 						</div>
-						<h3 className="text-lg font-semibold text-emerald-800 dark:text-emerald-200">
-                            No Complaints found
+						<h3 className="text-base font-semibold text-muted-foreground">
+							No Complaints found
 						</h3>
 					</motion.div>
 				</CardContent>
@@ -33,8 +33,9 @@ export default function Complaints({ complaints }: ComplaintsProps) {
 	}
 
 	return (
-		<Card className="border-amber-200 bg-amber-50 dark:border-amber-800 dark:bg-amber-950 mb-3">
-			<CardContent className="p-2">
+		<Card className="border-amber-200/50 dark:border-amber-800/30 bg-amber-50/50
+		dark:bg-amber-950/30 backdrop-blur-sm mb-3 shadow-lg shadow-amber-500/5">
+			<CardContent className="p-3">
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}

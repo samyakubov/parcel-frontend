@@ -7,8 +7,8 @@ import useFlyTo from "@/hooks/mapbox/map/fly-to"
 
 export default function useHandleMapClick(mapRef: React.RefObject<mapboxgl.Map | null>) {
 	const markerRef = useRef<mapboxgl.Marker | null>(null)
-    const searchByFuzzyCoords = useSearchByFuzzyCoords()
-    const flyTo = useFlyTo()
+	const searchByFuzzyCoords = useSearchByFuzzyCoords()
+	const flyTo = useFlyTo()
 
 	return useCallback(async (e: mapboxgl.MapMouseEvent) => {
 		if (isNull(mapRef.current)) return
@@ -23,9 +23,9 @@ export default function useHandleMapClick(mapRef: React.RefObject<mapboxgl.Map |
 
 			flyTo()
 
-            await searchByFuzzyCoords()
+			await searchByFuzzyCoords()
 		} catch (error) {
 			console.error("Error handling map click:", error)
 		}
-	}, [mapRef, searchByFuzzyCoords])
+	}, [mapRef, searchByFuzzyCoords, flyTo])
 }

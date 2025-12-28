@@ -1,8 +1,8 @@
 "use client"
-import React, {useEffect, useRef} from "react"
-import {searchStore} from "@/stores/search-store"
+import React, { useEffect, useRef } from "react"
+import { searchStore } from "@/stores/search-store"
 import SuggestionItem from "@/components/address-search-bar/suggestion-item"
-import {observer} from "mobx-react"
+import { observer } from "mobx-react"
 
 function SuggestionsList() {
 	const suggestionsRef = useRef<HTMLUListElement>(null)
@@ -21,7 +21,8 @@ function SuggestionsList() {
 	return (
 		<ul
 			ref={suggestionsRef}
-			className="absolute w-10/12 mt-1 bg-popover border border-border rounded-lg shadow-lg max-h-60 overflow-auto"
+			className="bg-background/95 dark:bg-background/90 backdrop-blur-2xl border border-border/50
+			dark:border-white/10 rounded-xl shadow-2xl shadow-black/10 dark:shadow-black/30 max-h-60 overflow-auto p-1.5"
 		>
 			{searchStore._suggestions.map((suggestion) => (
 				<SuggestionItem key={suggestion.id} suggestion={suggestion} />

@@ -5,9 +5,9 @@ import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 
 interface ComplaintsHeaderProps {
-    isExpanded: boolean;
-    setIsExpanded: (isExpanded: boolean) => void;
-    complaintsCount: number;
+	isExpanded: boolean;
+	setIsExpanded: (isExpanded: boolean) => void;
+	complaintsCount: number;
 }
 
 export default function ComplaintsHeader({ isExpanded, setIsExpanded, complaintsCount }: ComplaintsHeaderProps) {
@@ -18,11 +18,11 @@ export default function ComplaintsHeader({ isExpanded, setIsExpanded, complaints
 			onClick={() => setIsExpanded(!isExpanded)}
 		>
 			<div className="flex items-center gap-3">
-				<div className="flex h-10 w-10 items-center justify-center rounded-full bg-amber-100 dark:bg-amber-900 t
-				transition-colors group-hover:bg-amber-200 dark:group-hover:bg-amber-800">
-					<AlertCircle className="h-6 w-6 text-amber-600 dark:text-amber-400" />
+				<div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-100/80 dark:bg-amber-900/50
+			transition-colors shadow-sm">
+					<AlertCircle className="h-5 w-5 text-amber-600 dark:text-amber-400" />
 				</div>
-				<h3 className="text-lg font-semibold text-amber-800 dark:text-amber-200">
+				<h3 className="text-base font-semibold text-amber-700 dark:text-amber-300">
 					Complaints ({complaintsCount})
 				</h3>
 			</div>

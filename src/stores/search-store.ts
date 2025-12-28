@@ -1,4 +1,4 @@
-import { action, makeAutoObservable} from "mobx"
+import { action, makeAutoObservable } from "mobx"
 
 class SearchStore {
 	constructor() {
@@ -6,16 +6,21 @@ class SearchStore {
 	}
 
 	public _addressSearchQuery = ""
+	public _bblSearchQuery = ""
 
 	public _suggestions: MapboxFeature[] = []
 	public _isSuggestionsOpen = false
 	public _suggestionsError: string | null = null
 
-	public setAddressSearchQuery = action((query: string) =>{
+	public setAddressSearchQuery = action((query: string) => {
 		this._addressSearchQuery = query
 	})
 
-	public setSuggestions = action((newSuggestions: MapboxFeature[]) =>{
+	public setBblSearchQuery = action((query: string) => {
+		this._bblSearchQuery = query
+	})
+
+	public setSuggestions = action((newSuggestions: MapboxFeature[]) => {
 		this._suggestions = newSuggestions
 	})
 

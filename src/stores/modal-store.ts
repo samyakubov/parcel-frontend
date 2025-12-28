@@ -1,7 +1,7 @@
 import { action, makeAutoObservable } from "mobx"
 import { v4 as uuidv4 } from "uuid"
 import isUndefined from "lodash-es/isUndefined"
-import {toast} from "react-toastify"
+import { toast } from "react-toastify"
 
 class ModalStore {
 	constructor() {
@@ -24,6 +24,10 @@ class ModalStore {
 				...updates as Partial<PropertyModal>
 			}
 		}
+	})
+
+	public updateModalPosition = action((id: string, position: { x: number, y: number }) => {
+		this.setModalState(id, { position })
 	})
 
 	public getModal = (id: string): PropertyModal | undefined => {
@@ -82,7 +86,7 @@ class ModalStore {
 	})
 
 	public minimizeModal = action((id: string) => {
-		if (this._propertyModals.filter((modal)=>modal.isMinimized).length >= 4) {
+		if (this._propertyModals.filter((modal) => modal.isMinimized).length >= 4) {
 			return toast.info("You can only have 4 minimized modals. Please close one before minimizing another.")
 		}
 		this.setModalState(id, { isMinimized: true })
@@ -92,9 +96,9 @@ class ModalStore {
 		this.setModalState(id, {
 			isMinimized: false,
 			isOpen: true,
-			position:this.calculateNewModalPosition()
+			position: this.calculateNewModalPosition()
 		})
-        this.focusModal(id)
+		this.focusModal(id)
 	})
 
 	public toggleModalExpand = action((id: string) => {
@@ -104,10 +108,11 @@ class ModalStore {
 				isExpanded: !modal.isExpanded,
 				position: { x: 0, y: 0 }
 			})
+			this.focusModal(id)
 		}
 	})
 
-	public closeModal = action((id: string, ) => {
+	public closeModal = action((id: string,) => {
 		const propertyIndex = this._propertyModals.findIndex(modal => modal.id === id)
 		if (propertyIndex !== -1) {
 			this._propertyModals.splice(propertyIndex, 1)
