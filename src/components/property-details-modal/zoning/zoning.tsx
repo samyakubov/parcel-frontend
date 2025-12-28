@@ -10,19 +10,20 @@ import CommercialOverlays from "@/components/property-details-modal/zoning/comme
 import LimitedHeightDistrict from "@/components/property-details-modal/zoning/limited-height-district"
 import LastUpdated from "@/components/property-details-modal/zoning/last-updated"
 import ZoningDistricts from "@/components/property-details-modal/zoning/zoning-districts"
-import {isEmpty} from "lodash-es"
+import { isEmpty } from "lodash-es"
 
 interface ZoningSectionProps {
-    zoning: Zoning
+	zoning: Zoning
 }
 
 export default function Zoning({ zoning }: ZoningSectionProps) {
-	const hasNoZoningData = isNull(zoning.zoning_districts) || isUndefined(zoning.zoning_districts) || (
-		isEmpty(zoning.zoning_districts) &&
-        isEmpty(zoning.commercial_overlays) &&
-        isEmpty(zoning.special_districts) &&
-        !zoning.limited_height_district
-	)
+	const hasNoZoningData = isNull(zoning) || isUndefined(zoning) ||
+		isNull(zoning.zoning_districts) || isUndefined(zoning.zoning_districts) || (
+			isEmpty(zoning.zoning_districts) &&
+			isEmpty(zoning.commercial_overlays) &&
+			isEmpty(zoning.special_districts) &&
+			!zoning.limited_height_district
+		)
 
 	if (hasNoZoningData) {
 		return (
@@ -33,14 +34,14 @@ export default function Zoning({ zoning }: ZoningSectionProps) {
 							<Map className="h-4 w-4 text-destructive" />
 						</div>
 						<h3 className="text-lg font-semibold text-destructive">
-                            Zoning Information
+							Zoning Information
 						</h3>
 					</div>
 				</CardHeader>
 				<CardContent>
 					<Alert variant="destructive">
 						<AlertDescription>
-                            No zoning information available.
+							No zoning information available.
 						</AlertDescription>
 					</Alert>
 				</CardContent>
@@ -56,7 +57,7 @@ export default function Zoning({ zoning }: ZoningSectionProps) {
 						<Map className="h-4 w-4 text-primary" />
 					</div>
 					<h3 className="text-lg font-semibold">
-                        Zoning Information
+						Zoning Information
 					</h3>
 				</div>
 			</CardHeader>

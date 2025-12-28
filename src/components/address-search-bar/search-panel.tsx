@@ -4,7 +4,7 @@ import { searchStore } from "@/stores/search-store"
 import { Button } from "@/components/ui/button"
 import SuggestionsList from "@/components/address-search-bar/suggestions-list"
 import useAddressAutocomplete from "@/hooks/mapbox/search-with-autocomplete/use-address-auto-complete"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { observer } from "mobx-react"
 import useSearchByBbl from "@/hooks/property-search/use-search-by-bbl"
 import useSearchByAddress from "@/hooks/property-search/use-search-by-address"
@@ -108,20 +108,12 @@ function ModeDropdown({ currentMode, isOpen, onToggle, onSelect, activeMode }: M
 function SearchPanel() {
     const [searchMode, setSearchMode] = useState<SearchMode>("address")
     const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-    const addressAutocomplete = useAddressAutocomplete()
+    const { fetch: addressAutocomplete, cancel: cancelAutocomplete } = useAddressAutocomplete()
     const searchByBbl = useSearchByBbl()
     const searchByAddress = useSearchByAddress()
 
     const currentMode = SEARCH_MODES.find(m => m.id === searchMode) ?? SEARCH_MODES[0]
     const CurrentIcon = currentMode.icon
-
-    useEffect(() => {
-        if (searchMode === "address" && searchStore._addressSearchQuery.length >= 2) {
-            void addressAutocomplete()
-        } else {
-            searchStore.setIsSuggestionsOpen(false)
-        }
-    }, [addressAutocomplete, searchMode])
 
     const handleSearch = () => {
         if (searchMode === "address") {
@@ -178,6 +170,11 @@ function SearchPanel() {
                                 onChange={(e) => {
                                     if (searchMode === "address") {
                                         searchStore.setAddressSearchQuery(e.target.value)
+                                        if (e.target.value.length >= 2) {
+                                            addressAutocomplete()
+                                        } else {
+                                            searchStore.setIsSuggestionsOpen(false)
+                                        }
                                     } else {
                                         searchStore.setBblSearchQuery(e.target.value)
                                     }

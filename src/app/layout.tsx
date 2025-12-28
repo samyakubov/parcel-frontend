@@ -17,8 +17,8 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-	title: "Buildly | Building your home's timeline",
-	description: "Document every renovation, upgrade, and improvement. Give buyers the complete home history they deserve.",
+	title: "Parcel",
+	description: "Just Property Records",
 }
 
 export default function RootLayout({
@@ -34,7 +34,12 @@ export default function RootLayout({
 			>
 				<ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
 					{children}
-					<ToastContainer />
+					<ToastContainer
+					position="bottom-right"
+					hideProgressBar={true}
+					pauseOnHover
+					theme="colored"
+					/>
 				</ThemeProvider>
 			</body>
 		</html>

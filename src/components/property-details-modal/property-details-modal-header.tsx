@@ -11,7 +11,6 @@ export default function PropertyDetailsModalHeader({ modal }: PropertyDetailsMod
 	return (
 		<motion.div
 			layout="preserve-aspect"
-			whileHover={{ scale: 1.005 }}
 			transition={{ type: "spring", stiffness: 300, damping: 20 }}
 			className="flex-none flex items-center gap-4 p-5 bg-gradient-to-r from-primary/5 via-transparent to-transparent
 			 border-b border-border/50 backdrop-blur-sm cursor-pointer"

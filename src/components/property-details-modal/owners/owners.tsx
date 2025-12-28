@@ -1,12 +1,14 @@
 "use client"
 import isArray from "lodash-es/isArray"
 import React, { useState, useMemo } from "react"
-import { Users, Search } from "lucide-react"
+import {Users, Search} from "lucide-react"
 import { motion } from "framer-motion"
 import { Card, CardHeader, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import PreviousOwners from "@/components/property-details-modal/owners/previous-owners"
 import OwnerList from "@/components/property-details-modal/owners/owner-list"
+import {Alert, AlertDescription} from "@/components/ui/alert"
+import {isEmpty} from "lodash-es"
 
 interface OwnerProps {
     currentOwners: string[];
@@ -30,6 +32,36 @@ export default function Owners({ currentOwners, previousOwners }: OwnerProps) {
 	const sortedOwners = useMemo(() => {
 		return filteredOwners.slice().sort((a, b) => a.localeCompare(b))
 	}, [filteredOwners])
+
+	if (isEmpty(sortedOwners)) {
+		return (
+			<motion.div
+				initial={{ opacity: 0, y: -20 }}
+				animate={{ opacity: 1, y: 0 }}
+				className="w-full"
+			>
+				<Card>
+					<CardHeader>
+						<div className="flex items-center gap-2">
+							<div className="p-2 rounded-full bg-destructive/10">
+								<Users className="h-4 w-4 text-destructive" />
+							</div>
+							<h3 className="text-lg font-semibold text-destructive">
+								Owners
+							</h3>
+						</div>
+					</CardHeader>
+					<CardContent>
+						<Alert variant="destructive">
+							<AlertDescription>
+								No owners on record
+							</AlertDescription>
+						</Alert>
+					</CardContent>
+				</Card>
+			</motion.div>
+		)
+	}
 
 	return (
 		<motion.div

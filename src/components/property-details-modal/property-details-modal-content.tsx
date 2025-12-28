@@ -20,8 +20,6 @@ interface PropertyDetailsModalContentProps {
 }
 
 export default function PropertyDetailsModalContent({ modal }: PropertyDetailsModalContentProps) {
-
-
 	return (
 		<motion.div
 			layout="preserve-aspect"
@@ -80,7 +78,7 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
 										<CardHeader>
 											<div className="flex items-center gap-2">
 												<div className="p-2 rounded-full bg-destructive/10">
-													<Landmark className="h-4 w-4 text-muted-foreground" />
+													<Landmark className="h-4 w-4 text-destructive" />
 												</div>
 												<h3 className="text-lg font-semibold text-destructive">
 													Mortgage Details

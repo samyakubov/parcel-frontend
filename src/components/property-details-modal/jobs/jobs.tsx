@@ -17,13 +17,13 @@ export default function Jobs({ jobsFiled }: JobsProps) {
 
 	if (isEmpty(jobsFiled)) {
 		return (
-			<Card className="border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-950 mb-3">
+			<Card className="border-muted/50 bg-muted/30 backdrop-blur-sm mb-3">
 				<CardContent className="p-2">
 					<motion.div className="flex items-center gap-3">
-						<div className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-900">
-							<FileWarning className="h-6 w-6 text-slate-600 dark:text-slate-400" />
+						<div className="flex h-10 w-10 items-center justify-center rounded-xl bg-muted/50 shadow-sm">
+							<FileWarning className="h-5 w-5 text-muted-foreground" />
 						</div>
-						<h3 className="text-lg font-semibold text-slate-800 dark:text-slate-200">
+						<h3 className="text-base font-semibold text-muted-foreground">
                             No Jobs found
 						</h3>
 					</motion.div>
@@ -33,8 +33,8 @@ export default function Jobs({ jobsFiled }: JobsProps) {
 	}
 
 	return (
-		<Card className="border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-950 mb-3">
-			<CardContent className="p-2">
+		<Card className="border-green-200/50 bg-green-50 dark:border-green-800/30 dark:bg-green-950 mb-3">
+			<CardContent className="p-3">
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
