@@ -23,13 +23,11 @@ class MapStore {
 	})
 
 	public setMarker = action((longitude: number, latitude: number) => {
-		// Clean up previous marker if it exists
 		if (this._currentMarker) {
 			this._currentMarker.remove()
 			this._currentMarker = null
 		}
 
-		// Create new marker if map is available
 		if (this._map) {
 			this._currentMarker = createMarker(longitude, latitude)
 		}

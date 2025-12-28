@@ -11,7 +11,6 @@ export default function useAddressAutocomplete() {
 
 	const debouncedFetchRef = useRef<DebouncedFunc<FetchFn> | null>(null)
 
-	// Initialize the debounced function only once
 	if (!debouncedFetchRef.current) {
 		debouncedFetchRef.current = debounce(async (addressSearchQuery: string, token: string) => {
 			if (addressSearchQuery.length < 2) {

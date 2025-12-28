@@ -15,7 +15,6 @@ export default function useHandleSuggestionClick() {
 			return
 		}
 
-		// Cancel any pending autocomplete requests to prevent suggestions from reappearing
 		cancelAutocomplete()
 
 		const selectedSuggestion = suggestion.place_name.split(",")[0].split(" ")
