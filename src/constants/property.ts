@@ -27,14 +27,17 @@ export const JOBS_COLUMNS = [
 
 
 export const PROPERTY_RECORD_GRID_COLUMNS = [
-	"House Number",
-	"Street",
-	"Unit",
-	"BBL",
 	"Amount",
 	"Property Type",
 	"Party Name",
 	"Party",
 	"Document Type",
 	"Recorded Date"
-] as const
+]
+
+
+export const COOP_PROPERTY_TYPES = [
+	"MULTIPLE RESIDENTIAL COOP UNIT",
+	"APARTMENT BUILDING",
+	"SINGLE RESIDENTIAL COOP UNIT",
+]
