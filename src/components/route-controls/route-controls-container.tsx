@@ -9,7 +9,8 @@ const RouteControlsContainer = observer(() => {
   const {
     _hoveredRouteInfo: hoveredRouteInfo,
     _tooltipPosition: tooltipPosition,
-    _hoveredRoute: hoveredRoute
+    _hoveredRoute: hoveredRoute,
+    _hoveredStopInfo: hoveredStopInfo
   } = routeStore
 
 
@@ -17,8 +18,9 @@ const RouteControlsContainer = observer(() => {
     <RouteErrorBoundary fallback={null}>
       <RouteTooltip
         route={hoveredRouteInfo}
+        stop={hoveredStopInfo}
         position={tooltipPosition}
-        visible={!!hoveredRoute && !!hoveredRouteInfo}
+        visible={(!!hoveredRoute && !!hoveredRouteInfo) || !!hoveredStopInfo}
       />
     </RouteErrorBoundary>
 

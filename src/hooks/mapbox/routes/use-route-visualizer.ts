@@ -1,9 +1,12 @@
 import { useCallback, useMemo } from "react"
 import type mapboxgl from "mapbox-gl"
 import { routeStore } from "@/stores/route-store"
+import { RouteInfo, StopInfo } from "@/utils/gtfs-parser"
 
 const ROUTE_LAYER_ID = "bus-routes"
 const ROUTE_SOURCE_ID = "bus-routes-source"
+const STOPS_LAYER_ID = "bus-stops"
+const STOPS_SOURCE_ID = "bus-stops-source"
 const DEFAULT_OPACITY = 0.6
 const HOVER_OPACITY = 0.9
 const BASE_LINE_WIDTH = 2
@@ -59,6 +62,7 @@ export default function useRouteVisualizer(map: mapboxgl.Map | null) {
           routeStore.setTooltipPosition({ x: e.point.x, y: e.point.y })
 
           // Set hovered route info for tooltip
+
           const routeInfo: RouteInfo = {
             route_id: properties.routeId,
             route_short_name: properties.routeName,
@@ -69,6 +73,9 @@ export default function useRouteVisualizer(map: mapboxgl.Map | null) {
 
           routeStore.setHoveredRoute(routeId)
           routeStore.setHoveredRouteInfo(routeInfo)
+
+          // Update stops layer (Removed: stops are now a global layer)
+          // if (map && map.getSource(STOPS_SOURCE_ID) && stops.length > 0) { ... }
         }, 16) // ~60fps debounce
       }
     }
@@ -91,13 +98,50 @@ export default function useRouteVisualizer(map: mapboxgl.Map | null) {
 
       routeStore.setHoveredRoute(null)
       routeStore.setHoveredRouteInfo(null)
+
+      // Clear stops layer (Removed: stops are now global)
+      // if (map && map.getSource(STOPS_SOURCE_ID)) { ... }
     }
 
+
+    const handleStopHover = (e: mapboxgl.MapMouseEvent) => {
+      if (!e.features || e.features.length === 0) return
+
+      const feature = e.features[0]
+      const properties = feature.properties
+
+      if (properties) {
+        if (hoverTimeout) clearTimeout(hoverTimeout)
+
+        hoverTimeout = setTimeout(() => {
+          routeStore.setTooltipPosition({ x: e.point.x, y: e.point.y })
+
+          const stopInfo: StopInfo = {
+            stop_id: properties.stopId,
+            stop_name: properties.stopName,
+            stop_lat: feature.geometry.type === 'Point' ? feature.geometry.coordinates[1] : 0,
+            stop_lon: feature.geometry.type === 'Point' ? feature.geometry.coordinates[0] : 0
+          }
+
+          routeStore.setHoveredStopInfo(stopInfo)
+        }, 16)
+      }
+    }
+
+    const handleStopHoverExit = () => {
+      if (hoverTimeout) {
+        clearTimeout(hoverTimeout)
+        hoverTimeout = null
+      }
+      routeStore.setHoveredStopInfo(null)
+    }
 
     return {
       handleRouteHover,
       handleRouteMouseMove,
       handleRouteHoverExit,
+      handleStopHover,
+      handleStopHoverExit
     }
   }, [])
 
@@ -135,6 +179,48 @@ export default function useRouteVisualizer(map: mapboxgl.Map | null) {
       const layerConfig = createLayerConfig(routeData)
       map.addLayer(layerConfig)
 
+      // Add independent stops layer
+      if (!map.getSource(STOPS_SOURCE_ID)) {
+        const stopsData = routeStore._stopsData || { type: "FeatureCollection", features: [] }
+
+        map.addSource(STOPS_SOURCE_ID, {
+          type: "geojson",
+          data: stopsData,
+          buffer: 0,
+          maxzoom: 18
+        })
+      }
+
+      if (!map.getLayer(STOPS_LAYER_ID)) {
+        map.addLayer({
+          id: STOPS_LAYER_ID,
+          type: "circle",
+          source: STOPS_SOURCE_ID,
+          minzoom: 10,
+          paint: {
+            "circle-radius": [
+              "interpolate",
+              ["linear"],
+              ["zoom"],
+              10, 1.5,
+              12, 2.5,
+              15, 4,
+              18, 6
+            ],
+            "circle-color": "#ffffff",
+            "circle-stroke-width": 1,
+            "circle-stroke-color": "#333333",
+            "circle-opacity": [
+              "interpolate",
+              ["linear"],
+              ["zoom"],
+              10, 0.5,
+              12, 1
+            ]
+          }
+        })
+      }
+
       // Add event handlers with error boundaries
       const addEventHandler = (event: string, handler: (e: mapboxgl.MapMouseEvent) => void) => {
         try {
@@ -148,18 +234,32 @@ export default function useRouteVisualizer(map: mapboxgl.Map | null) {
       addEventHandler("mousemove", eventHandlers.handleRouteMouseMove)
       addEventHandler("mouseleave", eventHandlers.handleRouteHoverExit)
 
+      // Add event handlers for stops
+      const addStopHandler = (event: string, handler: (e: mapboxgl.MapMouseEvent) => void) => {
+        try {
+          map.on(event as any, STOPS_LAYER_ID, handler)
+        } catch (error) {
+          console.error(`Error adding ${event} handler for stops:`, error)
+        }
+      }
+
+      addStopHandler("mouseenter", eventHandlers.handleStopHover)
+      addStopHandler("mousemove", eventHandlers.handleRouteMouseMove) // Reuse mouse move for position updates
+      addStopHandler("mouseleave", eventHandlers.handleStopHoverExit)
+
+
       // Change cursor on hover with error handling
       try {
-        map.on("mouseenter", ROUTE_LAYER_ID, () => {
-          if (map.getCanvas()) {
-            map.getCanvas().style.cursor = "pointer"
-          }
-        })
-        map.on("mouseleave", ROUTE_LAYER_ID, () => {
-          if (map.getCanvas()) {
-            map.getCanvas().style.cursor = ""
-          }
-        })
+        const setCursor = (type: string) => {
+          if (map.getCanvas()) map.getCanvas().style.cursor = type
+        }
+
+        map.on("mouseenter", ROUTE_LAYER_ID, () => setCursor("pointer"))
+        map.on("mouseleave", ROUTE_LAYER_ID, () => setCursor(""))
+
+        map.on("mouseenter", STOPS_LAYER_ID, () => setCursor("pointer"))
+        map.on("mouseleave", STOPS_LAYER_ID, () => setCursor(""))
+
       } catch (error) {
         console.error("Error setting cursor handlers:", error)
       }
@@ -215,12 +315,31 @@ export default function useRouteVisualizer(map: mapboxgl.Map | null) {
       removeEventHandler("mousemove", eventHandlers.handleRouteMouseMove)
       removeEventHandler("mouseleave", eventHandlers.handleRouteHoverExit)
 
+      const removeStopHandler = (event: string, handler: (e: mapboxgl.MapMouseEvent) => void) => {
+        try {
+          map.off(event as any, STOPS_LAYER_ID, handler)
+        } catch (error) {
+          console.error(`Error removing ${event} handler for stops:`, error)
+        }
+      }
+
+      removeStopHandler("mouseenter", eventHandlers.handleStopHover)
+      removeStopHandler("mousemove", eventHandlers.handleRouteMouseMove)
+      removeStopHandler("mouseleave", eventHandlers.handleStopHoverExit)
+
       // Remove layer and source
       if (map.getLayer(ROUTE_LAYER_ID)) {
         map.removeLayer(ROUTE_LAYER_ID)
       }
       if (map.getSource(ROUTE_SOURCE_ID)) {
         map.removeSource(ROUTE_SOURCE_ID)
+      }
+
+      if (map.getLayer(STOPS_LAYER_ID)) {
+        map.removeLayer(STOPS_LAYER_ID)
+      }
+      if (map.getSource(STOPS_SOURCE_ID)) {
+        map.removeSource(STOPS_SOURCE_ID)
       }
 
       // Reset cursor

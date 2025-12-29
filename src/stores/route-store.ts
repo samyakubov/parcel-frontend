@@ -1,5 +1,5 @@
 import { action, makeAutoObservable, runInAction } from "mobx"
-import { gtfsParser, GTFSParseProgress, GTFSParseOptions } from "@/utils/gtfs-parser"
+import { gtfsParser, GTFSParseProgress, GTFSParseOptions, RouteInfo, StopInfo } from "@/utils/gtfs-parser"
 
 interface RouteLoadingState {
 	isLoading: boolean
@@ -15,6 +15,7 @@ class RouteStore {
 	}
 
 	public _routeData: GeoJSON.FeatureCollection | null = null
+	public _stopsData: GeoJSON.FeatureCollection | null = null
 	public _loadingState: RouteLoadingState = {
 		isLoading: false,
 		progress: 0,
@@ -25,6 +26,7 @@ class RouteStore {
 	public _hoveredRoute: string | null = null
 	public _tooltipPosition: { x: number; y: number } = { x: 0, y: 0 }
 	public _hoveredRouteInfo: RouteInfo | null = null
+	public _hoveredStopInfo: StopInfo | null = null
 	private _abortController: AbortController | null = null
 
 	public get isLoading(): boolean {
@@ -43,8 +45,14 @@ class RouteStore {
 		return this._loadingState.message
 	}
 
-	public setRouteData = action((data: GeoJSON.FeatureCollection | null) => {
-		this._routeData = data
+	public setRouteData = action((data: { routes: GeoJSON.FeatureCollection, stops: GeoJSON.FeatureCollection } | null) => {
+		if (data) {
+			this._routeData = data.routes
+			this._stopsData = data.stops
+		} else {
+			this._routeData = null
+			this._stopsData = null
+		}
 	})
 
 
@@ -74,6 +82,10 @@ class RouteStore {
 
 	public setHoveredRouteInfo = action((routeInfo: RouteInfo | null) => {
 		this._hoveredRouteInfo = routeInfo
+	})
+
+	public setHoveredStopInfo = action((stopInfo: StopInfo | null) => {
+		this._hoveredStopInfo = stopInfo
 	})
 
 	public setTooltipPosition = action((position: { x: number; y: number }) => {
@@ -122,20 +134,20 @@ class RouteStore {
 				error: null
 			})
 
-			const routeData = await gtfsParser.parseGTFSFiles(loadOptions)
+			const result = await gtfsParser.parseGTFSFiles(loadOptions)
 
 			runInAction(() => {
-				this.setRouteData(routeData)
+				this.setRouteData(result)
 				this.setLoadingState({
 					isLoading: false,
 					progress: 100,
 					stage: 'complete',
-					message: `Loaded ${routeData.features.length} bus routes`,
+					message: `Loaded ${result.routes.features.length} bus routes and ${result.stops.features.length} stops`,
 					error: null
 				})
 			})
 
-			return routeData
+			return result
 		} catch (error) {
 			const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred'
 
@@ -231,6 +243,7 @@ class RouteStore {
 
 		// Reset all state
 		this._routeData = null
+		this._stopsData = null
 		this._loadingState = {
 			isLoading: false,
 			progress: 0,
@@ -240,6 +253,7 @@ class RouteStore {
 		}
 		this._hoveredRoute = null
 		this._hoveredRouteInfo = null
+		this._hoveredStopInfo = null
 		this._tooltipPosition = { x: 0, y: 0 }
 	})
 }
