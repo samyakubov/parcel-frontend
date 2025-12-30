@@ -31,6 +31,7 @@ export default function useInitMap(containerId:string) {
 					map.setLayoutProperty(layerId, "visibility", "none")
 				}
 			})
+		})
 
 		mapRef.current.fitBounds(NYC_BOUNDS as mapboxgl.LngLatBoundsLike, {
 			padding: 50,
