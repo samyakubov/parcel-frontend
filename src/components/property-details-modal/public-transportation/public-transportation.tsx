@@ -1,7 +1,7 @@
 "use client"
 import React from "react"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import {isNil} from "lodash-es"
+import {isEmpty, isNil} from "lodash-es"
 import {observer} from "mobx-react"
 import {Card, CardContent, CardHeader} from "@/components/ui/card"
 import {Alert, AlertDescription} from "@/components/ui/alert"
@@ -14,7 +14,7 @@ interface PublicTransportationCardProps {
 function PublicTransportation({routesNearBy}:PublicTransportationCardProps) {
     const features = routesNearBy?.features
 
-    if (isNil(features) || features.length === 0) {
+    if (isNil(features) || isEmpty(features)) {
         return (
             <Card>
                 <CardHeader>
