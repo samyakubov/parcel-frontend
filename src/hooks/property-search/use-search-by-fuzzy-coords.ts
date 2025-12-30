@@ -13,7 +13,6 @@ export default function useSearchByFuzzyCoords() {
             if (isNull(mapStore._coords)) return
 
             mapStore.setIsPropertyDataLoading(true)
-            console.log("Searching fuzzy coords:", mapStore._coords)
             const response = await apiClient.propertyService.searchByPropertyFuzzyCoords(
                 { latitude: mapStore._coords.latitude, longitude: mapStore._coords.longitude }
             )
