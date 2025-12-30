@@ -5,15 +5,25 @@ import { apiClient } from "@/api/api-client"
 import {publicTransitStore} from "@/stores/public-transit-store"
 
 export default function useGetNearbyRoutes() {
-
     return useCallback(async () => {
+        console.log("🚀 useGetNearbyRoutes called")
+        console.log("📍 Current coords:", mapStore._coords)
+
         try {
-            if (isNull(mapStore._coords)) return
+            if (isNull(mapStore._coords)) {
+                return
+            }
+
+            console.log("🔄 Fetching nearby routes...")
             const response = await apiClient.publicTransitService.findPublicTransitNearby()
+            console.log("✅ API Response:", response)
+            console.log("📊 Features count:", response?.features?.length)
+
             publicTransitStore.setRoutesNearby(response)
-        } catch {
+            console.log("💾 Stored in MobX:", publicTransitStore._routesNearBy)
+        } catch (error) {
+            console.error("💥 Error fetching routes:", error)
             mapStore.setIsPropertyDataLoading(false)
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ mapStore._coords])
+    }, [])
 }

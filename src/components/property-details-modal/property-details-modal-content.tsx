@@ -14,6 +14,8 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import PropertyRecordGrid from "@/components/property-details-modal/property-record-grid/property-records-grid"
 import { Landmark } from "lucide-react"
 import { Alert, AlertDescription } from "@/components/ui/alert"
+import PublicTransportationCard from "@/components/property-details-modal/public-transportation/public-transportation-card"
+
 
 interface PropertyDetailsModalContentProps {
 	modal: PropertyModal;
@@ -51,6 +53,7 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
 
 
 						<LastSold lastSoldFor={modal.propertyData.last_sold} />
+						<PublicTransportationCard />
 					</motion.div>
 					<motion.div
 						layout="preserve-aspect"
