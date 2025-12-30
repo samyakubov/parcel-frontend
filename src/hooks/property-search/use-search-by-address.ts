@@ -16,7 +16,6 @@ export default function useSearchByAddress() {
     return useCallback(async () => {
         try {
             if (isEmpty(searchStore._addressSearchQuery)) return
-
             const existingModal = modalStore._propertyModals.find(modal => modal.title === searchStore._addressSearchQuery)
 
             if (!isUndefined(existingModal)) {
