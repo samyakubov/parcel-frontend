@@ -45,13 +45,18 @@ class ModalStore {
 			modal.isOpen && !modal.isMinimized
 		)
 
-		const position = activeModals.length * MODAL_WIDTH
+		const viewportWidth = window.innerWidth
+		const maxModalsVisible = Math.floor(viewportWidth / MODAL_WIDTH)
+		const index = activeModals.length
 
-		if (position >= 1395) {
+		if (index >= maxModalsVisible) {
 			return { x: START_X, y: START_Y }
 		}
 
-		return { x: -position, y: START_Y }
+		return {
+			x: START_X - (index * MODAL_WIDTH),
+			y: START_Y
+		}
 	}
 
 	public addPropertyModal = action((coords: Coordinates,
@@ -92,8 +97,8 @@ class ModalStore {
 	})
 
 	public minimizeModal = action((id: string) => {
-		if (this._propertyModals.filter((modal) => modal.isMinimized).length >= 4) {
-			return toast.info("You can only have 4 minimized modals. Please close one before minimizing another.")
+		if (this._propertyModals.filter((modal) => modal.isMinimized).length >= 8) {
+			return toast.info("You can only have 8 minimized modals. Please close one before minimizing another.")
 		}
 		this.setModalState(id, { isMinimized: true })
 	})

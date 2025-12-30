@@ -37,16 +37,12 @@ class MapStore {
 		}
 	})
 
-	public cleanup = action(() => {
-		this.clearMarker()
-	})
-
 	public resetMap = action(() => {
 		const map = this._map
 
 		if (!map) return
 
-		this.cleanup()
+		this.clearMarker()
 
 		this._coords = null
 
