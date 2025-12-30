@@ -2,6 +2,7 @@ import { action, makeAutoObservable } from "mobx"
 import { v4 as uuidv4 } from "uuid"
 import isUndefined from "lodash-es/isUndefined"
 import { toast } from "react-toastify"
+import {mapStore} from "@/stores/map-store"
 
 class ModalStore {
 	constructor() {
@@ -85,6 +86,7 @@ class ModalStore {
 		const modal = this.getModal(id)
 		if (modal && !modal.isMinimized) {
 			this.setModalState(id, { zIndex: this.getNextZIndex() })
+			mapStore.setCoords(modal.coords)
 		}
 	})
 

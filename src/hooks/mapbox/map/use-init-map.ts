@@ -25,23 +25,12 @@ export default function useInitMap(containerId:string) {
 			const map = mapRef.current
 			if (!map) return
 
-			const poiLayers = [
-				"poi-label",
-				"poi-label-park"
-			]
-
-			const transitLayers = [
-				"transit-label"
-			]
-
-			const layersToHide = [...poiLayers, ...transitLayers]
-
+			const layersToHide = ["poi-label", "poi-label-park", "transit-label"]
 			layersToHide.forEach(layerId => {
 				if (map.getLayer(layerId)) {
 					map.setLayoutProperty(layerId, "visibility", "none")
 				}
 			})
-		})
 
 		mapRef.current.fitBounds(NYC_BOUNDS as mapboxgl.LngLatBoundsLike, {
 			padding: 50,
