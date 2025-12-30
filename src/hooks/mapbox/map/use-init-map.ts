@@ -4,7 +4,6 @@ import useHandleMapClick from "@/hooks/mapbox/map/use-handle-map-click"
 import {NYC_BOUNDS, NYC_CENTER} from "@/constants/mapbox"
 import {mapStore} from "@/stores/map-store"
 
-
 export default function useInitMap(containerId:string) {
 	mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_API_KEY as string
 	const mapRef = useRef<mapboxgl.Map | null>(null)
@@ -22,6 +21,28 @@ export default function useInitMap(containerId:string) {
 
 		mapStore.setMap(mapRef.current)
 
+		mapRef.current.on("load", () => {
+			const map = mapRef.current
+			if (!map) return
+
+			const poiLayers = [
+				"poi-label",
+				"poi-label-park"
+			]
+
+			const transitLayers = [
+				"transit-label"
+			]
+
+			const layersToHide = [...poiLayers, ...transitLayers]
+
+			layersToHide.forEach(layerId => {
+				if (map.getLayer(layerId)) {
+					map.setLayoutProperty(layerId, "visibility", "none")
+				}
+			})
+		})
+
 		mapRef.current.fitBounds(NYC_BOUNDS as mapboxgl.LngLatBoundsLike, {
 			padding: 50,
 			maxZoom: 20,
@@ -35,7 +56,6 @@ export default function useInitMap(containerId:string) {
 		return () => {
 			mapStore.cleanup()
 		}
-
 	}, [containerId, handleMapClick])
 
 	return mapRef
