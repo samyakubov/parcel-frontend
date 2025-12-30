@@ -15,25 +15,27 @@ function PublicTransportation({routesNearBy}:PublicTransportationCardProps) {
     const features = routesNearBy?.features
 
     if (isNil(features) || features.length === 0) {
-        return <Card>
-            <CardHeader>
-                <div className="flex items-center gap-2">
-                    <div className="p-2 rounded-full bg-primary/10">
-                        <BusFront className="h-4 w-4 text-primary" />
+        return (
+            <Card>
+                <CardHeader>
+                    <div className="flex items-center gap-2">
+                        <div className="p-2 rounded-full bg-primary/10">
+                            <BusFront className="h-4 w-4 text-destructive" />
+                        </div>
+                        <h3 className="text-lg font-semibold text-destructive">
+                            Public Transportation
+                        </h3>
                     </div>
-                    <h3 className="text-lg font-semibold text-primary">
-                        Public Transportation
-                    </h3>
-                </div>
-            </CardHeader>
-            <CardContent>
-                <Alert>
-                    <AlertDescription>
-                        No public transit information available.
-                    </AlertDescription>
-                </Alert>
-            </CardContent>
-        </Card>
+                </CardHeader>
+                <CardContent>
+                    <Alert variant="destructive">
+                        <AlertDescription>
+                            No public transit information available.
+                        </AlertDescription>
+                    </Alert>
+                </CardContent>
+            </Card>
+        )
     }
 
     return (
@@ -43,7 +45,7 @@ function PublicTransportation({routesNearBy}:PublicTransportationCardProps) {
                     <div className="p-2 rounded-full bg-primary/10">
                         <BusFront className="h-4 w-4 text-primary" />
                     </div>
-                    <h3 className="text-lg font-semibold text-primary">
+                    <h3 className="text-lg font-semibold">
                         Public Transportation
                     </h3>
                 </div>
