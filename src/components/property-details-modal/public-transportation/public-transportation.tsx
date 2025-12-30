@@ -1,7 +1,7 @@
 "use client"
 import React from "react"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import {isEmpty, isNil} from "lodash-es"
+import {isEmpty, isNil, uniqBy} from "lodash-es"
 import {observer} from "mobx-react"
 import {Card, CardContent, CardHeader} from "@/components/ui/card"
 import {Alert, AlertDescription} from "@/components/ui/alert"
@@ -13,6 +13,7 @@ interface PublicTransportationCardProps {
 
 function PublicTransportation({routesNearBy}:PublicTransportationCardProps) {
     const features = routesNearBy?.features
+    const dedupedFeatures = features ? uniqBy(features, "properties.route_long_name") : []
 
     if (isNil(features) || isEmpty(features)) {
         return (
@@ -51,7 +52,7 @@ function PublicTransportation({routesNearBy}:PublicTransportationCardProps) {
                 </div>
             </CardHeader>
             <CardContent className="space-y-0">
-                {features.map((item, index) => {
+                {dedupedFeatures.map((item, index) => {
                     const properties = item.properties
                     return (
                         <div key={index} className="flex items-center justify-between p-4 border-b">
@@ -59,8 +60,8 @@ function PublicTransportation({routesNearBy}:PublicTransportationCardProps) {
                                 <Avatar>
                                     <AvatarFallback
                                         style={{
-                                            backgroundColor: `#${properties.route_color}`,
-                                            color: `#${properties.route_text_color}`
+                                            backgroundColor: `${properties.route_color}`,
+                                            color: `${properties.route_text_color}`
                                         }}
                                     >
                                         {properties.route_name}
