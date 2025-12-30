@@ -53,7 +53,7 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
 
 
 						<LastSold lastSoldFor={modal.propertyData.last_sold} />
-						<PublicTransportationCard />
+						<PublicTransportationCard routesNearBy={modal.publicTransit}/>
 					</motion.div>
 					<motion.div
 						layout="preserve-aspect"

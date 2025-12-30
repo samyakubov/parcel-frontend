@@ -8,6 +8,7 @@ import { modalStore } from "@/stores/modal-store"
 import isNull from "lodash-es/isNull"
 import useFlyTo from "@/hooks/mapbox/map/fly-to"
 import isUndefined from "lodash-es/isUndefined"
+import getNearbyRoutes from "@/utils/get-nearby-routes"
 
 
 export default function useSearchByBbl() {
@@ -34,10 +35,12 @@ export default function useSearchByBbl() {
 
             mapStore.setCoords(data.coordinates)
             const firstRecord = data.records[0]
+            const publicTransitNearby =  await getNearbyRoutes()
             modalStore.addPropertyModal(
                 data.coordinates,
                 `${firstRecord.prop_streetnumber} ${normalizeStreetNames(firstRecord.prop_streetname)}`,
-                data
+                data,
+                publicTransitNearby ?? { type: "FeatureCollection", features: [] }
             )
             if (!isNull(mapStore._map) && !isNull(mapStore._coords)) {
                 mapStore.setMarker(mapStore._coords.longitude, mapStore._coords.latitude)
