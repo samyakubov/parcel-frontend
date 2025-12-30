@@ -1,6 +1,7 @@
 import { action, makeAutoObservable} from "mobx"
 import mapboxgl from "mapbox-gl"
 import createMarker from "@/hooks/mapbox/map/create-marker"
+import {NYC_CENTER} from "@/constants/mapbox"
 
 class MapStore {
 	constructor() {
@@ -38,6 +39,24 @@ class MapStore {
 
 	public cleanup = action(() => {
 		this.clearMarker()
+	})
+
+	public resetMap = action(() => {
+		const map = this._map
+
+		if (!map) return
+
+		this.cleanup()
+
+		this._coords = null
+
+		map.flyTo({
+			center: [NYC_CENTER.longitude, NYC_CENTER.latitude],
+			zoom: 10,
+			duration: 2000,
+			essential: true,
+			curve: 1.42,
+		})
 	})
 }
 

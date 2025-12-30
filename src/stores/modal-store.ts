@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid"
 import isUndefined from "lodash-es/isUndefined"
 import { toast } from "react-toastify"
 import {mapStore} from "@/stores/map-store"
+import {isEmpty} from "lodash-es"
 
 class ModalStore {
 	constructor() {
@@ -117,12 +118,23 @@ class ModalStore {
 		}
 	})
 
-	public closeModal = action((id: string,) => {
+	public closeModal = action((id: string) => {
 		const propertyIndex = this._propertyModals.findIndex(modal => modal.id === id)
+
 		if (propertyIndex !== -1) {
 			this._propertyModals.splice(propertyIndex, 1)
+
+			if (isEmpty(this._propertyModals)) {
+				mapStore.resetMap()
+			} else {
+				const lastModal = this._propertyModals[this._propertyModals.length - 1]
+				if (lastModal) {
+					this.focusModal(lastModal.id)
+				}
+			}
 		}
 	})
+
 }
 
 export const modalStore = new ModalStore()
