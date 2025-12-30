@@ -9,7 +9,6 @@ export default async function getNearbyRoutes() {
         }
         return await apiClient.publicTransitService.findPublicTransitNearby()
     } catch (error) {
-        console.error("💥 Error fetching routes:", error)
-        mapStore.setIsPropertyDataLoading(false)
+        console.error("Error in getNearbyRoutes:", error)
     }
 }

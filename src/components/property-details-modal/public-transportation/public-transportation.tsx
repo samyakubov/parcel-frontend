@@ -11,7 +11,7 @@ interface PublicTransportationCardProps {
     routesNearBy:FeatureCollection | null
 }
 
-function PublicTransportationCard({routesNearBy}:PublicTransportationCardProps) {
+function PublicTransportation({routesNearBy}:PublicTransportationCardProps) {
     const features = routesNearBy?.features
 
     if (isNil(features) || features.length === 0) {
@@ -78,4 +78,4 @@ function PublicTransportationCard({routesNearBy}:PublicTransportationCardProps) 
     )
 }
 
-export default observer(PublicTransportationCard)
+export default observer(PublicTransportation)

@@ -27,9 +27,7 @@ export default function useSearchByBbl() {
                 return
             }
 
-            mapStore.setIsPropertyDataLoading(true)
             const response = await apiClient.propertyService.searchByPropertyBbl(searchStore._bblSearchQuery)
-            mapStore.setIsPropertyDataLoading(false)
 
             const data = response as PropertyDetailsWithCoords
 
@@ -46,8 +44,8 @@ export default function useSearchByBbl() {
                 mapStore.setMarker(mapStore._coords.longitude, mapStore._coords.latitude)
                 flyTo()
             }
-        } catch {
-            mapStore.setIsPropertyDataLoading(false)
+        } catch (error) {
+            console.error("Error in useSearchByBbl:", error)
         }
     }, [flyTo])
 }

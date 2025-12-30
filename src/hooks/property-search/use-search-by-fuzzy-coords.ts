@@ -13,11 +13,9 @@ export default function useSearchByFuzzyCoords() {
         try {
             if (isNull(mapStore._coords)) return
 
-            mapStore.setIsPropertyDataLoading(true)
             const response = await apiClient.propertyService.searchByPropertyFuzzyCoords(
                 { latitude: mapStore._coords.latitude, longitude: mapStore._coords.longitude }
             )
-            mapStore.setIsPropertyDataLoading(false)
 
             const data = response as PropertyDetailsWithCoords
 
@@ -33,8 +31,8 @@ export default function useSearchByFuzzyCoords() {
                 publicTransitNearby ?? { type: "FeatureCollection", features: [] }
             )
 
-        } catch {
-            mapStore.setIsPropertyDataLoading(false)
+        } catch (error) {
+            console.error("Error in useSearchByFuzzyCoords:", error)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [apiClient.propertyService, mapStore, searchStore, mapStore._coords, modalStore])

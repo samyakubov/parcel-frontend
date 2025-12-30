@@ -24,9 +24,7 @@ export default function useSearchByAddress() {
                 return
             }
 
-            mapStore.setIsPropertyDataLoading(true)
             const response = await apiClient.propertyService.searchByPropertyAddress(searchStore._addressSearchQuery)
-            mapStore.setIsPropertyDataLoading(false)
 
             const data = response as PropertyDetailsWithCoords
 
@@ -43,8 +41,8 @@ export default function useSearchByAddress() {
                 mapStore.setMarker(mapStore._coords.longitude, mapStore._coords.latitude)
                 flyTo()
             }
-        } catch {
-            mapStore.setIsPropertyDataLoading(false)
+        } catch (error) {
+            console.error("Error in useSearchByAddress:", error)
         }
     }, [flyTo])
 }
