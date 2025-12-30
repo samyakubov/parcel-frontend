@@ -6,21 +6,21 @@ export default class PropertyService {
     constructor(private readonly httpClient: AxiosHttpClient) { }
 
 
-    async searchByPropertyAddress(address: string): Promise<PropertyDetailsWithCoords | HTTPError> {
+    async searchByPropertyAddress(address: string): Promise<PropertyDetailsWithCoords> {
         const response = await this.httpClient.http.get(
             `${this.serviceHeader}/search_by_property_address/address=${address}`
         )
         return response.data
     }
 
-    async searchByPropertyBbl(bbl: string): Promise<PropertyDetailsWithCoords | HTTPError> {
+    async searchByPropertyBbl(bbl: string): Promise<PropertyDetailsWithCoords> {
         const response = await this.httpClient.http.get(
             `${this.serviceHeader}/search_by_property_bbl/bbl=${bbl}`
         )
         return response.data
     }
 
-    async searchByPropertyFuzzyCoords(coords: Coordinates): Promise<PropertyDetailsWithCoords | HTTPError> {
+    async searchByPropertyFuzzyCoords(coords: Coordinates): Promise<PropertyDetailsWithCoords> {
         const response = await this.httpClient.http.get(
             `${this.serviceHeader}/search_by_fuzzy_coords/lat=${coords.latitude}/long=${coords.longitude}`
         )

@@ -52,7 +52,10 @@ class ModalStore {
 		return { x: -position, y: START_Y }
 	}
 
-	public addPropertyModal = action((coords: Coordinates, title: string, propertyData: PropertyDetails) => {
+	public addPropertyModal = action((coords: Coordinates,
+									  title: string,
+									  propertyData: PropertyDetails,
+									  publicTransit:FeatureCollection) => {
 		if (this._propertyModals.length >= 8) {
 			return toast.info("Modal limit reached. Close one to open more")
 		}
@@ -62,7 +65,6 @@ class ModalStore {
 		if (!isUndefined(existingModal)) {
 			this.restoreModal(existingModal.id)
 		}
-
 		const newModal: PropertyModal = {
 			id: uuidv4(),
 			isOpen: true,
@@ -72,6 +74,7 @@ class ModalStore {
 			title,
 			position: this.calculateNewModalPosition(),
 			propertyData,
+			publicTransit,
 			zIndex: this.getNextZIndex()
 		}
 

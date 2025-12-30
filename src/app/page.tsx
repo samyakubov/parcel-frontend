@@ -6,6 +6,7 @@ import SearchPanel from "@/components/address-search-bar/search-panel"
 
 export default function Map() {
 	useInitMap("map")
+
 	return (
 		<div className="relative w-full h-screen">
 			<div className="absolute top-4 left-4 z-10">

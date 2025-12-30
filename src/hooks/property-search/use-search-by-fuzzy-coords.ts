@@ -5,6 +5,7 @@ import { mapStore } from "@/stores/map-store"
 import { normalizeStreetNames } from "@/utils/normalize-street-names"
 import { apiClient } from "@/api/api-client"
 import { modalStore } from "@/stores/modal-store"
+import getNearbyRoutes from "@/utils/get-nearby-routes"
 
 export default function useSearchByFuzzyCoords() {
 
@@ -12,12 +13,9 @@ export default function useSearchByFuzzyCoords() {
         try {
             if (isNull(mapStore._coords)) return
 
-            mapStore.setIsPropertyDataLoading(true)
-            console.log("Searching fuzzy coords:", mapStore._coords)
             const response = await apiClient.propertyService.searchByPropertyFuzzyCoords(
                 { latitude: mapStore._coords.latitude, longitude: mapStore._coords.longitude }
             )
-            mapStore.setIsPropertyDataLoading(false)
 
             const data = response as PropertyDetailsWithCoords
 
@@ -25,14 +23,16 @@ export default function useSearchByFuzzyCoords() {
 
             mapStore.setCoords(data.coordinates)
 
+            const publicTransitNearby =  await getNearbyRoutes()
             modalStore.addPropertyModal(
                 data.coordinates,
                 `${firstRecord.prop_streetnumber} ${normalizeStreetNames(firstRecord.prop_streetname)}`,
-                data
+                data,
+                publicTransitNearby ?? { type: "FeatureCollection", features: [] }
             )
 
-        } catch {
-            mapStore.setIsPropertyDataLoading(false)
+        } catch (error) {
+            console.error("Error in useSearchByFuzzyCoords:", error)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [apiClient.propertyService, mapStore, searchStore, mapStore._coords, modalStore])
