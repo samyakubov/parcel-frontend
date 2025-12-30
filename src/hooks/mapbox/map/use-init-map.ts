@@ -44,7 +44,7 @@ export default function useInitMap(containerId:string) {
 		mapRef.current.on("click", handleMapClick)
 
 		return () => {
-			mapStore.cleanup()
+			mapStore.clearMarker()
 		}
 	}, [containerId, handleMapClick])
 
