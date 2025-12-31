@@ -14,12 +14,11 @@ export default function ComplaintsHeader({ isExpanded, setIsExpanded, complaints
 	return (
 		<Button
 			variant="ghost"
-			className="w-full justify-between p-0 h-auto hover:bg-transparent"
+			className="w-full justify-between p-0 h-auto"
 			onClick={() => setIsExpanded(!isExpanded)}
 		>
 			<div className="flex items-center gap-3">
-				<div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-100/80 dark:bg-amber-900/50
-			transition-colors shadow-sm">
+				<div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-100/80 dark:bg-amber-900/50 shadow-sm">
 					<AlertCircle className="h-5 w-5 text-amber-600 dark:text-amber-400" />
 				</div>
 				<h3 className="text-base font-semibold text-amber-700 dark:text-amber-300">

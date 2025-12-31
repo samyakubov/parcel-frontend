@@ -54,16 +54,12 @@ function PublicTransportation({routesNearBy}:PublicTransportationCardProps) {
             <CardContent className="p-0">
                 {dedupedFeatures.map((item, index) => {
                     const properties = item.properties
-                    const isLast = index === dedupedFeatures.length - 1
 
                     return (
                         <div
                             key={index}
-                            className={`
-                                flex items-center justify-between p-5 
-                                transition-colors duration-200 hover:bg-gray-50
-                                ${!isLast ? "border-b border-gray-200" : ""}
-                              `}
+                            className={`flex items-center justify-between 
+                                        p-5 transition-colors duration-200`}
                             >
                             <div className="flex items-center gap-4 flex-1 min-w-0">
                                 <Avatar className="h-12 w-12 flex-shrink-0 shadow-sm">
@@ -79,10 +75,10 @@ function PublicTransportation({routesNearBy}:PublicTransportationCardProps) {
                                 </Avatar>
 
                                 <div className="flex-1 min-w-0">
-                                    <p className="font-semibold text-gray-900 truncate">
+                                    <p className="font-semibold truncate">
                                         {properties.route_long_name}
                                     </p>
-                                    <p className="text-sm text-gray-500 font-mono">
+                                    <p className="text-sm  font-mono">
                                         {properties.route_id}
                                     </p>
                                 </div>

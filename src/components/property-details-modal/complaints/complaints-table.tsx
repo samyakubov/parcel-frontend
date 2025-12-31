@@ -42,7 +42,7 @@ export default function ComplaintsTable({ complaints }: ComplaintsTableProps) {
 				<ScrollArea className="h-96">
 					<Table>
 						<TableHeader>
-							<TableRow className="hover:bg-transparent">
+							<TableRow>
 								{COMPLAINT_COLUMNS.map((column) => (
 									<TableHead
 										key={column}
@@ -61,7 +61,7 @@ export default function ComplaintsTable({ complaints }: ComplaintsTableProps) {
 										initial={{ opacity: 0, x: -20 }}
 										animate={{ opacity: 1, x: 0 }}
 										transition={{ delay: index * 0.05 }}
-										className="border-b transition-colors hover:bg-muted/50"
+										className="border-b"
 									>
 										<TableCell className="py-3">
 											<Badge variant={getStatusVariant(complaint.status)}>

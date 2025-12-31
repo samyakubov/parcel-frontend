@@ -7,6 +7,7 @@ import useFlyTo from "@/hooks/mapbox/map/fly-to"
 import {useEffect} from "react"
 import {mapStore} from "@/stores/map-store"
 import {reaction} from "mobx"
+import ThemeToggle from "@/components/theme-toggle"
 
 export default function Map() {
 	useInitMap("map")
@@ -33,7 +34,9 @@ export default function Map() {
 
 			<ModalContainer />
 			<MinimizedModalsBar />
-
+			<div className="absolute bottom-4 right-4 z-10">
+				<ThemeToggle/>
+			</div>
 			<div id="map" className="w-full h-full" />
 		</div>
 	)

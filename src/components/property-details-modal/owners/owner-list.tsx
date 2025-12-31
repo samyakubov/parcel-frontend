@@ -11,7 +11,7 @@ export default function OwnerList({ owners }: OwnerListProps) {
 			{owners.map((owner, index) => (
 				<div
 					key={index}
-					className="flex items-center justify-between p-3 rounded-lg border bg-card hover:bg-accent/50 transition-colors">
+					className="flex items-center justify-between p-3 rounded-lg border bg-card">
 					<span className="text-sm font-medium">
 						{owner}
 					</span>

@@ -33,7 +33,7 @@ export default function Jobs({ jobsFiled }: JobsProps) {
 	}
 
 	return (
-		<Card className="border-green-200/50 bg-green-50 dark:border-green-800/30 dark:bg-green-950 mb-3">
+		<Card className="border-green-200/50 bg-green-50 dark:border-green-800/30 dark:bg-green-950/30 mb-3 shadow-lg shadow-green-500/5">
 			<CardContent className="p-3">
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
