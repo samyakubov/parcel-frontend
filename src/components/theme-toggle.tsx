@@ -19,7 +19,6 @@ export default function ThemeToggle() {
 		return () => window.removeEventListener("scroll", handleScroll)
 	}, [])
 
-	// Prevent hydration mismatch
 	if (!mounted) {
 		return (
 			<Button
