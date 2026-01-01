@@ -18,5 +18,5 @@ export default function useFlyTo() {
             essential: true,
             curve: 1.42,
         })
-    }, [])
+    }, [mapStore._coords, mapStore._map])
 }

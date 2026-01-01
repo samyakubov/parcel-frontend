@@ -2,6 +2,8 @@ import { action, makeAutoObservable } from "mobx"
 import { v4 as uuidv4 } from "uuid"
 import isUndefined from "lodash-es/isUndefined"
 import { toast } from "react-toastify"
+import {mapStore} from "@/stores/map-store"
+import {isEmpty} from "lodash-es"
 
 class ModalStore {
 	constructor() {
@@ -43,13 +45,18 @@ class ModalStore {
 			modal.isOpen && !modal.isMinimized
 		)
 
-		const position = activeModals.length * MODAL_WIDTH
+		const viewportWidth = window.innerWidth
+		const maxModalsVisible = Math.floor(viewportWidth / MODAL_WIDTH)
+		const index = activeModals.length
 
-		if (position >= 1395) {
+		if (index >= maxModalsVisible) {
 			return { x: START_X, y: START_Y }
 		}
 
-		return { x: -position, y: START_Y }
+		return {
+			x: START_X - (index * MODAL_WIDTH),
+			y: START_Y
+		}
 	}
 
 	public addPropertyModal = action((coords: Coordinates,
@@ -85,12 +92,13 @@ class ModalStore {
 		const modal = this.getModal(id)
 		if (modal && !modal.isMinimized) {
 			this.setModalState(id, { zIndex: this.getNextZIndex() })
+			mapStore.setCoords(modal.coords)
 		}
 	})
 
 	public minimizeModal = action((id: string) => {
-		if (this._propertyModals.filter((modal) => modal.isMinimized).length >= 4) {
-			return toast.info("You can only have 4 minimized modals. Please close one before minimizing another.")
+		if (this._propertyModals.filter((modal) => modal.isMinimized).length >= 8) {
+			return toast.info("You can only have 8 minimized modals. Please close one before minimizing another.")
 		}
 		this.setModalState(id, { isMinimized: true })
 	})
@@ -115,12 +123,23 @@ class ModalStore {
 		}
 	})
 
-	public closeModal = action((id: string,) => {
+	public closeModal = action((id: string) => {
 		const propertyIndex = this._propertyModals.findIndex(modal => modal.id === id)
+
 		if (propertyIndex !== -1) {
 			this._propertyModals.splice(propertyIndex, 1)
+
+			if (isEmpty(this._propertyModals)) {
+				mapStore.resetMap()
+			} else {
+				const lastModal = this._propertyModals[this._propertyModals.length - 1]
+				if (lastModal) {
+					this.focusModal(lastModal.id)
+				}
+			}
 		}
 	})
+
 }
 
 export const modalStore = new ModalStore()

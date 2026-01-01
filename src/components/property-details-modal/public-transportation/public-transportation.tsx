@@ -1,7 +1,7 @@
 "use client"
 import React from "react"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import {isEmpty, isNil} from "lodash-es"
+import {isEmpty, isNil, uniqBy} from "lodash-es"
 import {observer} from "mobx-react"
 import {Card, CardContent, CardHeader} from "@/components/ui/card"
 import {Alert, AlertDescription} from "@/components/ui/alert"
@@ -13,6 +13,7 @@ interface PublicTransportationCardProps {
 
 function PublicTransportation({routesNearBy}:PublicTransportationCardProps) {
     const features = routesNearBy?.features
+    const dedupedFeatures = features ? uniqBy(features, "properties.route_long_name") : []
 
     if (isNil(features) || isEmpty(features)) {
         return (
@@ -50,28 +51,44 @@ function PublicTransportation({routesNearBy}:PublicTransportationCardProps) {
                     </h3>
                 </div>
             </CardHeader>
-            <CardContent className="space-y-0">
-                {features.map((item, index) => {
+            <CardContent className="p-0">
+                {dedupedFeatures.map((item, index) => {
                     const properties = item.properties
+
                     return (
-                        <div key={index} className="flex items-center justify-between p-4 border-b">
-                            <div className="flex items-center gap-4">
-                                <Avatar>
+                        <div
+                            key={index}
+                            className={`flex items-center justify-between 
+                                        p-5 transition-colors duration-200`}
+                            >
+                            <div className="flex items-center gap-4 flex-1 min-w-0">
+                                <Avatar className="h-12 w-12 flex-shrink-0 shadow-sm">
                                     <AvatarFallback
+                                        className="text-lg font-bold"
                                         style={{
-                                            backgroundColor: `#${properties.route_color}`,
-                                            color: `#${properties.route_text_color}`
+                                            backgroundColor: properties.route_color,
+                                            color: properties.route_text_color
                                         }}
                                     >
                                         {properties.route_name}
                                     </AvatarFallback>
                                 </Avatar>
-                                <div>
-                                    <p className="font-semibold">{properties.route_long_name}</p>
-                                    <p className="text-sm text-gray-500">{properties.route_id}</p>
+
+                                <div className="flex-1 min-w-0">
+                                    <p className="font-semibold truncate">
+                                        {properties.route_long_name}
+                                    </p>
+                                    <p className="text-sm  font-mono">
+                                        {properties.route_id}
+                                    </p>
                                 </div>
                             </div>
-                            <p className="text-sm">{properties.distance} mi</p>
+
+                            <div className="ml-4 flex-shrink-0">
+                                <p className="text-sm font-medium text-gray-700">
+                                    {properties.distance} mi
+                                </p>
+                            </div>
                         </div>
                     )
                 })}
