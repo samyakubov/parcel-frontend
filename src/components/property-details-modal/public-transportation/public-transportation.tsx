@@ -25,6 +25,19 @@ export default function PublicTransportation({ routesNearBy, stopsNearBy }: Publ
 
     const isStopNearby = (stopId: string) => nearbyStopIds.has(stopId)
 
+    const deduplicateStops = (stops: Stop[] | undefined) => {
+        if (!stops) return []
+
+        const seenNames = new Set<string>()
+        return stops.filter(stop => {
+            if (seenNames.has(stop.stop_name)) {
+                return false
+            }
+            seenNames.add(stop.stop_name)
+            return true
+        })
+    }
+
     if (isNil(routesNearBy) || isEmpty(routesNearBy)) {
         return (
             <Card>
@@ -70,7 +83,8 @@ export default function PublicTransportation({ routesNearBy, stopsNearBy }: Publ
                 <div className="max-h-96 overflow-y-auto pr-2">
                     <Accordion type="single" collapsible className="space-y-3">
                         {routesNearBy.map((route) => {
-                            const nearbyStopsCount = route.stops?.filter(stop =>
+                            const dedupedStops = deduplicateStops(route.stops)
+                            const nearbyStopsCount = dedupedStops.filter(stop =>
                                 isStopNearby(stop.stop_id)
                             ).length || 0
 
@@ -105,7 +119,7 @@ export default function PublicTransportation({ routesNearBy, stopsNearBy }: Publ
                                                 )}
                                                 <div className="flex items-center gap-2 mt-1">
                                                     <p className="text-xs text-muted-foreground">
-                                                        {route.stops?.length || 0} stops
+                                                        {dedupedStops.length} stops
                                                     </p>
                                                     {nearbyStopsCount > 0 && (
                                                         <>
@@ -121,10 +135,10 @@ export default function PublicTransportation({ routesNearBy, stopsNearBy }: Publ
                                     </AccordionTrigger>
 
                                     <AccordionContent className="px-0 pb-0">
-                                        {route.stops && route.stops.length > 0 && (
+                                        {dedupedStops.length > 0 && (
                                             <div className="border-t bg-muted/30">
                                                 <div className="max-h-64 overflow-y-auto">
-                                                    {route.stops.map((stop) => {
+                                                    {dedupedStops.map((stop) => {
                                                         const isNearby = isStopNearby(stop.stop_id)
 
                                                         return (
