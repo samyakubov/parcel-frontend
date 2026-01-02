@@ -24,11 +24,18 @@ export default class PublicTransitService {
         )
     }
 
-    async findPublicTransitNearby(): Promise<FeatureCollection> {
+    async findNearbyRoutes(): Promise<Route[]> {
         const response = await this.http.get(
-
-            `/routes/nearby?lat=${mapStore._coords?.latitude}&lon=${mapStore._coords?.longitude}&radius_miles=0.5`
+            `/routes/nearby?lat=${mapStore._coords?.latitude}&lon=${mapStore._coords?.longitude}&radius_miles=1.0`
         )
         return response.data
     }
+
+    async findNearbyStops(): Promise<Stop[]> {
+        const response = await this.http.get(
+            `/stops/nearby?lat=${mapStore._coords?.latitude}&lon=${mapStore._coords?.longitude}&radius_miles=1.0&limit=50`
+        )
+        return response.data
+    }
+
 }

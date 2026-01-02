@@ -5,7 +5,6 @@ import { mapStore } from "@/stores/map-store"
 import { normalizeStreetNames } from "@/utils/normalize-street-names"
 import { apiClient } from "@/api/api-client"
 import { modalStore } from "@/stores/modal-store"
-import getNearbyRoutes from "@/utils/get-nearby-routes"
 
 export default function useSearchByFuzzyCoords() {
 
@@ -23,12 +22,15 @@ export default function useSearchByFuzzyCoords() {
 
             mapStore.setCoords(data.coordinates)
 
-            const publicTransitNearby =  await getNearbyRoutes()
+            const routesNearby = await apiClient.publicTransitService.findNearbyRoutes()
+            const stopsNearby = await apiClient.publicTransitService.findNearbyStops()
+
             modalStore.addPropertyModal(
                 data.coordinates,
                 `${firstRecord.prop_streetnumber} ${normalizeStreetNames(firstRecord.prop_streetname)}`,
                 data,
-                publicTransitNearby ?? { type: "FeatureCollection", features: [] }
+                routesNearby,
+                stopsNearby
             )
 
         } catch (error) {

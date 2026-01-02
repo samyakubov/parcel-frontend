@@ -12,6 +12,7 @@ interface PropertyModal {
     title: string;
     position: ModalPosition;
     propertyData: PropertyDetails;
-    publicTransit:FeatureCollection | null;
+    routesNearBy:Route[] | null;
+    stopsNearBy:Stop[] | null;
     zIndex: number;
 }

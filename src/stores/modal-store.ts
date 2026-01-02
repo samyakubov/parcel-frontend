@@ -62,7 +62,8 @@ class ModalStore {
 	public addPropertyModal = action((coords: Coordinates,
 									  title: string,
 									  propertyData: PropertyDetails,
-									  publicTransit:FeatureCollection) => {
+									  routesNearBy:Route[],
+									  stopsNearBy:Stop[]) => {
 		if (this._propertyModals.length >= 8) {
 			return toast.info("Modal limit reached. Close one to open more")
 		}
@@ -81,7 +82,8 @@ class ModalStore {
 			title,
 			position: this.calculateNewModalPosition(),
 			propertyData,
-			publicTransit,
+			routesNearBy,
+			stopsNearBy,
 			zIndex: this.getNextZIndex()
 		}
 
