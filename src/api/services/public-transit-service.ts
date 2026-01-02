@@ -30,4 +30,12 @@ export default class PublicTransitService {
         )
         return response.data
     }
+
+    async findNearbyStops(): Promise<Stop[]> {
+        const response = await this.http.get(
+            `/stops/nearby?lat=${mapStore._coords?.latitude}&lon=${mapStore._coords?.longitude}&radius_miles=1.0&limit=50`
+        )
+        return response.data
+    }
+
 }

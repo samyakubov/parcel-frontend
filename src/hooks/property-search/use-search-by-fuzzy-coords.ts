@@ -22,12 +22,15 @@ export default function useSearchByFuzzyCoords() {
 
             mapStore.setCoords(data.coordinates)
 
-            const publicTransitNearby = await apiClient.publicTransitService.findNearbyRoutes()
+            const routesNearby = await apiClient.publicTransitService.findNearbyRoutes()
+            const stopsNearby = await apiClient.publicTransitService.findNearbyStops()
+
             modalStore.addPropertyModal(
                 data.coordinates,
                 `${firstRecord.prop_streetnumber} ${normalizeStreetNames(firstRecord.prop_streetname)}`,
                 data,
-                publicTransitNearby
+                routesNearby,
+                stopsNearby
             )
 
         } catch (error) {

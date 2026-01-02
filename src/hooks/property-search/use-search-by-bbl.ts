@@ -32,12 +32,15 @@ export default function useSearchByBbl() {
 
             mapStore.setCoords(data.coordinates)
             const firstRecord = data.records[0]
-            const publicTransitNearby = await apiClient.publicTransitService.findNearbyRoutes()
+            const routesNearby = await apiClient.publicTransitService.findNearbyRoutes()
+            const stopsNearby = await apiClient.publicTransitService.findNearbyStops()
+
             modalStore.addPropertyModal(
                 data.coordinates,
                 `${firstRecord.prop_streetnumber} ${normalizeStreetNames(firstRecord.prop_streetname)}`,
                 data,
-                publicTransitNearby
+                routesNearby,
+                stopsNearby
             )
             if (!isNull(mapStore._map) && !isNull(mapStore._coords)) {
                 mapStore.setMarker(mapStore._coords.longitude, mapStore._coords.latitude)

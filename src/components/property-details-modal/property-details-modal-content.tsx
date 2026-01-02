@@ -53,7 +53,7 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
 
 
 						<LastSold lastSoldFor={modal.propertyData.last_sold} />
-						<PublicTransportation routesNearBy={modal.publicTransit}/>
+						<PublicTransportation routesNearBy={modal.routesNearBy} stopsNearBy={modal.stopsNearBy}/>
 					</motion.div>
 					<motion.div
 						layout="preserve-aspect"
