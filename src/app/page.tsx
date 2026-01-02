@@ -1,16 +1,37 @@
 "use client"
 import useInitMap from "@/hooks/mapbox/map/use-init-map"
 import ModalContainer from "@/components/modal/modal-container"
-import MinimizedModalsBar from "@/components/minimized-modal-bar"
+import MinimizedModalsBar from "@/components/minimized-modal-bar/minimized-modal-bar"
 import SearchPanel from "@/components/address-search-bar/search-panel"
 import useFlyTo from "@/hooks/mapbox/map/fly-to"
 import {useEffect} from "react"
 import {mapStore} from "@/stores/map-store"
 import {reaction} from "mobx"
 import ThemeToggle from "@/components/theme-toggle"
+import MapStyleSwitcher from "@/components/map-style-switcher"
+import {MAP_STYLES, MapStyle} from "@/constants/mapbox"
 
 export default function Map() {
-	useInitMap("map")
+	const mapRef = useInitMap("map", "satellite")
+
+	const setMapStyle = (style: MapStyle) => {
+		if (mapRef.current) {
+			mapRef.current.setStyle(MAP_STYLES[style])
+
+			mapRef.current.once("styledata", () => {
+				const map = mapRef.current
+				if (!map) return
+
+				const layersToHide = ["poi-label", "poi-label-park", "transit-label"]
+				layersToHide.forEach(layerId => {
+					if (map.getLayer(layerId)) {
+						map.setLayoutProperty(layerId, "visibility", "none")
+					}
+				})
+			})
+		}
+	}
+
 	const flyTo = useFlyTo()
 
 	useEffect(() => {
@@ -28,16 +49,22 @@ export default function Map() {
 	}, [flyTo])
 	return (
 		<div className="relative w-full h-screen">
+			<div id="map" className="w-full h-full" />
+
 			<div className="absolute top-4 left-4 z-10">
 				<SearchPanel />
 			</div>
 
+			<div className="absolute top-4 right-4 z-10">
+				<MapStyleSwitcher onStyleChange={setMapStyle} />
+			</div>
+
 			<ModalContainer />
 			<MinimizedModalsBar />
+
 			<div className="absolute bottom-4 right-4 z-10">
 				<ThemeToggle/>
 			</div>
-			<div id="map" className="w-full h-full" />
 		</div>
 	)
 }

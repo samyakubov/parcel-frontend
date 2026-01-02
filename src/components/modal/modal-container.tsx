@@ -2,7 +2,7 @@
 import React from "react"
 import {modalStore} from "@/stores/modal-store"
 import {observer} from "mobx-react"
-import PropertyDetailsModal from "@/components/property-details-modal"
+import PropertyDetailsModal from "@/components/property-details-modal/property-details-modal"
 
 
 function ModalContainer() {

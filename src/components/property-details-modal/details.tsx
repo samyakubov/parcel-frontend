@@ -78,6 +78,7 @@ export default function Details({ firstRecord, lastSold }: PropertyDetailProps) 
                     icon={<Hash className="h-4 w-4 text-muted-foreground" />}
                     label="BBL"
                     value={firstRecord.bbl}
+                    enableCopy={true}
                 />
 
                 {isLastSoldWithSqft(lastSold) && (

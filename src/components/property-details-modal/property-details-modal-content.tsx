@@ -15,6 +15,7 @@ import PropertyRecordGrid from "@/components/property-details-modal/property-rec
 import { Landmark } from "lucide-react"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import PublicTransportation from "@/components/property-details-modal/public-transportation/public-transportation"
+import {isNil} from "lodash-es"
 
 
 interface PropertyDetailsModalContentProps {
@@ -22,6 +23,8 @@ interface PropertyDetailsModalContentProps {
 }
 
 export default function PropertyDetailsModalContent({ modal }: PropertyDetailsModalContentProps) {
+	const firstDeedOrMortgageRecord = modal.propertyData.records.find(
+		(record) => record.doc_type === "DEED" || record.doc_type === "MORTGAGE")
 	return (
 		<motion.div
 			layout="preserve-aspect"
@@ -47,7 +50,7 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
 						/>
 
 						<Details
-							firstRecord={modal.propertyData.records[0]}
+							firstRecord={!isNil(firstDeedOrMortgageRecord) ? firstDeedOrMortgageRecord : modal.propertyData.records[0]}
 							lastSold={modal.propertyData.last_sold}
 						/>
 

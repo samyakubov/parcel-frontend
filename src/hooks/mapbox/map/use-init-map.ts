@@ -1,10 +1,12 @@
 import {useEffect, useRef} from "react"
 import mapboxgl from "mapbox-gl"
 import useHandleMapClick from "@/hooks/mapbox/map/use-handle-map-click"
-import {NYC_BOUNDS, NYC_CENTER} from "@/constants/mapbox"
+import {MAP_STYLES, MapStyle, NYC_BOUNDS, NYC_CENTER} from "@/constants/mapbox"
 import {mapStore} from "@/stores/map-store"
 
-export default function useInitMap(containerId:string) {
+
+
+export default function useInitMap(containerId: string, initialStyle: MapStyle = "satellite") {
 	mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_API_KEY as string
 	const mapRef = useRef<mapboxgl.Map | null>(null)
 	const handleMapClick = useHandleMapClick(mapRef)
@@ -14,7 +16,7 @@ export default function useInitMap(containerId:string) {
 
 		mapRef.current = new mapboxgl.Map({
 			container: containerId,
-			style: "mapbox://styles/mapbox/satellite-streets-v12",
+			style: MAP_STYLES[initialStyle],
 			center: [NYC_CENTER.longitude, NYC_CENTER.latitude],
 			zoom: 10,
 		})
@@ -46,7 +48,8 @@ export default function useInitMap(containerId:string) {
 		return () => {
 			mapStore.clearMarker()
 		}
-	}, [containerId, handleMapClick])
+	}, [containerId, handleMapClick, initialStyle])
+
 
 	return mapRef
 }

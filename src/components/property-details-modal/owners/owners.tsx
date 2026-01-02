@@ -19,19 +19,22 @@ export default function Owners({ currentOwners, previousOwners }: OwnerProps) {
 
 	const [searchTerm, setSearchTerm] = useState<string>("")
 
+	const sortedOwners = useMemo(() => {
+		return currentOwners.slice().sort((a, b) => a.localeCompare(b))
+	}, [currentOwners])
+
+
 	const filteredOwners = useMemo(() => {
-		if (!isArray(currentOwners)) return []
+		if (!isArray(sortedOwners)) return []
 
-		if (!searchTerm.trim()) return currentOwners
+		if (!searchTerm.trim()) return sortedOwners
 
-		return currentOwners.filter(owner =>
+		return sortedOwners.filter(owner =>
 			owner.toLowerCase().includes(searchTerm.toLowerCase())
 		)
-	}, [currentOwners, searchTerm])
+	}, [sortedOwners, searchTerm])
 
-	const sortedOwners = useMemo(() => {
-		return filteredOwners.slice().sort((a, b) => a.localeCompare(b))
-	}, [filteredOwners])
+
 
 	if (isEmpty(sortedOwners)) {
 		return (
@@ -93,7 +96,7 @@ export default function Owners({ currentOwners, previousOwners }: OwnerProps) {
 						/>
 					</div>
 
-					<OwnerList owners={sortedOwners} />
+					<OwnerList owners={filteredOwners} />
 				</CardContent>
 
 				<CardContent>

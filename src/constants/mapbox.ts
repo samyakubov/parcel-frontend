@@ -8,3 +8,11 @@ export const NYC_CENTER = {
 	longitude: -73.935242,
 	latitude: 40.730610
 }
+
+export type MapStyle = "light" | "dark" | "satellite"
+
+export const MAP_STYLES: Record<MapStyle, string> = {
+    light: "mapbox://styles/mapbox/light-v11",
+    dark: "mapbox://styles/mapbox/dark-v11",
+    satellite: "mapbox://styles/mapbox/satellite-streets-v12"
+}
