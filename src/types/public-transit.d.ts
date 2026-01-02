@@ -1,28 +1,26 @@
 
 declare global {
-
-    interface FeatureCollection {
-        type: "FeatureCollection";
-        features: PublicTransitFeature[];
+    interface Stop {
+        stop_id: string;
+        stop_name: string;
+        stop_lat: number;
+        stop_lon: number;
+        location_type: number;
+        wheelchair_boarding: number;
+        platform_code: string | null;
+        stop_desc: string | null;
+        zone_id: string | null;
     }
 
-    interface PublicTransitFeature {
-        type: "Feature";
-        geometry: {
-            type: "LineString";
-            coordinates: number[][];
-        };
-        properties: PublicTransitProperties;
-    }
-
-    interface PublicTransitProperties {
-        distance: number;
-        route_color: string;
+    interface Route {
         route_id: string;
+        route_short_name: string;
         route_long_name: string;
-        route_name: string;
+        route_color: string;
         route_text_color: string;
-        shape_id: string;
+        route_type: number;
+        stops:Stop[];
+        route_desc:string;
     }
 }
 

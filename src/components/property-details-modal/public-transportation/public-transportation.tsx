@@ -1,21 +1,24 @@
 "use client"
 import React from "react"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import {isEmpty, isNil, uniqBy} from "lodash-es"
-import {observer} from "mobx-react"
-import {Card, CardContent, CardHeader} from "@/components/ui/card"
-import {Alert, AlertDescription} from "@/components/ui/alert"
-import {BusFront} from "lucide-react"
+import { isEmpty, isNil } from "lodash-es"
+import { observer } from "mobx-react"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { BusFront, MapPin } from "lucide-react"
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+} from "@/components/ui/accordion"
 
 interface PublicTransportationCardProps {
-    routesNearBy:FeatureCollection | null
+    routesNearBy: Route[] | null
 }
 
-function PublicTransportation({routesNearBy}:PublicTransportationCardProps) {
-    const features = routesNearBy?.features
-    const dedupedFeatures = features ? uniqBy(features, "properties.route_long_name") : []
-
-    if (isNil(features) || isEmpty(features)) {
+function PublicTransportation({ routesNearBy }: PublicTransportationCardProps) {
+    if (isNil(routesNearBy) || isEmpty(routesNearBy)) {
         return (
             <Card>
                 <CardHeader>
@@ -51,47 +54,81 @@ function PublicTransportation({routesNearBy}:PublicTransportationCardProps) {
                     </h3>
                 </div>
             </CardHeader>
-            <CardContent className="p-0">
-                {dedupedFeatures.map((item, index) => {
-                    const properties = item.properties
-
-                    return (
-                        <div
-                            key={index}
-                            className={`flex items-center justify-between 
-                                        p-5 transition-colors duration-200`}
+            <CardContent className="p-4">
+                <div className="max-h-96 overflow-y-auto pr-2">
+                    <Accordion type="single" collapsible className="space-y-3">
+                        {routesNearBy.map((route) => (
+                            <AccordionItem
+                                key={route.route_id}
+                                value={route.route_id}
+                                className="border-2 rounded-lg overflow-hidden hover:border-primary/50 transition-colors"
                             >
-                            <div className="flex items-center gap-4 flex-1 min-w-0">
-                                <Avatar className="h-12 w-12 flex-shrink-0 shadow-sm">
-                                    <AvatarFallback
-                                        className="text-lg font-bold"
-                                        style={{
-                                            backgroundColor: properties.route_color,
-                                            color: properties.route_text_color
-                                        }}
-                                    >
-                                        {properties.route_name}
-                                    </AvatarFallback>
-                                </Avatar>
+                                <AccordionTrigger className="px-4 py-3 hover:no-underline hover:bg-accent/50">
+                                    <div className="flex items-center gap-4 flex-1">
+                                        <Avatar className="h-12 w-12 flex-shrink-0 shadow-sm">
+                                            <AvatarFallback
+                                                className="text-lg font-bold"
+                                                style={{
+                                                    backgroundColor: `#${route.route_color}`,
+                                                    color: `#${route.route_text_color}`
+                                                }}
+                                            >
+                                                {route.route_id}
+                                            </AvatarFallback>
+                                        </Avatar>
 
-                                <div className="flex-1 min-w-0">
-                                    <p className="font-semibold truncate">
-                                        {properties.route_long_name}
-                                    </p>
-                                    <p className="text-sm  font-mono">
-                                        {properties.route_id}
-                                    </p>
-                                </div>
-                            </div>
+                                        <div className="flex-1 min-w-0 text-left">
+                                            <p className="font-semibold truncate text-base">
+                                                {route.route_long_name}
+                                            </p>
+                                            {route.route_desc && (
+                                                <p className="text-sm text-muted-foreground truncate">
+                                                    {route.route_desc}
+                                                </p>
+                                            )}
+                                            <p className="text-xs text-muted-foreground mt-1">
+                                                {route.stops?.length || 0} stops
+                                            </p>
+                                        </div>
+                                    </div>
+                                </AccordionTrigger>
 
-                            <div className="ml-4 flex-shrink-0">
-                                <p className="text-sm font-medium text-gray-700">
-                                    {properties.distance} mi
-                                </p>
-                            </div>
-                        </div>
-                    )
-                })}
+                                <AccordionContent className="px-0 pb-0">
+                                    {route.stops && route.stops.length > 0 && (
+                                        <div className="border-t bg-muted/30">
+                                            <div className="max-h-64 overflow-y-auto">
+                                                {route.stops.map((stop) => (
+                                                    <div
+                                                        key={stop.stop_id}
+                                                        className="px-4 py-3 flex items-start gap-3 hover:bg-accent/30
+                                                        transition-colors border-b last:border-b-0"
+                                                    >
+                                                        <MapPin className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                                                        <div className="flex-1 min-w-0">
+                                                            <p className="font-medium text-sm">
+                                                                {stop.stop_name}
+                                                            </p>
+                                                            {stop.platform_code && (
+                                                                <p className="text-xs text-muted-foreground">
+                                                                    Platform {stop.platform_code}
+                                                                </p>
+                                                            )}
+                                                            {stop.stop_desc && (
+                                                                <p className="text-xs text-muted-foreground mt-1">
+                                                                    {stop.stop_desc}
+                                                                </p>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                </AccordionContent>
+                            </AccordionItem>
+                        ))}
+                    </Accordion>
+                </div>
             </CardContent>
         </Card>
     )
