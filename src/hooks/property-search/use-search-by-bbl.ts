@@ -9,6 +9,7 @@ import isNull from "lodash-es/isNull"
 import useFlyTo from "@/hooks/mapbox/map/fly-to"
 import isUndefined from "lodash-es/isUndefined"
 import {v4 as uuidv4} from "uuid"
+import {getSchools} from "@/utils/get-schools"
 
 
 export default function useSearchByBbl() {
@@ -29,10 +30,10 @@ export default function useSearchByBbl() {
 
             const response = await apiClient.propertyService.searchByPropertyBbl(searchStore._bblSearchQuery)
 
-            const data = response as PropertyDetailsWithCoords
+            const propertyData = response as PropertyDetailsWithCoords
 
-            mapStore.setCoords(data.coordinates)
-            const firstRecord = data.records[0]
+            mapStore.setCoords(propertyData.coordinates)
+            const firstRecord = propertyData.records[0]
             const routesNearby = await apiClient.publicTransitService.findNearbyRoutes()
             const stopsNearby = await apiClient.publicTransitService.findNearbyStops()
 
@@ -43,9 +44,10 @@ export default function useSearchByBbl() {
                 isExpanded: false,
                 title:`${firstRecord.prop_streetnumber} ${normalizeStreetNames(firstRecord.prop_streetname)}`,
                 position: modalStore.calculateNewModalPosition(),
-                propertyData: data,
+                propertyData: propertyData,
                 routesNearBy: routesNearby,
                 stopsNearBy: stopsNearby,
+                schools: await getSchools(),
                 zIndex: modalStore.getNextZIndex()
             })
             if (!isNull(mapStore._map) && !isNull(mapStore._coords)) {

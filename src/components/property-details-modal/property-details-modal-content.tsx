@@ -16,6 +16,7 @@ import { Landmark } from "lucide-react"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import PublicTransportation from "@/components/property-details-modal/public-transportation/public-transportation"
 import {isNil} from "lodash-es"
+import Schools from "@/components/property-details-modal/schools/schools"
 
 
 interface PropertyDetailsModalContentProps {
@@ -103,6 +104,7 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
 
 							)
 						}
+						<Schools schools={modal.schools}/>
 					</motion.div>
 				</motion.div>
 
