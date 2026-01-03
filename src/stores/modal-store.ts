@@ -69,9 +69,9 @@ class ModalStore {
 		}
 
 		const existingModal = this._propertyModals.find(modal => modal.title === title)
-
 		if (!isUndefined(existingModal)) {
 			this.restoreModal(existingModal.id)
+			return
 		}
 		const newModal: PropertyModal = {
 			id: uuidv4(),
