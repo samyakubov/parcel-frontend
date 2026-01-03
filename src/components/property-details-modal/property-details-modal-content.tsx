@@ -43,7 +43,7 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
 							layout="preserve-aspect"
 							className="rounded-xl shadow-lg w-full h-64 object-cover mb-4 border border-white/10"
 							src={`https://maps.googleapis.com/maps/api/streetview?size=800x300&location=
-							${modal.coords.latitude},${modal.coords.longitude}
+							${modal.propertyData.coordinates.latitude},${modal.propertyData.coordinates.longitude}
 							&key=${process.env.NEXT_PUBLIC_STREETVIEW_API_KEY}`
 							}
 							alt="Google Street View"

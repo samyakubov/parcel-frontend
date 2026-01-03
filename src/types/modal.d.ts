@@ -8,10 +8,9 @@ interface PropertyModal {
     isOpen: boolean;
     isMinimized: boolean;
     isExpanded: boolean;
-    coords: Coordinates;
     title: string;
     position: ModalPosition;
-    propertyData: PropertyDetails;
+    propertyData: PropertyDetailsWithCoords;
     routesNearBy:Route[] | null;
     stopsNearBy:Stop[] | null;
     zIndex: number;
