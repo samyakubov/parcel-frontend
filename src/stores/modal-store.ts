@@ -1,5 +1,4 @@
 import { action, makeAutoObservable } from "mobx"
-import { v4 as uuidv4 } from "uuid"
 import isUndefined from "lodash-es/isUndefined"
 import { toast } from "react-toastify"
 import {mapStore} from "@/stores/map-store"
@@ -14,7 +13,7 @@ class ModalStore {
 
 	public _propertyModals: PropertyModal[] = []
 
-	private getNextZIndex = (): number => {
+	public getNextZIndex = (): number => {
 		return ++this._currentZIndex
 	}
 
@@ -36,7 +35,7 @@ class ModalStore {
 		return this._propertyModals.find(modal => modal.id === id)
 	}
 
-	private calculateNewModalPosition = (): { x: number, y: number } => {
+	public calculateNewModalPosition = (): { x: number, y: number } => {
 		const MODAL_WIDTH = 465
 		const START_X = 0
 		const START_Y = 0
@@ -59,32 +58,15 @@ class ModalStore {
 		}
 	}
 
-	public addPropertyModal = action((coords: Coordinates,
-									  title: string,
-									  propertyData: PropertyDetails,
-									  routesNearBy:Route[],
-									  stopsNearBy:Stop[]) => {
+	public addPropertyModal = action((newModal:PropertyModal) => {
 		if (this._propertyModals.length >= 8) {
 			return toast.info("Modal limit reached. Close one to open more")
 		}
 
-		const existingModal = this._propertyModals.find(modal => modal.title === title)
-
+		const existingModal = this._propertyModals.find(modal => modal.title === newModal.title)
 		if (!isUndefined(existingModal)) {
 			this.restoreModal(existingModal.id)
-		}
-		const newModal: PropertyModal = {
-			id: uuidv4(),
-			isOpen: true,
-			isMinimized: false,
-			isExpanded: false,
-			coords,
-			title,
-			position: this.calculateNewModalPosition(),
-			propertyData,
-			routesNearBy,
-			stopsNearBy,
-			zIndex: this.getNextZIndex()
+			return
 		}
 
 		this._propertyModals.push(newModal)
@@ -94,7 +76,7 @@ class ModalStore {
 		const modal = this.getModal(id)
 		if (modal && !modal.isMinimized) {
 			this.setModalState(id, { zIndex: this.getNextZIndex() })
-			mapStore.setCoords(modal.coords)
+			mapStore.setCoords(modal.propertyData.coordinates)
 		}
 	})
 

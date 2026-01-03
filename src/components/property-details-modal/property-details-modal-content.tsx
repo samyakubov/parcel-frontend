@@ -15,7 +15,8 @@ import PropertyRecordGrid from "@/components/property-details-modal/property-rec
 import { Landmark } from "lucide-react"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import PublicTransportation from "@/components/property-details-modal/public-transportation/public-transportation"
-import {isNil} from "lodash-es"
+import {isEmpty, isNil} from "lodash-es"
+import Schools from "@/components/property-details-modal/schools/schools"
 
 
 interface PropertyDetailsModalContentProps {
@@ -25,6 +26,18 @@ interface PropertyDetailsModalContentProps {
 export default function PropertyDetailsModalContent({ modal }: PropertyDetailsModalContentProps) {
 	const firstDeedOrMortgageRecord = modal.propertyData.records.find(
 		(record) => record.doc_type === "DEED" || record.doc_type === "MORTGAGE")
+
+	const getCurrentOwner = () => {
+		if (
+			(isEmpty(modal.propertyData.owners.current_owners) || isNull(modal.propertyData.owners.current_owners))
+			&& !isNil(modal.propertyData.records[0].owner_name)
+		) {
+			return [modal.propertyData.records[0].owner_name]
+		} else {
+			return modal.propertyData.owners.current_owners
+		}
+	}
+
 	return (
 		<motion.div
 			layout="preserve-aspect"
@@ -43,7 +56,7 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
 							layout="preserve-aspect"
 							className="rounded-xl shadow-lg w-full h-64 object-cover mb-4 border border-white/10"
 							src={`https://maps.googleapis.com/maps/api/streetview?size=800x300&location=
-							${modal.coords.latitude},${modal.coords.longitude}
+							${modal.propertyData.coordinates.latitude},${modal.propertyData.coordinates.longitude}
 							&key=${process.env.NEXT_PUBLIC_STREETVIEW_API_KEY}`
 							}
 							alt="Google Street View"
@@ -64,7 +77,8 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
 					>
 						<Zoning zoning={modal.propertyData.zoning} />
 
-						<Owners currentOwners={modal.propertyData.owners.current_owners}
+						<Owners
+							currentOwners={getCurrentOwner()}
 							previousOwners={modal.propertyData.owners.previous_owners}
 						/>
 						{
@@ -103,6 +117,7 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
 
 							)
 						}
+						<Schools schools={modal.schools}/>
 					</motion.div>
 				</motion.div>
 

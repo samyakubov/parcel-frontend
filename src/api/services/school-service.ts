@@ -1,16 +1,13 @@
 import axios, {AxiosInstance} from "axios"
-import {mapStore} from "@/stores/map-store"
 import {toast} from "react-toastify"
 
-export default class PublicTransitService {
+export default class SchoolService {
     public readonly http: AxiosInstance
 
     constructor() {
         this.http = axios.create({
-            baseURL: process.env.NEXT_PUBLIC_TRANSIT_API_URL,
             headers: {
                 "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*",
             }
         })
 
@@ -24,16 +21,9 @@ export default class PublicTransitService {
         )
     }
 
-    async findNearbyRoutes(): Promise<Route[]> {
+    async getSchools(): Promise<School[]> {
         const response = await this.http.get(
-            `/routes/nearby?lat=${mapStore._coords?.latitude}&lon=${mapStore._coords?.longitude}&radius_miles=1.0`
-        )
-        return response.data
-    }
-
-    async findNearbyStops(): Promise<Stop[]> {
-        const response = await this.http.get(
-            `/stops/nearby?lat=${mapStore._coords?.latitude}&lon=${mapStore._coords?.longitude}&radius_miles=1.0&limit=50`
+            "https://data.cityofnewyork.us/api/v3/views/wg9x-4ke6/query.json?app_token=Wp0DkC4v0qjF22hrVBLm1KSOF"
         )
         return response.data
     }
