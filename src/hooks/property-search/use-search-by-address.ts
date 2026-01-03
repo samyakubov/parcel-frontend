@@ -28,7 +28,6 @@ export default function useSearchByAddress() {
             const response = await apiClient.propertyService.searchByPropertyAddress(searchStore._addressSearchQuery)
 
             const propertyData = response as PropertyDetailsWithCoords
-
             mapStore.setCoords(propertyData.coordinates)
             const firstRecord = propertyData.records[0]
             const routesNearby = await apiClient.publicTransitService.findNearbyRoutes()
@@ -44,7 +43,7 @@ export default function useSearchByAddress() {
                     propertyData: propertyData,
                     routesNearBy: routesNearby,
                     stopsNearBy: stopsNearby,
-                    schools: await getSchools(),
+                    schools: await getSchools(firstRecord.school_dist),
                     zIndex: modalStore.getNextZIndex()
                 })
 

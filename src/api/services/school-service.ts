@@ -22,7 +22,9 @@ export default class SchoolService {
     }
 
     async getSchools(): Promise<School[]> {
-        const response = await this.http.get("https://data.cityofnewyork.us/resource/wg9x-4ke6.json")
+        const response = await this.http.get(
+            "https://data.cityofnewyork.us/api/v3/views/wg9x-4ke6/query.json?app_token=Wp0DkC4v0qjF22hrVBLm1KSOF"
+        )
         return response.data
     }
 }

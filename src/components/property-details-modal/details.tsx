@@ -5,13 +5,13 @@ import {
     Home,
     Ruler,
     TreePine,
-    CalendarClock,
-    Hash
+    Hash, Square, CalendarDays, Layers
 } from "lucide-react"
 import isEmpty from "lodash-es/isEmpty"
 import { Card, CardHeader, CardContent } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import PropertyDetailItem from "@/components/property-details-modal/mortgage/property-detail-item"
+import isNull from "lodash-es/isNull"
 
 interface PropertyDetailProps {
     firstRecord: PropertyRecord
@@ -35,7 +35,7 @@ function isLastSoldWithSqft(
 
 
 export default function Details({ firstRecord, lastSold }: PropertyDetailProps) {
-    if (isEmpty(firstRecord)) {
+    if (isEmpty(firstRecord) || isNull(firstRecord)) {
         return (
             <Card className="w-full">
                 <CardHeader>
@@ -55,6 +55,58 @@ export default function Details({ firstRecord, lastSold }: PropertyDetailProps) 
                 </CardContent>
             </Card>
         )
+    }
+
+
+    const getDetails = () => {
+        if (!isNull(firstRecord)) {
+            return (
+                <>
+                    <PropertyDetailItem
+                        icon={<Layers className="h-4 w-4 text-muted-foreground"/>}
+                        label="# of floors"
+                        value={firstRecord.num_floors.toString()}
+                    />
+                    <PropertyDetailItem
+                        icon={<Home className="h-4 w-4 text-muted-foreground"/>}
+                        label="Home Square Feet"
+                        value={`${firstRecord.bldg_area.toString()} (${firstRecord.bldg_front} X ${firstRecord.bldg_depth})`}
+                    />
+                    <PropertyDetailItem
+                        icon={<Square className="h-4 w-4 text-muted-foreground"/>}
+                        label="Land Square Feet"
+                        value={`${firstRecord.lot_area.toString()} (${firstRecord.lot_front} X ${firstRecord.lot_depth})`}
+                    />
+                    <PropertyDetailItem
+                        icon={<CalendarDays className="h-4 w-4 text-muted-foreground"/>}
+                        label="Property Year Built"
+                        value={firstRecord.year_built.toString()}
+                    />
+                </>
+            )
+        } else if (isLastSoldWithSqft(lastSold)) {
+            return (
+                <>
+                    <PropertyDetailItem
+                        icon={<Ruler className="h-4 w-4 text-muted-foreground"/>}
+                        label="Home Square Feet"
+                        value={lastSold.gross_sqft}
+                    />
+                    <PropertyDetailItem
+                        icon={<TreePine className="h-4 w-4 text-muted-foreground"/>}
+                        label="Land Square Feet"
+                        value={lastSold.land_sqft}
+                    />
+                    <PropertyDetailItem
+                        icon={<CalendarDays className="h-4 w-4 text-muted-foreground"/>}
+                        label="Property Year Built"
+                        value={lastSold.year_built}
+                    />
+                </>
+            )
+        } else {
+            return null
+        }
     }
 
     return (
@@ -80,26 +132,7 @@ export default function Details({ firstRecord, lastSold }: PropertyDetailProps) 
                     value={firstRecord.bbl}
                     enableCopy={true}
                 />
-
-                {isLastSoldWithSqft(lastSold) && (
-                    <>
-                        <PropertyDetailItem
-                            icon={<Ruler className="h-4 w-4 text-muted-foreground" />}
-                            label="Home Square Feet"
-                            value={lastSold.gross_sqft}
-                        />
-                        <PropertyDetailItem
-                            icon={<TreePine className="h-4 w-4 text-muted-foreground" />}
-                            label="Land Square Feet"
-                            value={lastSold.land_sqft}
-                        />
-                        <PropertyDetailItem
-                            icon={<CalendarClock className="h-4 w-4 text-muted-foreground" />}
-                            label="Property Year Built"
-                            value={lastSold.year_built}
-                        />
-                    </>
-                )}
+                {getDetails()}
             </CardContent>
         </Card>
     )

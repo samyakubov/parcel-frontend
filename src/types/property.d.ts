@@ -68,6 +68,41 @@ declare global {
         party_zip: string;
         doc_type: string;
         record_filed: string;
+        school_dist: number;
+        council: number;
+        zipcode: string;
+        police_prct: string;
+        land_use: number;
+        owner_type: string;
+        owner_name: string;
+        lot_area: number;
+        bldg_area: number;
+        com_area: number;
+        res_area: number;
+        office_area: number;
+        retail_area: number;
+        garage_area: number;
+        strge_area: number;
+        factry_area: number;
+        other_area: number;
+        area_source: string;
+        num_bldgs: number;
+        num_floors: number;
+        units_res: number;
+        units_total: number;
+        lot_front: number;
+        lot_depth: number;
+        bldg_front: number;
+        bldg_depth: number;
+        ext: string;
+        prox_code: string;
+        irr_lot_code: string;
+        lot_type: string;
+        bsmt_code: string;
+        assess_land: number;
+        assess_tot: number;
+        exempt_tot: number;
+        year_built: number;
     }
 
     interface Violation {

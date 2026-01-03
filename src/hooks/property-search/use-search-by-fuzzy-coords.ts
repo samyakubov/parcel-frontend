@@ -23,7 +23,6 @@ export default function useSearchByFuzzyCoords() {
             const firstRecord = propertyData.records[0]
 
             mapStore.setCoords(propertyData.coordinates)
-
             const routesNearby = await apiClient.publicTransitService.findNearbyRoutes()
             const stopsNearby = await apiClient.publicTransitService.findNearbyStops()
 
@@ -37,7 +36,7 @@ export default function useSearchByFuzzyCoords() {
                 propertyData: propertyData,
                 routesNearBy: routesNearby,
                 stopsNearBy: stopsNearby,
-                schools: await getSchools(),
+                schools: await getSchools(firstRecord.school_dist),
                 zIndex: modalStore.getNextZIndex()
             })
 

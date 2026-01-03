@@ -47,7 +47,7 @@ export default function useSearchByBbl() {
                 propertyData: propertyData,
                 routesNearBy: routesNearby,
                 stopsNearBy: stopsNearby,
-                schools: await getSchools(),
+                schools: await getSchools(firstRecord.school_dist),
                 zIndex: modalStore.getNextZIndex()
             })
             if (!isNull(mapStore._map) && !isNull(mapStore._coords)) {

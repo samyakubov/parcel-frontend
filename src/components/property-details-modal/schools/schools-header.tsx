@@ -14,7 +14,7 @@ export default function SchoolsHeader() {
                         Schools
                     </h3>
                     <p className="text-sm italic text-gray-500">
-                        Zoned for this property
+                        In the district
                     </p>
                 </div>
             </div>
