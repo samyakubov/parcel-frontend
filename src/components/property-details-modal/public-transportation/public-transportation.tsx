@@ -1,7 +1,7 @@
 "use client"
 import React from "react"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { isEmpty, isNil } from "lodash-es"
+import { isEmpty, isNil, isUndefined } from "lodash-es"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { BusFront, MapPin } from "lucide-react"
@@ -11,10 +11,11 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion"
+import { Skeleton } from "@/components/ui/skeleton"
 
 interface PublicTransportationCardProps {
-    routesNearBy: Route[] | null
-    stopsNearBy: Stop[] | null
+    routesNearBy: Route[] | null | undefined
+    stopsNearBy: Stop[] | null | undefined
 }
 
 export default function PublicTransportation({ routesNearBy, stopsNearBy }: PublicTransportationCardProps) {
@@ -38,6 +39,35 @@ export default function PublicTransportation({ routesNearBy, stopsNearBy }: Publ
         })
     }
 
+    // Loading state
+    if (isUndefined(routesNearBy) || isUndefined(stopsNearBy)) {
+        return (
+            <Card>
+                <CardHeader>
+                    <div className="flex items-center gap-2">
+                        <div className="p-2 rounded-full bg-primary/10">
+                            <BusFront className="h-4 w-4 text-primary" />
+                        </div>
+                        <div className="flex flex-col gap-2">
+                            <h3 className="text-lg font-semibold">
+                                Public Transportation
+                            </h3>
+                            <p className="text-sm italic text-gray-500">
+                                Within a mile radius
+                            </p>
+                        </div>
+                    </div>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                    <Skeleton className="h-16 w-full" />
+                    <Skeleton className="h-16 w-full" />
+                    <Skeleton className="h-16 w-full" />
+                </CardContent>
+            </Card>
+        )
+    }
+
+    // No data state
     if (isNil(routesNearBy) || isEmpty(routesNearBy)) {
         return (
             <Card>
@@ -61,6 +91,8 @@ export default function PublicTransportation({ routesNearBy, stopsNearBy }: Publ
             </Card>
         )
     }
+
+    // Data loaded state
 
     return (
         <Card>
@@ -145,22 +177,19 @@ export default function PublicTransportation({ routesNearBy, stopsNearBy }: Publ
                                                             <div
                                                                 key={stop.stop_id}
                                                                 className={`px-4 py-3 flex items-start 
-                                                                gap-3 transition-colors border-b last:border-b-0 ${
-                                                                    isNearby
+                                                                gap-3 transition-colors border-b last:border-b-0 ${isNearby
                                                                         ? "bg-primary/10 hover:bg-primary/20 border-l-4 border-l-primary"
                                                                         : "hover:bg-accent/30"
-                                                                }`}
+                                                                    }`}
                                                             >
                                                                 <MapPin
-                                                                    className={`h-4 w-4 mt-0.5 flex-shrink-0 ${
-                                                                        isNearby ? "text-primary fill-primary/20" : "text-primary"
-                                                                    }`}
+                                                                    className={`h-4 w-4 mt-0.5 flex-shrink-0 ${isNearby ? "text-primary fill-primary/20" : "text-primary"
+                                                                        }`}
                                                                 />
                                                                 <div className="flex-1 min-w-0">
                                                                     <div className="flex items-center gap-2">
-                                                                        <p className={`font-medium text-sm ${
-                                                                            isNearby ? "text-primary font-semibold" : ""
-                                                                        }`}>
+                                                                        <p className={`font-medium text-sm ${isNearby ? "text-primary font-semibold" : ""
+                                                                            }`}>
                                                                             {stop.stop_name}
                                                                         </p>
                                                                         {isNearby && (

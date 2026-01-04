@@ -11,8 +11,8 @@ interface PropertyModal {
     title: string;
     position: ModalPosition;
     propertyData: PropertyDetailsWithCoords;
-    routesNearBy:Route[];
-    stopsNearBy:Stop[];
-    schools:School[];
+    routesNearBy: Route[] | null | undefined;
+    stopsNearBy: Stop[] | null | undefined;
+    schools: School[] | null | undefined;
     zIndex: number;
 }

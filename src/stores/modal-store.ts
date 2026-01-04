@@ -1,8 +1,8 @@
 import { action, makeAutoObservable } from "mobx"
 import isUndefined from "lodash-es/isUndefined"
 import { toast } from "react-toastify"
-import {mapStore} from "@/stores/map-store"
-import {isEmpty} from "lodash-es"
+import { mapStore } from "@/stores/map-store"
+import { isEmpty } from "lodash-es"
 
 class ModalStore {
 	constructor() {
@@ -29,6 +29,14 @@ class ModalStore {
 
 	public updateModalPosition = action((id: string, position: { x: number, y: number }) => {
 		this.setModalState(id, { position })
+	})
+
+	public updateModalData = action((id: string, updates: {
+		schools?: School[] | null;
+		routesNearBy?: Route[] | null;
+		stopsNearBy?: Stop[] | null;
+	}) => {
+		this.setModalState(id, updates)
 	})
 
 	public getModal = (id: string): PropertyModal | undefined => {
@@ -58,7 +66,7 @@ class ModalStore {
 		}
 	}
 
-	public addPropertyModal = action((newModal:PropertyModal) => {
+	public addPropertyModal = action((newModal: PropertyModal) => {
 		if (this._propertyModals.length >= 8) {
 			return toast.info("Modal limit reached. Close one to open more")
 		}
