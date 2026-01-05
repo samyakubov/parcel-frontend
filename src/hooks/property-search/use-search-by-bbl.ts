@@ -28,7 +28,6 @@ export default function useSearchByBbl() {
                 return
             }
 
-            // Fetch property data first
             const response = await apiClient.propertyService.searchByPropertyBbl(searchStore._bblSearchQuery)
 
             const propertyData = response as PropertyDetailsWithCoords
@@ -36,10 +35,8 @@ export default function useSearchByBbl() {
             mapStore.setCoords(propertyData.coordinates)
             const firstRecord = propertyData.records[0]
 
-            // Create modal ID
             const modalId = uuidv4()
 
-            // Open modal immediately with property data, async data set to undefined (loading state)
             modalStore.addPropertyModal({
                 id: modalId,
                 isOpen: true,
@@ -59,14 +56,12 @@ export default function useSearchByBbl() {
                 flyTo()
             }
 
-            // Fetch async data in parallel
             const [routesResult, stopsResult, schoolsResult] = await Promise.allSettled([
                 apiClient.publicTransitService.findNearbyRoutes(),
                 apiClient.publicTransitService.findNearbyStops(),
                 getSchools(firstRecord.school_dist)
             ])
 
-            // Update modal with async data (null if failed)
             modalStore.updateModalData(modalId, {
                 routesNearBy: routesResult.status === 'fulfilled' ? routesResult.value : null,
                 stopsNearBy: stopsResult.status === 'fulfilled' ? stopsResult.value : null,

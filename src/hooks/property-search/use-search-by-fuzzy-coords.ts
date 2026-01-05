@@ -14,7 +14,6 @@ export default function useSearchByFuzzyCoords() {
         try {
             if (isNull(mapStore._coords)) return
 
-            // Fetch property data first
             const response = await apiClient.propertyService.searchByPropertyFuzzyCoords(
                 { latitude: mapStore._coords.latitude, longitude: mapStore._coords.longitude }
             )
@@ -25,10 +24,8 @@ export default function useSearchByFuzzyCoords() {
 
             mapStore.setCoords(propertyData.coordinates)
 
-            // Create modal ID
             const modalId = uuidv4()
 
-            // Open modal immediately with property data, async data set to undefined (loading state)
             modalStore.addPropertyModal({
                 id: modalId,
                 isOpen: true,
@@ -43,14 +40,12 @@ export default function useSearchByFuzzyCoords() {
                 zIndex: modalStore.getNextZIndex()
             })
 
-            // Fetch async data in parallel
             const [routesResult, stopsResult, schoolsResult] = await Promise.allSettled([
                 apiClient.publicTransitService.findNearbyRoutes(),
                 apiClient.publicTransitService.findNearbyStops(),
                 getSchools(firstRecord.school_dist)
             ])
 
-            // Update modal with async data (null if failed)
             modalStore.updateModalData(modalId, {
                 routesNearBy: routesResult.status === 'fulfilled' ? routesResult.value : null,
                 stopsNearBy: stopsResult.status === 'fulfilled' ? stopsResult.value : null,
