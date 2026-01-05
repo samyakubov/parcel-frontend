@@ -39,7 +39,6 @@ export default function PublicTransportation({ routesNearBy, stopsNearBy }: Publ
         })
     }
 
-    // Loading state
     if (isUndefined(routesNearBy) || isUndefined(stopsNearBy)) {
         return (
             <Card>
@@ -67,7 +66,6 @@ export default function PublicTransportation({ routesNearBy, stopsNearBy }: Publ
         )
     }
 
-    // No data state
     if (isNil(routesNearBy) || isEmpty(routesNearBy)) {
         return (
             <Card>
@@ -91,8 +89,6 @@ export default function PublicTransportation({ routesNearBy, stopsNearBy }: Publ
             </Card>
         )
     }
-
-    // Data loaded state
 
     return (
         <Card>

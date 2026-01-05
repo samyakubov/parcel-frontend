@@ -63,7 +63,7 @@ export default function LastSold({lastSoldFor}: PropertyLastSaleProps) {
 
 				<CardContent className="space-y-4">
 					<LastSoldPrice lastSoldPrice={lastSoldFor.last_sold_price} />
-					<LastSoldDate saleDate={lastSoldFor.sale_date} />
+					<LastSoldDate saleDate={lastSoldFor.last_sold_date} />
 				</CardContent>
 			</Card>
 		</motion.div>
