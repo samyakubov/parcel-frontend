@@ -47,9 +47,9 @@ export default function useSearchByFuzzyCoords() {
             ])
 
             modalStore.updateModalData(modalId, {
-                routesNearBy: routesResult.status === 'fulfilled' ? routesResult.value : null,
-                stopsNearBy: stopsResult.status === 'fulfilled' ? stopsResult.value : null,
-                schools: schoolsResult.status === 'fulfilled' ? schoolsResult.value : null
+                routesNearBy: routesResult.status === "fulfilled" ? routesResult.value : null,
+                stopsNearBy: stopsResult.status === "fulfilled" ? stopsResult.value : null,
+                schools: schoolsResult.status === "fulfilled" ? schoolsResult.value : null
             })
 
         } catch (error) {
