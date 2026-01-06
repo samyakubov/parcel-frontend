@@ -2,7 +2,7 @@
 import React from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import isNull from "lodash-es/isNull"
-import Details from "@/components/property-details-modal/details"
+import Details from "@/components/property-details-modal/details/details"
 import Mortgage from "@/components/property-details-modal/mortgage/mortgage"
 import Zoning from "@/components/property-details-modal/zoning/zoning"
 import LastSold from "@/components/property-details-modal/last-sold/last-sold"
