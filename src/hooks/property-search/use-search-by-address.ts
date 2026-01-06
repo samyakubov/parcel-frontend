@@ -8,8 +8,8 @@ import { modalStore } from "@/stores/modal-store"
 import isNull from "lodash-es/isNull"
 import useFlyTo from "@/hooks/mapbox/map/fly-to"
 import isUndefined from "lodash-es/isUndefined"
-import {v4 as uuidv4} from "uuid"
-import {getSchools} from "@/utils/get-schools"
+import { v4 as uuidv4 } from "uuid"
+import { getSchools } from "@/utils/get-schools"
 
 
 export default function useSearchByAddress() {
@@ -30,27 +30,39 @@ export default function useSearchByAddress() {
             const propertyData = response as PropertyDetailsWithCoords
             mapStore.setCoords(propertyData.coordinates)
             const firstRecord = propertyData.records[0]
-            const routesNearby = await apiClient.publicTransitService.findNearbyRoutes()
-            const stopsNearby = await apiClient.publicTransitService.findNearbyStops()
+
+            const modalId = uuidv4()
 
             modalStore.addPropertyModal({
-                    id: uuidv4(),
-                    isOpen: true,
-                    isMinimized: false,
-                    isExpanded: false,
-                    title:`${firstRecord.prop_streetnumber} ${normalizeStreetNames(firstRecord.prop_streetname)}`,
-                    position: modalStore.calculateNewModalPosition(),
-                    propertyData: propertyData,
-                    routesNearBy: routesNearby,
-                    stopsNearBy: stopsNearby,
-                    schools: await getSchools(firstRecord.school_dist),
-                    zIndex: modalStore.getNextZIndex()
-                })
+                id: modalId,
+                isOpen: true,
+                isMinimized: false,
+                isExpanded: false,
+                title: `${firstRecord.prop_streetnumber} ${normalizeStreetNames(firstRecord.prop_streetname)}`,
+                position: modalStore.calculateNewModalPosition(),
+                propertyData: propertyData,
+                routesNearBy: undefined,
+                stopsNearBy: undefined,
+                schools: undefined,
+                zIndex: modalStore.getNextZIndex()
+            })
 
             if (!isNull(mapStore._map) && !isNull(mapStore._coords)) {
                 mapStore.setMarker(mapStore._coords.longitude, mapStore._coords.latitude)
                 flyTo()
             }
+
+            const [routesResult, stopsResult, schoolsResult] = await Promise.allSettled([
+                apiClient.publicTransitService.findNearbyRoutes(),
+                apiClient.publicTransitService.findNearbyStops(),
+                getSchools(firstRecord.school_dist)
+            ])
+
+            modalStore.updateModalData(modalId, {
+                routesNearBy: routesResult.status === "fulfilled" ? routesResult.value : null,
+                stopsNearBy: stopsResult.status === "fulfilled" ? stopsResult.value : null,
+                schools: schoolsResult.status === "fulfilled" ? schoolsResult.value : null
+            })
         } catch (error) {
             console.error("Error in useSearchByAddress:", error)
         }

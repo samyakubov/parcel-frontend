@@ -2,11 +2,12 @@ import React from "react"
 import {
     Table,
     TableBody,
-    TableCell,
     TableHead,
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import SchoolRow from "@/components/property-details-modal/schools/school-row"
 
 interface SchoolsTableProps {
     schools: School[] | null
@@ -14,25 +15,21 @@ interface SchoolsTableProps {
 
 export default function SchoolsTable({ schools }: SchoolsTableProps) {
     return (
-        <div className="max-h-96 overflow-y-auto pr-2">
+        <ScrollArea className="h-96 w-full rounded-md border">
             <Table>
-                <TableHeader>
+                <TableHeader className="bg-muted/50 sticky top-0 z-10 transition-none">
                     <TableRow>
-                        <TableHead>School Name</TableHead>
+                        <TableHead className="w-[45%]">School Name</TableHead>
                         <TableHead>Type</TableHead>
-                        <TableHead>Grade Levels</TableHead>
+                        <TableHead className="text-right">Grades</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
                     {schools?.map((school, index) => (
-                        <TableRow key={index}>
-                            <TableCell>{school.location_name}</TableCell>
-                            <TableCell>{school.location_type_description}</TableCell>
-                            <TableCell>{school.grades_final_text}</TableCell>
-                        </TableRow>
+                        <SchoolRow key={index} school={school} />
                     ))}
                 </TableBody>
             </Table>
-        </div>
+        </ScrollArea>
     )
 }

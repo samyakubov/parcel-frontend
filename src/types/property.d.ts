@@ -10,7 +10,7 @@ declare global {
 
     interface LastSold {
         last_sold_price: number;
-        sale_date: string;
+        last_sold_date: string;
     }
 
     interface LastSoldWithSqft extends LastSold {

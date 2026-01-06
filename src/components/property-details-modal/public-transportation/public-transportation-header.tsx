@@ -1,33 +1,33 @@
 import React from "react"
 import { CardHeader } from "@/components/ui/card"
-import { School } from "lucide-react"
+import { BusFront } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { isNil } from "lodash-es"
 
-interface SchoolsHeaderProps {
+interface PublicTransportationHeaderProps {
     count?: number
 }
 
-export default function SchoolsHeader({ count }: SchoolsHeaderProps) {
+export default function PublicTransportationHeader({ count }: PublicTransportationHeaderProps) {
     return (
         <CardHeader>
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                     <div className="p-2 rounded-full bg-primary/10">
-                        <School className="h-4 w-4 text-primary" />
+                        <BusFront className="h-4 w-4 text-primary" />
                     </div>
                     <div className="flex flex-col gap-0.5">
                         <h3 className="text-lg font-semibold leading-none">
-                            Schools
+                            Public Transportation
                         </h3>
                         <p className="text-xs text-muted-foreground">
-                            In the district
+                            Within a mile radius
                         </p>
                     </div>
                 </div>
                 {!isNil(count) && (
                     <Badge variant="secondary" className="px-2">
-                        {count} schools
+                        {count} routes
                     </Badge>
                 )}
             </div>

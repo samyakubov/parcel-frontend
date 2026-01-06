@@ -2,7 +2,7 @@
 import React from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import isNull from "lodash-es/isNull"
-import Details from "@/components/property-details-modal/details"
+import Details from "@/components/property-details-modal/details/details"
 import Mortgage from "@/components/property-details-modal/mortgage/mortgage"
 import Zoning from "@/components/property-details-modal/zoning/zoning"
 import LastSold from "@/components/property-details-modal/last-sold/last-sold"
@@ -52,15 +52,23 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
 						layout="preserve-aspect"
 						className={modal.isExpanded ? "w-1/2 space-y-4" : "space-y-4"}
 					>
+
 						<motion.img
 							layout="preserve-aspect"
-							className="rounded-xl shadow-lg w-full h-64 object-cover mb-4 border border-white/10"
-							src={`https://maps.googleapis.com/maps/api/streetview?size=800x300&location=
-							${modal.propertyData.coordinates.latitude},${modal.propertyData.coordinates.longitude}
-							&key=${process.env.NEXT_PUBLIC_STREETVIEW_API_KEY}`
+							initial={{ opacity: 0, scale: 0.95 }}
+							animate={{ opacity: 1, scale: 1 }}
+							transition={{ duration: 0.3 }}
+							className={`rounded-xl shadow-2xl w-full object-cover 
+										${modal.isExpanded ? "h-96" : "h-64"}
+									`}
+							src={
+								`https://maps.googleapis.com/maps/api/streetview?size=640x640&scale=2&fov=100&pitch=10
+								&location=${modal.propertyData.coordinates.latitude},${modal.propertyData.coordinates.longitude}
+								&key=${process.env.NEXT_PUBLIC_STREETVIEW_API_KEY}`
 							}
 							alt="Google Street View"
 						/>
+
 
 						<Details
 							firstRecord={!isNil(firstDeedOrMortgageRecord) ? firstDeedOrMortgageRecord : modal.propertyData.records[0]}

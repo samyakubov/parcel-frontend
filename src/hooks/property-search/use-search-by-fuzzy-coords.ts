@@ -5,8 +5,8 @@ import { mapStore } from "@/stores/map-store"
 import { normalizeStreetNames } from "@/utils/normalize-street-names"
 import { apiClient } from "@/api/api-client"
 import { modalStore } from "@/stores/modal-store"
-import {v4 as uuidv4} from "uuid"
-import {getSchools} from "@/utils/get-schools"
+import { v4 as uuidv4 } from "uuid"
+import { getSchools } from "@/utils/get-schools"
 
 export default function useSearchByFuzzyCoords() {
 
@@ -23,21 +23,33 @@ export default function useSearchByFuzzyCoords() {
             const firstRecord = propertyData.records[0]
 
             mapStore.setCoords(propertyData.coordinates)
-            const routesNearby = await apiClient.publicTransitService.findNearbyRoutes()
-            const stopsNearby = await apiClient.publicTransitService.findNearbyStops()
+
+            const modalId = uuidv4()
 
             modalStore.addPropertyModal({
-                id: uuidv4(),
+                id: modalId,
                 isOpen: true,
                 isMinimized: false,
                 isExpanded: false,
-                title:`${firstRecord.prop_streetnumber} ${normalizeStreetNames(firstRecord.prop_streetname)}`,
+                title: `${firstRecord.prop_streetnumber} ${normalizeStreetNames(firstRecord.prop_streetname)}`,
                 position: modalStore.calculateNewModalPosition(),
                 propertyData: propertyData,
-                routesNearBy: routesNearby,
-                stopsNearBy: stopsNearby,
-                schools: await getSchools(firstRecord.school_dist),
+                routesNearBy: undefined,
+                stopsNearBy: undefined,
+                schools: undefined,
                 zIndex: modalStore.getNextZIndex()
+            })
+
+            const [routesResult, stopsResult, schoolsResult] = await Promise.allSettled([
+                apiClient.publicTransitService.findNearbyRoutes(),
+                apiClient.publicTransitService.findNearbyStops(),
+                getSchools(firstRecord.school_dist)
+            ])
+
+            modalStore.updateModalData(modalId, {
+                routesNearBy: routesResult.status === "fulfilled" ? routesResult.value : null,
+                stopsNearBy: stopsResult.status === "fulfilled" ? stopsResult.value : null,
+                schools: schoolsResult.status === "fulfilled" ? schoolsResult.value : null
             })
 
         } catch (error) {
