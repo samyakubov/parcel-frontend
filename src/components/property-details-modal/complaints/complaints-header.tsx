@@ -14,7 +14,7 @@ export default function ComplaintsHeader({ isExpanded, setIsExpanded, complaints
 	return (
 		<Button
 			variant="ghost"
-			className="w-full justify-between p-0 h-auto"
+			className="w-full justify-between p-0 h-auto hover:bg-transparent"
 			onClick={() => setIsExpanded(!isExpanded)}
 		>
 			<div className="flex items-center gap-3">
