@@ -3,8 +3,7 @@ import AxiosHttpClient from "@/api/axios-http-client"
 
 export default class PublicTransitService {
 
-    constructor(private readonly httpClient: AxiosHttpClient) {
-    }
+    constructor(private readonly httpClient: AxiosHttpClient) { }
 
     async findNearbyRoutes(): Promise<Route[]> {
         const response = await this.httpClient.http.get(
