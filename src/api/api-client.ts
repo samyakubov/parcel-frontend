@@ -4,9 +4,12 @@ import PublicTransitService from "@/api/services/public-transit-service"
 import SchoolService from "@/api/services/school-service"
 
 export class ApiClient {
-    public axiosHttpClient: AxiosHttpClient = new AxiosHttpClient()
-    public propertyService: PropertyService = new PropertyService(this.axiosHttpClient)
-    public publicTransitService:PublicTransitService = new PublicTransitService()
+    public parcelBackendHttpClient: AxiosHttpClient = new AxiosHttpClient(process.env.NEXT_PUBLIC_SERVER_URL)
+    public propertyService: PropertyService = new PropertyService(this.parcelBackendHttpClient)
+
+    public publicTransitHttpClient: AxiosHttpClient = new AxiosHttpClient(process.env.NEXT_PUBLIC_TRANSIT_API_URL)
+    public publicTransitService:PublicTransitService = new PublicTransitService(this.publicTransitHttpClient)
+
     public schoolService:SchoolService  = new SchoolService()
 
     constructor() {}

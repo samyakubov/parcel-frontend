@@ -20,8 +20,13 @@ export default function PropertyDetailsModalHeader({ modal }: PropertyDetailsMod
            border-b border-border/50 backdrop-blur-sm cursor-pointer"
 			onClick={() => modalStore.focusModal(modal.id)}
 		>
-			<div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-muted
-			border border-transparent hover:border-primary/20 transition-all duration-200">
+			<div
+				className={`gap-2 px-3 py-1.5 rounded-xl ${
+					copied
+						? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
+						: "bg-muted hover:bg-primary/10 text-foreground cursor-pointer hover:shadow-sm"
+				}`}
+			>
 				<a
 					target="_blank"
 					rel="noopener noreferrer"
