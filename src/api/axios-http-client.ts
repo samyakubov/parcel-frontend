@@ -1,12 +1,13 @@
-import axios, { AxiosInstance } from "axios"
+import axios, { AxiosInstance, AxiosResponse } from "axios"
 import { toast } from "react-toastify"
+import { setupCache } from "axios-cache-interceptor"
 
 export default class AxiosHttpClient {
     public readonly http: AxiosInstance
 
-    constructor() {
-        this.http = axios.create({
-            baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
+    constructor(url?: string) {
+        const instance = axios.create({
+            baseURL: url,
             headers: {
                 "Content-Type": "application/json",
                 "Access-Control-Allow-Origin": "*",
@@ -14,8 +15,12 @@ export default class AxiosHttpClient {
             }
         })
 
+        this.http = setupCache(instance, {
+            ttl: 15 * 60 * 1000,
+        })
+
         this.http.interceptors.response.use(
-            (response) => response,
+            (response: AxiosResponse) => response,
             (error) => {
                 const message = error.response?.data?.message || error.message || "An unexpected error occurred"
                 toast.error(message)
