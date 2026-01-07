@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse } from "axios"
 import { toast } from "react-toastify"
-import { setupCache } from "axios-cache-interceptor"
+import { setupCache, buildWebStorage, buildMemoryStorage } from "axios-cache-interceptor"
 
 export default class AxiosHttpClient {
     public readonly http: AxiosInstance
@@ -17,6 +17,9 @@ export default class AxiosHttpClient {
 
         this.http = setupCache(instance, {
             ttl: 15 * 60 * 1000,
+            storage: typeof window !== "undefined"
+                ? buildWebStorage(localStorage)
+                : buildMemoryStorage()
         })
 
         this.http.interceptors.response.use(
