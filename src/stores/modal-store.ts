@@ -17,7 +17,7 @@ class ModalStore {
 		return ++this._currentZIndex
 	}
 
-	private setModalState = action((id: string, updates: Partial<PropertyModal>) => {
+	public setModalState = action((id: string, updates: Partial<PropertyModal>) => {
 		const modalIndex = this._propertyModals.findIndex(modal => modal.id === id)
 		if (modalIndex !== -1) {
 			this._propertyModals[modalIndex] = {
@@ -29,14 +29,6 @@ class ModalStore {
 
 	public updateModalPosition = action((id: string, position: { x: number, y: number }) => {
 		this.setModalState(id, { position })
-	})
-
-	public updateModalData = action((id: string, updates: {
-		schools?: School[] | null;
-		routesNearBy?: Route[] | null;
-		stopsNearBy?: Stop[] | null;
-	}) => {
-		this.setModalState(id, updates)
 	})
 
 	public getModal = (id: string): PropertyModal | undefined => {

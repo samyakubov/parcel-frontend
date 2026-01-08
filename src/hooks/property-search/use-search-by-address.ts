@@ -56,7 +56,7 @@ export default function useSearchByAddress() {
                 getSchools(firstRecord.school_dist)
             ])
 
-            modalStore.updateModalData(modalId, {
+            modalStore.setModalState(modalId, {
                 routesNearBy: routesResult.status === "fulfilled" ? routesResult.value : null,
                 stopsNearBy: stopsResult.status === "fulfilled" ? stopsResult.value : null,
                 schools: schoolsResult.status === "fulfilled" ? schoolsResult.value : null
