@@ -27,10 +27,6 @@ class ModalStore {
 		}
 	})
 
-	public updateModalPosition = action((id: string, position: { x: number, y: number }) => {
-		this.setModalState(id, { position })
-	})
-
 	public getModal = (id: string): PropertyModal | undefined => {
 		return this._propertyModals.find(modal => modal.id === id)
 	}
