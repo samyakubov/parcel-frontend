@@ -42,6 +42,18 @@ export default function useInitMap(containerId: string, initialStyle: MapStyle =
 			easing: (t) => t * (2 - t)
 		})
 
+		mapRef.current.once("styledata", () => {
+			const map = mapRef.current
+			if (!map) return
+
+			const layersToHide = ["poi-label", "poi-label-park", "transit-label"]
+			layersToHide.forEach(layerId => {
+				if (map.getLayer(layerId)) {
+					map.setLayoutProperty(layerId, "visibility", "none")
+				}
+			})
+		})
+
 		mapRef.current.setMaxBounds(NYC_BOUNDS as mapboxgl.LngLatBoundsLike)
 		mapRef.current.on("click", handleMapClick)
 

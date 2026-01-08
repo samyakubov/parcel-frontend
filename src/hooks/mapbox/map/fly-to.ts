@@ -6,6 +6,7 @@ export default function useFlyTo() {
     return useCallback(() => {
         const coords = mapStore._coords
         const map = mapStore._map
+
         if (isNull(coords) || isNull(map)) {
             console.warn("No coordinates available for flyTo")
             return
@@ -18,5 +19,5 @@ export default function useFlyTo() {
             essential: true,
             curve: 1.42,
         })
-    }, [mapStore._coords, mapStore._map])
+    }, [])
 }

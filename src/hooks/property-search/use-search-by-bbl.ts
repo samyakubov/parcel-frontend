@@ -1,15 +1,15 @@
-import { useCallback } from "react"
+import {useCallback} from "react"
 import isEmpty from "lodash-es/isEmpty"
-import { searchStore } from "@/stores/search-store"
-import { mapStore } from "@/stores/map-store"
-import { apiClient } from "@/api/api-client"
-import { normalizeStreetNames } from "@/utils/normalize-street-names"
-import { modalStore } from "@/stores/modal-store"
+import {searchStore} from "@/stores/search-store"
+import {mapStore} from "@/stores/map-store"
+import {apiClient} from "@/api/api-client"
+import {normalizeStreetNames} from "@/utils/normalize-street-names"
+import {modalStore} from "@/stores/modal-store"
 import isNull from "lodash-es/isNull"
 import useFlyTo from "@/hooks/mapbox/map/fly-to"
 import isUndefined from "lodash-es/isUndefined"
-import { v4 as uuidv4 } from "uuid"
-import { getSchools } from "@/utils/get-schools"
+import {v4 as uuidv4} from "uuid"
+import {getSchools} from "@/utils/get-schools"
 
 
 export default function useSearchByBbl() {
@@ -28,9 +28,7 @@ export default function useSearchByBbl() {
                 return
             }
 
-            const response = await apiClient.propertyService.searchByPropertyBbl(searchStore._bblSearchQuery)
-
-            const propertyData = response as PropertyDetailsWithCoords
+            const propertyData = await apiClient.propertyService.searchByPropertyBbl(searchStore._bblSearchQuery)
 
             mapStore.setCoords(propertyData.coordinates)
             const firstRecord = propertyData.records[0]
@@ -62,7 +60,7 @@ export default function useSearchByBbl() {
                 getSchools(firstRecord.school_dist)
             ])
 
-            modalStore.updateModalData(modalId, {
+            modalStore.setModalState(modalId, {
                 routesNearBy: routesResult.status === "fulfilled" ? routesResult.value : null,
                 stopsNearBy: stopsResult.status === "fulfilled" ? stopsResult.value : null,
                 schools: schoolsResult.status === "fulfilled" ? schoolsResult.value : null
