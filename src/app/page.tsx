@@ -20,18 +20,6 @@ export default function Map() {
 	const setMapStyle = (style: MapStyle) => {
 		if (mapRef.current) {
 			mapRef.current.setStyle(MAP_STYLES[style])
-
-			mapRef.current.once("styledata", () => {
-				const map = mapRef.current
-				if (!map) return
-
-				const layersToHide = ["poi-label", "poi-label-park", "transit-label"]
-				layersToHide.forEach(layerId => {
-					if (map.getLayer(layerId)) {
-						map.setLayoutProperty(layerId, "visibility", "none")
-					}
-				})
-			})
 		}
 	}
 
@@ -42,8 +30,8 @@ export default function Map() {
 			() => mapStore._coords,
 			(coords: Coordinates | null) => {
 				if (coords) {
-					flyTo()
 					mapStore.setMarker(coords.longitude, coords.latitude)
+					flyTo()
 				}
 			}
 		)

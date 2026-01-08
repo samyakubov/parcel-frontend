@@ -10,7 +10,7 @@ import useSendAiMessage from "@/hooks/use-ai-chat"
 import { chatStore } from "@/stores/chat-store"
 import ChatBotMessageLoading from "@/components/ai-chatbot/chat-message-loading"
 
-type AiChatbotProps = {
+interface AiChatbotProps {
     isOpen: boolean
     onClose: () => void
 }
