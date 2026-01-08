@@ -5,7 +5,7 @@ export default class AiService {
 
     constructor(private readonly httpClient: AxiosHttpClient) { }
 
-    async ask(question: string): Promise<{ response: string }> {
+    async ask(question: string): Promise<ChatResponse> {
         const response = await this.httpClient.http.post(
             `${this.serviceHeader}/ask`,
             { question }
