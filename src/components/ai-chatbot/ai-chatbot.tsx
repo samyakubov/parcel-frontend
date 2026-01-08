@@ -1,16 +1,19 @@
 "use client"
 import { useState, useRef, useEffect } from "react"
-import { MessageCircle, X, Send, Bot, User } from "lucide-react"
+import { observer } from "mobx-react"
+import { MessageCircle, X, Send, Bot } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn } from "@/lib/utils"
-import useAiChat, { Message } from "@/hooks/use-ai-chat"
+import { ChatMessage } from "@/components/ai-chatbot/chat-message"
+import useSendAiMessage from "@/hooks/use-ai-chat"
+import { chatStore } from "@/stores/chat-store"
 
-export default function AiChatbot() {
+function AiChatbot() {
     const [isOpen, setIsOpen] = useState(false)
-    const { messages, isLoading, error, sendMessage } = useAiChat()
+    const sendMessage = useSendAiMessage()
     const [inputValue, setInputValue] = useState("")
     const scrollEndRef = useRef<HTMLDivElement>(null)
 
@@ -32,19 +35,17 @@ export default function AiChatbot() {
 
     useEffect(() => {
         if (scrollEndRef.current) {
-            // Small timeout to ensure DOM is updated
             setTimeout(() => {
                 scrollEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" })
             }, 100)
         }
-    }, [messages, isLoading])
+    }, [chatStore._messages, chatStore._isMessageLoading])
 
     return (
         <div className="fixed bottom-24 right-4 z-50 flex flex-col items-end space-y-4">
             {isOpen && (
                 <Card className="w-[380px] h-[500px] flex flex-col shadow-2xl
                 border-border/50 animate-in fade-in slide-in-from-bottom-10 duration-300">
-                    {/* Header */}
                     <div className="flex items-center justify-between p-4 border-b bg-muted/30">
                         <div className="flex items-center gap-2">
                             <div className="p-1.5 bg-primary/10 rounded-full text-primary">
@@ -64,21 +65,20 @@ export default function AiChatbot() {
                         </Button>
                     </div>
 
-                    {/* Chat Area */}
-                    <ScrollArea className="flex-1 p-4">
-                        <div className="space-y-6 pb-4">
-                            {messages.length === 0 && (
+                    <ScrollArea className="flex-1 min-h-0">
+                        <div className="space-y-6 p-4">
+                            {chatStore._messages.length === 0 && (
                                 <div className="text-center text-muted-foreground mt-10 space-y-2">
                                     <Bot className="mx-auto text-muted-foreground/50" size={40} />
                                     <p className="text-sm">Hi! How can I help you today?</p>
                                 </div>
                             )}
 
-                            {messages.map((msg) => (
+                            {chatStore._messages.map((msg) => (
                                 <ChatMessage key={msg.id} message={msg} />
                             ))}
 
-                            {isLoading && (
+                            {chatStore._isMessageLoading && (
                                 <div className="flex gap-4">
                                     <div className="mt-0.5 min-w-8">
                                         <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
@@ -88,26 +88,29 @@ export default function AiChatbot() {
                                     <div className="space-y-1">
                                         <p className="text-sm font-medium text-foreground">AI Assistant</p>
                                         <div className="flex space-x-1 h-5 items-center">
-                                            <div className="w-1.5 h-1.5 bg-primary/40 rounded-full animate-bounce [animation-delay:-0.3s]" />
+                                            <div
+                                                className="w-1.5 h-1.5 bg-primary/40 rounded-full animate-bounce [animation-delay:-0.3s]"
+                                            />
                                             <div
                                                 className="w-1.5 h-1.5 bg-primary/40 rounded-full animate-bounce [animation-delay:-0.15s]"
                                             />
-                                            <div className="w-1.5 h-1.5 bg-primary/40 rounded-full animate-bounce" />
+                                            <div
+                                                className="w-1.5 h-1.5 bg-primary/40 rounded-full animate-bounce"
+                                            />
                                         </div>
                                     </div>
                                 </div>
                             )}
 
-                            {error && (
+                            {chatStore._error && (
                                 <div className="p-3 text-sm text-destructive bg-destructive/10 rounded-lg text-center">
-                                    {error}
+                                    {chatStore._error}
                                 </div>
                             )}
                             <div ref={scrollEndRef} />
                         </div>
                     </ScrollArea>
 
-                    {/* Input Area */}
                     <div className="p-4 border-t bg-muted/30">
                         <div className="relative">
                             <Input
@@ -116,16 +119,16 @@ export default function AiChatbot() {
                                 onChange={(e) => setInputValue(e.target.value)}
                                 onKeyDown={handleKeyDown}
                                 className="pr-12 bg-background border-muted-foreground/20 focus-visible:ring-1"
-                                disabled={isLoading}
+                                disabled={chatStore._isMessageLoading}
                                 autoFocus
                             />
                             <Button
                                 size="icon"
-                                className="absolute right-1 top-1 h-8 w-8"
+                                className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7"
                                 onClick={handleSend}
-                                disabled={!inputValue.trim() || isLoading}
+                                disabled={!inputValue.trim() || chatStore._isMessageLoading}
                             >
-                                <Send size={15} />
+                                <Send size={11} />
                             </Button>
                         </div>
                     </div>
@@ -146,30 +149,4 @@ export default function AiChatbot() {
     )
 }
 
-function ChatMessage({ message }: { message: Message }) {
-    const isAi = message.role === "ai"
-
-    return (
-        <div className="flex gap-4 group">
-            <div className="mt-0.5 min-w-8">
-                {isAi ? (
-                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                        <Bot size={16} />
-                    </div>
-                ) : (
-                    <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-muted-foreground">
-                        <User size={16} />
-                    </div>
-                )}
-            </div>
-            <div className="space-y-1 overflow-hidden">
-                <p className="text-sm font-medium text-foreground">
-                    {isAi ? "AI Assistant" : "You"}
-                </p>
-                <div className="text-sm text-muted-foreground leading-relaxed whitespace-pre-wrap">
-                    {message.content}
-                </div>
-            </div>
-        </div>
-    )
-}
+export default observer(AiChatbot)
