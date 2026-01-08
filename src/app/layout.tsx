@@ -5,7 +5,6 @@ import "mapbox-gl/dist/mapbox-gl.css"
 import { ThemeProvider } from "next-themes"
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
-import AiChatbot from "@/components/ai-chatbot/ai-chatbot"
 
 const inter = Inter({
 	variable: "--font-inter",
@@ -41,7 +40,6 @@ export default function RootLayout({
 						pauseOnHover
 						theme="colored"
 					/>
-					<AiChatbot />
 				</ThemeProvider>
 			</body>
 		</html>

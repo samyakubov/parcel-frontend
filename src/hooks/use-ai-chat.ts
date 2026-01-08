@@ -13,22 +13,15 @@ export default function useSendAiMessage() {
             content
         })
         chatStore.setIsLoading(true)
-        chatStore.setError(null)
 
-        try {
-            const result = await apiClient.aiService.ask(content)
+        const result = await apiClient.aiService.ask(content)
 
-            chatStore.pushMessage({
-                id: crypto.randomUUID(),
-                role: "ai",
-                content: result.response
-            })
+        chatStore.pushMessage({
+            id: crypto.randomUUID(),
+            role: "ai",
+            content: result.response
+        })
 
-        } catch (err) {
-            console.error(err)
-            chatStore.setError("Failed to get response from AI. Please try again.")
-        } finally {
-            chatStore.setIsLoading(false)
-        }
+        chatStore.setIsLoading(false)
     }, [])
 }
