@@ -21,55 +21,59 @@ export default function useSendAiMessage() {
             content
         })
         chatStore.setIsLoading(true)
+        try {
+            const result = await apiClient.aiService.ask(content)
 
-        const result = await apiClient.aiService.ask(content)
-
-        chatStore.pushMessage({
-            id: crypto.randomUUID(),
-            role: "ai",
-            content: result.response
-        })
-
-        const propertyData = result.propertyData
-        if (propertyData) {
-            mapStore.setCoords(propertyData.coordinates)
-            const firstRecord = propertyData.records[0]
-
-            const modalId = uuidv4()
-
-            modalStore.addPropertyModal({
-                id: modalId,
-                isOpen: true,
-                isMinimized: false,
-                isExpanded: false,
-                title: `${firstRecord.prop_streetnumber} ${normalizeStreetNames(firstRecord.prop_streetname)}`,
-                position: modalStore.calculateNewModalPosition(),
-                propertyData: propertyData,
-                routesNearBy: undefined,
-                stopsNearBy: undefined,
-                schools: undefined,
-                zIndex: modalStore.getNextZIndex()
+            chatStore.pushMessage({
+                id: crypto.randomUUID(),
+                role: "ai",
+                content: result.response
             })
 
-            if (!isNull(mapStore._map) && !isNull(mapStore._coords)) {
-                mapStore.setMarker(mapStore._coords.longitude, mapStore._coords.latitude)
-                flyTo()
+            const propertyData = result.propertyData
+            if (propertyData) {
+                mapStore.setCoords(propertyData.coordinates)
+                const firstRecord = propertyData.records[0]
+
+                const modalId = uuidv4()
+
+                modalStore.addPropertyModal({
+                    id: modalId,
+                    isOpen: true,
+                    isMinimized: false,
+                    isExpanded: false,
+                    title: `${firstRecord.prop_streetnumber} ${normalizeStreetNames(firstRecord.prop_streetname)}`,
+                    position: modalStore.calculateNewModalPosition(),
+                    propertyData: propertyData,
+                    routesNearBy: undefined,
+                    stopsNearBy: undefined,
+                    schools: undefined,
+                    zIndex: modalStore.getNextZIndex()
+                })
+
+                if (!isNull(mapStore._map) && !isNull(mapStore._coords)) {
+                    mapStore.setMarker(mapStore._coords.longitude, mapStore._coords.latitude)
+                    flyTo()
+                }
+
+                const [routesResult, stopsResult, schoolsResult] = await Promise.allSettled([
+                    apiClient.publicTransitService.findNearbyRoutes(),
+                    apiClient.publicTransitService.findNearbyStops(),
+                    getSchools(firstRecord.school_dist)
+                ])
+
+                modalStore.updateModalData(modalId, {
+                    routesNearBy: routesResult.status === "fulfilled" ? routesResult.value : null,
+                    stopsNearBy: stopsResult.status === "fulfilled" ? stopsResult.value : null,
+                    schools: schoolsResult.status === "fulfilled" ? schoolsResult.value : null
+                })
             }
 
-            const [routesResult, stopsResult, schoolsResult] = await Promise.allSettled([
-                apiClient.publicTransitService.findNearbyRoutes(),
-                apiClient.publicTransitService.findNearbyStops(),
-                getSchools(firstRecord.school_dist)
-            ])
-
-            modalStore.updateModalData(modalId, {
-                routesNearBy: routesResult.status === "fulfilled" ? routesResult.value : null,
-                stopsNearBy: stopsResult.status === "fulfilled" ? stopsResult.value : null,
-                schools: schoolsResult.status === "fulfilled" ? schoolsResult.value : null
-            })
+        } catch (e) {
+            console.error(e)
+        } finally {
+            chatStore.setIsLoading(false)
         }
-
-        chatStore.setIsLoading(false)
 
     }, [flyTo])
 }
