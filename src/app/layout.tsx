@@ -17,8 +17,7 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-	title: "Parcel | Just Property Records",
-	description: "",
+	title: "Parcel | Just Property Records"
 }
 
 export default function RootLayout({
