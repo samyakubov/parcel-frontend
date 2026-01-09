@@ -8,6 +8,7 @@ import {normalizeStreetNames} from "@/utils/normalize-street-names"
 import isNull from "lodash-es/isNull"
 import {getSchools} from "@/utils/get-schools"
 import useFlyTo from "@/hooks/mapbox/map/fly-to"
+import isUndefined from "lodash-es/isUndefined"
 
 export default function useSendAiMessage() {
     const flyTo = useFlyTo()
@@ -30,11 +31,11 @@ export default function useSendAiMessage() {
                 content: result.response
             })
 
-            const propertyData = result.propertyData
-            if (propertyData) {
+            const propertyData = result.property_data
+
+            if (!isUndefined(propertyData)) {
                 mapStore.setCoords(propertyData.coordinates)
                 const firstRecord = propertyData.records[0]
-
                 const modalId = uuidv4()
 
                 modalStore.addPropertyModal({
@@ -48,6 +49,7 @@ export default function useSendAiMessage() {
                     routesNearBy: undefined,
                     stopsNearBy: undefined,
                     schools: undefined,
+                    census: undefined,
                     zIndex: modalStore.getNextZIndex()
                 })
 
@@ -56,19 +58,22 @@ export default function useSendAiMessage() {
                     flyTo()
                 }
 
-                const [routesResult, stopsResult, schoolsResult] = await Promise.allSettled([
+                const [routesResult, stopsResult, schoolsResult, censusResult] = await Promise.allSettled([
                     apiClient.publicTransitService.findNearbyRoutes(),
                     apiClient.publicTransitService.findNearbyStops(),
-                    getSchools(firstRecord.school_dist)
+                    getSchools(firstRecord.school_dist),
+                    apiClient.censusService.getCensusData(
+                        `${firstRecord.prop_streetnumber} ${normalizeStreetNames(firstRecord.prop_streetname)}` + " " + firstRecord.zipcode
+                    )
                 ])
 
                 modalStore.setModalState(modalId, {
                     routesNearBy: routesResult.status === "fulfilled" ? routesResult.value : null,
                     stopsNearBy: stopsResult.status === "fulfilled" ? stopsResult.value : null,
-                    schools: schoolsResult.status === "fulfilled" ? schoolsResult.value : null
+                    schools: schoolsResult.status === "fulfilled" ? schoolsResult.value : null,
+                    census: censusResult.status === "fulfilled" ? censusResult.value : null
                 })
             }
-
         } catch (e) {
             console.error(e)
         } finally {

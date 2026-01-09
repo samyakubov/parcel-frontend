@@ -29,9 +29,11 @@ export default function ModalContent({
 			drag={!currentModal.isExpanded}
 			dragMomentum={false}
 			onDragEnd={(event, info) => {
-				modalStore.updateModalPosition(currentModal.id, {
-					x: currentModal.position.x + info.offset.x,
-					y: currentModal.position.y + info.offset.y
+				modalStore.setModalState(currentModal.id, {
+					position: {
+						x: currentModal.position.x + info.offset.x,
+						y: currentModal.position.y + info.offset.y
+					}
 				})
 			}}
 			initial="hidden"

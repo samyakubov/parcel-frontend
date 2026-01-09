@@ -11,6 +11,7 @@ interface PropertyModal {
     title: string;
     position: ModalPosition;
     propertyData: PropertyDetailsWithCoords;
+    census: CensusDemographicDataResponse | null | undefined;
     routesNearBy: Route[] | null | undefined;
     stopsNearBy: Stop[] | null | undefined;
     schools: School[] | null | undefined;

@@ -46,6 +46,7 @@ export default function useSearchByBbl() {
                 routesNearBy: undefined,
                 stopsNearBy: undefined,
                 schools: undefined,
+                census: undefined,
                 zIndex: modalStore.getNextZIndex()
             })
 
@@ -54,16 +55,18 @@ export default function useSearchByBbl() {
                 flyTo()
             }
 
-            const [routesResult, stopsResult, schoolsResult] = await Promise.allSettled([
+            const [routesResult, stopsResult, schoolsResult, censusResult] = await Promise.allSettled([
                 apiClient.publicTransitService.findNearbyRoutes(),
                 apiClient.publicTransitService.findNearbyStops(),
-                getSchools(firstRecord.school_dist)
+                getSchools(firstRecord.school_dist),
+                apiClient.censusService.getCensusData(searchStore._addressSearchQuery + " " + firstRecord.zipcode)
             ])
 
             modalStore.setModalState(modalId, {
                 routesNearBy: routesResult.status === "fulfilled" ? routesResult.value : null,
                 stopsNearBy: stopsResult.status === "fulfilled" ? stopsResult.value : null,
-                schools: schoolsResult.status === "fulfilled" ? schoolsResult.value : null
+                schools: schoolsResult.status === "fulfilled" ? schoolsResult.value : null,
+                census: censusResult.status === "fulfilled" ? censusResult.value : null
             })
         } catch (error) {
             console.error("Error in useSearchByBbl:", error)
