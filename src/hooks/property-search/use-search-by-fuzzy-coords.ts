@@ -39,11 +39,14 @@ export default function useSearchByFuzzyCoords() {
                 zIndex: modalStore.getNextZIndex()
             })
 
+
             const [routesResult, stopsResult, schoolsResult, censusResult] = await Promise.allSettled([
                 apiClient.publicTransitService.findNearbyRoutes(),
                 apiClient.publicTransitService.findNearbyStops(),
                 getSchools(firstRecord.school_dist),
-                apiClient.censusService.getCensusData(searchStore._addressSearchQuery + " " + firstRecord.zipcode)
+                apiClient.censusService.getCensusData(
+                    `${firstRecord.prop_streetnumber} ${normalizeStreetNames(firstRecord.prop_streetname)}` + " " + firstRecord.zipcode
+                )
             ])
 
             modalStore.setModalState(modalId, {

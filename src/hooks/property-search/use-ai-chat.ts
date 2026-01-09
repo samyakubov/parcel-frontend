@@ -9,7 +9,7 @@ import isNull from "lodash-es/isNull"
 import {getSchools} from "@/utils/get-schools"
 import useFlyTo from "@/hooks/mapbox/map/fly-to"
 import {searchStore} from "@/stores/search-store"
-import {isNil} from "lodash-es"
+import isUndefined from "lodash-es/isUndefined"
 
 export default function useSendAiMessage() {
     const flyTo = useFlyTo()
@@ -33,48 +33,46 @@ export default function useSendAiMessage() {
             })
 
             const propertyData = result.propertyData
-            if (isNil(propertyData)) {
-                return
+
+            if (!isUndefined(propertyData)) {
+                mapStore.setCoords(propertyData.coordinates)
+                const firstRecord = propertyData.records[0]
+                const modalId = uuidv4()
+
+                modalStore.addPropertyModal({
+                    id: modalId,
+                    isOpen: true,
+                    isMinimized: false,
+                    isExpanded: false,
+                    title: `${firstRecord.prop_streetnumber} ${normalizeStreetNames(firstRecord.prop_streetname)}`,
+                    position: modalStore.calculateNewModalPosition(),
+                    propertyData: propertyData,
+                    routesNearBy: undefined,
+                    stopsNearBy: undefined,
+                    schools: undefined,
+                    census: undefined,
+                    zIndex: modalStore.getNextZIndex()
+                })
+
+                if (!isNull(mapStore._map) && !isNull(mapStore._coords)) {
+                    mapStore.setMarker(mapStore._coords.longitude, mapStore._coords.latitude)
+                    flyTo()
+                }
+
+                const [routesResult, stopsResult, schoolsResult, censusResult] = await Promise.allSettled([
+                    apiClient.publicTransitService.findNearbyRoutes(),
+                    apiClient.publicTransitService.findNearbyStops(),
+                    getSchools(firstRecord.school_dist),
+                    apiClient.censusService.getCensusData(searchStore._addressSearchQuery + " " + firstRecord.zipcode)
+                ])
+
+                modalStore.setModalState(modalId, {
+                    routesNearBy: routesResult.status === "fulfilled" ? routesResult.value : null,
+                    stopsNearBy: stopsResult.status === "fulfilled" ? stopsResult.value : null,
+                    schools: schoolsResult.status === "fulfilled" ? schoolsResult.value : null,
+                    census: censusResult.status === "fulfilled" ? censusResult.value : null
+                })
             }
-
-            mapStore.setCoords(propertyData.coordinates)
-            const firstRecord = propertyData.records[0]
-
-            const modalId = uuidv4()
-
-            modalStore.addPropertyModal({
-                id: modalId,
-                isOpen: true,
-                isMinimized: false,
-                isExpanded: false,
-                title: `${firstRecord.prop_streetnumber} ${normalizeStreetNames(firstRecord.prop_streetname)}`,
-                position: modalStore.calculateNewModalPosition(),
-                propertyData: propertyData,
-                routesNearBy: undefined,
-                stopsNearBy: undefined,
-                schools: undefined,
-                census: undefined,
-                zIndex: modalStore.getNextZIndex()
-            })
-
-            if (!isNull(mapStore._map) && !isNull(mapStore._coords)) {
-                mapStore.setMarker(mapStore._coords.longitude, mapStore._coords.latitude)
-                flyTo()
-            }
-
-            const [routesResult, stopsResult, schoolsResult, censusResult] = await Promise.allSettled([
-                apiClient.publicTransitService.findNearbyRoutes(),
-                apiClient.publicTransitService.findNearbyStops(),
-                getSchools(firstRecord.school_dist),
-                apiClient.censusService.getCensusData(searchStore._addressSearchQuery + " " + firstRecord.zipcode)
-            ])
-
-            modalStore.setModalState(modalId, {
-                routesNearBy: routesResult.status === "fulfilled" ? routesResult.value : null,
-                stopsNearBy: stopsResult.status === "fulfilled" ? stopsResult.value : null,
-                schools: schoolsResult.status === "fulfilled" ? schoolsResult.value : null,
-                census: censusResult.status === "fulfilled" ? censusResult.value : null
-            })
         } catch (e) {
             console.error(e)
         } finally {

@@ -17,6 +17,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import PublicTransportation from "@/components/property-details-modal/public-transportation/public-transportation"
 import {isEmpty, isNil} from "lodash-es"
 import Schools from "@/components/property-details-modal/schools/schools"
+import Census from "@/components/property-details-modal/census/census"
 
 
 interface PropertyDetailsModalContentProps {
@@ -136,6 +137,8 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
 							animate={{ opacity: 1, height: "auto" }}
 							exit={{ opacity: 0, height: 0 }}
 						>
+							<Census census={modal.census} />
+
 							<Jobs jobsFiled={modal.propertyData.job_filings} />
 							<Complaints complaints={modal.propertyData.complaints} />
 							<Violations violations={modal.propertyData.violations} />
