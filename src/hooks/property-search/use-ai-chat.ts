@@ -8,7 +8,6 @@ import {normalizeStreetNames} from "@/utils/normalize-street-names"
 import isNull from "lodash-es/isNull"
 import {getSchools} from "@/utils/get-schools"
 import useFlyTo from "@/hooks/mapbox/map/fly-to"
-import {searchStore} from "@/stores/search-store"
 import isUndefined from "lodash-es/isUndefined"
 
 export default function useSendAiMessage() {
@@ -32,7 +31,7 @@ export default function useSendAiMessage() {
                 content: result.response
             })
 
-            const propertyData = result.propertyData
+            const propertyData = result.property_data
 
             if (!isUndefined(propertyData)) {
                 mapStore.setCoords(propertyData.coordinates)
@@ -63,7 +62,9 @@ export default function useSendAiMessage() {
                     apiClient.publicTransitService.findNearbyRoutes(),
                     apiClient.publicTransitService.findNearbyStops(),
                     getSchools(firstRecord.school_dist),
-                    apiClient.censusService.getCensusData(searchStore._addressSearchQuery + " " + firstRecord.zipcode)
+                    apiClient.censusService.getCensusData(
+                        `${firstRecord.prop_streetnumber} ${normalizeStreetNames(firstRecord.prop_streetname)}` + " " + firstRecord.zipcode
+                    )
                 ])
 
                 modalStore.setModalState(modalId, {

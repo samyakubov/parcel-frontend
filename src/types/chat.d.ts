@@ -6,7 +6,7 @@ declare global {
     }
     interface ChatResponse {
         response: string
-        propertyData:PropertyDetailsWithCoords
+        property_data:PropertyDetailsWithCoords
     }
 }
 
