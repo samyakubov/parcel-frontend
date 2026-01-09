@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { ChatMessage } from "@/components/ai-chatbot/chat-message"
-import useSendAiMessage from "@/hooks/use-ai-chat"
+import useSendAiMessage from "@/hooks/property-search/use-ai-chat"
 import { chatStore } from "@/stores/chat-store"
 import ChatBotMessageLoading from "@/components/ai-chatbot/chat-message-loading"
 

@@ -1,34 +1,41 @@
-import {useCallback} from "react"
-import isEmpty from "lodash-es/isEmpty"
-import {searchStore} from "@/stores/search-store"
+import { useCallback } from "react"
+import { apiClient } from "@/api/api-client"
+import {chatStore} from "@/stores/chat-store"
 import {mapStore} from "@/stores/map-store"
-import {apiClient} from "@/api/api-client"
-import {normalizeStreetNames} from "@/utils/normalize-street-names"
-import {modalStore} from "@/stores/modal-store"
-import isNull from "lodash-es/isNull"
-import useFlyTo from "@/hooks/mapbox/map/fly-to"
-import isUndefined from "lodash-es/isUndefined"
 import {v4 as uuidv4} from "uuid"
+import {modalStore} from "@/stores/modal-store"
+import {normalizeStreetNames} from "@/utils/normalize-street-names"
+import isNull from "lodash-es/isNull"
 import {getSchools} from "@/utils/get-schools"
+import useFlyTo from "@/hooks/mapbox/map/fly-to"
+import {searchStore} from "@/stores/search-store"
+import {isNil} from "lodash-es"
 
-
-export default function useSearchByBbl() {
+export default function useSendAiMessage() {
     const flyTo = useFlyTo()
 
-    return useCallback(async () => {
+    return useCallback(async (content: string) => {
+        if (!content.trim()) return
+
+        chatStore.pushMessage({
+            id: crypto.randomUUID(),
+            role: "user",
+            content
+        })
+        chatStore.setIsLoading(true)
         try {
-            if (isEmpty(searchStore._bblSearchQuery)) return
+            const result = await apiClient.aiService.ask(content)
 
-            const existingModal = modalStore._propertyModals.find(modal =>
-                modal.propertyData.records[0]?.bbl === searchStore._bblSearchQuery
-            )
+            chatStore.pushMessage({
+                id: crypto.randomUUID(),
+                role: "ai",
+                content: result.response
+            })
 
-            if (!isUndefined(existingModal)) {
-                modalStore.restoreModal(existingModal.id)
+            const propertyData = result.propertyData
+            if (isNil(propertyData)) {
                 return
             }
-
-            const propertyData = await apiClient.propertyService.searchByPropertyBbl(searchStore._bblSearchQuery)
 
             mapStore.setCoords(propertyData.coordinates)
             const firstRecord = propertyData.records[0]
@@ -68,8 +75,11 @@ export default function useSearchByBbl() {
                 schools: schoolsResult.status === "fulfilled" ? schoolsResult.value : null,
                 census: censusResult.status === "fulfilled" ? censusResult.value : null
             })
-        } catch (error) {
-            console.error("Error in useSearchByBbl:", error)
+        } catch (e) {
+            console.error(e)
+        } finally {
+            chatStore.setIsLoading(false)
         }
+
     }, [flyTo])
 }

@@ -1,12 +1,12 @@
-import { useCallback } from "react"
+import {useCallback} from "react"
 import isNull from "lodash-es/isNull"
-import { searchStore } from "@/stores/search-store"
-import { mapStore } from "@/stores/map-store"
-import { normalizeStreetNames } from "@/utils/normalize-street-names"
-import { apiClient } from "@/api/api-client"
-import { modalStore } from "@/stores/modal-store"
-import { v4 as uuidv4 } from "uuid"
-import { getSchools } from "@/utils/get-schools"
+import {searchStore} from "@/stores/search-store"
+import {mapStore} from "@/stores/map-store"
+import {normalizeStreetNames} from "@/utils/normalize-street-names"
+import {apiClient} from "@/api/api-client"
+import {modalStore} from "@/stores/modal-store"
+import {v4 as uuidv4} from "uuid"
+import {getSchools} from "@/utils/get-schools"
 
 export default function useSearchByFuzzyCoords() {
 
@@ -14,11 +14,9 @@ export default function useSearchByFuzzyCoords() {
         try {
             if (isNull(mapStore._coords)) return
 
-            const response = await apiClient.propertyService.searchByPropertyFuzzyCoords(
-                { latitude: mapStore._coords.latitude, longitude: mapStore._coords.longitude }
+            const propertyData = await apiClient.propertyService.searchByPropertyFuzzyCoords(
+                {latitude: mapStore._coords.latitude, longitude: mapStore._coords.longitude}
             )
-
-            const propertyData = response as PropertyDetailsWithCoords
 
             const firstRecord = propertyData.records[0]
 
@@ -37,19 +35,22 @@ export default function useSearchByFuzzyCoords() {
                 routesNearBy: undefined,
                 stopsNearBy: undefined,
                 schools: undefined,
+                census: undefined,
                 zIndex: modalStore.getNextZIndex()
             })
 
-            const [routesResult, stopsResult, schoolsResult] = await Promise.allSettled([
+            const [routesResult, stopsResult, schoolsResult, censusResult] = await Promise.allSettled([
                 apiClient.publicTransitService.findNearbyRoutes(),
                 apiClient.publicTransitService.findNearbyStops(),
-                getSchools(firstRecord.school_dist)
+                getSchools(firstRecord.school_dist),
+                apiClient.censusService.getCensusData(searchStore._addressSearchQuery + " " + firstRecord.zipcode)
             ])
 
             modalStore.setModalState(modalId, {
                 routesNearBy: routesResult.status === "fulfilled" ? routesResult.value : null,
                 stopsNearBy: stopsResult.status === "fulfilled" ? stopsResult.value : null,
-                schools: schoolsResult.status === "fulfilled" ? schoolsResult.value : null
+                schools: schoolsResult.status === "fulfilled" ? schoolsResult.value : null,
+                census: censusResult.status === "fulfilled" ? censusResult.value : null
             })
 
         } catch (error) {
