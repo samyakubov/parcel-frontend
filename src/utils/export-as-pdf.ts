@@ -392,7 +392,6 @@ async function createPieChart(raceDemographics: RaceDemographic[]): Promise<stri
     const { Chart, registerables } = await import("chart.js")
     Chart.register(...registerables)
 
-    // Create canvas
     const canvas = document.createElement("canvas")
     canvas.width = 400
     canvas.height = 400
@@ -402,7 +401,6 @@ async function createPieChart(raceDemographics: RaceDemographic[]): Promise<stri
         throw new Error("Could not get canvas context")
     }
 
-    // Prepare data from race demographics
     const labels = raceDemographics.map(d => d.label)
     const values = raceDemographics.map(d => d.value)
 
@@ -417,7 +415,6 @@ async function createPieChart(raceDemographics: RaceDemographic[]): Promise<stri
         "#D53F8C"  // Pink
     ]
 
-    // Create chart
     const chart = new Chart(ctx, {
         type: "pie",
         data: {
@@ -457,13 +454,10 @@ async function createPieChart(raceDemographics: RaceDemographic[]): Promise<stri
         }
     })
 
-    // Wait for chart to render
     await new Promise(resolve => setTimeout(resolve, 100))
 
-    // Convert to image
     const imageData = canvas.toDataURL("image/png")
 
-    // Cleanup
     chart.destroy()
 
     return imageData
