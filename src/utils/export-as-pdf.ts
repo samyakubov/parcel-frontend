@@ -112,12 +112,11 @@ export async function exportAsPDF(
 
         addSection("Property Records")
 
-        const recordsData = data.propertyData.records.slice(0, 10).map(record => [
+        const recordsData = data.propertyData.records.map(record => [
             record.record_filed,
             record.doc_type,
             `$${record.amount.toLocaleString()}`,
             record.party_name,
-            record.year_built?.toString() || "N/A"
         ])
 
         autoTable(doc, {

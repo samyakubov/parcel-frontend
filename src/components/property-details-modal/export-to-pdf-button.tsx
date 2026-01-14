@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { FileDown } from "lucide-react"
+import {Download} from "lucide-react"
 import {exportAsPDF} from "@/utils/export-as-pdf"
 
 
@@ -17,8 +17,7 @@ export function ExportPDFButton({data}: ExportToPdfButtonProps) {
             }}
             variant="default"
         >
-            <FileDown className="mr-2 h-4 w-4" />
-            Export PDF
+            <Download className="h-4 w-4" />
         </Button>
     )
 }
