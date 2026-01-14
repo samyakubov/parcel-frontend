@@ -2,6 +2,7 @@ import {Card, CardContent} from "@/components/ui/card"
 import {useState} from "react"
 import {Building2, ChevronDown, ChevronUp, MapPin, Phone, Users} from "lucide-react"
 import {Badge} from "@/components/ui/badge"
+import {Button} from "@/components/ui/button"
 
 export default function SchoolCard({ school }: { school: School }) {
     const [expanded, setExpanded] = useState(false)
@@ -14,10 +15,9 @@ export default function SchoolCard({ school }: { school: School }) {
     }
 
     return (
-        <Card className="overflow-hidden hover:shadow-md transition-shadow">
+        <Card className="overflow-hidden">
             <CardContent className="p-0">
                 <div className="p-4 space-y-3">
-                    {/* Header */}
                     <div className="flex items-start justify-between gap-3">
                         <div className="flex-1 min-w-0">
                             <h3 className="font-semibold text-base mb-1 line-clamp-2">
@@ -29,13 +29,12 @@ export default function SchoolCard({ school }: { school: School }) {
                             </div>
                         </div>
                         <div className="flex flex-col gap-1.5 items-end flex-shrink-0">
-                            <Badge className={`${getTypeColor(school.location_type_description)} text-xs px-2 py-0.5`}>
+                            <Badge className={`${getTypeColor(school.location_category_description)} text-xs px-2 py-0.5`}>
                                 {school.location_type_description}
                             </Badge>
                         </div>
                     </div>
 
-                    {/* Quick Info Grid */}
                     <div className="grid grid-cols-2 gap-3 pt-2 border-t">
                         <div className="flex items-center gap-2">
                             <div className="p-1.5 rounded-md bg-primary/10">
@@ -57,7 +56,6 @@ export default function SchoolCard({ school }: { school: School }) {
                         </div>
                     </div>
 
-                    {/* Expandable Details */}
                     {expanded && (
                         <div className="space-y-3 pt-3 border-t animate-in slide-in-from-top-2">
                             <div className="grid grid-cols-2 gap-3">
@@ -87,11 +85,10 @@ export default function SchoolCard({ school }: { school: School }) {
                         </div>
                     )}
 
-                    {/* Expand Button */}
-                    <button
+                    <Button
                         onClick={() => setExpanded(!expanded)}
-                        className="w-full flex items-center justify-center gap-1
-                        text-xs text-muted-foreground hover:text-foreground transition-colors pt-2 border-t"
+                        className="w-full flex items-center justify-center gap-1 bg-transparent hover:bg-transparent
+                        text-xs text-muted-foreground transition-colors pt-2"
                     >
                         {expanded ? (
                             <>
@@ -104,7 +101,7 @@ export default function SchoolCard({ school }: { school: School }) {
                                 <ChevronDown className="h-3.5 w-3.5" />
                             </>
                         )}
-                    </button>
+                    </Button>
                 </div>
             </CardContent>
         </Card>
