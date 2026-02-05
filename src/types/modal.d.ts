@@ -1,35 +1,35 @@
 
 declare global {
-    interface ModalPosition {
-        x: number;
-        y: number;
-    }
+	interface ModalPosition {
+		x: number;
+		y: number;
+	}
 
-    interface PropertyModal {
-        id: string;
-        isOpen: boolean;
-        isMinimized: boolean;
-        isExpanded: boolean;
-        title: string;
-        position: ModalPosition;
-        propertyData: PropertyDetailsWithCoords;
-        census: CensusDemographicDataResponse | null | undefined;
-        routesNearBy: Route[] | null | undefined;
-        stopsNearBy: Stop[] | null | undefined;
-        schools: School[] | null | undefined;
-        zIndex: number;
-    }
+	interface PropertyModal {
+		id: string;
+		isOpen: boolean;
+		isMinimized: boolean;
+		isExpanded: boolean;
+		title: string;
+		position: ModalPosition;
+		propertyData: PropertyDetailsWithCoords;
+		census: CensusDemographicDataResponse | null | undefined;
+		routesNearBy: Route[] | null | undefined;
+		stopsNearBy: Stop[] | null | undefined;
+		schools: School[] | null | undefined;
+		zIndex: number;
+	}
 
-    type SortConfig = {
-        key: keyof PropertyRecord
-        direction: "asc" | "desc"
-    } | null
+	type SortConfig = {
+		key: keyof PropertyRecord
+		direction: "asc" | "desc"
+	} | null
 
-    type ColumnConfig = {
-        key: keyof PropertyRecord
-        label: string
-        sortable: boolean
-    }
+	type ColumnConfig = {
+		key: keyof PropertyRecord
+		label: string
+		sortable: boolean
+	}
 
 }
 

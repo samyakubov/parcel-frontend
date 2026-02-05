@@ -11,15 +11,15 @@ import {ExportPDFButton} from "@/components/property-details-modal/export-to-pdf
 
 
 interface PropertyInfoModalProps {
-    id: string
+	id: string
 }
 
 function PropertyDetailsModal({ id }: PropertyInfoModalProps) {
 	const modal = modalStore.getModal(id)
 
-    if (isUndefined(modal)) {
-        return null
-    }
+	if (isUndefined(modal)) {
+		return null
+	}
 
 	return (
 		<Modal

@@ -11,74 +11,74 @@ import useFlyTo from "@/hooks/mapbox/map/fly-to"
 import isUndefined from "lodash-es/isUndefined"
 
 export default function useSendAiMessage() {
-    const flyTo = useFlyTo()
+	const flyTo = useFlyTo()
 
-    return useCallback(async (content: string) => {
-        if (!content.trim()) return
+	return useCallback(async (content: string) => {
+		if (!content.trim()) return
 
-        chatStore.pushMessage({
-            id: crypto.randomUUID(),
-            role: "user",
-            content
-        })
-        chatStore.setIsLoading(true)
-        try {
-            const result = await apiClient.aiService.ask(content)
+		chatStore.pushMessage({
+			id: crypto.randomUUID(),
+			role: "user",
+			content
+		})
+		chatStore.setIsLoading(true)
+		try {
+			const result = await apiClient.aiService.ask(content)
 
-            chatStore.pushMessage({
-                id: crypto.randomUUID(),
-                role: "ai",
-                content: result.response
-            })
+			chatStore.pushMessage({
+				id: crypto.randomUUID(),
+				role: "ai",
+				content: result.response
+			})
 
-            const propertyData = result.property_data
+			const propertyData = result.property_data
 
-            if (!isUndefined(propertyData)) {
-                mapStore.setCoords(propertyData.coordinates)
-                const firstRecord = propertyData.records[0]
-                const modalId = uuidv4()
+			if (!isUndefined(propertyData)) {
+				mapStore.setCoords(propertyData.coordinates)
+				const firstRecord = propertyData.records[0]
+				const modalId = uuidv4()
 
-                modalStore.addPropertyModal({
-                    id: modalId,
-                    isOpen: true,
-                    isMinimized: false,
-                    isExpanded: false,
-                    title: `${firstRecord.prop_streetnumber} ${normalizeStreetNames(firstRecord.prop_streetname)}`,
-                    position: modalStore.calculateNewModalPosition(),
-                    propertyData: propertyData,
-                    routesNearBy: undefined,
-                    stopsNearBy: undefined,
-                    schools: undefined,
-                    census: undefined,
-                    zIndex: modalStore.getNextZIndex()
-                })
+				modalStore.addPropertyModal({
+					id: modalId,
+					isOpen: true,
+					isMinimized: false,
+					isExpanded: false,
+					title: `${firstRecord.prop_streetnumber} ${normalizeStreetNames(firstRecord.prop_streetname)}`,
+					position: modalStore.calculateNewModalPosition(),
+					propertyData: propertyData,
+					routesNearBy: undefined,
+					stopsNearBy: undefined,
+					schools: undefined,
+					census: undefined,
+					zIndex: modalStore.getNextZIndex()
+				})
 
-                if (!isNull(mapStore._map) && !isNull(mapStore._coords)) {
-                    mapStore.setMarker(mapStore._coords.longitude, mapStore._coords.latitude)
-                    flyTo()
-                }
+				if (!isNull(mapStore._map) && !isNull(mapStore._coords)) {
+					mapStore.setMarker(mapStore._coords.longitude, mapStore._coords.latitude)
+					flyTo()
+				}
 
-                const [routesResult, stopsResult, schoolsResult, censusResult] = await Promise.allSettled([
-                    apiClient.publicTransitService.findNearbyRoutes(),
-                    apiClient.publicTransitService.findNearbyStops(),
-                    getSchools(firstRecord.school_dist),
-                    apiClient.censusService.getCensusData(
-                        `${firstRecord.prop_streetnumber} ${normalizeStreetNames(firstRecord.prop_streetname)}` + " " + firstRecord.zipcode
-                    )
-                ])
+				const [routesResult, stopsResult, schoolsResult, censusResult] = await Promise.allSettled([
+					apiClient.publicTransitService.findNearbyRoutes(),
+					apiClient.publicTransitService.findNearbyStops(),
+					getSchools(firstRecord.school_dist),
+					apiClient.censusService.getCensusData(
+						`${firstRecord.prop_streetnumber} ${normalizeStreetNames(firstRecord.prop_streetname)}` + " " + firstRecord.zipcode
+					)
+				])
 
-                modalStore.setModalState(modalId, {
-                    routesNearBy: routesResult.status === "fulfilled" ? routesResult.value : null,
-                    stopsNearBy: stopsResult.status === "fulfilled" ? stopsResult.value : null,
-                    schools: schoolsResult.status === "fulfilled" ? schoolsResult.value : null,
-                    census: censusResult.status === "fulfilled" ? censusResult.value : null
-                })
-            }
-        } catch (e) {
-            console.error(e)
-        } finally {
-            chatStore.setIsLoading(false)
-        }
+				modalStore.setModalState(modalId, {
+					routesNearBy: routesResult.status === "fulfilled" ? routesResult.value : null,
+					stopsNearBy: stopsResult.status === "fulfilled" ? stopsResult.value : null,
+					schools: schoolsResult.status === "fulfilled" ? schoolsResult.value : null,
+					census: censusResult.status === "fulfilled" ? censusResult.value : null
+				})
+			}
+		} catch (e) {
+			console.error(e)
+		} finally {
+			chatStore.setIsLoading(false)
+		}
 
-    }, [flyTo])
+	}, [flyTo])
 }

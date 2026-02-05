@@ -4,15 +4,15 @@ import { motion, AnimatePresence } from "framer-motion"
 import ModalContent from "@/components/modal/modal-content"
 
 interface ModalProps {
-    children: React.ReactNode;
-    isExpandable: boolean;
-    modal: PropertyModal;
+	children: React.ReactNode;
+	isExpandable: boolean;
+	modal: PropertyModal;
 }
 
 export default function Modal({
-  children,
-  isExpandable,
-  modal,
+	children,
+	isExpandable,
+	modal,
 }: ModalProps) {
 
 	return (
@@ -23,9 +23,9 @@ export default function Modal({
 				exit="exit"
 				transition={{ duration: 0.2 }}
 				className={"fixed inset-0 overflow-hidden"}
-                style={{
+				style={{
 					pointerEvents: "none",
-                    zIndex: modal.zIndex
+					zIndex: modal.zIndex
 				}}
 			>
 				<ModalContent

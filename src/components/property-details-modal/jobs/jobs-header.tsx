@@ -5,9 +5,9 @@ import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 
 interface JobsHeaderProps {
-    isExpanded: boolean;
-    setIsExpanded: (isExpanded: boolean) => void;
-    jobCount: number;
+	isExpanded: boolean;
+	setIsExpanded: (isExpanded: boolean) => void;
+	jobCount: number;
 }
 
 export default function JobsHeader({ isExpanded, setIsExpanded, jobCount }: JobsHeaderProps) {

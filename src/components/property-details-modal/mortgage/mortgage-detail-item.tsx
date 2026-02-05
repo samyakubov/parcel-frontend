@@ -2,9 +2,9 @@
 import React from "react"
 
 interface MortgageDetailItemProps {
-    icon: React.ReactNode;
-    label: string;
-    value: string | React.ReactNode;
+	icon: React.ReactNode;
+	label: string;
+	value: string | React.ReactNode;
 }
 
 export default function MortgageDetailItem({ icon, label, value }: MortgageDetailItemProps) {

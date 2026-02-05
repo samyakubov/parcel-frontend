@@ -33,6 +33,6 @@
     "**/*.test.tsx",
     "**/tests/**/*.ts",
     "**/tests/**/*.tsx"
-  ],
+, "next.config.js"  ],
   "exclude": ["node_modules"]
 }

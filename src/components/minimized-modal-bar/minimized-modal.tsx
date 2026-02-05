@@ -4,7 +4,7 @@ import React from "react"
 import MinimizedModalActions from "@/components/minimized-modal-bar/minimized-modal-actions"
 
 interface MinimizedModalProps {
-    modal: PropertyModal
+	modal: PropertyModal
 }
 
 export default function MinimizedModal(props: MinimizedModalProps) {

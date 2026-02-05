@@ -1,18 +1,10 @@
-import { dirname } from "path"
-import { fileURLToPath } from "url"
-import { FlatCompat } from "@eslint/eslintrc"
-import security from "eslint-plugin-security"
+import stylistic from "@stylistic/eslint-plugin"
+import typescript from "@typescript-eslint/eslint-plugin"
+import typescriptParser from "@typescript-eslint/parser"
+import react from "eslint-plugin-react"
+import reactHooks from "eslint-plugin-react-hooks"
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
-const __filename = fileURLToPath(import.meta.url)
-// eslint-disable-next-line @typescript-eslint/naming-convention
-const __dirname = dirname(__filename)
-
-const compat = new FlatCompat({
-	baseDirectory: __dirname,
-})
-
-const eslintConfig = [
+export default [
 	{
 		ignores: [
 			"node_modules/**",
@@ -20,37 +12,59 @@ const eslintConfig = [
 			"out/**",
 			"build/**",
 			"next-env.d.ts",
-			"src/components/ui/**",
+			"src/components/ui/**/*",
+			"src/lib/**/*",
+			"src/hooks/shadcn/**/*",
+			"add-use-client.js",
+			"eslint.config.mjs",
+			"next.config.js",
+			"postcss.config.js",
+			"src/classes/__tests__/**/*",
 		],
 	},
-	...compat.extends("next/core-web-vitals", "next/typescript"),
+
+	// TypeScript and React configuration
 	{
+		files: ["**/*.{ts,tsx}"],
+		languageOptions: {
+			parser: typescriptParser,
+			parserOptions: {
+				ecmaVersion: "latest",
+				sourceType: "module",
+				project: "./tsconfig.json",
+				ecmaFeatures: {
+					jsx: true,
+				},
+			},
+		},
 		plugins: {
-			security,
+			"@typescript-eslint": typescript,
+			"react": react,
+			"react-hooks": reactHooks,
+		},
+		settings: {
+			react: {
+				version: "detect",
+			},
 		},
 		rules: {
-
-			"linebreak-style": ["error", "unix"],
-			quotes: ["error", "double"],
-			semi: ["error", "never"],
-			"no-empty": ["error", {
-				allowEmptyCatch: true,
-			}],
+			"linebreak-style": ["warn", "unix"],
+			"quotes": ["error", "double"],
+			"semi": ["error", "never"],
+			"no-empty": ["error", { "allowEmptyCatch": true }],
 			"eol-last": ["error", "always"],
 			"no-unused-vars": "off",
-			"@typescript-eslint/no-unused-vars": "warn",
-			eqeqeq: "error",
+			"@typescript-eslint/no-unused-vars": [
+				"warn",
+				{ "argsIgnorePattern": "^_" }
+			],
+			"eqeqeq": "error",
 			"space-infix-ops": "warn",
 			"space-before-blocks": "error",
-			"keyword-spacing": ["error", {
-				before: true,
-				after: true,
-			}],
+			"keyword-spacing": ["error", { "before": true, "after": true }],
 			"no-trailing-spaces": "error",
 			"prefer-const": "error",
-			"max-len": ["error", {
-				code: 140,
-			}],
+			"max-len": ["warn", { "code": 140 }],
 			"require-await": "error",
 			"@typescript-eslint/no-explicit-any": "error",
 			"@typescript-eslint/prefer-as-const": "error",
@@ -61,46 +75,108 @@ const eslintConfig = [
 			"@typescript-eslint/no-empty-interface": "error",
 			"max-depth": ["warn", 3],
 			"no-nested-ternary": "error",
-			complexity: ["warn", 9],
+			"complexity": ["warn", 10],
 			"no-shadow": "off",
 			"@typescript-eslint/no-shadow": "error",
 			"@typescript-eslint/no-non-null-assertion": "error",
-			"max-params": ["warn", 6],
-			"max-lines-per-function": ["warn", {
-				max: 40,
-				skipBlankLines: true,
-				skipComments: true,
-			}],
-			"@typescript-eslint/naming-convention": ["error", {
-				selector: "variable",
-				format: ["camelCase", "UPPER_CASE", "PascalCase"],
-			}, {
-				selector: "function",
-				format: ["camelCase", "PascalCase"],
-			}, {
-				selector: "parameter",
-				format: ["camelCase"],
-				leadingUnderscore: "allow",
-			}, {
-				selector: "enumMember",
-				format: ["UPPER_CASE"],
-			}, {
-				selector: "typeLike",
-				format: ["PascalCase"],
-			}],
-			"security/detect-buffer-noassert": "warn",
-			"security/detect-child-process": "warn",
-			"security/detect-disable-mustache-escape": "warn",
-			"security/detect-eval-with-expression": "warn",
-			"security/detect-no-csrf-before-method-override": "warn",
-			"security/detect-non-literal-fs-filename": "warn",
-			"security/detect-non-literal-regexp": "warn",
-			"security/detect-non-literal-require": "warn",
-			"security/detect-possible-timing-attacks": "warn",
-			"security/detect-pseudoRandomBytes": "warn",
-			"security/detect-unsafe-regex": "warn",
+			"react/react-in-jsx-scope": "off",
+			"react/jsx-uses-react": "off",
+			"react/prop-types": "off",
+			"max-params": ["warn", 4],
+			"max-lines-per-function": [
+				"warn",
+				{"max": 90, "skipBlankLines": true, "skipComments": true}
+			],
+			"@typescript-eslint/naming-convention": [
+				"error",
+				{
+					"selector": "function",
+					"format": ["camelCase", "PascalCase"]
+				},
+				{
+					"selector": "parameter",
+					"format": ["camelCase"],
+					"leadingUnderscore": "allow"
+				},
+				{
+					"selector": "typeLike",
+					"format": ["PascalCase"]
+				}
+			],
+			"@typescript-eslint/ban-types": "off",
+			"react/display-name": "off",
+			"react-hooks/rules-of-hooks": "error",
+			"react-hooks/exhaustive-deps": "warn",
+			"react/jsx-no-constructed-context-values": "error",
+			"react/no-unescaped-entities": "off",
+		},
+	},
+
+	// Stylistic rules (including indent with tabs)
+	{
+		plugins: {
+			"@stylistic": stylistic,
+		},
+		rules: {
+			"@stylistic/indent": ["error", "tab"],
+		},
+	},
+
+	// Override for TSX files - disable floating promises check
+	{
+		files: ["**/*.tsx"],
+		rules: {
+			"@typescript-eslint/no-floating-promises": "off",
+		},
+	},
+
+	// Override for App Router files
+	{
+		files: ["app/**/*.tsx", "app/**/*.ts", "pages/**/*.tsx", "pages/**/*.ts"],
+		rules: {
+			"react/display-name": "off",
+		},
+	},
+
+	// Override for icon components - disable explicit function return type
+	{
+		files: ["src/icons/**/*"],
+		rules: {
+			"@typescript-eslint/explicit-function-return-type": "off",
+			"max-len": "off",
+			"max-lines-per-function": "off",
+		},
+	},
+
+	// Override for JavaScript files - disable TypeScript-specific rules
+	{
+		files: ["**/*.{js,mjs,cjs}"],
+		languageOptions: {
+			ecmaVersion: "latest",
+			sourceType: "module",
+		},
+		rules: {
+			"@typescript-eslint/explicit-function-return-type": "off",
+			"@typescript-eslint/no-unused-vars": "off",
+			"@typescript-eslint/no-explicit-any": "off",
+			"@typescript-eslint/prefer-as-const": "off",
+			"@typescript-eslint/no-empty-interface": "off",
+			"@typescript-eslint/no-unnecessary-condition": "off",
+			"@typescript-eslint/no-shadow": "off",
+			"@typescript-eslint/no-non-null-assertion": "off",
+			"@typescript-eslint/naming-convention": "off",
+			"@typescript-eslint/ban-types": "off",
+			"@typescript-eslint/no-floating-promises": "off",
+			"no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+			"no-shadow": "error",
+		},
+	},
+
+	// Override for additional icon components paths
+	{
+		files: ["src/components/icons/**/*"],
+		rules: {
+			"@typescript-eslint/explicit-function-return-type": "off",
 		},
 	},
 ]
-
-export default eslintConfig

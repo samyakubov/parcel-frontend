@@ -4,7 +4,7 @@ import { Calendar } from "lucide-react"
 import { FORMAT_DATE } from "@/utils/format-date"
 
 interface LastSoldDateProps {
-    saleDate: string;
+	saleDate: string;
 }
 
 export default function LastSoldDate({ saleDate }: LastSoldDateProps) {

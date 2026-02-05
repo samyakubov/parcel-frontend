@@ -38,9 +38,9 @@ export default function PropertyDetailItem({ icon, label, value, enableCopy }: P
                       text-sm font-semibold
                       transition-all duration-200
                       ${copied
-							? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
-							: "bg-muted hover:bg-primary/10 text-foreground cursor-pointer hover:shadow-sm"
-						}
+						? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
+						: "bg-muted hover:bg-primary/10 text-foreground cursor-pointer hover:shadow-sm"
+					}
                       border border-transparent hover:border-primary/20
                       max-w-full
                    `}

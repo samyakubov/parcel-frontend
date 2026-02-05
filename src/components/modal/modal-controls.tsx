@@ -5,13 +5,13 @@ import MinimizeButton from "@/components/modal/modal-control-buttons/minimize-bu
 import CloseButton from "@/components/modal/modal-control-buttons/close-button"
 
 interface ModalControlsProps {
-    isExpandable?: boolean
-    currentModal: PropertyModal
+	isExpandable?: boolean
+	currentModal: PropertyModal
 }
 
 export default function ModalControls({
 	isExpandable = false,
-    currentModal,
+	currentModal,
 }: ModalControlsProps) {
 
 	return (
@@ -20,7 +20,7 @@ export default function ModalControls({
 
 			<ExpandModalButton
 				isExpandable={isExpandable}
-                currentModal={currentModal}
+				currentModal={currentModal}
 			/>
 
 			<CloseButton currentModal={currentModal} />

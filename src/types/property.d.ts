@@ -1,148 +1,148 @@
 
 declare global {
-    interface Zoning {
-        zoning_districts: string[];
-        commercial_overlays: string[];
-        special_districts: string[];
-        limited_height_district: string;
-        last_updated: string;
-    }
+	interface Zoning {
+		zoning_districts: string[];
+		commercial_overlays: string[];
+		special_districts: string[];
+		limited_height_district: string;
+		last_updated: string;
+	}
 
-    interface LastSold {
-        last_sold_price: number;
-        last_sold_date: string;
-    }
+	interface LastSold {
+		last_sold_price: number;
+		last_sold_date: string;
+	}
 
-    interface LastSoldWithSqft extends LastSold {
-        year_built:string;
-        land_sqft:string;
-        gross_sqft:string;
-    }
+	interface LastSoldWithSqft extends LastSold {
+		year_built:string;
+		land_sqft:string;
+		gross_sqft:string;
+	}
 
-    interface Owners {
-        current_owners: string[];
-        previous_owners: string[];
-    }
+	interface Owners {
+		current_owners: string[];
+		previous_owners: string[];
+	}
 
-    interface Mortgage {
-        lender: string;
-        borrower: string;
-        amount: number;
-    }
+	interface Mortgage {
+		lender: string;
+		borrower: string;
+		amount: number;
+	}
 
-    interface PropertyDetails {
-        last_sold: LastSold | LastSoldWithSqft;
-        mortgage: Mortgage | null;
-        owners: Owners;
-        records: PropertyRecord[];
-        job_filings:JobFiled[];
-        violations: Violation[];
-        complaints: Complaint[];
-        zoning: Zoning;
-    }
+	interface PropertyDetails {
+		last_sold: LastSold | LastSoldWithSqft;
+		mortgage: Mortgage | null;
+		owners: Owners;
+		records: PropertyRecord[];
+		job_filings:JobFiled[];
+		violations: Violation[];
+		complaints: Complaint[];
+		zoning: Zoning;
+	}
 
-    interface PropertyDetailsWithCoords extends PropertyDetails {
-        coordinates:Coordinates;
-    }
+	interface PropertyDetailsWithCoords extends PropertyDetails {
+		coordinates:Coordinates;
+	}
 
-    interface PropertyRecord {
-        documentid: string;
-        bbl: string;
-        amount: number;
-        prop_borough: number;
-        prop_block: number;
-        prop_lot: number;
-        prop_unit: string | null;
-        prop_streetnumber: string;
-        prop_streetname: string;
-        prop_partiallot: string;
-        prop_type: string;
-        party_borough: string;
-        partytype_desc: string;
-        party_name: string;
-        party_address1: string;
-        party_address2: string | null;
-        party_country: string;
-        party_city: string;
-        party_state: string;
-        party_zip: string;
-        doc_type: string;
-        record_filed: string;
-        school_dist: number;
-        council: number;
-        zipcode: string;
-        police_prct: string;
-        land_use: number;
-        owner_type: string;
-        owner_name: string;
-        lot_area: number;
-        bldg_area: number;
-        com_area: number;
-        res_area: number;
-        office_area: number;
-        retail_area: number;
-        garage_area: number;
-        strge_area: number;
-        factry_area: number;
-        other_area: number;
-        area_source: string;
-        num_bldgs: number;
-        num_floors: number;
-        units_res: number;
-        units_total: number;
-        lot_front: number;
-        lot_depth: number;
-        bldg_front: number;
-        bldg_depth: number;
-        ext: string;
-        prox_code: string;
-        irr_lot_code: string;
-        lot_type: string;
-        bsmt_code: string;
-        assess_land: number;
-        assess_tot: number;
-        exempt_tot: number;
-        year_built: number;
-    }
+	interface PropertyRecord {
+		documentid: string;
+		bbl: string;
+		amount: number;
+		prop_borough: number;
+		prop_block: number;
+		prop_lot: number;
+		prop_unit: string | null;
+		prop_streetnumber: string;
+		prop_streetname: string;
+		prop_partiallot: string;
+		prop_type: string;
+		party_borough: string;
+		partytype_desc: string;
+		party_name: string;
+		party_address1: string;
+		party_address2: string | null;
+		party_country: string;
+		party_city: string;
+		party_state: string;
+		party_zip: string;
+		doc_type: string;
+		record_filed: string;
+		school_dist: number;
+		council: number;
+		zipcode: string;
+		police_prct: string;
+		land_use: number;
+		owner_type: string;
+		owner_name: string;
+		lot_area: number;
+		bldg_area: number;
+		com_area: number;
+		res_area: number;
+		office_area: number;
+		retail_area: number;
+		garage_area: number;
+		strge_area: number;
+		factry_area: number;
+		other_area: number;
+		area_source: string;
+		num_bldgs: number;
+		num_floors: number;
+		units_res: number;
+		units_total: number;
+		lot_front: number;
+		lot_depth: number;
+		bldg_front: number;
+		bldg_depth: number;
+		ext: string;
+		prox_code: string;
+		irr_lot_code: string;
+		lot_type: string;
+		bsmt_code: string;
+		assess_land: number;
+		assess_tot: number;
+		exempt_tot: number;
+		year_built: number;
+	}
 
-    interface Violation {
-        bbl: string;
-        violation_status: string;
-        issue_date: string;
-        violation_type: string;
-        description: string;
-        severity: string;
-        penalty_amount: number;
-        amount_paid: number;
-        balance_due: number;
-        respondent_name: string;
-        house_number: string;
-        street: string;
-        city: string;
-        zip: string;
-    }
+	interface Violation {
+		bbl: string;
+		violation_status: string;
+		issue_date: string;
+		violation_type: string;
+		description: string;
+		severity: string;
+		penalty_amount: number;
+		amount_paid: number;
+		balance_due: number;
+		respondent_name: string;
+		house_number: string;
+		street: string;
+		city: string;
+		zip: string;
+	}
 
-    interface Complaint {
-        complaint_number: number;
-        bin: string;
-        special_district: string;
-        complaint_category: string;
-        disposition_date: string;
-        disposition_code: string;
-        inspection_date: string;
-        dobrun_date: string;
-        status: string;
-    }
+	interface Complaint {
+		complaint_number: number;
+		bin: string;
+		special_district: string;
+		complaint_category: string;
+		disposition_date: string;
+		disposition_code: string;
+		inspection_date: string;
+		dobrun_date: string;
+		status: string;
+	}
 
-    interface JobFiled {
-        bin: number;
-        job_description: string;
-        applicant_first_name: string;
-        applicant_last_name: string;
-        applicant_professional_title:string;
-        job_status: string;
-        job_type: string;
-    }
+	interface JobFiled {
+		bin: number;
+		job_description: string;
+		applicant_first_name: string;
+		applicant_last_name: string;
+		applicant_professional_title:string;
+		job_status: string;
+		job_type: string;
+	}
 }
 
 export { }

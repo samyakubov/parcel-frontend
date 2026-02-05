@@ -1,6 +1,6 @@
 export const NYC_BOUNDS = [
-    [-74.25909, 40.477399] as [number, number],
-    [-73.700181, 40.917577] as [number, number],
+	[-74.25909, 40.477399] as [number, number],
+	[-73.700181, 40.917577] as [number, number],
 ] as const
 
 
@@ -12,7 +12,7 @@ export const NYC_CENTER = {
 export type MapStyle = "light" | "dark" | "satellite"
 
 export const MAP_STYLES: Record<MapStyle, string> = {
-    light: "mapbox://styles/mapbox/light-v11",
-    dark: "mapbox://styles/mapbox/dark-v11",
-    satellite: "mapbox://styles/mapbox/satellite-streets-v12"
+	light: "mapbox://styles/mapbox/light-v11",
+	dark: "mapbox://styles/mapbox/dark-v11",
+	satellite: "mapbox://styles/mapbox/satellite-streets-v12"
 }

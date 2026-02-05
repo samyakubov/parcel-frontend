@@ -6,8 +6,8 @@ import { Button } from "@/components/ui/button"
 import {modalStore} from "@/stores/modal-store"
 
 interface ExpandModalButtonProps {
-    isExpandable: boolean
-    currentModal: PropertyModal
+	isExpandable: boolean
+	currentModal: PropertyModal
 }
 
 export default function ExpandModalButton({ currentModal, isExpandable }: ExpandModalButtonProps) {

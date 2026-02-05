@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import {isEmpty} from "lodash-es"
 
 interface CommercialOverlaysProps {
-    overlays: string[];
+	overlays: string[];
 }
 
 export default function CommercialOverlays({ overlays }: CommercialOverlaysProps) {

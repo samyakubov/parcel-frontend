@@ -9,7 +9,7 @@ import JobsTable from "@/components/property-details-modal/jobs/jobs-table"
 
 
 interface JobsProps {
-    jobsFiled: JobFiled[]
+	jobsFiled: JobFiled[]
 }
 
 export default function Jobs({ jobsFiled }: JobsProps) {
@@ -24,7 +24,7 @@ export default function Jobs({ jobsFiled }: JobsProps) {
 							<FileWarning className="h-5 w-5 text-muted-foreground" />
 						</div>
 						<h3 className="text-base font-semibold text-muted-foreground">
-                            No Jobs found
+							No Jobs found
 						</h3>
 					</motion.div>
 				</CardContent>
