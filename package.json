@@ -8,6 +8,7 @@
     "start": "next start",
     "type-check": "tsc --noEmit",
     "lint": "eslint .",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "validate": "pnpm run lint && pnpm run type-check && pnpm run check-unused && depcheck",
     "analyze": "ANALYZE=true next build",
     "postinstall": "next telemetry disable",
