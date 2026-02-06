@@ -51,16 +51,16 @@ export default function useSearchByAddress() {
 				flyTo()
 			}
 
-			const [routesResult, stopsResult, schoolsResult, censusResult] = await Promise.allSettled([
-				apiClient.publicTransitService.findNearbyRoutes(),
-				apiClient.publicTransitService.findNearbyStops(),
+			const [schoolsResult, censusResult] = await Promise.allSettled([
 				getSchools(firstRecord.school_dist),
-				apiClient.censusService.getCensusData(searchStore._addressSearchQuery + " " + firstRecord.zipcode)
+				apiClient.censusService.getCensusData(searchStore._addressSearchQuery + " " + firstRecord.zipcode),
+				// apiClient.publicTransitService.findNearbyRoutes(),
+				// apiClient.publicTransitService.findNearbyStops(),
 			])
 
 			modalStore.setModalState(modalId, {
-				routesNearBy: routesResult.status === "fulfilled" ? routesResult.value : null,
-				stopsNearBy: stopsResult.status === "fulfilled" ? stopsResult.value : null,
+				// routesNearBy: routesResult.status === "fulfilled" ? routesResult.value : null,
+				// stopsNearBy: stopsResult.status === "fulfilled" ? stopsResult.value : null,
 				schools: schoolsResult.status === "fulfilled" ? schoolsResult.value : null,
 				census: censusResult.status === "fulfilled" ? censusResult.value : null,
 			})
