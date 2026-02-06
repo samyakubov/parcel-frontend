@@ -91,7 +91,7 @@ function SearchPanel() {
 							<TabsList className="h-11! rounded-xl">
 								<CustomTooltip
 									tooltipTrigger={
-										<TabsTrigger value="address" className="h-9 w-9 p-0 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground!">
+										<TabsTrigger value="address" className="h-9 w-9 p-0 cursor-pointer">
 											<MapPin className="w-4 h-4" />
 										</TabsTrigger>
 									}
@@ -99,7 +99,7 @@ function SearchPanel() {
 								/>
 								<CustomTooltip
 									tooltipTrigger={
-										<TabsTrigger value="bbl" className="h-9 w-9 p-0 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground!">
+										<TabsTrigger value="bbl" className="h-9 w-9 p-0 cursor-pointer">
 											<Hash className="w-4 h-4" />
 										</TabsTrigger>
 									}
