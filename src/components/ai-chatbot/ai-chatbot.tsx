@@ -40,6 +40,7 @@ function AiChatbot({ isOpen, onClose }: AiChatbotProps) {
 				scrollEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" })
 			}, 100)
 		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [chatStore._messages, chatStore._isMessageLoading])
 
 	if (!isOpen) return null
