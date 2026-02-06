@@ -19,6 +19,7 @@ export default function useInitMap(containerId: string, initialStyle: MapStyle =
 			style: MAP_STYLES[initialStyle],
 			center: [NYC_CENTER.longitude, NYC_CENTER.latitude],
 			zoom: 10,
+			attributionControl: false,
 		})
 
 		mapStore.setMap(mapRef.current)

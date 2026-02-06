@@ -120,3 +120,8 @@
         @apply bg-background text-foreground;
     }
 }
+
+/* Hide Mapbox logo */
+.mapboxgl-ctrl-logo {
+    display: none !important;
+}

@@ -59,7 +59,7 @@ function AiChatbot({ isOpen, onClose }: AiChatbotProps) {
 				</div>
 				<Button variant="ghost"
 					size="icon"
-					className="h-8 w-8 text-muted-foreground hover:text-foreground cursor-pointer"
+					className="h-8 w-8 text-muted-foreground hover:text-foreground cursor-pointer duration-0"
 					onClick={onClose}
 				>
 					<X size={18} />
@@ -100,7 +100,7 @@ function AiChatbot({ isOpen, onClose }: AiChatbotProps) {
 					/>
 					<Button
 						size="icon"
-						className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7"
+						className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7 cursor-pointer duration-0"
 						onClick={handleSend}
 						disabled={!inputValue.trim() || chatStore._isMessageLoading}
 					>
