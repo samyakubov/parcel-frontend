@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useMemo, useState } from "react"
+import orderBy from "lodash-es/orderBy"
 import {ArrowUpDown, ArrowUp, ArrowDown, Calendar, FileText, Building2, User} from "lucide-react"
 import {
 	Table,
@@ -62,25 +63,7 @@ export default function PropertyRecordGridTable({ data }: GridProps) {
 
 	const sortedData = useMemo(() => {
 		if (!sortConfig) return data
-
-		return [...data].sort((a, b) => {
-			const aValue = a[sortConfig.key]
-			const bValue = b[sortConfig.key]
-
-			if (aValue === null || aValue === undefined) return 1
-			if (bValue === null || bValue === undefined) return -1
-
-			if (typeof aValue === "number" && typeof bValue === "number") {
-				return sortConfig.direction === "asc" ? aValue - bValue : bValue - aValue
-			}
-
-			const aStr = String(aValue).toLowerCase()
-			const bStr = String(bValue).toLowerCase()
-
-			if (aStr < bStr) return sortConfig.direction === "asc" ? -1 : 1
-			if (aStr > bStr) return sortConfig.direction === "asc" ? 1 : -1
-			return 0
-		})
+		return orderBy(data, [sortConfig.key], [sortConfig.direction])
 	}, [data, sortConfig])
 
 	const handleSort = (key: keyof PropertyRecord) => {
