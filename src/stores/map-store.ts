@@ -31,10 +31,9 @@ class MapStore {
 	})
 
 	public clearMarker = action(() => {
-		if (this._currentMarker) {
-			this._currentMarker.remove()
-			this._currentMarker = null
-		}
+		if (!this._currentMarker) return
+		this._currentMarker.remove()
+		this._currentMarker = null
 	})
 
 	public resetMap = action(() => {
@@ -43,16 +42,6 @@ class MapStore {
 		if (!map) return
 
 		this.clearMarker()
-
-		this._coords = null
-
-		map.flyTo({
-			center: [NYC_CENTER.longitude, NYC_CENTER.latitude],
-			zoom: 10,
-			duration: 2000,
-			essential: true,
-			curve: 1.42,
-		})
 	})
 }
 
