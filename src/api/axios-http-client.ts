@@ -5,9 +5,9 @@ import { setupCache, buildWebStorage, buildMemoryStorage } from "axios-cache-int
 export default class AxiosHttpClient {
 	public readonly http: AxiosInstance
 
-	constructor() {
+	constructor(url: string) {
 		const instance = axios.create({
-			baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
+			baseURL: url,
 			headers: {
 				"Content-Type": "application/json",
 				"Access-Control-Allow-Origin": "*",

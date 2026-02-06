@@ -6,11 +6,14 @@ import AiService from "@/api/services/ai-service"
 import CensusService from "@/api/services/census-service"
 
 class ApiClient {
-	public httpClient: AxiosHttpClient = new AxiosHttpClient()
-	public aiService: AiService = new AiService(this.httpClient)
-	public censusService = new CensusService(this.httpClient)
-	public propertyService: PropertyService = new PropertyService(this.httpClient)
-	public publicTransitService: PublicTransitService = new PublicTransitService(this.httpClient)
+	public parcelHttpClient: AxiosHttpClient = new AxiosHttpClient(process.env.NEXT_PUBLIC_SERVER_URL as string)
+	public publicTransportHttpClient: AxiosHttpClient = new AxiosHttpClient(process.env.NEXT_PUBLIC_TRANSIT_API_URL as string)
+
+	public aiService: AiService = new AiService(this.parcelHttpClient)
+	public censusService = new CensusService(this.parcelHttpClient)
+	public propertyService: PropertyService = new PropertyService(this.parcelHttpClient)
+	public publicTransitService: PublicTransitService = new PublicTransitService(this.publicTransportHttpClient)
+
 	public schoolService: SchoolService = new SchoolService()
 
 	constructor() { }
