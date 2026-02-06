@@ -43,11 +43,17 @@ export default function useAddressAutocomplete() {
 		}, 300)
 	}
 
+	const cancel = useCallback(() => {
+		if (debouncedFetchRef.current) {
+			debouncedFetchRef.current.cancel()
+		}
+	}, [])
+
 	const fetch = useCallback(() => {
 		if (debouncedFetchRef.current) {
 			debouncedFetchRef.current(searchStore._addressSearchQuery, accessToken)
 		}
 	}, [accessToken])
 
-	return { fetch }
+	return { fetch, cancel }
 }
