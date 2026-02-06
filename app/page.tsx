@@ -11,7 +11,8 @@ import MapStyleSwitcher from "@/components/map-style-switcher"
 import { MAP_STYLES, MapStyle } from "@/constants/mapbox"
 import AiChatbot from "@/components/ai-chatbot/ai-chatbot"
 import { Button } from "@/components/ui/button"
-import { MessageCircle } from "lucide-react"
+import { MessageCircle, LocateFixed } from "lucide-react"
+import useSearchByFuzzyCoords from "@/hooks/property-search/use-search-by-fuzzy-coords"
 
 export default function Map() {
 	const mapRef = useInitMap("map", "satellite")
@@ -39,6 +40,25 @@ export default function Map() {
 	}, [flyTo])
 
 	const [isChatOpen, setIsChatOpen] = useState(false)
+	const searchByFuzzyCoords = useSearchByFuzzyCoords()
+
+	const handleLocateUser = () => {
+		if (!navigator.geolocation) {
+			console.error("Geolocation is not supported by this browser")
+			return
+		}
+
+		navigator.geolocation.getCurrentPosition(
+			async (position) => {
+				const { latitude, longitude } = position.coords
+				mapStore.setCoords({ latitude, longitude })
+				await searchByFuzzyCoords()
+			},
+			(error) => {
+				console.error("Error getting location:", error)
+			}
+		)
+	}
 
 	return (
 		<div className="flex w-full h-screen">
@@ -56,7 +76,14 @@ export default function Map() {
 				<ModalContainer />
 				<MinimizedModalsBar />
 
-				<div className="absolute bottom-4 right-4 z-10">
+				<div className="absolute bottom-4 right-4 z-10 flex flex-col gap-2">
+					<Button
+						size="icon"
+						onClick={handleLocateUser}
+						className="h-10 w-10 cursor-pointer duration-0"
+					>
+						<LocateFixed size={20} />
+					</Button>
 					<Button
 						size="icon"
 						onClick={() => setIsChatOpen(!isChatOpen)}
