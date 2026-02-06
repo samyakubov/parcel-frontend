@@ -1,5 +1,5 @@
 import { useCallback } from "react"
-import { apiClient } from "@/api/api-client"
+import apiClient from "@/api/api-client"
 import {chatStore} from "@/stores/chat-store"
 import {mapStore} from "@/stores/map-store"
 import {v4 as uuidv4} from "uuid"

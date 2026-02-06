@@ -2,7 +2,6 @@ import {mapStore} from "@/stores/map-store"
 import AxiosHttpClient from "@/api/axios-http-client"
 
 export default class PublicTransitService {
-
 	constructor(private readonly httpClient: AxiosHttpClient) { }
 
 	async findNearbyRoutes(): Promise<Route[]> {

@@ -6,21 +6,20 @@ import AiService from "@/api/services/ai-service"
 import CensusService from "@/api/services/census-service"
 
 class ApiClient {
-	public parcelBackendHttpClient: AxiosHttpClient = new AxiosHttpClient(process.env.NEXT_PUBLIC_SERVER_URL)
+	public parcelBackendHttpClient: AxiosHttpClient = new AxiosHttpClient()
 	public propertyService: PropertyService = new PropertyService(this.parcelBackendHttpClient)
 
-	public publicTransitHttpClient: AxiosHttpClient = new AxiosHttpClient(process.env.NEXT_PUBLIC_TRANSIT_API_URL)
-	public publicTransitService: PublicTransitService = new PublicTransitService(this.publicTransitHttpClient)
+	public publicTransitService: PublicTransitService = new PublicTransitService(this.parcelBackendHttpClient)
 
 	public schoolService: SchoolService = new SchoolService()
 
 	public aiService: AiService = new AiService(this.parcelBackendHttpClient)
-
 
 	public censusService = new CensusService(this.parcelBackendHttpClient)
 
 	constructor() { }
 }
 
+const apiClient = new ApiClient()
 
-export const apiClient = new ApiClient()
+export default apiClient

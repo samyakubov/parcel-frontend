@@ -6,23 +6,19 @@ import ModalControls from "@/components/modal/modal-controls"
 
 interface ModalContentProps {
 	children: React.ReactNode;
-	isExpandable: boolean;
 	currentModal: PropertyModal;
 }
 
 export default function ModalContent({
 	children,
-	isExpandable,
 	currentModal,
 }: ModalContentProps) {
 
 	const getPanelClassName = () => {
 		const baseClasses = "overflow-hidden flex flex-col"
-		if (isExpandable) {
-			return currentModal.isExpanded
-				? `fixed inset-0 m-auto w-[90vw] h-[90vh] ${baseClasses}`
-				: `fixed right-4 top-4 w-11/12 max-w-md h-[95vh] ${baseClasses}`
-		}
+		return currentModal.isExpanded
+			? `fixed inset-0 m-auto w-[90vw] h-[90vh] ${baseClasses}`
+			: `fixed right-4 top-4 w-11/12 max-w-md h-[95vh] ${baseClasses}`
 	}
 	return (
 		<motion.div
@@ -53,7 +49,6 @@ export default function ModalContent({
 		>
 			<ModalControls
 				currentModal={currentModal}
-				isExpandable={isExpandable}
 			/>
 
 			<div className="overflow-y-auto" onClick={(e) => e.stopPropagation()}>

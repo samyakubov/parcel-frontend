@@ -108,7 +108,7 @@ function ModeDropdown({ currentMode, isOpen, onToggle, onSelect, activeMode }: M
 function SearchPanel() {
 	const [searchMode, setSearchMode] = useState<SearchMode>("address")
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-	const { fetch: addressAutocomplete, cancel: cancelAutocomplete } = useAddressAutocomplete()
+	const { fetch: addressAutocomplete } = useAddressAutocomplete()
 	const searchByBbl = useSearchByBbl()
 	const searchByAddress = useSearchByAddress()
 

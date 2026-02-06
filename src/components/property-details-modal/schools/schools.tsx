@@ -1,12 +1,9 @@
-import React from "react"
-import {Card, CardHeader} from "@/components/ui/card"
+import {Card} from "@/components/ui/card"
 import { isEmpty, isNil, isUndefined } from "lodash-es"
 import SchoolsLoading from "@/components/property-details-modal/schools/schools-loading"
 import SchoolsEmpty from "@/components/property-details-modal/schools/schools-empty"
 import SchoolCard from "@/components/property-details-modal/schools/school-card"
 import {ScrollArea} from "@/components/ui/scroll-area"
-import { School} from "lucide-react"
-import {Badge} from "@/components/ui/badge"
 import SchoolsHeader from "@/components/property-details-modal/schools/schools-header"
 
 interface SchoolsProps {

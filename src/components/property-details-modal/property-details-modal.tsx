@@ -23,7 +23,6 @@ function PropertyDetailsModal({ id }: PropertyInfoModalProps) {
 
 	return (
 		<Modal
-			isExpandable={true}
 			modal={modal}>
 			<motion.div
 				layout="preserve-aspect"

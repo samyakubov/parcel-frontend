@@ -4,6 +4,7 @@ import {Building2, ChevronDown, ChevronUp, MapPin, Phone, Users} from "lucide-re
 import {Badge} from "@/components/ui/badge"
 import {Button} from "@/components/ui/button"
 
+// eslint-disable-next-line max-lines-per-function
 export default function SchoolCard({ school }: { school: School }) {
 	const [expanded, setExpanded] = useState(false)
 
@@ -24,11 +25,11 @@ export default function SchoolCard({ school }: { school: School }) {
 								{school.location_name}
 							</h3>
 							<div className="flex items-center gap-2 text-sm text-muted-foreground">
-								<MapPin className="h-3.5 w-3.5 flex-shrink-0" />
+								<MapPin className="h-3.5 w-3.5 shrink-0" />
 								<span className="line-clamp-1">{school.primary_address_line_1}</span>
 							</div>
 						</div>
-						<div className="flex flex-col gap-1.5 items-end flex-shrink-0">
+						<div className="flex flex-col gap-1.5 items-end shrink-0">
 							<Badge className={`${getTypeColor(school.location_category_description)} text-xs px-2 py-0.5`}>
 								{school.location_type_description}
 							</Badge>

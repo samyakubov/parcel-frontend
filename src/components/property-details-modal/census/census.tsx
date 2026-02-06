@@ -19,6 +19,7 @@ interface CensusProps {
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#AF19FF", "#FF1919"]
 
+// eslint-disable-next-line complexity, max-lines-per-function
 export default function Census({ census }: CensusProps) {
 	const [activeIndex, setActiveIndex] = useState<number | null>(null)
 
