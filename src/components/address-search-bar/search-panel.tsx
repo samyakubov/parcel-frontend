@@ -44,9 +44,9 @@ function SearchPanel() {
 	const handleSearch = () => {
 		if (searchMode === "address") {
 			void searchByAddress()
-		} else {
-			void searchByBbl()
+			return
 		}
+		void searchByBbl()
 	}
 
 	const inputValue = searchMode === "address"
