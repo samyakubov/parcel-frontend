@@ -7,7 +7,6 @@ import useFlyTo from "@/hooks/mapbox/map/fly-to"
 import { useEffect, useState } from "react"
 import { mapStore } from "@/stores/map-store"
 import { reaction } from "mobx"
-import ThemeToggle from "@/components/theme-toggle"
 import MapStyleSwitcher from "@/components/map-style-switcher"
 import { MAP_STYLES, MapStyle } from "@/constants/mapbox"
 import AiChatbot from "@/components/ai-chatbot/ai-chatbot"
@@ -57,7 +56,7 @@ export default function Map() {
 				<ModalContainer />
 				<MinimizedModalsBar />
 
-				<div className="absolute bottom-4 right-4 z-10 flex flex-col gap-2">
+				<div className="absolute bottom-4 right-4 z-10">
 					<Button
 						size="icon"
 						onClick={() => setIsChatOpen(!isChatOpen)}
@@ -65,7 +64,6 @@ export default function Map() {
 					>
 						<MessageCircle size={20} />
 					</Button>
-					<ThemeToggle />
 				</div>
 			</div>
 

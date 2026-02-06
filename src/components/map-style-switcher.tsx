@@ -1,5 +1,7 @@
+"use client"
 import React, { useState } from "react"
 import { Sun, Moon, Satellite } from "lucide-react"
+import { useTheme } from "next-themes"
 import {MapStyle} from "@/constants/mapbox"
 
 interface MapStyleSwitcherProps {
@@ -9,10 +11,17 @@ interface MapStyleSwitcherProps {
 
 export default function MapStyleSwitcher({onStyleChange, initialStyle = "satellite"}: MapStyleSwitcherProps) {
 	const [activeStyle, setActiveStyle] = useState<MapStyle>(initialStyle)
+	const { setTheme } = useTheme()
 
 	const handleStyleChange = (style: MapStyle) => {
 		setActiveStyle(style)
 		onStyleChange(style)
+
+		if (style === "light") {
+			setTheme("light")
+		} else if (style === "dark") {
+			setTheme("dark")
+		}
 	}
 
 	const styles: Array<{ type: MapStyle; icon: React.ReactNode; label: string }> = [
