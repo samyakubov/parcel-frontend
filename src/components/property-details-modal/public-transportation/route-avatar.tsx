@@ -7,7 +7,7 @@ interface RouteAvatarProps {
 
 export default function RouteAvatar({ route }: RouteAvatarProps) {
 	return (
-		<Avatar className="h-10 w-10 flex-shrink-0 shadow-sm">
+		<Avatar className="h-10 w-10 shrink-0 shadow-sm">
 			<AvatarFallback
 				className="text-sm font-bold"
 				style={{

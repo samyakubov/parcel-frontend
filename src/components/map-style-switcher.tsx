@@ -37,7 +37,7 @@ export default function MapStyleSwitcher({onStyleChange, initialStyle = "satelli
 					key={type}
 					onClick={() => handleStyleChange(type)}
 					className={`
-                        flex items-center gap-2 px-3 py-2 rounded-md transition-all duration-200
+                        flex items-center gap-2 px-3 py-2 rounded-md duration-0 cursor-pointer
                         ${activeStyle === type
 					? "bg-primary text-primary-foreground shadow-sm"
 					: "bg-transparent text-muted-foreground hover:bg-muted hover:text-foreground"

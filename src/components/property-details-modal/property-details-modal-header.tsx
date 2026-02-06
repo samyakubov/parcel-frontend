@@ -47,7 +47,7 @@ export default function PropertyDetailsModalHeader({ modal }: PropertyDetailsMod
 						setTimeout(() => setCopied(false), 2000)
 					}}
 					className={`
-						  flex-none p-1 rounded transition-all duration-200
+						  flex-none p-1 rounded duration-0 cursor-pointer
 						  ${copied
 			? "text-green-700 dark:text-green-400"
 			: "text-muted-foreground hover:text-primary"}`}

@@ -59,7 +59,7 @@ function AiChatbot({ isOpen, onClose }: AiChatbotProps) {
 				</div>
 				<Button variant="ghost"
 					size="icon"
-					className="h-8 w-8 text-muted-foreground hover:text-foreground"
+					className="h-8 w-8 text-muted-foreground hover:text-foreground cursor-pointer"
 					onClick={onClose}
 				>
 					<X size={18} />

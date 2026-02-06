@@ -17,7 +17,7 @@ export default function MinimizedModalActions({ modal }: MinimizedModalActionsPr
 				className="absolute -top-2 -right-2 p-1.5 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl
                 shadow-lg border border-red-200/60 dark:border-red-800/60
                 hover:bg-red-50/90 dark:hover:bg-red-900/50 hover:border-red-300 dark:hover:border-red-700
-                hover:shadow-red-500/20 dark:hover:shadow-red-500/30 transition-all duration-200 z-10
+                hover:shadow-red-500/20 dark:hover:shadow-red-500/30 duration-0 cursor-pointer z-10
                 opacity-0 group-hover:opacity-100 focus:opacity-100 focus:ring-2 focus:ring-red-500/50"
 				onClick={() => modalStore.closeModal(modal.id)}
 				aria-label="Close modal"
@@ -31,7 +31,7 @@ export default function MinimizedModalActions({ modal }: MinimizedModalActionsPr
 				className="absolute -top-2 -left-2 p-1.5 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl
                 shadow-lg border border-blue-200/60 dark:border-blue-800/60
                 hover:bg-blue-50/90 dark:hover:bg-blue-900/50 hover:border-blue-300 dark:hover:border-blue-700
-                hover:shadow-blue-500/20 dark:hover:shadow-blue-500/30 transition-all duration-200 z-10
+                hover:shadow-blue-500/20 dark:hover:shadow-blue-500/30 duration-0 cursor-pointer z-10
                 opacity-0 group-hover:opacity-100 focus:opacity-100 focus:ring-2 focus:ring-blue-500/50"
 				onClick={() => modalStore.restoreModal(modal.id)}
 				aria-label="Restore modal"

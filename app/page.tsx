@@ -60,7 +60,7 @@ export default function Map() {
 					<Button
 						size="icon"
 						onClick={() => setIsChatOpen(!isChatOpen)}
-						className="h-10 w-10"
+						className="h-10 w-10 cursor-pointer duration-0"
 					>
 						<MessageCircle size={20} />
 					</Button>

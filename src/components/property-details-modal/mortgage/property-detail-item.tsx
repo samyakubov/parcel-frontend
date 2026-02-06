@@ -36,7 +36,7 @@ export default function PropertyDetailItem({ icon, label, value, enableCopy }: P
 						className={`
                       inline-flex items-center gap-2 px-3 py-1.5 rounded-md
                       text-sm font-semibold
-                      transition-all duration-200
+                      duration-0 cursor-pointer
                       ${copied
 						? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
 						: "bg-muted hover:bg-primary/10 text-foreground cursor-pointer hover:shadow-sm"
@@ -46,9 +46,9 @@ export default function PropertyDetailItem({ icon, label, value, enableCopy }: P
                    `}
 					>
 						{copied ? (
-							<Check className="w-3.5 h-3.5 flex-shrink-0" />
+							<Check className="w-3.5 h-3.5 shrink-0" />
 						) : (
-							<Copy className="w-3.5 h-3.5 flex-shrink-0 opacity-60" />
+							<Copy className="w-3.5 h-3.5 shrink-0 opacity-60" />
 						)}
 						<span className="truncate">{value}</span>
 					</div>

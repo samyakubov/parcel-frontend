@@ -10,6 +10,7 @@ import useSearchByBbl from "@/hooks/property-search/use-search-by-bbl"
 import useSearchByAddress from "@/hooks/property-search/use-search-by-address"
 import { Search, MapPin, Hash, ChevronDown, LucideIcon } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
+import { cn } from "../../lib/utils"
 
 type SearchMode = "address" | "bbl"
 
@@ -136,11 +137,11 @@ function SearchPanel() {
         && searchStore._isSuggestionsOpen
         && searchStore._suggestions.length > 0
 
-	const containerClasses = [
+	const containerClasses = cn(
 		"relative bg-background/95 dark:bg-background/90 backdrop-blur-2xl",
 		"border border-border/50 dark:border-white/10 rounded-2xl",
 		"shadow-2xl shadow-black/10 dark:shadow-black/30 overflow-hidden"
-	].join(" ")
+	)
 
 	return (
 		<div className="w-[420px]">
@@ -185,7 +186,7 @@ function SearchPanel() {
 						<Button
 							onClick={handleSearch}
 							className="h-11 px-5 rounded-xl font-semibold shadow-lg
-								shadow-primary/20 hover:shadow-primary/30 transition-all"
+								shadow-primary/20 hover:shadow-primary/30 duration-0 cursor-pointer"
 						>
 							<Search className="w-4 h-4 mr-2" />
 							Search
