@@ -6,16 +6,12 @@ import AiService from "@/api/services/ai-service"
 import CensusService from "@/api/services/census-service"
 
 class ApiClient {
-	public parcelBackendHttpClient: AxiosHttpClient = new AxiosHttpClient()
-	public propertyService: PropertyService = new PropertyService(this.parcelBackendHttpClient)
-
-	public publicTransitService: PublicTransitService = new PublicTransitService(this.parcelBackendHttpClient)
-
+	public httpClient: AxiosHttpClient = new AxiosHttpClient()
+	public aiService: AiService = new AiService(this.httpClient)
+	public censusService = new CensusService(this.httpClient)
+	public propertyService: PropertyService = new PropertyService(this.httpClient)
+	public publicTransitService: PublicTransitService = new PublicTransitService(this.httpClient)
 	public schoolService: SchoolService = new SchoolService()
-
-	public aiService: AiService = new AiService(this.parcelBackendHttpClient)
-
-	public censusService = new CensusService(this.parcelBackendHttpClient)
 
 	constructor() { }
 }

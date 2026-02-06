@@ -66,6 +66,7 @@ class ModalStore {
 		}
 
 		this._propertyModals.push(newModal)
+		return
 	})
 
 	public focusModal = action((id: string) => {
@@ -81,6 +82,7 @@ class ModalStore {
 			return toast.info("You can only have 8 minimized modals. Please close one before minimizing another.")
 		}
 		this.setModalState(id, { isMinimized: true })
+		return
 	})
 
 	public restoreModal = action((id: string) => {

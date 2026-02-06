@@ -38,6 +38,7 @@ const formatDate = (date: string): string =>
 const isCoopProperty = (propType: string): boolean =>
 	(COOP_PROPERTY_TYPES as readonly string[]).includes(propType)
 
+// eslint-disable-next-line max-lines-per-function
 export default function PropertyRecordGridTable({ data }: GridProps) {
 	const [sortConfig, setSortConfig] = useState<SortConfig>(null)
 
@@ -107,7 +108,7 @@ export default function PropertyRecordGridTable({ data }: GridProps) {
 		return (
 			<div
 				className="flex items-center justify-center min-h-[400px]
-                rounded-2xl border-2 border-dashed bg-gradient-to-br from-background to-muted/20"
+                rounded-2xl border-2 border-dashed bg-linear-to-br from-background to-muted/20"
 			>
 				<div className="text-center space-y-3">
 					<Building2 className="w-12 h-12 mx-auto text-muted-foreground/40" />

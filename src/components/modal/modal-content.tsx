@@ -24,7 +24,7 @@ export default function ModalContent({
 		<motion.div
 			drag={!currentModal.isExpanded}
 			dragMomentum={false}
-			onDragEnd={(event, info) => {
+			onDragEnd={(_event, info) => {
 				modalStore.setModalState(currentModal.id, {
 					position: {
 						x: currentModal.position.x + info.offset.x,

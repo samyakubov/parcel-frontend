@@ -93,7 +93,7 @@ export default function Census({ census }: CensusProps) {
 						<ResponsiveContainer width="100%" height="100%">
 							<PieChart>
 								<defs>
-									{COLORS.map((color, index) => (
+									{COLORS.map((_color, index) => (
 										<filter key={`shadow-${index}`} id={`shadow-${index}`} height="200%">
 											<feDropShadow dx="0" dy="2" stdDeviation="3" floodOpacity="0.3" />
 										</filter>
@@ -115,7 +115,7 @@ export default function Census({ census }: CensusProps) {
 									animationDuration={800}
 									animationEasing="ease-out"
 								>
-									{plainRaceDemographics.map((entry, index) => (
+									{plainRaceDemographics.map((_entry, index) => (
 										<Cell
 											key={`cell-${index}`}
 											fill={COLORS[index % COLORS.length]}
