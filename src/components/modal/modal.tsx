@@ -5,13 +5,11 @@ import ModalContent from "@/components/modal/modal-content"
 
 interface ModalProps {
     children: React.ReactNode;
-    isExpandable: boolean;
     modal: PropertyModal;
 }
 
 export default function Modal({
   children,
-  isExpandable,
   modal,
 }: ModalProps) {
 
@@ -29,7 +27,6 @@ export default function Modal({
 				}}
 			>
 				<ModalContent
-					isExpandable={isExpandable}
 					currentModal={modal}
 				>
 					{children}

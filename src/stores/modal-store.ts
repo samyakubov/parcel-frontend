@@ -66,6 +66,7 @@ class ModalStore {
 		}
 
 		this._propertyModals.push(newModal)
+		return
 	})
 
 	public focusModal = action((id: string) => {
@@ -81,6 +82,7 @@ class ModalStore {
 			return toast.info("You can only have 8 minimized modals. Please close one before minimizing another.")
 		}
 		this.setModalState(id, { isMinimized: true })
+		return
 	})
 
 	public restoreModal = action((id: string) => {
@@ -106,16 +108,15 @@ class ModalStore {
 	public closeModal = action((id: string) => {
 		const propertyIndex = this._propertyModals.findIndex(modal => modal.id === id)
 
-		if (propertyIndex !== -1) {
-			this._propertyModals.splice(propertyIndex, 1)
+		if (propertyIndex === -1) return
+		this._propertyModals.splice(propertyIndex, 1)
 
-			if (isEmpty(this._propertyModals)) {
-				mapStore.resetMap()
-			} else {
-				const lastModal = this._propertyModals[this._propertyModals.length - 1]
-				if (lastModal) {
-					this.focusModal(lastModal.id)
-				}
+		if (isEmpty(this._propertyModals)) {
+			mapStore.resetMap()
+		} else {
+			const lastModal = this._propertyModals[this._propertyModals.length - 1]
+			if (lastModal) {
+				this.focusModal(lastModal.id)
 			}
 		}
 	})

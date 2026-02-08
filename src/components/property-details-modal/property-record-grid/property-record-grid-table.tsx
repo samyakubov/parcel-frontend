@@ -13,6 +13,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import {orderBy} from "lodash-es"
 
 const COOP_PROPERTY_TYPES = ["Co-op", "Cooperative"]
 
@@ -61,25 +62,7 @@ export default function PropertyRecordGridTable({ data }: GridProps) {
 
     const sortedData = useMemo(() => {
         if (!sortConfig) return data
-
-        return [...data].sort((a, b) => {
-            const aValue = a[sortConfig.key]
-            const bValue = b[sortConfig.key]
-
-            if (aValue === null || aValue === undefined) return 1
-            if (bValue === null || bValue === undefined) return -1
-
-            if (typeof aValue === "number" && typeof bValue === "number") {
-                return sortConfig.direction === "asc" ? aValue - bValue : bValue - aValue
-            }
-
-            const aStr = String(aValue).toLowerCase()
-            const bStr = String(bValue).toLowerCase()
-
-            if (aStr < bStr) return sortConfig.direction === "asc" ? -1 : 1
-            if (aStr > bStr) return sortConfig.direction === "asc" ? 1 : -1
-            return 0
-        })
+        return orderBy(data, [sortConfig.key], [sortConfig.direction])
     }, [data, sortConfig])
 
     const handleSort = (key: keyof PropertyRecord) => {
