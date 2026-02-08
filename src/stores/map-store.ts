@@ -1,7 +1,5 @@
 import { action, makeAutoObservable} from "mobx"
-import mapboxgl from "mapbox-gl"
 import createMarker from "@/hooks/mapbox/map/create-marker"
-import {NYC_CENTER} from "@/constants/mapbox"
 
 class MapStore {
 	constructor() {
