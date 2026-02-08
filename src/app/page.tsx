@@ -7,15 +7,17 @@ import useFlyTo from "@/hooks/mapbox/map/fly-to"
 import { useEffect, useState } from "react"
 import { mapStore } from "@/stores/map-store"
 import { reaction } from "mobx"
-import ThemeToggle from "@/components/theme-toggle"
 import MapStyleSwitcher from "@/components/map-style-switcher"
 import { MAP_STYLES, MapStyle } from "@/constants/mapbox"
 import AiChatbot from "@/components/ai-chatbot/ai-chatbot"
 import { Button } from "@/components/ui/button"
-import { MessageCircle } from "lucide-react"
+import {LocateFixed, MessageCircle} from "lucide-react"
+import useLocateUser from "@/hooks/property-search/use-locate-user"
 
 export default function Map() {
 	const mapRef = useInitMap("map", "satellite")
+	const handleLocateUser = useLocateUser()
+	const [isChatOpen, setIsChatOpen] = useState(false)
 
 	const setMapStyle = (style: MapStyle) => {
 		if (mapRef.current) {
@@ -39,8 +41,6 @@ export default function Map() {
 		return () => dispose()
 	}, [flyTo])
 
-	const [isChatOpen, setIsChatOpen] = useState(false)
-
 	return (
 		<div className="flex w-full h-screen">
 			<div className="relative flex-1 h-full">
@@ -60,12 +60,18 @@ export default function Map() {
 				<div className="absolute bottom-4 right-4 z-10 flex flex-col gap-2">
 					<Button
 						size="icon"
+						onClick={handleLocateUser}
+						className="h-10 w-10 cursor-pointer duration-0"
+					>
+						<LocateFixed size={20} />
+					</Button>
+					<Button
+						size="icon"
 						onClick={() => setIsChatOpen(!isChatOpen)}
-						className="h-10 w-10"
+						className="h-10 w-10 cursor-pointer duration-0"
 					>
 						<MessageCircle size={20} />
 					</Button>
-					<ThemeToggle />
 				</div>
 			</div>
 

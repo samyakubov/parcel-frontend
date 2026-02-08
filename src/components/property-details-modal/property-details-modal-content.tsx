@@ -23,7 +23,7 @@ import Census from "@/components/property-details-modal/census/census"
 interface PropertyDetailsModalContentProps {
 	modal: PropertyModal;
 }
-
+// eslint-disable-next-line max-lines-per-function
 export default function PropertyDetailsModalContent({ modal }: PropertyDetailsModalContentProps) {
 	const firstDeedOrMortgageRecord = modal.propertyData.records.find(
 		(record) => record.doc_type === "DEED" || record.doc_type === "MORTGAGE")
