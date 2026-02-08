@@ -6,23 +6,23 @@ import useSearchByFuzzyCoords from "@/hooks/property-search/use-search-by-fuzzy-
 
 
 export default function useLocateUser() {
-    const searchByFuzzyCoords = useSearchByFuzzyCoords()
+	const searchByFuzzyCoords = useSearchByFuzzyCoords()
 
-    return useCallback(() => {
-        if (!navigator.geolocation) {
-            console.error("Geolocation is not supported by this browser")
-            return
-        }
+	return useCallback(() => {
+		if (!navigator.geolocation) {
+			console.error("Geolocation is not supported by this browser")
+			return
+		}
 
-        navigator.geolocation.getCurrentPosition(
-            async (position) => {
-                const { latitude, longitude } = position.coords
-                mapStore.setCoords({ latitude, longitude })
-                await searchByFuzzyCoords()
-            },
-            (error) => {
-                console.error("Error getting location:", error)
-            }
-        )
-    }, [])
+		navigator.geolocation.getCurrentPosition(
+			async (position) => {
+				const { latitude, longitude } = position.coords
+				mapStore.setCoords({ latitude, longitude })
+				await searchByFuzzyCoords()
+			},
+			(error) => {
+				console.error("Error getting location:", error)
+			}
+		)
+	}, [])
 }

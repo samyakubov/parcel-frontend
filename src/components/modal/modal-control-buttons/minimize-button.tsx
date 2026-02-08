@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import {modalStore} from "@/stores/modal-store"
 
 interface MinimizeButtonProps {
-    currentModal: PropertyModal
+	currentModal: PropertyModal
 }
 
 export default function MinimizeButton ({ currentModal }: MinimizeButtonProps) {

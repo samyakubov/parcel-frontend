@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { FORMAT_PRICE } from "@/utils/format-price"
 
 interface LastSoldPriceProps {
-    lastSoldPrice: number;
+	lastSoldPrice: number;
 }
 
 export default function LastSoldPrice({ lastSoldPrice }: LastSoldPriceProps) {

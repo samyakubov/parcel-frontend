@@ -13,63 +13,63 @@ import {getSchools} from "@/utils/get-schools"
 
 
 export default function useSearchByBbl() {
-    const flyTo = useFlyTo()
+	const flyTo = useFlyTo()
 
-    return useCallback(async () => {
-        try {
-            if (isEmpty(searchStore._bblSearchQuery)) return
+	return useCallback(async () => {
+		try {
+			if (isEmpty(searchStore._bblSearchQuery)) return
 
-            const existingModal = modalStore._propertyModals.find(modal =>
-                modal.propertyData.records[0]?.bbl === searchStore._bblSearchQuery
-            )
+			const existingModal = modalStore._propertyModals.find(modal =>
+				modal.propertyData.records[0]?.bbl === searchStore._bblSearchQuery
+			)
 
-            if (!isUndefined(existingModal)) {
-                modalStore.restoreModal(existingModal.id)
-                return
-            }
+			if (!isUndefined(existingModal)) {
+				modalStore.restoreModal(existingModal.id)
+				return
+			}
 
-            const propertyData = await apiClient.propertyService.searchByPropertyBbl(searchStore._bblSearchQuery)
+			const propertyData = await apiClient.propertyService.searchByPropertyBbl(searchStore._bblSearchQuery)
 
-            mapStore.setCoords(propertyData.coordinates)
-            const firstRecord = propertyData.records[0]
+			mapStore.setCoords(propertyData.coordinates)
+			const firstRecord = propertyData.records[0]
 
-            const modalId = uuidv4()
+			const modalId = uuidv4()
 
-            modalStore.addPropertyModal({
-                id: modalId,
-                isOpen: true,
-                isMinimized: false,
-                isExpanded: false,
-                title: `${firstRecord.prop_streetnumber} ${normalizeStreetNames(firstRecord.prop_streetname)}`,
-                position: modalStore.calculateNewModalPosition(),
-                propertyData: propertyData,
-                routesNearBy: undefined,
-                stopsNearBy: undefined,
-                schools: undefined,
-                census: undefined,
-                zIndex: modalStore.getNextZIndex()
-            })
+			modalStore.addPropertyModal({
+				id: modalId,
+				isOpen: true,
+				isMinimized: false,
+				isExpanded: false,
+				title: `${firstRecord.prop_streetnumber} ${normalizeStreetNames(firstRecord.prop_streetname)}`,
+				position: modalStore.calculateNewModalPosition(),
+				propertyData: propertyData,
+				routesNearBy: undefined,
+				stopsNearBy: undefined,
+				schools: undefined,
+				census: undefined,
+				zIndex: modalStore.getNextZIndex()
+			})
 
-            if (!isNull(mapStore._map) && !isNull(mapStore._coords)) {
-                mapStore.setMarker(mapStore._coords.longitude, mapStore._coords.latitude)
-                flyTo()
-            }
+			if (!isNull(mapStore._map) && !isNull(mapStore._coords)) {
+				mapStore.setMarker(mapStore._coords.longitude, mapStore._coords.latitude)
+				flyTo()
+			}
 
-            const [routesResult, stopsResult, schoolsResult, censusResult] = await Promise.allSettled([
-                apiClient.publicTransitService.findNearbyRoutes(),
-                apiClient.publicTransitService.findNearbyStops(),
-                getSchools(firstRecord.school_dist),
-                apiClient.censusService.getCensusData(searchStore._addressSearchQuery + " " + firstRecord.zipcode)
-            ])
+			const [routesResult, stopsResult, schoolsResult, censusResult] = await Promise.allSettled([
+				apiClient.publicTransitService.findNearbyRoutes(),
+				apiClient.publicTransitService.findNearbyStops(),
+				getSchools(firstRecord.school_dist),
+				apiClient.censusService.getCensusData(searchStore._addressSearchQuery + " " + firstRecord.zipcode)
+			])
 
-            modalStore.setModalState(modalId, {
-                routesNearBy: routesResult.status === "fulfilled" ? routesResult.value : null,
-                stopsNearBy: stopsResult.status === "fulfilled" ? stopsResult.value : null,
-                schools: schoolsResult.status === "fulfilled" ? schoolsResult.value : null,
-                census: censusResult.status === "fulfilled" ? censusResult.value : null
-            })
-        } catch (error) {
-            console.error("Error in useSearchByBbl:", error)
-        }
-    }, [flyTo])
+			modalStore.setModalState(modalId, {
+				routesNearBy: routesResult.status === "fulfilled" ? routesResult.value : null,
+				stopsNearBy: stopsResult.status === "fulfilled" ? stopsResult.value : null,
+				schools: schoolsResult.status === "fulfilled" ? schoolsResult.value : null,
+				census: censusResult.status === "fulfilled" ? censusResult.value : null
+			})
+		} catch (error) {
+			console.error("Error in useSearchByBbl:", error)
+		}
+	}, [flyTo])
 }

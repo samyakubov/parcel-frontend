@@ -10,28 +10,28 @@ import {Badge} from "@/components/ui/badge"
 import SchoolsHeader from "@/components/property-details-modal/schools/schools-header"
 
 interface SchoolsProps {
-    schools: School[] | null | undefined
+	schools: School[] | null | undefined
 }
 
 export default function Schools({ schools }: SchoolsProps) {
-    if (isUndefined(schools)) {
-        return <SchoolsLoading />
-    }
+	if (isUndefined(schools)) {
+		return <SchoolsLoading />
+	}
 
-    if (isNil(schools) || isEmpty(schools)) {
-        return <SchoolsEmpty />
-    }
+	if (isNil(schools) || isEmpty(schools)) {
+		return <SchoolsEmpty />
+	}
 
-    return (
-        <Card className="w-full h-[600px]">
-            <SchoolsHeader/>
-            <ScrollArea className="h-[500px] p-6 w-full pr-4">
-                <div className="space-y-3">
-                    {schools.map((school, index) => (
-                        <SchoolCard key={index} school={school} />
-                    ))}
-                </div>
-            </ScrollArea>
-        </Card>
-    )
+	return (
+		<Card className="w-full h-[600px]">
+			<SchoolsHeader/>
+			<ScrollArea className="h-[500px] p-6 w-full pr-4">
+				<div className="space-y-3">
+					{schools.map((school, index) => (
+						<SchoolCard key={index} school={school} />
+					))}
+				</div>
+			</ScrollArea>
+		</Card>
+	)
 }

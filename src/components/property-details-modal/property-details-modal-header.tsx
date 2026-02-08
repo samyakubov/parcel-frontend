@@ -36,9 +36,9 @@ export default function PropertyDetailsModalHeader({ modal }: PropertyDetailsMod
 					&block=${modal.propertyData.records[0].prop_block}
 					&lot=${modal.propertyData.records[0].prop_lot}`}
 				>
-				   <span className="group-hover:underline underline-offset-4 decoration-primary/50">
-					  {modal.title}
-				   </span>
+					<span className="group-hover:underline underline-offset-4 decoration-primary/50">
+						{modal.title}
+					</span>
 				</a>
 				<button
 					onClick={async (e) => {
@@ -49,8 +49,8 @@ export default function PropertyDetailsModalHeader({ modal }: PropertyDetailsMod
 					className={`
 						  flex-none p-1 rounded transition-all duration-200
 						  ${copied
-							? "text-green-700 dark:text-green-400"
-							: "text-muted-foreground hover:text-primary"}`}
+			? "text-green-700 dark:text-green-400"
+			: "text-muted-foreground hover:text-primary"}`}
 					aria-label="Copy title">
 					{copied ? (
 						<Check className="w-4 h-4" />

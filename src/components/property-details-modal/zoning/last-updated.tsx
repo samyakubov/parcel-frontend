@@ -4,7 +4,7 @@ import { Clock } from "lucide-react"
 import { FORMAT_DATE } from "@/utils/format-date"
 
 interface LastUpdatedProps {
-    date: string;
+	date: string;
 }
 
 export default function LastUpdated({ date }: LastUpdatedProps) {

@@ -4,7 +4,7 @@ import PropertyRecordGridHeader from "@/components/property-details-modal/proper
 import PropertyRecordGridTable from "@/components/property-details-modal/property-record-grid/property-record-grid-table"
 
 interface GridProps {
-    data: PropertyRecord[];
+	data: PropertyRecord[];
 }
 
 export default function PropertyRecordGrid({ data }: GridProps) {

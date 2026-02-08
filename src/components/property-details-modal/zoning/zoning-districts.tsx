@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import {isEmpty} from "lodash-es"
 
 interface ZoningDistrictsProps {
-    districts: string[];
+	districts: string[];
 }
 
 export default function ZoningDistricts({ districts }: ZoningDistrictsProps) {
