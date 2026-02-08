@@ -3,7 +3,7 @@ import React from "react"
 import { Building2 } from "lucide-react"
 
 interface LimitedHeightDistrictProps {
-    district: string;
+	district: string;
 }
 
 export default function LimitedHeightDistrict({ district }: LimitedHeightDistrictProps) {

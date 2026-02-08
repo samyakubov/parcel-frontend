@@ -15,17 +15,17 @@ import {
 import { COMPLAINT_COLUMNS } from "@/constants/property"
 
 interface ComplaintsTableProps {
-    complaints: Complaint[];
+	complaints: Complaint[];
 }
 
 const getStatusVariant = (status: string) => {
 	switch (status) {
-	case "CLOSED":
-		return "secondary" as const
-	case "OPEN":
-		return "destructive" as const
-	default:
-		return "outline" as const
+		case "CLOSED":
+			return "secondary" as const
+		case "OPEN":
+			return "destructive" as const
+		default:
+			return "outline" as const
 	}
 }
 

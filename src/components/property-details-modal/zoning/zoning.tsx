@@ -19,11 +19,11 @@ interface ZoningSectionProps {
 export default function Zoning({ zoning }: ZoningSectionProps) {
 	const hasNoZoningData = isNull(zoning) || isUndefined(zoning) ||
 		isNull(zoning.zoning_districts) || isUndefined(zoning.zoning_districts) || (
-			isEmpty(zoning.zoning_districts) &&
+		isEmpty(zoning.zoning_districts) &&
 			isEmpty(zoning.commercial_overlays) &&
 			isEmpty(zoning.special_districts) &&
 			!zoning.limited_height_district
-		)
+	)
 
 	if (hasNoZoningData) {
 		return <ZoningEmpty />

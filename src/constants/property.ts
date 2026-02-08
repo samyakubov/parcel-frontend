@@ -18,8 +18,8 @@ export const VIOLATION_COLUMNS:string[] = [
 ]
 
 export const JOBS_COLUMNS = [
-    "Job Description",
-    "Applicant Name",
+	"Job Description",
+	"Applicant Name",
 	"Applicant Professional Title",
 	"Job Status",
 	"Job Type"

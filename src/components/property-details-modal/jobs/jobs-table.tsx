@@ -14,7 +14,7 @@ import {
 import { JOBS_COLUMNS } from "@/constants/property"
 
 interface JobsTableProps {
-    jobs: JobFiled[];
+	jobs: JobFiled[];
 }
 
 export default function JobsTable({ jobs }: JobsTableProps) {
