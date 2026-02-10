@@ -14,8 +14,8 @@ interface MortgageDetailsProps {
 export default function Mortgage({ borrower, lender, amount }: MortgageDetailsProps) {
 
 	return (
-		<Card className="w-full">
-			<CardHeader>
+		<Card className="w-full py-4 gap-4">
+			<CardHeader className="p-4 py-0">
 				<div className="flex items-center gap-2">
 					<div className="p-2 rounded-full bg-primary/10">
 						<Building2 className="h-4 w-4 text-primary" />
@@ -26,7 +26,7 @@ export default function Mortgage({ borrower, lender, amount }: MortgageDetailsPr
 				</div>
 			</CardHeader>
 
-			<CardContent className="space-y-4">
+			<CardContent className="space-y-4 p-4 py-0">
 				<MortgageDetailItem
 					icon={<User className="h-4 w-4 text-muted-foreground" />}
 					label="Borrower"

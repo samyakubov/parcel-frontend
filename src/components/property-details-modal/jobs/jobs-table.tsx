@@ -1,7 +1,5 @@
 "use client"
 import React from "react"
-import { AnimatePresence, motion } from "framer-motion"
-import { Card } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import {
 	Table,
@@ -14,27 +12,21 @@ import {
 import { JOBS_COLUMNS } from "@/constants/property"
 
 interface JobsTableProps {
-	jobs: JobFiled[];
+	jobs: JobFiled[]
 }
 
 export default function JobsTable({ jobs }: JobsTableProps) {
 	return (
-		<motion.div
-			initial={{ height: 0, opacity: 0 }}
-			animate={{ height: "auto", opacity: 1 }}
-			exit={{ height: 0, opacity: 0 }}
-			transition={{ duration: 0.3 }}
-			className="overflow-hidden"
-		>
-			<Card className="mt-4 border-border">
-				<ScrollArea className="h-96">
+		<div className="overflow-hidden">
+			<div className="mt-2 border-t border-border/50">
+				<ScrollArea className="h-60">
 					<Table>
 						<TableHeader>
 							<TableRow className="hover:bg-transparent">
 								{JOBS_COLUMNS.map((column) => (
 									<TableHead
 										key={column}
-										className="font-semibold text-foreground whitespace-nowrap"
+										className="font-semibold text-foreground whitespace-nowrap text-xs h-8"
 									>
 										{column}
 									</TableHead>
@@ -42,37 +34,32 @@ export default function JobsTable({ jobs }: JobsTableProps) {
 							</TableRow>
 						</TableHeader>
 						<TableBody>
-							<AnimatePresence>
-								{jobs.map((job, index) => (
-									<motion.tr
-										key={job.bin + " " + index.toString()}
-										initial={{ opacity: 0, x: -20 }}
-										animate={{ opacity: 1, x: 0 }}
-										transition={{ delay: index * 0.05 }}
-										className="border-b transition-colors hover:bg-muted/50"
-									>
-										<TableCell className="py-3 text-muted-foreground">
-											{job.job_description}
-										</TableCell>
-										<TableCell className="py-3 text-muted-foreground">
-											{job.applicant_first_name} {job.applicant_last_name}
-										</TableCell>
-										<TableCell className="py-3 text-muted-foreground">
-											{job.applicant_professional_title}
-										</TableCell>
-										<TableCell className="py-3 text-muted-foreground">
-											{job.job_status}
-										</TableCell>
-										<TableCell className="py-3 text-muted-foreground">
-											{job.job_type}
-										</TableCell>
-									</motion.tr>
-								))}
-							</AnimatePresence>
+							{jobs.map((job, index) => (
+								<tr
+									key={job.bin + " " + index.toString()}
+									className="border-b transition-colors hover:bg-muted/50"
+								>
+									<TableCell className="py-2 text-muted-foreground text-xs">
+										{job.job_description}
+									</TableCell>
+									<TableCell className="py-2 text-muted-foreground text-xs">
+										{job.applicant_first_name} {job.applicant_last_name}
+									</TableCell>
+									<TableCell className="py-2 text-muted-foreground text-xs">
+										{job.applicant_professional_title}
+									</TableCell>
+									<TableCell className="py-2 text-muted-foreground text-xs">
+										{job.job_status}
+									</TableCell>
+									<TableCell className="py-2 text-muted-foreground text-xs">
+										{job.job_type}
+									</TableCell>
+								</tr>
+							))}
 						</TableBody>
 					</Table>
 				</ScrollArea>
-			</Card>
-		</motion.div>
+			</div>
+		</div>
 	)
 }

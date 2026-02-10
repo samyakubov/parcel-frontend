@@ -19,19 +19,19 @@ interface ZoningSectionProps {
 export default function Zoning({ zoning }: ZoningSectionProps) {
 	const hasNoZoningData = isNull(zoning) || isUndefined(zoning) ||
 		isNull(zoning.zoning_districts) || isUndefined(zoning.zoning_districts) || (
-		isEmpty(zoning.zoning_districts) &&
+			isEmpty(zoning.zoning_districts) &&
 			isEmpty(zoning.commercial_overlays) &&
 			isEmpty(zoning.special_districts) &&
 			!zoning.limited_height_district
-	)
+		)
 
 	if (hasNoZoningData) {
 		return <ZoningEmpty />
 	}
 
 	return (
-		<Card className="w-full">
-			<CardHeader>
+		<Card className="w-full py-4 gap-4">
+			<CardHeader className="p-4 py-0">
 				<div className="flex items-center gap-2">
 					<div className="p-2 rounded-full bg-primary/10">
 						<Map className="h-4 w-4 text-primary" />
@@ -42,7 +42,7 @@ export default function Zoning({ zoning }: ZoningSectionProps) {
 				</div>
 			</CardHeader>
 
-			<CardContent className="space-y-4">
+			<CardContent className="space-y-4 p-4 py-0">
 				<ZoningDistricts districts={zoning.zoning_districts} />
 				<CommercialOverlays overlays={zoning.commercial_overlays} />
 				<SpecialDistricts districts={zoning.special_districts} />

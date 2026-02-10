@@ -10,7 +10,7 @@ interface SchoolsHeaderProps {
 
 export default function SchoolsHeader({ count }: SchoolsHeaderProps) {
 	return (
-		<CardHeader>
+		<CardHeader className="pb-0">
 			<div className="flex items-center justify-between">
 				<div className="flex items-center gap-2">
 					<div className="p-2 rounded-full bg-primary/10">
@@ -20,9 +20,6 @@ export default function SchoolsHeader({ count }: SchoolsHeaderProps) {
 						<h3 className="text-lg font-semibold leading-none">
 							Schools
 						</h3>
-						<p className="text-xs text-muted-foreground">
-							In the district
-						</p>
 					</div>
 				</div>
 				{!isNil(count) && (
