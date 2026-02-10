@@ -21,10 +21,10 @@ export default function Schools({ schools }: SchoolsProps) {
 	}
 
 	return (
-		<Card className="w-full h-[600px]">
+		<Card className="w-full">
 			<SchoolsHeader />
-			<ScrollArea className="h-[500px] p-4 w-full pr-4">
-				<div className="space-y-3">
+			<ScrollArea className="h-[400px] p-3 w-full pr-3">
+				<div className="space-y-2">
 					{schools.map((school, index) => (
 						<SchoolCard key={index} school={school} />
 					))}

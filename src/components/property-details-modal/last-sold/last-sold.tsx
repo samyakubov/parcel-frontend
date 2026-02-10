@@ -36,8 +36,10 @@ export default function LastSold({ lastSoldFor }: PropertyLastSaleProps) {
 				</CardHeader>
 
 				<CardContent className="space-y-4 p-4 py-0">
-					<LastSoldPrice lastSoldPrice={lastSoldFor.last_sold_price} />
-					<LastSoldDate saleDate={lastSoldFor.last_sold_date} />
+					<div className="flex gap-2">
+						<LastSoldPrice lastSoldPrice={lastSoldFor.last_sold_price} />
+						<LastSoldDate saleDate={lastSoldFor.last_sold_date} />
+					</div>
 				</CardContent>
 			</Card>
 		</motion.div>

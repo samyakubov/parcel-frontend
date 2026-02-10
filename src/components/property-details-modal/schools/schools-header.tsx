@@ -13,7 +13,7 @@ export default function SchoolsHeader({ count }: SchoolsHeaderProps) {
 		<CardHeader className="pb-0">
 			<div className="flex items-center justify-between">
 				<div className="flex items-center gap-2">
-					<div className="p-2 rounded-full bg-primary/10">
+					<div className="p-1.5 rounded-full bg-primary/10">
 						<School className="h-4 w-4 text-primary" />
 					</div>
 					<div className="flex flex-col gap-0.5">

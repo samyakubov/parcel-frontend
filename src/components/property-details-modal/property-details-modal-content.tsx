@@ -57,8 +57,8 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
 							initial={{ opacity: 0, scale: 0.95 }}
 							animate={{ opacity: 1, scale: 1 }}
 							transition={{ duration: 0.3 }}
-							className={`rounded-xl shadow-2xl w-full object-cover 
-										${modal.isExpanded ? "h-96" : "h-64"}
+							className={`rounded-lg w-full object-cover 
+										${modal.isExpanded ? "h-64" : "h-48"}
 									`}
 							src={
 								`https://maps.googleapis.com/maps/api/streetview?size=640x640&scale=2&fov=100&pitch=10
@@ -77,6 +77,11 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
 
 						<LastSold lastSoldFor={modal.propertyData.last_sold} />
 						<PublicTransportation routesNearBy={modal.routesNearBy} stopsNearBy={modal.stopsNearBy} />
+						<PropertyActivity
+							jobs={modal.propertyData.job_filings}
+							complaints={modal.propertyData.complaints}
+							violations={modal.propertyData.violations}
+						/>
 					</motion.div>
 					<motion.div
 						layout="preserve-aspect"
@@ -125,11 +130,7 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
 							)
 						}
 						<Schools schools={modal.schools} />
-						<PropertyActivity
-							jobs={modal.propertyData.job_filings}
-							complaints={modal.propertyData.complaints}
-							violations={modal.propertyData.violations}
-						/>
+
 					</motion.div>
 
 				</motion.div>

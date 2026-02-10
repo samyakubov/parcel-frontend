@@ -1,9 +1,8 @@
 "use client"
 import React, { useState } from "react"
-import { motion } from "framer-motion"
 import { modalStore } from "@/stores/modal-store"
 import { Copy, Check } from "lucide-react"
-import {handleCopy} from "@/utils/handle-copy"
+import { handleCopy } from "@/utils/handle-copy"
 
 interface PropertyDetailsModalHeaderProps {
 	modal: PropertyModal;
@@ -13,24 +12,20 @@ export default function PropertyDetailsModalHeader({ modal }: PropertyDetailsMod
 	const [copied, setCopied] = useState(false)
 
 	return (
-		<motion.div
-			layout="preserve-aspect"
-			transition={{ type: "spring", stiffness: 300, damping: 20 }}
-			className="flex-none flex items-center gap-4 p-5 bg-gradient-to-r from-primary/5 via-transparent to-transparent
-           border-b border-border/50 backdrop-blur-sm cursor-pointer"
+		<div
+			className="flex-none flex items-center gap-3 p-3 cursor-pointer"
 			onClick={() => modalStore.focusModal(modal.id)}
 		>
 			<div
-				className={`gap-2 px-3 py-1.5 rounded-xl ${
-					copied
-						? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
-						: "bg-muted hover:bg-primary/10 text-foreground cursor-pointer hover:shadow-sm"
+				className={`gap-2 px-2 py-1 rounded-lg ${copied
+					? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
+					: "bg-muted hover:bg-primary/10 text-foreground cursor-pointer hover:shadow-sm"
 				}`}
 			>
 				<a
 					target="_blank"
 					rel="noopener noreferrer"
-					className="text-xl font-bold text-foreground hover:text-primary transition-colors duration-300 group"
+					className="text-lg font-bold text-foreground hover:text-primary transition-colors duration-300 group"
 					href={`http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?
 					boro=${modal.propertyData.records[0].bbl[0]}
 					&block=${modal.propertyData.records[0].prop_block}
@@ -59,6 +54,6 @@ export default function PropertyDetailsModalHeader({ modal }: PropertyDetailsMod
 					)}
 				</button>
 			</div>
-		</motion.div>
+		</div>
 	)
 }

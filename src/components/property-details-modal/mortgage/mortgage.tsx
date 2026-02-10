@@ -32,16 +32,20 @@ export default function Mortgage({ borrower, lender, amount }: MortgageDetailsPr
 					label="Borrower"
 					value={borrower}
 				/>
-				<MortgageDetailItem
-					icon={<Landmark className="h-4 w-4 text-muted-foreground" />}
-					label="Lender"
-					value={lender}
-				/>
-				<MortgageDetailItem
-					icon={<DollarSign className="h-4 w-4 text-muted-foreground" />}
-					label="Amount"
-					value={`${FORMAT_PRICE(amount)}`}
-				/>
+				<div className="flex gap-4">
+					<MortgageDetailItem
+						icon={<Landmark className="h-4 w-4 text-muted-foreground" />}
+						label="Lender"
+						value={lender}
+						className={"w-1/2"}
+					/>
+					<MortgageDetailItem
+						icon={<DollarSign className="h-4 w-4 text-muted-foreground" />}
+						label="Amount"
+						value={`${FORMAT_PRICE(amount)}`}
+						className={"w-1/2"}
+					/>
+				</div>
 			</CardContent>
 		</Card>
 	)
