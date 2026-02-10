@@ -1,7 +1,5 @@
 "use client"
 import React from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import {
@@ -15,7 +13,7 @@ import {
 import { COMPLAINT_COLUMNS } from "@/constants/property"
 
 interface ComplaintsTableProps {
-	complaints: Complaint[];
+	complaints: Complaint[]
 }
 
 const getStatusVariant = (status: string) => {
@@ -31,22 +29,18 @@ const getStatusVariant = (status: string) => {
 
 export default function ComplaintsTable({ complaints }: ComplaintsTableProps) {
 	return (
-		<motion.div
-			initial={{ height: 0, opacity: 0 }}
-			animate={{ height: "auto", opacity: 1 }}
-			exit={{ height: 0, opacity: 0 }}
-			transition={{ duration: 0.3 }}
+		<div
 			className="overflow-hidden"
 		>
-			<Card className="mt-4 border-border">
-				<ScrollArea className="h-96">
+			<div className="mt-2 border-t border-border/50">
+				<ScrollArea className="h-60">
 					<Table>
 						<TableHeader>
-							<TableRow>
+							<TableRow className="hover:bg-transparent">
 								{COMPLAINT_COLUMNS.map((column) => (
 									<TableHead
 										key={column}
-										className="font-semibold text-foreground"
+										className="font-semibold text-foreground text-xs h-8"
 									>
 										{column}
 									</TableHead>
@@ -54,45 +48,40 @@ export default function ComplaintsTable({ complaints }: ComplaintsTableProps) {
 							</TableRow>
 						</TableHeader>
 						<TableBody>
-							<AnimatePresence>
-								{complaints.map((complaint, index) => (
-									<motion.tr
-										key={`${complaint.bin}-${index}`}
-										initial={{ opacity: 0, x: -20 }}
-										animate={{ opacity: 1, x: 0 }}
-										transition={{ delay: index * 0.05 }}
-										className="border-b"
-									>
-										<TableCell className="py-3">
-											<Badge variant={getStatusVariant(complaint.status)}>
-												{complaint.status}
-											</Badge>
-										</TableCell>
-										<TableCell className="py-3 text-muted-foreground">
-											{complaint.complaint_category}
-										</TableCell>
-										<TableCell className="py-3 text-muted-foreground">
-											{complaint.disposition_date || (
-												<span className="text-muted-foreground/50">—</span>
-											)}
-										</TableCell>
-										<TableCell className="py-3 text-muted-foreground">
-											{complaint.disposition_code || (
-												<span className="text-muted-foreground/50">—</span>
-											)}
-										</TableCell>
-										<TableCell className="py-3 text-muted-foreground">
-											{complaint.inspection_date || (
-												<span className="text-muted-foreground/50">—</span>
-											)}
-										</TableCell>
-									</motion.tr>
-								))}
-							</AnimatePresence>
+							{complaints.map((complaint, index) => (
+								<tr
+									key={`${complaint.bin}-${index}`}
+									className="border-b"
+								>
+									<TableCell className="py-2">
+										<Badge variant={getStatusVariant(complaint.status)} className="text-[10px] px-1.5 h-5">
+											{complaint.status}
+										</Badge>
+									</TableCell>
+									<TableCell className="py-2 text-muted-foreground text-xs">
+										{complaint.complaint_category}
+									</TableCell>
+									<TableCell className="py-2 text-muted-foreground text-xs">
+										{complaint.disposition_date || (
+											<span className="text-muted-foreground/50">—</span>
+										)}
+									</TableCell>
+									<TableCell className="py-2 text-muted-foreground text-xs">
+										{complaint.disposition_code || (
+											<span className="text-muted-foreground/50">—</span>
+										)}
+									</TableCell>
+									<TableCell className="py-2 text-muted-foreground text-xs">
+										{complaint.inspection_date || (
+											<span className="text-muted-foreground/50">—</span>
+										)}
+									</TableCell>
+								</tr>
+							))}
 						</TableBody>
 					</Table>
 				</ScrollArea>
-			</Card>
-		</motion.div>
+			</div>
+		</div>
 	)
 }

@@ -6,18 +6,16 @@ import Details from "@/components/property-details-modal/details/details"
 import Mortgage from "@/components/property-details-modal/mortgage/mortgage"
 import Zoning from "@/components/property-details-modal/zoning/zoning"
 import LastSold from "@/components/property-details-modal/last-sold/last-sold"
-import Jobs from "@/components/property-details-modal/jobs/jobs"
-import Complaints from "@/components/property-details-modal/complaints/complaints"
-import Violations from "@/components/property-details-modal/violations/violations"
 import Owners from "@/components/property-details-modal/owners/owners"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import PropertyRecordGrid from "@/components/property-details-modal/property-record-grid/property-records-grid"
 import { Landmark } from "lucide-react"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import PublicTransportation from "@/components/property-details-modal/public-transportation/public-transportation"
-import {isEmpty, isNil} from "lodash-es"
+import { isEmpty, isNil } from "lodash-es"
 import Schools from "@/components/property-details-modal/schools/schools"
 import Census from "@/components/property-details-modal/census/census"
+import PropertyActivity from "@/components/property-details-modal/property-activity"
 
 
 interface PropertyDetailsModalContentProps {
@@ -44,10 +42,10 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
 			layout="preserve-aspect"
 			className="flex-1 overflow-y-auto"
 		>
-			<div className="p-6 space-y-4">
+			<div className="p-4 space-y-4">
 				<motion.div
 					layout="preserve-aspect"
-					className={modal.isExpanded ? "flex gap-8 " : "space-y-4"}
+					className={modal.isExpanded ? "flex gap-4 " : "space-y-4"}
 				>
 					<motion.div
 						layout="preserve-aspect"
@@ -59,16 +57,15 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
 							initial={{ opacity: 0, scale: 0.95 }}
 							animate={{ opacity: 1, scale: 1 }}
 							transition={{ duration: 0.3 }}
-							className={`rounded-xl shadow-2xl w-full object-cover 
-										${modal.isExpanded ? "h-96" : "h-64"}
-									`}
-							src={
-								`https://maps.googleapis.com/maps/api/streetview?size=640x640&scale=2&fov=100&pitch=10
+							className={`rounded-lg w-full object-cover 
+								${modal.isExpanded ? "h-96" : "h-64"}
+							  `}
+							src={`https://maps.googleapis.com/maps/api/streetview?size=2048x2048&scale=2&fov=90&pitch=10
 								&location=${modal.propertyData.coordinates.latitude},${modal.propertyData.coordinates.longitude}
-								&key=${process.env.NEXT_PUBLIC_STREETVIEW_API_KEY}`
-							}
+								&key=${process.env.NEXT_PUBLIC_STREETVIEW_API_KEY}`}
 							alt="Google Street View"
 						/>
+
 
 
 						<Details
@@ -78,7 +75,8 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
 
 
 						<LastSold lastSoldFor={modal.propertyData.last_sold} />
-						<PublicTransportation routesNearBy={modal.routesNearBy} stopsNearBy={modal.stopsNearBy}/>
+						<PublicTransportation routesNearBy={modal.routesNearBy} stopsNearBy={modal.stopsNearBy} />
+
 					</motion.div>
 					<motion.div
 						layout="preserve-aspect"
@@ -126,8 +124,14 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
 
 							)
 						}
-						<Schools schools={modal.schools}/>
+						<Schools schools={modal.schools} />
+						<PropertyActivity
+							jobs={modal.propertyData.job_filings}
+							complaints={modal.propertyData.complaints}
+							violations={modal.propertyData.violations}
+						/>
 					</motion.div>
+
 				</motion.div>
 
 				<AnimatePresence>
@@ -136,12 +140,9 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
 							initial={{ opacity: 0, height: 0 }}
 							animate={{ opacity: 1, height: "auto" }}
 							exit={{ opacity: 0, height: 0 }}
+							className="space-y-4"
 						>
 							<Census census={modal.census} />
-
-							<Jobs jobsFiled={modal.propertyData.job_filings} />
-							<Complaints complaints={modal.propertyData.complaints} />
-							<Violations violations={modal.propertyData.violations} />
 							<PropertyRecordGrid data={modal.propertyData.records} />
 						</motion.div>
 					)}

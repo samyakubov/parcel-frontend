@@ -10,7 +10,7 @@ interface LastSoldPriceProps {
 
 export default function LastSoldPrice({ lastSoldPrice }: LastSoldPriceProps) {
 	return (
-		<div className="flex items-start gap-3 p-3 rounded-lg border bg-card">
+		<div className="flex items-start gap-3 p-3 rounded-lg border bg-card w-1/2">
 			<div className="p-2 rounded-full bg-muted mt-1">
 				<DollarSign className="h-4 w-4 text-muted-foreground" />
 			</div>

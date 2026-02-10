@@ -29,7 +29,7 @@ export default function PublicTransportation({ routesNearBy, stopsNearBy }: Publ
 
 	return (
 		<Card className="overflow-hidden">
-			<PublicTransportationHeader count={routesNearBy.length} />
+			<PublicTransportationHeader />
 			<CardContent className="p-3">
 				<div className="max-h-96 overflow-y-auto pr-2">
 					<Accordion type="single" collapsible className="space-y-3">

@@ -23,8 +23,8 @@ export default function Details({ firstRecord, lastSold }: PropertyDetailProps) 
 	}
 
 	return (
-		<Card className="w-full">
-			<CardHeader>
+		<Card className="w-full py-4 gap-4">
+			<CardHeader className="p-4 py-0">
 				<div className="flex items-center gap-2">
 					<div className="p-2 rounded-full bg-primary/10">
 						<Building2 className="h-4 w-4 text-primary" />
@@ -33,20 +33,23 @@ export default function Details({ firstRecord, lastSold }: PropertyDetailProps) 
 				</div>
 			</CardHeader>
 
-			<CardContent className="space-y-4">
-				<PropertyDetailItem
-					icon={<Home className="h-4 w-4 text-muted-foreground" />}
-					label="Property Type"
-					value={firstRecord.prop_type}
-				/>
-				<PropertyDetailItem
-					icon={<Hash className="h-4 w-4 text-muted-foreground" />}
-					label="BBL"
-					value={firstRecord.bbl}
-					enableCopy={true}
-				/>
-				<PropertyDetailList firstRecord={firstRecord} lastSold={lastSold} />
+			<CardContent className="p-4 py-0">
+				<div className="grid grid-cols-2 gap-4">
+					<PropertyDetailItem
+						icon={<Home className="h-4 w-4 text-muted-foreground" />}
+						label="Property Type"
+						value={firstRecord.prop_type}
+					/>
+					<PropertyDetailItem
+						icon={<Hash className="h-4 w-4 text-muted-foreground" />}
+						label="BBL"
+						value={firstRecord.bbl}
+						enableCopy
+					/>
+					<PropertyDetailList firstRecord={firstRecord} lastSold={lastSold} />
+				</div>
 			</CardContent>
+
 		</Card>
 	)
 }

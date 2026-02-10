@@ -15,9 +15,6 @@ export default function PublicTransportationLoading() {
 						<h3 className="text-lg font-semibold">
 							Public Transportation
 						</h3>
-						<p className="text-sm italic text-gray-500">
-							Within a mile radius
-						</p>
 					</div>
 				</div>
 			</CardHeader>

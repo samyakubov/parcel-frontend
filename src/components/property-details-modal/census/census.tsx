@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from "react"
-import {PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, PieSectorDataItem} from "recharts"
+import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, PieSectorDataItem } from "recharts"
 import { Card, CardContent } from "@/components/ui/card"
 import CensusHeader from "@/components/property-details-modal/census/census-header"
 import PropertyDetailItem from "@/components/property-details-modal/mortgage/property-detail-item"
@@ -11,7 +11,7 @@ import { FORMAT_PRICE } from "@/utils/format-price"
 import isUndefined from "lodash-es/isUndefined"
 import CensusLoading from "@/components/property-details-modal/census/census-loading"
 import { toJS } from "mobx"
-import {CustomTooltip} from "@/components/property-details-modal/census/custom-chart-tooltip"
+import { CustomTooltip } from "@/components/property-details-modal/census/custom-chart-tooltip"
 
 interface CensusProps {
 	census: CensusDemographicDataResponse | null | undefined
@@ -52,9 +52,9 @@ export default function Census({ census }: CensusProps) {
 	}
 
 	return (
-		<Card className="w-full mb-3">
+		<Card className="w-full">
 			<CensusHeader />
-			<CardContent className="flex flex-col lg:flex-row gap-6 py-6">
+			<CardContent className="flex flex-col lg:flex-row gap-4 py-4">
 				<div className="flex-1 space-y-4">
 					<PropertyDetailItem
 						icon={<Users className="h-4 w-4 text-muted-foreground" />}

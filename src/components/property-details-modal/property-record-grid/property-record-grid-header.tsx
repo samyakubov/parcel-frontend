@@ -1,5 +1,6 @@
 "use client"
 import React from "react"
+import {CardHeader} from "@/components/ui/card"
 
 interface PropertyRecordGridHeaderProps {
 	bbl: string;
@@ -9,7 +10,7 @@ interface PropertyRecordGridHeaderProps {
 
 export default function PropertyRecordGridHeader({ bbl, block, lot }: PropertyRecordGridHeaderProps) {
 	return (
-		<div className="flex items-center gap-3 w-full">
+		<CardHeader className="flex items-center gap-3 w-full">
 			<a
 				target="_blank"
 				rel="noopener noreferrer"
@@ -20,6 +21,6 @@ export default function PropertyRecordGridHeader({ bbl, block, lot }: PropertyRe
 			>
 				<span className="group-hover:underline underline-offset-4 decoration-primary/50">ACRIS Records</span>
 			</a>
-		</div>
+		</CardHeader>
 	)
 }

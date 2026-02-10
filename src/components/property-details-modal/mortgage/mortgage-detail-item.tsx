@@ -5,11 +5,12 @@ interface MortgageDetailItemProps {
 	icon: React.ReactNode;
 	label: string;
 	value: string | React.ReactNode;
+	className?:string;
 }
 
-export default function MortgageDetailItem({ icon, label, value }: MortgageDetailItemProps) {
+export default function MortgageDetailItem({ icon, label, value, className }: MortgageDetailItemProps) {
 	return (
-		<div className="flex items-center gap-3 p-3 rounded-lg border bg-card">
+		<div className={`flex items-center gap-3 p-3 rounded-lg border bg-card ${className}`}>
 			<div className="p-2 rounded-full bg-muted">
 				{icon}
 			</div>

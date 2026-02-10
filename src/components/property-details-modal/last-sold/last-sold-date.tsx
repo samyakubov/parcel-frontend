@@ -11,7 +11,7 @@ export default function LastSoldDate({ saleDate }: LastSoldDateProps) {
 	if (!saleDate) return null
 
 	return (
-		<div className="flex items-center gap-3 p-3 rounded-lg border bg-card">
+		<div className="flex items-center gap-3 p-3 rounded-lg border bg-card w-1/2">
 			<div className="p-2 rounded-full bg-muted">
 				<Calendar className="h-4 w-4 text-muted-foreground" />
 			</div>
