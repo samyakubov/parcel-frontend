@@ -1,14 +1,10 @@
 import React from "react"
 import { CardHeader } from "@/components/ui/card"
 import { School } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
-import { isNil } from "lodash-es"
 
-interface SchoolsHeaderProps {
-	count?: number
-}
 
-export default function SchoolsHeader({ count }: SchoolsHeaderProps) {
+
+export default function SchoolsHeader() {
 	return (
 		<CardHeader className="pb-0">
 			<div className="flex items-center justify-between">
@@ -16,17 +12,12 @@ export default function SchoolsHeader({ count }: SchoolsHeaderProps) {
 					<div className="p-1.5 rounded-full bg-primary/10">
 						<School className="h-4 w-4 text-primary" />
 					</div>
-					<div className="flex flex-col gap-0.5">
+					<div className="flex flex-col">
 						<h3 className="text-lg font-semibold leading-none">
 							Schools
 						</h3>
 					</div>
 				</div>
-				{!isNil(count) && (
-					<Badge variant="secondary" className="px-2">
-						{count} schools
-					</Badge>
-				)}
 			</div>
 		</CardHeader>
 	)

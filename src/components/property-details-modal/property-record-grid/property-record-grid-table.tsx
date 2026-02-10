@@ -14,6 +14,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {orderBy} from "lodash-es"
+import {CardContent} from "@/components/ui/card"
 
 const COOP_PROPERTY_TYPES = ["Co-op", "Cooperative"]
 
@@ -103,13 +104,12 @@ export default function PropertyRecordGridTable({ data }: GridProps) {
 	const showUnitColumn = columnConfig.length > 6
 
 	return (
-		<div className="space-y-4">
-
-			<div className="rounded-xl border bg-card/50 backdrop-blur-sm shadow-sm overflow-hidden">
+		<CardContent className="space-y-4">
+			<div className="rounded-xl border bg-card/50 overflow-hidden">
 				<ScrollArea className="h-[600px] w-full">
 					<Table>
-						<TableHeader className="sticky top-0 bg-muted/80 backdrop-blur-md z-10 border-b">
-							<TableRow className="hover:bg-transparent">
+						<TableHeader className="sticky top-0 bg-muted/80 z-10">
+							<TableRow>
 								{columnConfig.map((column) => (
 									<TableHead key={column.key}
 										className="text-xs font-semibold uppercase tracking-wider text-muted-foreground"
@@ -118,7 +118,7 @@ export default function PropertyRecordGridTable({ data }: GridProps) {
 											<Button
 												variant="ghost"
 												onClick={() => handleSort(column.key)}
-												className="-ml-4 h-auto p-2 hover:bg-transparent hover:text-foreground transition-colors"
+												className="-ml-4 h-auto p-2 hover:text-foreground transition-colors"
 											>
 												{column.label}
 												{getSortIcon(column.key)}
@@ -187,6 +187,6 @@ export default function PropertyRecordGridTable({ data }: GridProps) {
 					</Table>
 				</ScrollArea>
 			</div>
-		</div>
+		</CardContent>
 	)
 }

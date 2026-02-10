@@ -21,9 +21,9 @@ export default function Schools({ schools }: SchoolsProps) {
 	}
 
 	return (
-		<Card className="w-full">
+		<Card className="w-full h-[450px] overflow-hidden flex flex-col">
 			<SchoolsHeader />
-			<ScrollArea className="h-[400px] p-3 w-full pr-3">
+			<ScrollArea className="flex-1 p-3 pr-3 overflow-y-auto">
 				<div className="space-y-2">
 					{schools.map((school, index) => (
 						<SchoolCard key={index} school={school} />
@@ -31,5 +31,6 @@ export default function Schools({ schools }: SchoolsProps) {
 				</div>
 			</ScrollArea>
 		</Card>
+
 	)
 }
