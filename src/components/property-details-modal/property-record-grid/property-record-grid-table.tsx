@@ -104,7 +104,7 @@ export default function PropertyRecordGridTable({ data }: GridProps) {
 	const showUnitColumn = columnConfig.length > 6
 
 	return (
-		<CardContent className="space-y-4">
+		<CardContent className="space-y-2">
 			<div className="rounded-xl border bg-card/50 overflow-hidden">
 				<ScrollArea className="h-[600px] w-full">
 					<Table>
@@ -118,7 +118,7 @@ export default function PropertyRecordGridTable({ data }: GridProps) {
 											<Button
 												variant="ghost"
 												onClick={() => handleSort(column.key)}
-												className="-ml-4 h-auto p-2 hover:text-foreground transition-colors"
+												className="-ml-4 h-auto p-2 transition-colors"
 											>
 												{column.label}
 												{getSortIcon(column.key)}
@@ -134,11 +134,11 @@ export default function PropertyRecordGridTable({ data }: GridProps) {
 							{sortedData.map((record, index) => (
 								<TableRow
 									key={`${record.documentid}-${index}`}
-									className="group hover:bg-accent/50 transition-colors border-b border-border/50"
+									className="group border-b border-border/50"
 								>
 									<TableCell className="py-4">
 										<div className="flex items-center gap-2">
-											<div className="w-1 h-8 rounded-full bg-primary/20 group-hover:bg-primary transition-colors" />
+											<div className="w-1 h-8 rounded-full bg-primary/20" />
 											<span className="text-base font-bold text-foreground">
 												{formatCurrency(record.amount)}
 											</span>

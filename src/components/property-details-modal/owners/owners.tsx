@@ -25,8 +25,8 @@ export default function Owners({ currentOwners, previousOwners }: OwnerProps) {
 			animate={{ opacity: 1, y: 0 }}
 			className="w-full"
 		>
-			<Card className="py-4 gap-4">
-				<CardHeader className="p-4 py-0">
+			<Card className="py-2 gap-2">
+				<CardHeader className="p-2">
 					<div className="flex items-center gap-2">
 						<div className="p-2 rounded-full bg-primary/10">
 							<Users className="h-4 w-4 text-primary" />
@@ -37,11 +37,11 @@ export default function Owners({ currentOwners, previousOwners }: OwnerProps) {
 					</div>
 				</CardHeader>
 
-				<CardContent className="space-y-4 p-4 py-0">
+				<CardContent className="space-y-2 p-2 py-0">
 					<CurrentOwners owners={currentOwners} />
 				</CardContent>
 
-				<CardContent className="p-4 py-0">
+				<CardContent className="p-2 py-0">
 					<PreviousOwners previousOwners={previousOwners} />
 				</CardContent>
 			</Card>

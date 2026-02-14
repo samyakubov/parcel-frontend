@@ -23,7 +23,7 @@ export default function Details({ firstRecord, lastSold }: PropertyDetailProps) 
 	}
 
 	return (
-		<Card className="w-full py-4 gap-4">
+		<Card className="w-full py-2 gap-2">
 			<CardHeader className="p-4 py-0">
 				<div className="flex items-center gap-2">
 					<div className="p-2 rounded-full bg-primary/10">
@@ -34,7 +34,7 @@ export default function Details({ firstRecord, lastSold }: PropertyDetailProps) 
 			</CardHeader>
 
 			<CardContent className="p-4 py-0">
-				<div className="grid grid-cols-2 gap-4">
+				<div className="grid grid-cols-2 gap-2">
 					<PropertyDetailItem
 						icon={<Home className="h-4 w-4 text-muted-foreground" />}
 						label="Property Type"

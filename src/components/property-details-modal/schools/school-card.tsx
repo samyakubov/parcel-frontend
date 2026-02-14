@@ -12,7 +12,7 @@ export default function SchoolCard({ school }: { school: School }) {
 
 	return (
 		<Card className="overflow-hidden shadow-none bg-muted/30">
-			<CardContent className="p-3">
+			<CardContent className="p-2">
 				<div className="flex items-start justify-between gap-2 mb-2">
 					<div className="flex-1 min-w-0">
 						<h3 className="font-semibold text-sm mb-1 line-clamp-1">
@@ -28,7 +28,7 @@ export default function SchoolCard({ school }: { school: School }) {
 					</Badge>
 				</div>
 
-				<div className="flex items-center gap-3 text-xs pt-2 border-t">
+				<div className="flex items-center text-xs pt-2 border-t">
 					<div className="flex-1">
 						<span className="text-muted-foreground">Category: </span>
 						<span className="font-medium">{school.location_category_description}</span>

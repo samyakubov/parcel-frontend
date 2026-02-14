@@ -28,20 +28,18 @@ export default function PublicTransportation({ routesNearBy, stopsNearBy }: Publ
 	}
 
 	return (
-		<Card className="overflow-hidden">
+		<Card className="w-full py-2 gap-2">
 			<PublicTransportationHeader />
-			<CardContent className="p-3">
-				<div className="max-h-96 overflow-y-auto pr-2">
-					<Accordion type="single" collapsible className="space-y-3">
-						{routesNearBy.map((route) => (
-							<RouteItem
-								key={route.route_id}
-								route={route}
-								nearbyStopIds={nearbyStopIds}
-							/>
-						))}
-					</Accordion>
-				</div>
+			<CardContent className="max-h-64 overflow-y-auto">
+				<Accordion type="single" collapsible className="space-y-1">
+					{routesNearBy.map((route) => (
+						<RouteItem
+							key={route.route_id}
+							route={route}
+							nearbyStopIds={nearbyStopIds}
+						/>
+					))}
+				</Accordion>
 			</CardContent>
 		</Card>
 	)
