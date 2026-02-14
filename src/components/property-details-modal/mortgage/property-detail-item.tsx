@@ -22,7 +22,7 @@ export default function PropertyDetailItem({ icon, label, value, enableCopy }: P
 	}
 
 	return (
-		<div className="flex items-center gap-3 p-3 rounded-lg border bg-card">
+		<div className="flex items-center gap-3 p-1 rounded-lg border bg-card">
 			<div className="p-2 rounded-full bg-muted">
 				{icon}
 			</div>

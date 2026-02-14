@@ -26,13 +26,13 @@ export default function Mortgage({ borrower, lender, amount }: MortgageDetailsPr
 				</div>
 			</CardHeader>
 
-			<CardContent className="space-y-4 p-4 py-0">
+			<CardContent className="space-y-2 p-2">
 				<MortgageDetailItem
 					icon={<User className="h-4 w-4 text-muted-foreground" />}
 					label="Borrower"
 					value={borrower}
 				/>
-				<div className="flex gap-4">
+				<div className="flex gap-2">
 					<MortgageDetailItem
 						icon={<Landmark className="h-4 w-4 text-muted-foreground" />}
 						label="Lender"

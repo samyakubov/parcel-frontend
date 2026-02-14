@@ -10,7 +10,7 @@ interface GridProps {
 
 export default function PropertyRecordGrid({ data }: GridProps) {
 	return (
-		<Card className="space-y-4">
+		<Card className="space-y-2">
 			<PropertyRecordGridHeader bbl={data[0].bbl} block={data[0].prop_block} lot={data[0].prop_lot} />
 			<PropertyRecordGridTable data={data} />
 		</Card>

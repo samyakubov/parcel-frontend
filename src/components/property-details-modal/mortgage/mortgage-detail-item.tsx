@@ -10,7 +10,7 @@ interface MortgageDetailItemProps {
 
 export default function MortgageDetailItem({ icon, label, value, className }: MortgageDetailItemProps) {
 	return (
-		<div className={`flex items-center gap-3 p-3 rounded-lg border bg-card ${className}`}>
+		<div className={`flex items-center gap-3 p-2 rounded-lg border bg-card ${className}`}>
 			<div className="p-2 rounded-full bg-muted">
 				{icon}
 			</div>

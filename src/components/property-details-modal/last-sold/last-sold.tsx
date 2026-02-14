@@ -24,7 +24,7 @@ export default function LastSold({ lastSoldFor }: PropertyLastSaleProps) {
 			className="w-full"
 		>
 			<Card className="py-4 gap-4">
-				<CardHeader className="p-4 py-0">
+				<CardHeader className="p-2 py-0">
 					<div className="flex items-center gap-2">
 						<div className="p-2 rounded-full bg-primary/10">
 							<TrendingUp className="h-4 w-4 text-primary" />
@@ -35,7 +35,7 @@ export default function LastSold({ lastSoldFor }: PropertyLastSaleProps) {
 					</div>
 				</CardHeader>
 
-				<CardContent className="space-y-4 p-4 py-0">
+				<CardContent className="space-y-1 p-1 py-0">
 					<div className="flex gap-2">
 						<LastSoldPrice lastSoldPrice={lastSoldFor.last_sold_price} />
 						<LastSoldDate saleDate={lastSoldFor.last_sold_date} />

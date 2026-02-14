@@ -54,8 +54,8 @@ export default function Census({ census }: CensusProps) {
 	return (
 		<Card className="w-full">
 			<CensusHeader />
-			<CardContent className="flex flex-col lg:flex-row gap-4 py-4">
-				<div className="flex-1 space-y-4">
+			<CardContent className="flex flex-col lg:flex-row gap-4 py-2">
+				<div className="flex-1 space-y-2">
 					<PropertyDetailItem
 						icon={<Users className="h-4 w-4 text-muted-foreground" />}
 						label="Population"
@@ -83,10 +83,9 @@ export default function Census({ census }: CensusProps) {
 					/>
 				</div>
 
-				<div className="flex-1 flex flex-col min-h-[400px]">
-					<div className="text-center mb-2">
+				<div className="flex-1 flex flex-col min-h-[300px]">
+					<div className="text-center mb-1">
 						<h3 className="text-lg font-semibold">Race & Ethnicity Demographics</h3>
-						<p className="text-sm text-muted-foreground">Population breakdown by race</p>
 					</div>
 					<div className="flex-1 w-full">
 						<ResponsiveContainer width="100%" height="100%">
@@ -104,8 +103,8 @@ export default function Census({ census }: CensusProps) {
 									nameKey="label"
 									cx="50%"
 									cy="50%"
-									innerRadius={60}
-									outerRadius={100}
+									innerRadius={45}
+									outerRadius={80}
 									paddingAngle={2}
 									labelLine={false}
 									onMouseEnter={onPieEnter}

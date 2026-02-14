@@ -23,7 +23,7 @@ export default function Schools({ schools }: SchoolsProps) {
 	return (
 		<Card className="w-full h-[450px] overflow-hidden flex flex-col">
 			<SchoolsHeader />
-			<ScrollArea className="flex-1 p-3 pr-3 overflow-y-auto">
+			<ScrollArea className="flex-1 p-2 pr-2 overflow-y-auto">
 				<div className="space-y-2">
 					{schools.map((school, index) => (
 						<SchoolCard key={index} school={school} />

@@ -42,14 +42,14 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
 			layout="preserve-aspect"
 			className="flex-1 overflow-y-auto"
 		>
-			<div className="p-4 space-y-4">
+			<div className="p-2 space-y-2">
 				<motion.div
 					layout="preserve-aspect"
-					className={modal.isExpanded ? "flex gap-4 " : "space-y-4"}
+					className={modal.isExpanded ? "flex gap-2 " : "space-y-2"}
 				>
 					<motion.div
 						layout="preserve-aspect"
-						className={modal.isExpanded ? "w-1/2 space-y-4" : "space-y-4"}
+						className={modal.isExpanded ? "w-1/2 space-y-2" : "space-y-2"}
 					>
 
 						<motion.img
@@ -58,15 +58,13 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
 							animate={{ opacity: 1, scale: 1 }}
 							transition={{ duration: 0.3 }}
 							className={`rounded-lg w-full object-cover 
-								${modal.isExpanded ? "h-96" : "h-64"}
+								${modal.isExpanded ? "h-80" : "h-64"}
 							  `}
 							src={`https://maps.googleapis.com/maps/api/streetview?size=2048x2048&scale=2&fov=90&pitch=10
 								&location=${modal.propertyData.coordinates.latitude},${modal.propertyData.coordinates.longitude}
 								&key=${process.env.NEXT_PUBLIC_STREETVIEW_API_KEY}`}
 							alt="Google Street View"
 						/>
-
-
 
 						<Details
 							firstRecord={!isNil(firstDeedOrMortgageRecord) ? firstDeedOrMortgageRecord : modal.propertyData.records[0]}
@@ -76,11 +74,15 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
 
 						<LastSold lastSoldFor={modal.propertyData.last_sold} />
 						<PublicTransportation routesNearBy={modal.routesNearBy} stopsNearBy={modal.stopsNearBy} />
-
+						<PropertyActivity
+							jobs={modal.propertyData.job_filings}
+							complaints={modal.propertyData.complaints}
+							violations={modal.propertyData.violations}
+						/>
 					</motion.div>
 					<motion.div
 						layout="preserve-aspect"
-						className={modal.isExpanded ? "w-1/2 space-y-4" : "space-y-4"}
+						className={modal.isExpanded ? "w-1/2 space-y-2" : "space-y-2"}
 					>
 						<Zoning zoning={modal.propertyData.zoning} />
 
@@ -125,11 +127,7 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
 							)
 						}
 						<Schools schools={modal.schools} />
-						<PropertyActivity
-							jobs={modal.propertyData.job_filings}
-							complaints={modal.propertyData.complaints}
-							violations={modal.propertyData.violations}
-						/>
+
 					</motion.div>
 
 				</motion.div>
@@ -140,7 +138,7 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
 							initial={{ opacity: 0, height: 0 }}
 							animate={{ opacity: 1, height: "auto" }}
 							exit={{ opacity: 0, height: 0 }}
-							className="space-y-4"
+							className="space-y-2"
 						>
 							<Census census={modal.census} />
 							<PropertyRecordGrid data={modal.propertyData.records} />

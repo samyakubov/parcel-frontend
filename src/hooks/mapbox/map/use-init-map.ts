@@ -24,7 +24,7 @@ export default function useInitMap(containerId: string, initialStyle: MapStyle =
 
 		mapStore.setMap(mapRef.current)
 
-		mapRef.current.on("load", () => {
+		mapRef.current.on("idle", () => {
 			const map = mapRef.current
 			if (!map) return
 
