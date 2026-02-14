@@ -5,8 +5,8 @@ import { BusFront } from "lucide-react"
 
 export default function PublicTransportationHeader() {
 	return (
-		<CardHeader>
-			<div className="flex items-center justify-between">
+		<CardHeader className="p-4 py-2">
+			<div className="flex justify-between">
 				<div className="flex items-center gap-2">
 					<div className="p-2 rounded-full bg-primary/10">
 						<BusFront className="h-4 w-4 text-primary" />

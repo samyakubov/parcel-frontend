@@ -6,7 +6,7 @@ import { School } from "lucide-react"
 
 export default function SchoolsHeader() {
 	return (
-		<CardHeader className="pb-0">
+		<CardHeader className="p-4 py-0">
 			<div className="flex items-center justify-between">
 				<div className="flex items-center gap-2">
 					<div className="p-1.5 rounded-full bg-primary/10">

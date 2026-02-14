@@ -21,7 +21,7 @@ export default function Schools({ schools }: SchoolsProps) {
 	}
 
 	return (
-		<Card className="w-full h-[450px] overflow-hidden flex flex-col">
+		<Card className="w-full flex flex-col max-h-[600px]">
 			<SchoolsHeader />
 			<ScrollArea className="flex-1 p-2 pr-2 overflow-y-auto">
 				<div className="space-y-2">

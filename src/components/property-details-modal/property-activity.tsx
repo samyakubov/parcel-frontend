@@ -30,8 +30,8 @@ export default function PropertyActivity({ jobs, complaints, violations }: Prope
 	}
 
 	return (
-		<Card className="w-full">
-			<CardHeader>
+		<Card className="w-full py-2 gap-2">
+			<CardHeader className="p-4 py-2">
 				<div className="flex items-center gap-2">
 					<div className="rounded-full bg-primary/10">
 						<Activity className="h-4 w-4 text-primary" />
