@@ -13,17 +13,23 @@ export default function MinimizedModal(props: MinimizedModalProps) {
 	return (
 		<motion.div
 			key={modal.id}
-			className="group relative"
+			className="group relative flex-shrink-0"
 		>
 			<MinimizedModalActions modal={modal} />
 
 			<motion.div
-				className="flex items-center pl-3 pr-4 py-2.5 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-2xl
-                shadow-xl hover:shadow-2xl border border-slate-200/60 dark:border-gray-700/60
-                hover:bg-white/90 dark:hover:bg-gray-800/90 hover:border-slate-300/60 dark:hover:border-gray-600/60
-                transition-all duration-300 group-hover:scale-105"
+				className="flex items-center pl-3 pr-4 py-2.5
+				min-w-[120px] min-h-[48px] md:min-w-0 md:min-h-0
+				bg-card/80 backdrop-blur-sm rounded-2xl
+                shadow-xl hover:shadow-2xl border border-border/60
+                hover:bg-card/90 hover:border-border
+                transition-all duration-300 group-hover:scale-105
+                motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+				style={{
+					willChange: "transform"
+				}}
 			>
-				<span className="text-gray-900 dark:text-gray-100 text-sm font-semibold truncate max-w-[140px]">
+				<span className="text-card-foreground text-sm font-semibold truncate max-w-[140px]">
 					{modal.title}
 				</span>
 			</motion.div>

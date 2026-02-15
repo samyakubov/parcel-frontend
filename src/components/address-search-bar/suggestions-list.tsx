@@ -22,7 +22,8 @@ function SuggestionsList() {
 		<ul
 			ref={suggestionsRef}
 			className="bg-background/95 dark:bg-background/90 backdrop-blur-2xl border border-border/50
-			dark:border-white/10 rounded-xl shadow-2xl shadow-black/10 dark:shadow-black/30 max-h-60 overflow-auto p-1.5"
+			dark:border-white/10 rounded-xl shadow-2xl shadow-black/10 dark:shadow-black/30 max-h-60 overflow-auto p-1.5
+			relative z-50"
 		>
 			{searchStore._suggestions.map((suggestion) => (
 				<SuggestionItem key={suggestion.id} suggestion={suggestion} />

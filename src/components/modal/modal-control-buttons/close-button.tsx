@@ -16,6 +16,7 @@ export default function CloseButton({ currentModal }: CloseButtonProps) {
 			size="icon"
 			variant="ghost"
 			aria-label="Close modal"
+			className="w-11 h-11 md:w-10 md:h-10"
 		>
 			<motion.div
 				onClick={()=>modalStore.closeModal(currentModal.id)}

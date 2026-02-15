@@ -19,8 +19,11 @@ export default function Modal({
 				initial="hidden"
 				animate="visible"
 				exit="exit"
-				transition={{ duration: 0.2 }}
-				className={"fixed inset-0 overflow-hidden"}
+				transition={{
+					duration: 0.2,
+					ease: "easeOut"
+				}}
+				className={"fixed inset-0 overflow-hidden motion-reduce:transition-none"}
 				style={{
 					pointerEvents: "none",
 					zIndex: modal.zIndex

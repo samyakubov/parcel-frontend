@@ -17,6 +17,7 @@ export default function ExpandModalButton({ currentModal }: ExpandModalButtonPro
 			size="icon"
 			variant="ghost"
 			aria-label={currentModal?.isExpanded ? "Restore" : "Maximize"}
+			className="w-11 h-11 md:w-10 md:h-10"
 		>
 			<motion.div
 				onClick={() => modalStore.toggleModalExpand(currentModal.id)}

@@ -3,6 +3,7 @@ import isUndefined from "lodash-es/isUndefined"
 import { toast } from "react-toastify"
 import { mapStore } from "@/stores/map-store"
 import { isEmpty } from "lodash-es"
+import { uiStore } from "@/stores/ui-store"
 
 class ModalStore {
 	constructor() {
@@ -65,6 +66,16 @@ class ModalStore {
 			return
 		}
 
+		// On mobile, minimize all currently open modals before adding new one
+		if (uiStore.isMobileView) {
+			const openModals = this._propertyModals.filter(
+				modal => modal.isOpen && !modal.isMinimized
+			)
+			openModals.forEach(modal => {
+				this.setModalState(modal.id, { isMinimized: true })
+			})
+		}
+
 		this._propertyModals.push(newModal)
 		return
 	})
@@ -86,6 +97,16 @@ class ModalStore {
 	})
 
 	public restoreModal = action((id: string) => {
+		// On mobile, minimize all other open modals before restoring this one
+		if (uiStore.isMobileView) {
+			const otherOpenModals = this._propertyModals.filter(
+				modal => modal.id !== id && modal.isOpen && !modal.isMinimized
+			)
+			otherOpenModals.forEach(modal => {
+				this.setModalState(modal.id, { isMinimized: true })
+			})
+		}
+
 		this.setModalState(id, {
 			isMinimized: false,
 			isOpen: true,

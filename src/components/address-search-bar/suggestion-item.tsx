@@ -17,8 +17,9 @@ export default function SuggestionItem({ suggestion }: SuggestionItemProps) {
 			onClick={() => {
 				handleSuggestionClick(suggestion)
 			}}
-			className="px-4 py-3 cursor-pointer transition-all duration-300 rounded-lg
-			    flex items-center gap-3 text-popover-foreground hover:bg-accent/50 hover:pl-5"
+			className="cursor-pointer transition-all duration-300 rounded-lg
+			    flex items-center gap-3 text-popover-foreground hover:bg-accent/50 hover:pl-5
+				px-4 py-4 md:py-3"
 		>
 			<MapPin
 				size={18}

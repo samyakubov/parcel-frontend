@@ -16,6 +16,7 @@ export default function MinimizeButton ({ currentModal }: MinimizeButtonProps) {
 			size="icon"
 			variant="ghost"
 			aria-label="Minimize window"
+			className="w-11 h-11 md:w-10 md:h-10"
 		>
 			<motion.div
 				onClick={()=>modalStore.minimizeModal(currentModal.id)}

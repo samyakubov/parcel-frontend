@@ -121,6 +121,59 @@
     }
 }
 
+/* Animation performance optimizations */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Optimize animations for mobile */
+@media (max-width: 767px) {
+    [class*="motion-"],
+    [class*="animate-"],
+    [class*="transition-"] {
+        will-change: transform, opacity;
+    }
+    
+    /* Remove will-change after animation completes */
+    [class*="motion-"]:not(:hover):not(:focus),
+    [class*="animate-"]:not(:hover):not(:focus),
+    [class*="transition-"]:not(:hover):not(:focus) {
+        will-change: auto;
+    }
+}
+
+/* Safe area inset fallbacks for browsers that don't support env() */
+@supports not (padding: env(safe-area-inset-bottom)) {
+    /* Fallback for minimized modal bar */
+    .safe-area-bottom {
+        padding-bottom: 1rem !important;
+    }
+    
+    /* Fallback for bottom-right buttons */
+    .safe-area-bottom-right {
+        padding-bottom: 1rem !important;
+        padding-right: 1rem !important;
+    }
+}
+
+/* For browsers that support safe area insets, ensure they're applied correctly */
+@supports (padding: env(safe-area-inset-bottom)) {
+    .safe-area-bottom {
+        padding-bottom: max(1rem, env(safe-area-inset-bottom)) !important;
+    }
+    
+    .safe-area-bottom-right {
+        padding-bottom: max(1rem, env(safe-area-inset-bottom)) !important;
+        padding-right: max(1rem, env(safe-area-inset-right)) !important;
+    }
+}
 
 .mapboxgl-ctrl-logo {
     display: none !important;

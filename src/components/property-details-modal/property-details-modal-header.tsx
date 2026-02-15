@@ -13,25 +13,25 @@ export default function PropertyDetailsModalHeader({ modal }: PropertyDetailsMod
 
 	return (
 		<div
-			className="flex-none flex items-center gap-3 p-3 cursor-pointer"
+			className="flex-none flex items-center gap-3 p-3 md:p-3 p-2 cursor-pointer"
 			onClick={() => modalStore.focusModal(modal.id)}
 		>
 			<div
-				className={`gap-2 px-2 py-1 rounded-lg ${copied
-					? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
+				className={`flex items-center gap-2 px-2 py-1 rounded-lg ${copied
+					? "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300"
 					: "bg-muted hover:bg-primary/10 text-foreground cursor-pointer hover:shadow-sm"
 				}`}
 			>
 				<a
 					target="_blank"
 					rel="noopener noreferrer"
-					className="text-lg font-bold text-foreground hover:text-primary transition-colors duration-300 group"
+					className="text-base md:text-lg font-bold text-foreground hover:text-primary transition-colors duration-300 group flex-shrink min-w-0"
 					href={`http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?
 					boro=${modal.propertyData.records[0].bbl[0]}
 					&block=${modal.propertyData.records[0].prop_block}
 					&lot=${modal.propertyData.records[0].prop_lot}`}
 				>
-					<span className="group-hover:underline underline-offset-4 decoration-primary/50">
+					<span className="group-hover:underline underline-offset-4 decoration-primary/50 truncate block">
 						{modal.title}
 					</span>
 				</a>
@@ -42,9 +42,11 @@ export default function PropertyDetailsModalHeader({ modal }: PropertyDetailsMod
 						setTimeout(() => setCopied(false), 2000)
 					}}
 					className={`
-						  flex-none p-1 rounded transition-all duration-200
+						  flex-none p-2 md:p-1 rounded transition-all duration-200
+						  min-w-[44px] min-h-[44px] md:min-w-0 md:min-h-0
+						  flex items-center justify-center
 						  ${copied
-			? "text-green-700 dark:text-green-400"
+			? "text-green-700 dark:text-green-300"
 			: "text-muted-foreground hover:text-primary"}`}
 					aria-label="Copy title">
 					{copied ? (

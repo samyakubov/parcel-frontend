@@ -43,14 +43,14 @@ export default function PropertyActivity({ jobs, complaints, violations }: Prope
 			</CardHeader>
 			<CardContent className="pt-2">
 				<Tabs defaultValue="violations" className="w-full" onValueChange={setActiveTab}>
-					<TabsList className="grid w-full grid-cols-3">
-						<TabsTrigger value="violations" className="text-xs px-1">
+					<TabsList className="grid w-full grid-cols-3 h-12 md:h-9">
+						<TabsTrigger value="violations" className="text-xs px-1 min-h-[44px] md:min-h-0">
 							Violations ({violations?.length || 0})
 						</TabsTrigger>
-						<TabsTrigger value="complaints" className="text-xs px-1">
+						<TabsTrigger value="complaints" className="text-xs px-1 min-h-[44px] md:min-h-0">
 							Complaints ({complaints?.length || 0})
 						</TabsTrigger>
-						<TabsTrigger value="jobs" className="text-xs px-1">
+						<TabsTrigger value="jobs" className="text-xs px-1 min-h-[44px] md:min-h-0">
 							Jobs ({jobs?.length || 0})
 						</TabsTrigger>
 					</TabsList>
