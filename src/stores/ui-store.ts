@@ -6,7 +6,7 @@ class UIStore {
 	constructor() {
 		makeAutoObservable(this)
 
-		// Initialize viewport detection
+
 		if (typeof window !== "undefined") {
 			this.initializeViewportDetection()
 		}
@@ -18,28 +18,28 @@ class UIStore {
 	private mediaQueryList: MediaQueryList | null = null
 	private detectionFailed: boolean = false
 
-	// Computed property for mobile view detection
+
 	public get isMobileView(): boolean {
-		// Fallback to mobile layout if detection fails
+
 		if (this.detectionFailed) {
 			return true
 		}
 		return this._viewportWidth < 768
 	}
 
-	// Initialize viewport detection with matchMedia and debounced resize handler
+
 	private initializeViewportDetection = () => {
 		let handleMediaQueryChange: ((_e: MediaQueryListEvent) => void) | null = null
 
 		try {
-			// Use matchMedia for reliable breakpoint detection
+
 			if (window.matchMedia) {
 				this.mediaQueryList = window.matchMedia("(min-width: 768px)")
 
-				// Listen to media query changes for more reliable detection
+
 				handleMediaQueryChange = (_e: MediaQueryListEvent) => {
 					try {
-						// Update viewport width based on media query
+
 						this.updateViewportWidth(window.innerWidth)
 					} catch (error) {
 						console.warn("Error handling media query change:", error)
@@ -47,22 +47,22 @@ class UIStore {
 					}
 				}
 
-				// Modern browsers
+
 				if (this.mediaQueryList.addEventListener) {
 					this.mediaQueryList.addEventListener("change", handleMediaQueryChange)
 				}
 			}
 
-			// Set initial viewport width with error handling
+
 			if (window.innerWidth !== undefined) {
 				this._viewportWidth = window.innerWidth
 			} else {
-				// Fallback if innerWidth is not available
+
 				console.warn("window.innerWidth not available, falling back to mobile layout")
 				this.detectionFailed = true
 			}
 
-			// Add debounced resize handler (300ms)
+
 			const handleResize = () => {
 				try {
 					if (this.resizeTimeout) {
@@ -73,7 +73,7 @@ class UIStore {
 						try {
 							if (window.innerWidth !== undefined) {
 								this.updateViewportWidth(window.innerWidth)
-								// Reset detection failed flag if we successfully get width
+
 								if (this.detectionFailed) {
 									this.detectionFailed = false
 								}
@@ -82,7 +82,7 @@ class UIStore {
 							console.warn("Error updating viewport width:", error)
 							this.detectionFailed = true
 						}
-					}, 300) // 300ms debounce delay
+					}, 300)
 				} catch (error) {
 					console.warn("Error in resize handler:", error)
 					this.detectionFailed = true
@@ -91,7 +91,7 @@ class UIStore {
 
 			window.addEventListener("resize", handleResize)
 
-			// Cleanup function (can be called if needed)
+
 			return () => {
 				try {
 					window.removeEventListener("resize", handleResize)
@@ -109,28 +109,28 @@ class UIStore {
 			}
 		} catch (error) {
 			console.error("Failed to initialize viewport detection:", error)
-			// Fallback to mobile layout if initialization fails
+
 			this.detectionFailed = true
-			return () => {} // Return empty cleanup function
+			return () => { }
 		}
 	}
 
-	// Update viewport width
+
 	private updateViewportWidth = action((width: number) => {
 		this._viewportWidth = width
 	})
 
-	// Set active mobile panel
+
 	public setActiveMobilePanel = action((panel: MobilePanel) => {
 		this._activeMobilePanel = panel
 	})
 
-	// Close all mobile panels
+
 	public closeAllMobilePanels = action(() => {
 		this._activeMobilePanel = null
 	})
 
-	// Get current viewport width (for testing/debugging)
+
 	public get viewportWidth(): number {
 		return this._viewportWidth
 	}

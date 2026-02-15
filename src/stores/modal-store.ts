@@ -66,7 +66,7 @@ class ModalStore {
 			return
 		}
 
-		// On mobile, minimize all currently open modals before adding new one
+
 		if (uiStore.isMobileView) {
 			const openModals = this._propertyModals.filter(
 				modal => modal.isOpen && !modal.isMinimized
@@ -97,7 +97,7 @@ class ModalStore {
 	})
 
 	public restoreModal = action((id: string) => {
-		// On mobile, minimize all other open modals before restoring this one
+
 		if (uiStore.isMobileView) {
 			const otherOpenModals = this._propertyModals.filter(
 				modal => modal.id !== id && modal.isOpen && !modal.isMinimized

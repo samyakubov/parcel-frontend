@@ -26,7 +26,6 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		//TODO: figure out the hydration error from theme provider
 		<html lang="en" suppressHydrationWarning>
 			<body
 				className={`${inter.variable} ${geistMono.variable} antialiased`}

@@ -21,22 +21,21 @@ function ModalContent({
 	const getPanelClassName = () => {
 		const baseClasses = "overflow-hidden flex flex-col"
 
-		// Mobile: full screen for both default and expanded states
+
 		if (isMobileView) {
 			return `fixed inset-0 w-full h-full ${baseClasses}`
 		}
 
-		// Desktop: original behavior
+
 		return currentModal.isExpanded
 			? `fixed inset-0 m-auto w-[90vw] h-[90vh] ${baseClasses}`
 			: `fixed right-4 top-4 w-11/12 max-w-md h-[95vh] ${baseClasses}`
 	}
 
 	const handlePanEnd = (event: unknown, info: { offset: { x: number; y: number } }) => {
-		// On mobile, swipe down to minimize (threshold: 100px)
-		// Gestures below threshold are ignored, allowing map interactions to work
+
 		if (isMobileView && info.offset.y > 100) {
-			// Prevent default to avoid conflicts with browser gestures
+
 			if (event && typeof event === "object" && "preventDefault" in event && typeof event.preventDefault === "function") {
 				event.preventDefault()
 			}
@@ -44,7 +43,7 @@ function ModalContent({
 			return
 		}
 
-		// On desktop, handle drag positioning (only when not expanded)
+
 		if (!isMobileView && !currentModal.isExpanded) {
 			modalStore.setModalState(currentModal.id, {
 				position: {

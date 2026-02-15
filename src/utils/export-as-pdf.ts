@@ -404,14 +404,14 @@ async function createPieChart(raceDemographics: RaceDemographic[]): Promise<stri
 	const values = raceDemographics.map(d => d.value)
 
 	const colors = [
-		"#4299E1", // Blue
-		"#48BB78", // Green
-		"#ED8936", // Orange
-		"#9F7AEA", // Purple
-		"#ECC94B", // Yellow
-		"#F56565", // Red
-		"#38B2AC", // Teal
-		"#D53F8C"  // Pink
+		"#4299E1",
+		"#48BB78",
+		"#ED8936",
+		"#9F7AEA",
+		"#ECC94B",
+		"#F56565",
+		"#38B2AC",
+		"#D53F8C"
 	]
 
 	const chart = new Chart(ctx, {

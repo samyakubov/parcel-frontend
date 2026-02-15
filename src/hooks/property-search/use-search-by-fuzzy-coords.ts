@@ -1,12 +1,12 @@
-import {useCallback} from "react"
+import { useCallback } from "react"
 import isNull from "lodash-es/isNull"
-import {searchStore} from "@/stores/search-store"
-import {mapStore} from "@/stores/map-store"
-import {normalizeStreetNames} from "@/utils/normalize-street-names"
-import {apiClient} from "@/api/api-client"
-import {modalStore} from "@/stores/modal-store"
-import {v4 as uuidv4} from "uuid"
-import {getSchools} from "@/utils/get-schools"
+import { searchStore } from "@/stores/search-store"
+import { mapStore } from "@/stores/map-store"
+import { normalizeStreetNames } from "@/utils/normalize-street-names"
+import { apiClient } from "@/api/api-client"
+import { modalStore } from "@/stores/modal-store"
+import { v4 as uuidv4 } from "uuid"
+import { getSchools } from "@/utils/get-schools"
 
 export default function useSearchByFuzzyCoords() {
 
@@ -15,7 +15,7 @@ export default function useSearchByFuzzyCoords() {
 			if (isNull(mapStore._coords)) return
 
 			const propertyData = await apiClient.propertyService.searchByPropertyFuzzyCoords(
-				{latitude: mapStore._coords.latitude, longitude: mapStore._coords.longitude}
+				{ latitude: mapStore._coords.latitude, longitude: mapStore._coords.longitude }
 			)
 
 			const firstRecord = propertyData.records[0]
@@ -59,6 +59,5 @@ export default function useSearchByFuzzyCoords() {
 		} catch (error) {
 			console.error("Error in useSearchByFuzzyCoords:", error)
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [apiClient.propertyService, mapStore, searchStore, mapStore._coords, modalStore])
 }

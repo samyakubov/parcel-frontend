@@ -18,14 +18,11 @@ function ModalControls({
 	return (
 		<div className={"flex gap-2 absolute top-4 right-4 z-10"}>
 			<MinimizeButton currentModal={currentModal} />
-
-			{/* Hide expand button on mobile since modal is already full screen */}
 			{!isMobileView && (
 				<ExpandModalButton
 					currentModal={currentModal}
 				/>
 			)}
-
 			<CloseButton currentModal={currentModal} />
 		</div>
 	)

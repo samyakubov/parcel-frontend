@@ -20,7 +20,12 @@ export default observer(function Map() {
 	const mapRef = useInitMap("map", "satellite")
 	const handleLocateUser = useLocateUser()
 	const [isChatOpen, setIsChatOpen] = useState(false)
-	const isMobile = uiStore.isMobileView
+	const [isMounted, setIsMounted] = useState(false)
+	const isMobile = isMounted ? uiStore.isMobileView : false
+
+	useEffect(() => {
+		setIsMounted(true)
+	}, [])
 
 	const setMapStyle = (style: MapStyle) => {
 		if (mapRef.current) {
@@ -59,7 +64,7 @@ export default observer(function Map() {
 				</div>
 
 				{/* Mobile Search Button - only visible on mobile when search panel is closed */}
-				{isMobile && uiStore._activeMobilePanel !== "search" && (
+				{isMounted && isMobile && uiStore._activeMobilePanel !== "search" && (
 					<div className="absolute top-4 left-4 z-10 md:hidden">
 						<Button
 							size="icon"
@@ -82,9 +87,11 @@ export default observer(function Map() {
 				{/* Bottom right controls - vertical stack on mobile with style switcher */}
 				<div className="absolute bottom-4 right-4 z-20 flex flex-col gap-2 safe-area-bottom-right md:pb-0 md:pr-0">
 					{/* Map Style Switcher - only visible on mobile, positioned above other buttons */}
-					<div className="md:hidden">
-						<MapStyleSwitcher onStyleChange={setMapStyle} />
-					</div>
+					{isMounted && (
+						<div className="md:hidden">
+							<MapStyleSwitcher onStyleChange={setMapStyle} />
+						</div>
+					)}
 					<Button
 						size="icon"
 						onClick={handleLocateUser}

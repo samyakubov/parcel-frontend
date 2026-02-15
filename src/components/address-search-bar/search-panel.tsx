@@ -46,12 +46,12 @@ function SearchPanel() {
 	const isMobile = isMounted ? uiStore.isMobileView : false
 	const isSearchPanelActive = uiStore._activeMobilePanel === "search"
 
-	// Handle hydration - only use mobile detection after mount
+
 	useEffect(() => {
 		setIsMounted(true)
 	}, [])
 
-	// Handle click outside to close on mobile
+
 	useEffect(() => {
 		if (!isMobile || !isSearchPanelActive) return
 
@@ -62,7 +62,7 @@ function SearchPanel() {
 			}
 		}
 
-		// Add a small delay to prevent immediate closing when opening
+
 		const timeoutId = setTimeout(() => {
 			document.addEventListener("mousedown", handleClickOutside)
 		}, 100)
@@ -86,36 +86,29 @@ function SearchPanel() {
 		: searchStore._bblSearchQuery
 
 	const showSuggestions = searchMode === "address"
-        && searchStore._isSuggestionsOpen
-        && searchStore._suggestions.length > 0
+		&& searchStore._isSuggestionsOpen
+		&& searchStore._suggestions.length > 0
 
 	const containerClasses = cn(
 		"relative bg-background/95 dark:bg-background/90 backdrop-blur-2xl",
 		"border border-border/50 dark:border-white/10 rounded-2xl",
 		"shadow-2xl shadow-black/10 dark:shadow-black/30 overflow-hidden",
-		// Mobile: full width, slide-in from top, overlay positioning
 		"fixed top-0 left-0 right-0 z-40 transition-transform duration-300",
-		// Animation optimization: will-change during transitions
+
 		isMobile && isSearchPanelActive && "will-change-transform",
 		isMobile && !isSearchPanelActive && "-translate-y-full",
 		isMobile && isSearchPanelActive && "translate-y-0",
-		// Desktop: fixed width, positioned, always visible
 		"md:w-[420px] md:relative md:translate-y-0 md:z-10",
-		// Reduced motion support
 		"motion-reduce:transition-none"
 	)
 
 	const wrapperClasses = cn(
-		// Mobile: no wrapper width constraint, relative positioning for suggestions
 		"w-full relative",
-		// Desktop: fixed width wrapper
 		"md:w-[420px]"
 	)
 
 	const suggestionsWrapperClasses = cn(
-		// Mobile: position below the search panel
 		"fixed left-0 right-0 px-4 z-50",
-		// Desktop: relative positioning with margin
 		"md:relative md:px-0 md:mt-2"
 	)
 
@@ -129,9 +122,7 @@ function SearchPanel() {
 							className={cn(
 								"bg-muted/30 border-border/50 rounded-xl",
 								"focus:bg-background focus:border-primary/50 transition-all",
-								// Mobile: increased height for touch
 								"h-12",
-								// Desktop: standard height
 								"md:h-11"
 							)}
 							value={inputValue}
@@ -152,9 +143,7 @@ function SearchPanel() {
 						<Tabs value={searchMode} onValueChange={(v) => setSearchMode(v as SearchMode)}>
 							<TabsList className={cn(
 								"rounded-xl",
-								// Mobile: increased height for touch
 								"h-12",
-								// Desktop: standard height
 								"md:h-11"
 							)}>
 								<CustomTooltip
@@ -180,9 +169,9 @@ function SearchPanel() {
 			</div>
 
 			{showSuggestions && (
-				<div 
+				<div
 					className={suggestionsWrapperClasses}
-					style={isMobile ? { top: '80px' } : undefined}
+					style={isMobile ? { top: "80px" } : undefined}
 				>
 					<SuggestionsList />
 				</div>

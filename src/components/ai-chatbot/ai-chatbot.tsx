@@ -38,10 +38,9 @@ function AiChatbot({ isOpen, onClose }: AiChatbotProps) {
 	}
 
 	const handlePanEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-		// Swipe right to close on mobile (threshold: 100px)
-		// Gestures below threshold are ignored, allowing map interactions to work
+
 		if (isMobileView && info.offset.x > 100) {
-			// Prevent default to avoid conflicts with browser gestures
+
 			if (event && event.preventDefault) {
 				event.preventDefault()
 			}
@@ -57,7 +56,7 @@ function AiChatbot({ isOpen, onClose }: AiChatbotProps) {
 		}
 	}, [chatStore._messages, chatStore._isMessageLoading])
 
-	// Set active mobile panel when chat opens
+
 	useEffect(() => {
 		if (isOpen && isMobileView) {
 			uiStore.setActiveMobilePanel("chat")
@@ -121,7 +120,7 @@ function AiChatbot({ isOpen, onClose }: AiChatbotProps) {
 					))}
 
 					{chatStore._isMessageLoading && (
-						<ChatBotMessageLoading/>
+						<ChatBotMessageLoading />
 					)}
 
 					<div ref={scrollEndRef} />

@@ -21,7 +21,6 @@ import PropertyActivity from "@/components/property-details-modal/property-activ
 interface PropertyDetailsModalContentProps {
 	modal: PropertyModal;
 }
-// eslint-disable-next-line max-lines-per-function
 export default function PropertyDetailsModalContent({ modal }: PropertyDetailsModalContentProps) {
 	const firstDeedOrMortgageRecord = modal.propertyData.records.find(
 		(record) => record.doc_type === "DEED" || record.doc_type === "MORTGAGE")
@@ -126,7 +125,6 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
 
 							)
 						}
-						<Schools schools={modal.schools} />
 
 					</motion.div>
 
@@ -140,6 +138,7 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
 							exit={{ opacity: 0, height: 0 }}
 							className="space-y-2"
 						>
+							<Schools schools={modal.schools} />
 							<Census census={modal.census} />
 							<PropertyRecordGrid data={modal.propertyData.records} />
 						</motion.div>
