@@ -11,11 +11,32 @@ import MapStyleSwitcher from "@/components/map-style-switcher"
 import { MAP_STYLES, MapStyle } from "@/constants/mapbox"
 import AiChatbot from "@/components/ai-chatbot/ai-chatbot"
 import { Button } from "@/components/ui/button"
-import {LocateFixed, MessageCircle} from "lucide-react"
+import { LocateFixed, MessageCircle, Map as MapIcon, Loader2 } from "lucide-react"
 import useLocateUser from "@/hooks/property-search/use-locate-user"
+import useHeatmapLayer from "@/hooks/mapbox/map/use-heatmap-layer"
+import { observer } from "mobx-react"
+import { heatmapStore } from "@/stores/heatmap-store"
+
+const HeatmapToggleButton = observer(() => {
+	return (
+		<Button
+			size="icon"
+			onClick={() => heatmapStore.toggleHeatmap()}
+			className={`h-10 w-10 cursor-pointer duration-0 ${heatmapStore.isHeatmapVisible ? "bg-primary text-primary-foreground" : "bg-background text-foreground hover:bg-muted"}`}
+			title="Toggle Heatmap"
+		>
+			{heatmapStore.isLoading ? (
+				<Loader2 size={20} className="animate-spin" />
+			) : (
+				<MapIcon size={20} />
+			)}
+		</Button>
+	)
+})
 
 export default function Map() {
 	const mapRef = useInitMap("map", "satellite")
+	useHeatmapLayer(mapRef)
 	const handleLocateUser = useLocateUser()
 	const [isChatOpen, setIsChatOpen] = useState(false)
 
@@ -58,6 +79,7 @@ export default function Map() {
 				<MinimizedModalsBar />
 
 				<div className="absolute bottom-4 right-4 z-10 flex flex-col gap-2">
+					<HeatmapToggleButton />
 					<Button
 						size="icon"
 						onClick={handleLocateUser}
