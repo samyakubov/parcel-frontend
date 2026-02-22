@@ -36,6 +36,14 @@ declare global {
 		latitude:number,
 		longitude: number
 	}
+
+	type SearchMode = "address" | "bbl"
+
+	interface SearchModeConfig {
+		id: SearchMode
+		label: string
+		placeholder: string
+	}
 }
 
 export { }

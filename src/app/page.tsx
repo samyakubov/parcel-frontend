@@ -11,28 +11,12 @@ import MapStyleSwitcher from "@/components/map-style-switcher"
 import { MAP_STYLES, MapStyle } from "@/constants/mapbox"
 import AiChatbot from "@/components/ai-chatbot/ai-chatbot"
 import { Button } from "@/components/ui/button"
-import { LocateFixed, MessageCircle, Map as MapIcon, Loader2 } from "lucide-react"
+import { LocateFixed, MessageCircle, Loader2, Flame } from "lucide-react"
 import useLocateUser from "@/hooks/property-search/use-locate-user"
 import useHeatmapLayer from "@/hooks/mapbox/map/use-heatmap-layer"
-import { observer } from "mobx-react"
 import { heatmapStore } from "@/stores/heatmap-store"
-
-const HeatmapToggleButton = observer(() => {
-	return (
-		<Button
-			size="icon"
-			onClick={() => heatmapStore.toggleHeatmap()}
-			className={`h-10 w-10 cursor-pointer duration-0 ${heatmapStore.isHeatmapVisible ? "bg-primary text-primary-foreground" : "bg-background text-foreground hover:bg-muted"}`}
-			title="Toggle Heatmap"
-		>
-			{heatmapStore.isLoading ? (
-				<Loader2 size={20} className="animate-spin" />
-			) : (
-				<MapIcon size={20} />
-			)}
-		</Button>
-	)
-})
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import HeatmapLegend from "@/components/heatmap-legend"
 
 export default function Map() {
 	const mapRef = useInitMap("map", "satellite")
@@ -78,23 +62,58 @@ export default function Map() {
 				<ModalContainer />
 				<MinimizedModalsBar />
 
-				<div className="absolute bottom-4 right-4 z-10 flex flex-col gap-2">
-					<HeatmapToggleButton />
-					<Button
-						size="icon"
-						onClick={handleLocateUser}
-						className="h-10 w-10 cursor-pointer duration-0"
-					>
-						<LocateFixed size={20} />
-					</Button>
-					<Button
-						size="icon"
-						onClick={() => setIsChatOpen(!isChatOpen)}
-						className="h-10 w-10 cursor-pointer duration-0"
-					>
-						<MessageCircle size={20} />
-					</Button>
-				</div>
+				<HeatmapLegend />
+
+				<TooltipProvider delayDuration={300}>
+					<div className="absolute bottom-4 right-4 z-10 flex flex-col gap-2">
+						<Tooltip>
+							<TooltipTrigger asChild>
+								<Button
+									size="icon"
+									onClick={() => heatmapStore.toggleHeatmap()}
+									className={`h-10 w-10 cursor-pointer duration-0 ${heatmapStore.isHeatmapVisible ? "bg-primary text-primary-foreground" : "bg-background text-foreground hover:bg-muted"}`}
+								>
+									{heatmapStore.isLoading ? (
+										<Loader2 size={20} className="animate-spin" />
+									) : (
+										<Flame size={20} />
+									)}
+								</Button>
+							</TooltipTrigger>
+							<TooltipContent side="left">
+								<p>Toggle Heatmap</p>
+							</TooltipContent>
+						</Tooltip>
+						<Tooltip>
+							<TooltipTrigger asChild>
+								<Button
+									size="icon"
+									onClick={handleLocateUser}
+									className="h-10 w-10 cursor-pointer duration-0"
+								>
+									<LocateFixed size={20} />
+								</Button>
+							</TooltipTrigger>
+							<TooltipContent side="left">
+								<p>Locate Me</p>
+							</TooltipContent>
+						</Tooltip>
+						<Tooltip>
+							<TooltipTrigger asChild>
+								<Button
+									size="icon"
+									onClick={() => setIsChatOpen(!isChatOpen)}
+									className="h-10 w-10 cursor-pointer duration-0"
+								>
+									<MessageCircle size={20} />
+								</Button>
+							</TooltipTrigger>
+							<TooltipContent side="left">
+								<p>AI Chatbot</p>
+							</TooltipContent>
+						</Tooltip>
+					</div>
+				</TooltipProvider>
 			</div>
 
 			<AiChatbot isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
