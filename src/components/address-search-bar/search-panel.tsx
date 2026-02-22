@@ -11,27 +11,9 @@ import { MapPin, Hash } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import CustomTooltip from "@/components/custom-tooltip"
+import {SEARCH_MODES} from "@/constants/mapbox"
 
-type SearchMode = "address" | "bbl"
 
-interface SearchModeConfig {
-	id: SearchMode
-	label: string
-	placeholder: string
-}
-
-const SEARCH_MODES: Record<SearchMode, SearchModeConfig> = {
-	address: {
-		id: "address",
-		label: "Address",
-		placeholder: "Enter property address..."
-	},
-	bbl: {
-		id: "bbl",
-		label: "BBL",
-		placeholder: "Enter BBL (e.g. 1000010001)"
-	},
-}
 
 function SearchPanel() {
 	const [searchMode, setSearchMode] = useState<SearchMode>("address")
