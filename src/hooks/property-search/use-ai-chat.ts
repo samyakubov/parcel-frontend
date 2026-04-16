@@ -42,6 +42,7 @@ export default function useSendAiMessage() {
 					id: modalId,
 					isOpen: true,
 					isMinimized: false,
+					activeTab: "details",
 					isExpanded: false,
 					title: `${firstRecord.prop_streetnumber} ${normalizeStreetNames(firstRecord.prop_streetname)}`,
 					position: modalStore.calculateNewModalPosition(),

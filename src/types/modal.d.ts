@@ -5,11 +5,14 @@ declare global {
 		y: number;
 	}
 
+	type ModalTab = "details" | "owners" | "mortgage" | "violations" | "complaints" | "jobs" | "schools" | "census" | "records"
+
 	interface PropertyModal {
 		id: string;
 		isOpen: boolean;
 		isMinimized: boolean;
 		isExpanded: boolean;
+		activeTab: ModalTab;
 		title: string;
 		position: ModalPosition;
 		propertyData: PropertyDetailsWithCoords;

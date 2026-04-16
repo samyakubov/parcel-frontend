@@ -1,52 +1,65 @@
 "use client"
 import React from "react"
-import { DollarSign, Building2, Landmark, User } from "lucide-react"
-import { Card, CardHeader, CardContent } from "@/components/ui/card"
+import { Building2, User } from "lucide-react"
+import { AppCard } from "@/components/property-details-modal/shared/app-card"
+import { SectionHeader } from "@/components/property-details-modal/shared/section-header"
 import { FORMAT_PRICE } from "@/utils/format-price"
-import MortgageDetailItem from "@/components/property-details-modal/mortgage/mortgage-detail-item"
 
-interface MortgageDetailsProps {
+interface StandardRowProps {
+	icon: React.ReactNode
+	label: string
+	value: string
+}
+
+function StandardRow({ icon, label, value }: StandardRowProps) {
+	return (
+		<div className="flex items-center gap-3">
+			<div className="text-muted-foreground/50 flex-shrink-0">{icon}</div>
+			<div className="flex-1 min-w-0">
+				<div className="text-[11px] font-semibold text-muted-foreground">{label}</div>
+				<div className="text-[15px] font-semibold text-foreground truncate">{value}</div>
+			</div>
+		</div>
+	)
+}
+
+interface MortgageProps {
 	borrower: string
 	lender: string
 	amount: number
 }
 
-export default function Mortgage({ borrower, lender, amount }: MortgageDetailsProps) {
-
+export default function Mortgage({ borrower, lender, amount }: MortgageProps) {
 	return (
-		<Card className="w-full py-4 gap-4">
-			<CardHeader className="p-4 py-0">
-				<div className="flex items-center gap-2">
-					<div className="p-2 rounded-full bg-primary/10">
-						<Building2 className="h-4 w-4 text-primary" />
-					</div>
-					<h3 className="text-lg font-semibold">
-						Mortgage Details
-					</h3>
-				</div>
-			</CardHeader>
+		<div className="px-1 pt-2">
+			<SectionHeader title="Loan Summary" subtitle="Current mortgage and financial lender data." />
 
-			<CardContent className="space-y-2 p-2">
-				<MortgageDetailItem
-					icon={<User className="h-4 w-4 text-muted-foreground" />}
-					label="Borrower"
-					value={borrower}
-				/>
-				<div className="flex gap-2">
-					<MortgageDetailItem
-						icon={<Landmark className="h-4 w-4 text-muted-foreground" />}
+			<AppCard>
+				{/* Hero amount */}
+				<div>
+					<div className="text-[12px] font-bold text-muted-foreground uppercase tracking-wide">
+						Principal Amount
+					</div>
+					<div className="mt-1 text-4xl font-semibold text-primary" style={{ letterSpacing: "-1px" }}>
+						{amount ? FORMAT_PRICE(amount) : "N/A"}
+					</div>
+				</div>
+
+				<div className="my-6 h-px bg-border" />
+
+				<div className="space-y-4">
+					<StandardRow
+						icon={<Building2 className="h-[18px] w-[18px]" />}
 						label="Lender"
-						value={lender}
-						className={"w-1/2"}
+						value={lender || "Unknown Lender"}
 					/>
-					<MortgageDetailItem
-						icon={<DollarSign className="h-4 w-4 text-muted-foreground" />}
-						label="Amount"
-						value={`${FORMAT_PRICE(amount)}`}
-						className={"w-1/2"}
+					<StandardRow
+						icon={<User className="h-[18px] w-[18px]" />}
+						label="Borrower"
+						value={borrower || "Unknown Borrower"}
 					/>
 				</div>
-			</CardContent>
-		</Card>
+			</AppCard>
+		</div>
 	)
 }

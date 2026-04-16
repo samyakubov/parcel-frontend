@@ -29,6 +29,7 @@ export default function useSearchByFuzzyCoords() {
 				isOpen: true,
 				isMinimized: false,
 				isExpanded: false,
+				activeTab: "details",
 				title: `${firstRecord.prop_streetnumber} ${normalizeStreetNames(firstRecord.prop_streetname)}`,
 				position: modalStore.calculateNewModalPosition(),
 				propertyData: propertyData,

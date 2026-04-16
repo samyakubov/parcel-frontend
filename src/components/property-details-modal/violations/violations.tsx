@@ -1,24 +1,94 @@
 "use client"
+import React from "react"
+import { Gavel, CalendarDays } from "lucide-react"
+import { SectionHeader } from "@/components/property-details-modal/shared/section-header"
+import { cn } from "@/lib/utils"
+import { FORMAT_DATE } from "@/utils/format-date"
+import { FORMAT_PRICE } from "@/utils/format-price"
 import { isEmpty } from "lodash-es"
-import { AlertTriangle } from "lucide-react"
-import ViolationsTable from "@/components/property-details-modal/violations/violations-table"
-
 
 interface ViolationsProps {
 	violations: Violation[]
 }
 
-export default function Violations({ violations }: ViolationsProps) {
+function StatusTag({ status, isPositive }: { status: string; isPositive: boolean }) {
+	return (
+		<span className={cn(
+			"inline-flex items-center px-2 py-1 rounded-md text-[9px] font-extrabold uppercase tracking-wide flex-shrink-0",
+			isPositive
+				? "bg-green-50 text-green-700 dark:bg-green-500/15 dark:text-green-300"
+				: "bg-amber-50 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300"
+		)}>
+			{status}
+		</span>
+	)
+}
 
+function ViolationCard({ violation }: { violation: Violation }) {
+	const isClosed = violation.violation_status?.toLowerCase().includes("close") ||
+		violation.violation_status?.toLowerCase().includes("resolve")
+	const hasFine = violation.penalty_amount > 0
+
+	return (
+		<div className="py-3 border-b border-border last:border-b-0">
+			{/* Title + status */}
+			<div className="flex items-start justify-between gap-2">
+				<span className="text-[15px] font-bold text-foreground leading-snug flex-1">
+					{violation.violation_type || "Violation"}
+				</span>
+				{violation.violation_status && (
+					<StatusTag status={violation.violation_status} isPositive={isClosed} />
+				)}
+			</div>
+
+			{/* Description */}
+			{violation.description && (
+				<p className="mt-1.5 text-[13px] text-muted-foreground leading-snug">
+					{violation.description}
+				</p>
+			)}
+
+			{/* Footer: date + fine */}
+			{(violation.issue_date || hasFine) && (
+				<div className="mt-3 flex items-center gap-3">
+					{violation.issue_date && (
+						<div className="flex items-center gap-1 flex-1 min-w-0">
+							<CalendarDays className="h-3 w-3 text-muted-foreground/50 flex-shrink-0" />
+							<span className="text-[12px] text-muted-foreground/70 font-medium truncate">
+								{FORMAT_DATE(violation.issue_date)}
+							</span>
+						</div>
+					)}
+					{hasFine && (
+						<span className="text-[12px] font-bold text-destructive flex-shrink-0">
+							Fine: {FORMAT_PRICE(violation.penalty_amount)}
+						</span>
+					)}
+				</div>
+			)}
+		</div>
+	)
+}
+
+export default function Violations({ violations }: ViolationsProps) {
 	if (isEmpty(violations)) {
 		return (
-			<div className="flex flex-col items-center justify-center py-8 text-center text-muted-foreground">
-				<AlertTriangle className="h-8 w-8 mb-2 opacity-50" />
-				<p>No violations found</p>
+			<div className="px-1 pt-2">
+				<SectionHeader title="Property Violations" subtitle="Outstanding and historical legal violations." />
+				<div className="flex flex-col items-center justify-center py-16 text-center text-muted-foreground">
+					<Gavel className="h-10 w-10 mb-3 opacity-20" />
+					<p className="text-sm">No violations recorded.</p>
+				</div>
 			</div>
 		)
 	}
 
-	return <ViolationsTable violations={violations} />
-
+	return (
+		<div className="px-1 pt-2">
+			<SectionHeader title="Property Violations" subtitle="Outstanding and historical legal violations." />
+			{violations.map((v, i) => (
+				<ViolationCard key={i} violation={v} />
+			))}
+		</div>
+	)
 }
