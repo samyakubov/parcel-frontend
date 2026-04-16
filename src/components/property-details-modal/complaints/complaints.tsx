@@ -3,25 +3,13 @@ import React, { useState } from "react"
 import { ShieldCheck, ChevronDown } from "lucide-react"
 import { SectionHeader } from "@/components/property-details-modal/shared/section-header"
 import { DetailGrid } from "@/components/property-details-modal/shared/detail-grid"
+import { StatusTag } from "@/components/property-details-modal/shared/status-tag"
 import { cn } from "@/lib/utils"
 import { FORMAT_DATE } from "@/utils/format-date"
 import { isEmpty } from "lodash-es"
 
 interface ComplaintsProps {
 	complaints: Complaint[]
-}
-
-function StatusTag({ status, isPositive }: { status: string; isPositive: boolean }) {
-	return (
-		<span className={cn(
-			"inline-flex items-center px-2 py-1 rounded-md text-[9px] font-extrabold uppercase tracking-wide flex-shrink-0",
-			isPositive
-				? "bg-green-50 text-green-700 dark:bg-green-500/15 dark:text-green-300"
-				: "bg-amber-50 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300"
-		)}>
-			{status}
-		</span>
-	)
 }
 
 function ComplaintCard({ complaint }: { complaint: Complaint }) {
@@ -37,7 +25,6 @@ function ComplaintCard({ complaint }: { complaint: Complaint }) {
 
 	return (
 		<div className="rounded-[16px] border border-border bg-card mb-3 overflow-hidden">
-			{/* Header row */}
 			<button
 				onClick={() => setOpen(o => !o)}
 				className="w-full flex items-center justify-between gap-3 px-4 py-3 text-left"
@@ -64,7 +51,6 @@ function ComplaintCard({ complaint }: { complaint: Complaint }) {
 				</div>
 			</button>
 
-			{/* Expanded detail grid */}
 			{open && details.length > 0 && (
 				<div className="px-4 pb-4 pt-1 bg-muted/30 border-t border-border">
 					<DetailGrid items={details} />

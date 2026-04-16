@@ -35,7 +35,6 @@ export default function Mortgage({ borrower, lender, amount }: MortgageProps) {
 			<SectionHeader title="Loan Summary" subtitle="Current mortgage and financial lender data." />
 
 			<AppCard>
-				{/* Hero amount */}
 				<div>
 					<div className="text-[12px] font-bold text-muted-foreground uppercase tracking-wide">
 						Principal Amount

@@ -25,15 +25,14 @@ function formatSqft(val: string | number | null | undefined): string {
 export default function Details({ firstRecord, lastSold }: DetailsProps) {
 	const withSqft = isLastSoldWithSqft(lastSold)
 	const yearBuilt = withSqft ? lastSold.year_built : firstRecord?.year_built?.toString()
-	const landSqft = withSqft ? formatSqft(lastSold.land_sqft) : firstRecord ? `${firstRecord.lot_area.toLocaleString()} sqft` : "N/A"
-	const grossSqft = withSqft ? formatSqft(lastSold.gross_sqft) : firstRecord ? `${firstRecord.bldg_area.toLocaleString()} sqft` : "N/A"
+	const landSqft = withSqft ? formatSqft(lastSold.land_sqft) : formatSqft(firstRecord?.lot_area)
+	const grossSqft = withSqft ? formatSqft(lastSold.gross_sqft) : formatSqft(firstRecord?.bldg_area)
 
 	return (
 		<div className="px-1 pt-2">
 			<SectionHeader title="Market Overview" subtitle="Key metrics and recent assessment data." />
 
 			<AppCard>
-				{/* Hero price */}
 				<div>
 					<div className="text-[12px] font-bold text-muted-foreground uppercase tracking-wide">
 						Last Sold Price

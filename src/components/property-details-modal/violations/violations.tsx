@@ -2,26 +2,13 @@
 import React from "react"
 import { Gavel, CalendarDays } from "lucide-react"
 import { SectionHeader } from "@/components/property-details-modal/shared/section-header"
-import { cn } from "@/lib/utils"
+import { StatusTag } from "@/components/property-details-modal/shared/status-tag"
 import { FORMAT_DATE } from "@/utils/format-date"
 import { FORMAT_PRICE } from "@/utils/format-price"
 import { isEmpty } from "lodash-es"
 
 interface ViolationsProps {
 	violations: Violation[]
-}
-
-function StatusTag({ status, isPositive }: { status: string; isPositive: boolean }) {
-	return (
-		<span className={cn(
-			"inline-flex items-center px-2 py-1 rounded-md text-[9px] font-extrabold uppercase tracking-wide flex-shrink-0",
-			isPositive
-				? "bg-green-50 text-green-700 dark:bg-green-500/15 dark:text-green-300"
-				: "bg-amber-50 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300"
-		)}>
-			{status}
-		</span>
-	)
 }
 
 function ViolationCard({ violation }: { violation: Violation }) {
@@ -31,7 +18,6 @@ function ViolationCard({ violation }: { violation: Violation }) {
 
 	return (
 		<div className="py-3 border-b border-border last:border-b-0">
-			{/* Title + status */}
 			<div className="flex items-start justify-between gap-2">
 				<span className="text-[15px] font-bold text-foreground leading-snug flex-1">
 					{violation.violation_type || "Violation"}
@@ -41,14 +27,12 @@ function ViolationCard({ violation }: { violation: Violation }) {
 				)}
 			</div>
 
-			{/* Description */}
 			{violation.description && (
 				<p className="mt-1.5 text-[13px] text-muted-foreground leading-snug">
 					{violation.description}
 				</p>
 			)}
 
-			{/* Footer: date + fine */}
 			{(violation.issue_date || hasFine) && (
 				<div className="mt-3 flex items-center gap-3">
 					{violation.issue_date && (

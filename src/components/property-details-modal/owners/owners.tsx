@@ -76,19 +76,19 @@ interface OwnersProps {
 export default function Owners({ currentOwners, previousOwners }: OwnersProps) {
 	const [query, setQuery] = useState("")
 
+	const filtered = useMemo(() => {
+		const allOwners = [
+			...currentOwners.map(name => ({ name, isCurrent: true })),
+			...previousOwners.map(name => ({ name, isCurrent: false })),
+		]
+		if (!query.trim()) return allOwners
+		const q = query.toLowerCase()
+		return allOwners.filter(o => o.name.toLowerCase().includes(q))
+	}, [currentOwners, previousOwners, query])
+
 	if (isEmpty(currentOwners) && isEmpty(previousOwners)) {
 		return <OwnersEmpty />
 	}
-
-	const allOwners = [
-		...currentOwners.map(name => ({ name, isCurrent: true })),
-		...previousOwners.map(name => ({ name, isCurrent: false })),
-	]
-
-	const filtered = useMemo(() => {
-		if (!query.trim()) return allOwners
-		return allOwners.filter(o => o.name.toLowerCase().includes(query.toLowerCase()))
-	}, [allOwners, query])
 
 	return (
 		<div className="px-1 pt-2">
@@ -97,7 +97,6 @@ export default function Owners({ currentOwners, previousOwners }: OwnersProps) {
 				subtitle="Showing timeline from most recent to earliest."
 			/>
 
-			{/* Search */}
 			<div className="relative mb-6">
 				<Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-primary" />
 				<input

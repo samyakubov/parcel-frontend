@@ -24,7 +24,6 @@ export default function PropertyDetailsModalHeader({ modal }: PropertyDetailsMod
 				<div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-background" />
 			</div>
 
-			{/* Address title */}
 			<div className="px-5 pt-5 pb-3">
 				<h1 className="text-2xl font-semibold leading-tight uppercase" style={{ letterSpacing: "-0.8px" }}>
 					{modal.title}

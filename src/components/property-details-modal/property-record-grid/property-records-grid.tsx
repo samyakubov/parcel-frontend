@@ -14,7 +14,6 @@ function RecordCard({ record }: { record: PropertyRecord }) {
 
 	return (
 		<div className="py-3 border-b border-border last:border-b-0">
-			{/* Title + amount */}
 			<div className="flex items-start justify-between gap-2">
 				<span className="text-[15px] font-bold text-foreground leading-snug flex-1">
 					{record.partytype_desc || "Record"}
@@ -26,14 +25,12 @@ function RecordCard({ record }: { record: PropertyRecord }) {
 				)}
 			</div>
 
-			{/* Party name */}
 			{record.party_name && (
 				<p className="mt-1.5 text-[13px] text-muted-foreground leading-snug">
 					{record.party_name}
 				</p>
 			)}
 
-			{/* Footer: doc type + date */}
 			{(record.doc_type || record.record_filed) && (
 				<div className="mt-3 flex items-center gap-3">
 					{record.doc_type && (
