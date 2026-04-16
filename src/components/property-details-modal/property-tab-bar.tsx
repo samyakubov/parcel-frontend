@@ -30,9 +30,9 @@ export default function PropertyTabBar({ modal }: PropertyTabBarProps) {
 						className={`
 							flex-shrink-0 rounded-lg px-3 py-1.5 text-sm font-medium transition-all duration-150
 							${isActive
-								? "bg-background text-primary shadow-sm"
-								: "text-muted-foreground hover:text-foreground"
-							}
+						? "bg-background text-primary shadow-sm"
+						: "text-muted-foreground hover:text-foreground"
+					}
 						`}
 					>
 						{tab.label}
