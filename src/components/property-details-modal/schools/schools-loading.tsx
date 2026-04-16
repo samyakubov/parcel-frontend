@@ -1,35 +1,23 @@
 import React from "react"
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
-import { School as SchoolIcon } from "lucide-react"
+import { SectionHeader } from "@/components/property-details-modal/shared/section-header"
 
 export default function SchoolsLoading() {
 	return (
-		<Card>
-			<CardHeader>
-				<div className="flex items-center gap-2">
-					<div className="p-2 rounded-full bg-primary/10">
-						<SchoolIcon className="h-4 w-4 text-primary" />
+		<div className="px-1 pt-2">
+			<SectionHeader title="Nearby Schools" subtitle="Public schools serving this property's district." />
+			<div>
+				{[...Array(4)].map((_, i) => (
+					<div key={i} className="py-3 border-b border-border last:border-b-0 space-y-2">
+						<div className="flex items-start justify-between gap-2">
+							<Skeleton className="h-4 w-2/3" />
+							<Skeleton className="h-5 w-16 rounded-md" />
+						</div>
+						<Skeleton className="h-3 w-1/2" />
+						<Skeleton className="h-3 w-3/4" />
 					</div>
-					<h3 className="text-lg font-semibold">
-						Schools
-					</h3>
-				</div>
-			</CardHeader>
-			<CardContent className="space-y-4">
-				<div className="flex items-center justify-between space-x-4">
-					<Skeleton className="h-4 w-[250px]" />
-					<Skeleton className="h-4 w-[100px]" />
-				</div>
-				<div className="flex items-center justify-between space-x-4">
-					<Skeleton className="h-4 w-[200px]" />
-					<Skeleton className="h-4 w-[100px]" />
-				</div>
-				<div className="flex items-center justify-between space-x-4">
-					<Skeleton className="h-4 w-[230px]" />
-					<Skeleton className="h-4 w-[100px]" />
-				</div>
-			</CardContent>
-		</Card>
+				))}
+			</div>
+		</div>
 	)
 }

@@ -96,9 +96,7 @@ export default function Census({ census }: CensusProps) {
 								labelLine={false}
 								onMouseEnter={onPieEnter}
 								onMouseLeave={onPieLeave}
-								animationBegin={0}
-								animationDuration={800}
-								animationEasing="ease-out"
+								isAnimationActive={false}
 							>
 								{plainRaceDemographics.map((_, index) => (
 									<Cell

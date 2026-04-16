@@ -40,7 +40,7 @@ function SearchPanel() {
         && searchStore._suggestions.length > 0
 
 	const containerClasses = cn(
-		"relative bg-background/95 dark:bg-background/90 backdrop-blur-2xl",
+		"relative bg-background/95 dark:bg-background backdrop-blur-2xl",
 		"border border-border/50 dark:border-white/10 rounded-2xl",
 		"shadow-2xl shadow-black/10 dark:shadow-black/30 overflow-hidden"
 	)
