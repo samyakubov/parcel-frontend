@@ -32,17 +32,17 @@ export default function useSearchByFuzzyCoords() {
 				title: `${firstRecord.prop_streetnumber} ${normalizeStreetNames(firstRecord.prop_streetname)}`,
 				position: modalStore.calculateNewModalPosition(),
 				propertyData: propertyData,
-				routesNearBy: undefined,
-				stopsNearBy: undefined,
+				routesNearBy: null,
+				stopsNearBy: null,
 				schools: undefined,
 				census: undefined,
 				zIndex: modalStore.getNextZIndex()
 			})
 
 
-			const [routesResult, stopsResult, schoolsResult, censusResult] = await Promise.allSettled([
-				apiClient.publicTransitService.findNearbyRoutes(),
-				apiClient.publicTransitService.findNearbyStops(),
+			const [schoolsResult, censusResult] = await Promise.allSettled([
+				// apiClient.publicTransitService.findNearbyRoutes(),
+				// apiClient.publicTransitService.findNearbyStops(),
 				getSchools(firstRecord.school_dist),
 				apiClient.censusService.getCensusData(
 					`${firstRecord.prop_streetnumber} ${normalizeStreetNames(firstRecord.prop_streetname)}` + " " + firstRecord.zipcode
@@ -50,8 +50,8 @@ export default function useSearchByFuzzyCoords() {
 			])
 
 			modalStore.setModalState(modalId, {
-				routesNearBy: routesResult.status === "fulfilled" ? routesResult.value : null,
-				stopsNearBy: stopsResult.status === "fulfilled" ? stopsResult.value : null,
+				// routesNearBy: routesResult.status === "fulfilled" ? routesResult.value : null,
+				// stopsNearBy: stopsResult.status === "fulfilled" ? stopsResult.value : null,
 				schools: schoolsResult.status === "fulfilled" ? schoolsResult.value : null,
 				census: censusResult.status === "fulfilled" ? censusResult.value : null
 			})
