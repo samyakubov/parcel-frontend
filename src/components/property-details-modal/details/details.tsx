@@ -30,8 +30,24 @@ export default function Details({ firstRecord, lastSold }: DetailsProps) {
 
 	return (
 		<div className="px-1 pt-2">
-			<SectionHeader title="Market Overview" subtitle="Key metrics and recent assessment data." />
+			{firstRecord && (
+				<>
+					<SectionHeader title="Property Info" subtitle="Building and lot characteristics." />
+					<AppCard>
+						<DetailGrid items={[
+							{ label: "Property Type", value: firstRecord.prop_type || "N/A" },
+							{ label: "BBL", value: firstRecord.bbl || "N/A" },
+							{ label: "Floors", value: firstRecord.num_floors?.toString() || "N/A" },
+							{ label: "Res Units", value: firstRecord.units_res?.toString() || "N/A" },
+							{ label: "Total Units", value: firstRecord.units_total?.toString() || "N/A" },
+							{ label: "Lot Dims", value: firstRecord.lot_front && firstRecord.lot_depth ? `${firstRecord.lot_front} × ${firstRecord.lot_depth}` : "N/A" },
+							{ label: "Bldg Dims", value: firstRecord.bldg_front && firstRecord.bldg_depth ? `${firstRecord.bldg_front} × ${firstRecord.bldg_depth}` : "N/A" },
+						]} />
+					</AppCard>
+				</>
+			)}
 
+			<SectionHeader title="Market Overview" subtitle="Key metrics and recent assessment data." />
 			<AppCard>
 				<div>
 					<div className="text-[12px] font-bold text-muted-foreground uppercase tracking-wide">
@@ -62,23 +78,6 @@ export default function Details({ firstRecord, lastSold }: DetailsProps) {
 					{ label: "Gross Area", value: grossSqft },
 				]} />
 			</AppCard>
-
-			{firstRecord && (
-				<>
-					<SectionHeader title="Property Info" subtitle="Building and lot characteristics." />
-					<AppCard>
-						<DetailGrid items={[
-							{ label: "Property Type", value: firstRecord.prop_type || "N/A" },
-							{ label: "BBL", value: firstRecord.bbl || "N/A" },
-							{ label: "Floors", value: firstRecord.num_floors?.toString() || "N/A" },
-							{ label: "Res Units", value: firstRecord.units_res?.toString() || "N/A" },
-							{ label: "Total Units", value: firstRecord.units_total?.toString() || "N/A" },
-							{ label: "Lot Dims", value: firstRecord.lot_front && firstRecord.lot_depth ? `${firstRecord.lot_front} × ${firstRecord.lot_depth}` : "N/A" },
-							{ label: "Bldg Dims", value: firstRecord.bldg_front && firstRecord.bldg_depth ? `${firstRecord.bldg_front} × ${firstRecord.bldg_depth}` : "N/A" },
-						]} />
-					</AppCard>
-				</>
-			)}
 		</div>
 	)
 }
