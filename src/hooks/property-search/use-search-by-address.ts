@@ -39,8 +39,6 @@ export default function useSearchByAddress() {
 				title: `${firstRecord.prop_streetnumber} ${normalizeStreetNames(firstRecord.prop_streetname)}`,
 				position: modalStore.calculateNewModalPosition(),
 				propertyData: propertyData,
-				routesNearBy: undefined,
-				stopsNearBy: undefined,
 				schools: undefined,
 				census: undefined,
 				zIndex: modalStore.getNextZIndex()
@@ -51,16 +49,12 @@ export default function useSearchByAddress() {
 				flyTo()
 			}
 
-			const [routesResult, stopsResult, schoolsResult, censusResult] = await Promise.allSettled([
-				apiClient.publicTransitService.findNearbyRoutes(),
-				apiClient.publicTransitService.findNearbyStops(),
+			const [schoolsResult, censusResult] = await Promise.allSettled([
 				getSchools(firstRecord.school_dist),
 				apiClient.censusService.getCensusData(searchStore._addressSearchQuery + " " + firstRecord.zipcode)
 			])
 
 			modalStore.setModalState(modalId, {
-				routesNearBy: routesResult.status === "fulfilled" ? routesResult.value : null,
-				stopsNearBy: stopsResult.status === "fulfilled" ? stopsResult.value : null,
 				schools: schoolsResult.status === "fulfilled" ? schoolsResult.value : null,
 				census: censusResult.status === "fulfilled" ? censusResult.value : null,
 			})

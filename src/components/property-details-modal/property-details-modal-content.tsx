@@ -11,7 +11,6 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import PropertyRecordGrid from "@/components/property-details-modal/property-record-grid/property-records-grid"
 import { Landmark } from "lucide-react"
 import { Alert, AlertDescription } from "@/components/ui/alert"
-import PublicTransportation from "@/components/property-details-modal/public-transportation/public-transportation"
 import { isEmpty, isNil } from "lodash-es"
 import Schools from "@/components/property-details-modal/schools/schools"
 import Census from "@/components/property-details-modal/census/census"
@@ -73,7 +72,6 @@ export default function PropertyDetailsModalContent({ modal }: PropertyDetailsMo
 
 
 						<LastSold lastSoldFor={modal.propertyData.last_sold} />
-						<PublicTransportation routesNearBy={modal.routesNearBy} stopsNearBy={modal.stopsNearBy} />
 						<PropertyActivity
 							jobs={modal.propertyData.job_filings}
 							complaints={modal.propertyData.complaints}
