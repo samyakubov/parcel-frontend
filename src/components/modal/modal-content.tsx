@@ -52,7 +52,7 @@ export default function ModalContent({
 				currentModal={currentModal}
 			/>
 
-			<div className="overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+			<div className="flex-1 min-h-0 flex flex-col" onClick={(e) => e.stopPropagation()}>
 				{children}
 			</div>
 		</motion.div>

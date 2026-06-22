@@ -1,149 +1,241 @@
 "use client"
 import React from "react"
-import { motion, AnimatePresence } from "framer-motion"
 import isNull from "lodash-es/isNull"
-import Details from "@/components/property-details-modal/details/details"
+import isNil from "lodash-es/isNil"
+import isEmpty from "lodash-es/isEmpty"
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import Mortgage from "@/components/property-details-modal/mortgage/mortgage"
-import Zoning from "@/components/property-details-modal/zoning/zoning"
-import LastSold from "@/components/property-details-modal/last-sold/last-sold"
 import Owners from "@/components/property-details-modal/owners/owners"
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import Jobs from "@/components/property-details-modal/jobs/jobs"
+import Violations from "@/components/property-details-modal/violations/violations"
+import Complaints from "@/components/property-details-modal/complaints/complaints"
 import PropertyRecordGrid from "@/components/property-details-modal/property-record-grid/property-records-grid"
-import { Landmark } from "lucide-react"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { isEmpty, isNil } from "lodash-es"
-import Schools from "@/components/property-details-modal/schools/schools"
-import Census from "@/components/property-details-modal/census/census"
-import PropertyActivity from "@/components/property-details-modal/property-activity"
 
+function fmtPrice(price: number | null | undefined): string {
+	if (!price || price === 0) return "N/A"
+	if (price >= 1_000_000) return `$${(price / 1_000_000).toFixed(1)}M`
+	if (price >= 1_000) return `$${Math.round(price / 1_000)}K`
+	return `$${price}`
+}
+
+function fmtSqft(n: number | string | null | undefined): string {
+	if (n === null || n === undefined || n === "") return "N/A"
+	const num = typeof n === "string" ? parseInt(n, 10) : n
+	if (!num || isNaN(num)) return "N/A"
+	if (num >= 1_000) return `${(num / 1_000).toFixed(1)}K sf`
+	return `${num} sf`
+}
+
+function fmtDate(d: string | null | undefined): string {
+	if (!d) return ""
+	try {
+		return new Date(d).toLocaleDateString("en-US", { year: "numeric", month: "short" })
+	} catch {
+		return d
+	}
+}
+
+function StatItem({ label, value, sub }: { label: string; value: string; sub?: string }) {
+	return (
+		<div className="flex flex-col gap-0.5 flex-none">
+			<span className="text-[10px] font-bold tracking-widest uppercase text-muted-foreground">{label}</span>
+			<span className="text-sm font-bold text-foreground leading-tight whitespace-nowrap">{value}</span>
+			{sub && <span className="text-[10px] font-medium text-muted-foreground/70 whitespace-nowrap">{sub}</span>}
+		</div>
+	)
+}
+
+function VDivider() {
+	return <div className="w-px h-8 bg-border mx-4 flex-none self-center" />
+}
 
 interface PropertyDetailsModalContentProps {
 	modal: PropertyModal;
 }
+
 // eslint-disable-next-line max-lines-per-function
 export default function PropertyDetailsModalContent({ modal }: PropertyDetailsModalContentProps) {
-	const firstDeedOrMortgageRecord = modal.propertyData.records.find(
-		(record) => record.doc_type === "DEED" || record.doc_type === "MORTGAGE")
+	const records = modal.propertyData.records
+	const firstRecord = records[0]
 
 	const getCurrentOwner = () => {
 		if (
 			(isEmpty(modal.propertyData.owners.current_owners) || isNull(modal.propertyData.owners.current_owners))
-			&& !isNil(modal.propertyData.records[0].owner_name)
+			&& !isNil(firstRecord?.owner_name)
 		) {
-			return [modal.propertyData.records[0].owner_name]
-		} else {
-			return modal.propertyData.owners.current_owners
+			return [firstRecord.owner_name]
 		}
+		return modal.propertyData.owners.current_owners
 	}
 
+	const coords = modal.propertyData.coordinates
+	const imageUrl = coords
+		? `https://maps.googleapis.com/maps/api/streetview?size=800x600&scale=2&fov=90&pitch=10&location=${coords.latitude},${coords.longitude}&key=${process.env.NEXT_PUBLIC_STREETVIEW_API_KEY}`
+		: null
+
+	const lastSold = modal.propertyData.last_sold
+	const isWithSqft = (d: typeof lastSold): d is LastSoldWithSqft => !!d && "gross_sqft" in d
+
+	const salePrice = fmtPrice(lastSold?.last_sold_price)
+	const saleDate = fmtDate(lastSold?.last_sold_date)
+	const yearBuilt = isWithSqft(lastSold)
+		? lastSold.year_built
+		: firstRecord?.year_built ? String(firstRecord.year_built) : "N/A"
+	const grossSqft = isWithSqft(lastSold) ? fmtSqft(lastSold.gross_sqft) : fmtSqft(firstRecord?.bldg_area)
+	const landSqft = isWithSqft(lastSold) ? fmtSqft(lastSold.land_sqft) : fmtSqft(firstRecord?.lot_area)
+
+	const propType = firstRecord?.prop_type
+	const floors = firstRecord?.num_floors
+	const resUnits = firstRecord?.units_res
+	const totalUnits = firstRecord?.units_total
+
+	const zoning = modal.propertyData.zoning
+	const zoningBadges: { code: string; color: string; bg: string }[] = []
+	if (zoning?.zoning_districts?.length) {
+		zoning.zoning_districts.forEach(c => zoningBadges.push({ code: c, color: "#3B82F6", bg: "rgba(59,130,246,0.12)" }))
+	}
+	if (zoning?.commercial_overlays?.length) {
+		zoning.commercial_overlays.forEach(c => zoningBadges.push({ code: c, color: "#7C5CBF", bg: "rgba(124,92,191,0.12)" }))
+	}
+	if (zoning?.special_districts?.length) {
+		zoning.special_districts.forEach(c => zoningBadges.push({ code: c, color: "#1A8A5A", bg: "rgba(26,138,90,0.12)" }))
+	}
+	if (zoning?.limited_height_district) {
+		zoningBadges.push({ code: zoning.limited_height_district, color: "#D97706", bg: "rgba(217,119,6,0.12)" })
+	}
+
+	const infoItems: { label: string; value: string }[] = []
+	if (propType) infoItems.push({ label: "Type", value: propType })
+	if (floors) infoItems.push({ label: "Floors", value: String(floors) })
+	if (resUnits) infoItems.push({ label: "Res Units", value: String(resUnits) })
+	if (totalUnits) infoItems.push({ label: "Total Units", value: String(totalUnits) })
+
+	const hasInfoStrip = infoItems.length > 0 || zoningBadges.length > 0
+
 	return (
-		<motion.div
-			layout="preserve-aspect"
-			className="flex-1 overflow-y-auto"
-		>
-			<div className="p-2 space-y-2">
-				<motion.div
-					layout="preserve-aspect"
-					className={modal.isExpanded ? "flex gap-2 " : "space-y-2"}
-				>
-					<motion.div
-						layout="preserve-aspect"
-						className={modal.isExpanded ? "w-1/2 space-y-2" : "space-y-2"}
-					>
-
-						<motion.img
-							layout="preserve-aspect"
-							initial={{ opacity: 0, scale: 0.95 }}
-							animate={{ opacity: 1, scale: 1 }}
-							transition={{ duration: 0.3 }}
-							className={`rounded-lg w-full object-cover 
-								${modal.isExpanded ? "h-80" : "h-64"}
-							  `}
-							src={`https://maps.googleapis.com/maps/api/streetview?size=2048x2048&scale=2&fov=90&pitch=10
-								&location=${modal.propertyData.coordinates.latitude},${modal.propertyData.coordinates.longitude}
-								&key=${process.env.NEXT_PUBLIC_STREETVIEW_API_KEY}`}
-							alt="Google Street View"
-						/>
-
-						<Details
-							firstRecord={!isNil(firstDeedOrMortgageRecord) ? firstDeedOrMortgageRecord : modal.propertyData.records[0]}
-							lastSold={modal.propertyData.last_sold}
-						/>
-
-
-						<LastSold lastSoldFor={modal.propertyData.last_sold} />
-						<PropertyActivity
-							jobs={modal.propertyData.job_filings}
-							complaints={modal.propertyData.complaints}
-							violations={modal.propertyData.violations}
-						/>
-					</motion.div>
-					<motion.div
-						layout="preserve-aspect"
-						className={modal.isExpanded ? "w-1/2 space-y-2" : "space-y-2"}
-					>
-						<Zoning zoning={modal.propertyData.zoning} />
-
-						<Owners
-							currentOwners={getCurrentOwner()}
-							previousOwners={modal.propertyData.owners.previous_owners}
-						/>
-						{
-							!isNull(modal.propertyData.mortgage) ? (
-								<Mortgage
-									borrower={modal.propertyData.mortgage.borrower}
-									lender={modal.propertyData.mortgage.lender}
-									amount={modal.propertyData.mortgage.amount}
-								/>
-							) : (
-								<motion.div
-									initial={{ opacity: 0, y: -20 }}
-									animate={{ opacity: 1, y: 0 }}
-									className="w-full"
-								>
-									<Card>
-										<CardHeader>
-											<div className="flex items-center gap-2">
-												<div className="p-2 rounded-full bg-destructive/10">
-													<Landmark className="h-4 w-4 text-destructive" />
-												</div>
-												<h3 className="text-lg font-semibold text-destructive">
-													Mortgage Details
-												</h3>
-											</div>
-										</CardHeader>
-										<CardContent>
-											<Alert variant="destructive">
-												<AlertDescription>
-													No mortgage on record
-												</AlertDescription>
-											</Alert>
-										</CardContent>
-									</Card>
-								</motion.div>
-
-							)
-						}
-						<Schools schools={modal.schools} />
-
-					</motion.div>
-
-				</motion.div>
-
-				<AnimatePresence>
-					{modal.isExpanded && (
-						<motion.div
-							initial={{ opacity: 0, height: 0 }}
-							animate={{ opacity: 1, height: "auto" }}
-							exit={{ opacity: 0, height: 0 }}
-							className="space-y-2"
-						>
-							<Census census={modal.census} />
-							<PropertyRecordGrid data={modal.propertyData.records} />
-						</motion.div>
-					)}
-				</AnimatePresence>
+		<div className="flex flex-col h-full">
+			{/* Street view image with overlaid gradients and drag handle */}
+			<div className="relative flex-none h-40 w-full">
+				{imageUrl ? (
+					<img
+						src={imageUrl}
+						className="absolute inset-0 w-full h-full object-cover"
+						alt="Street view"
+					/>
+				) : (
+					<div className="absolute inset-0 bg-muted" />
+				)}
+				<div className="absolute inset-x-0 top-0 h-12 bg-gradient-to-b from-black/40 to-transparent flex justify-center pt-3">
+					<div className="w-12 h-1.5 rounded-full bg-white/90 flex-none" />
+				</div>
+				<div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-background to-transparent" />
 			</div>
-		</motion.div>
+
+			{/* Address + BBL */}
+			<div className="px-5 pt-2 pb-2 flex-none">
+				<h2 className="text-2xl font-black tracking-tight leading-tight">{modal.title}</h2>
+				{firstRecord?.bbl && (
+					<p className="text-xs font-semibold text-muted-foreground mt-0.5">{firstRecord.bbl}</p>
+				)}
+			</div>
+
+			{/* Stats strip */}
+			<div className="flex-none overflow-x-auto px-5 pb-3">
+				<div className="flex items-center min-w-max">
+					<StatItem label="Last Sale" value={salePrice} sub={saleDate || undefined} />
+					<VDivider />
+					<StatItem label="Year Built" value={yearBuilt} />
+					<VDivider />
+					<StatItem label="Gross Area" value={grossSqft} />
+					<VDivider />
+					<StatItem label="Land Area" value={landSqft} />
+				</div>
+			</div>
+
+			{/* Info / zoning strip */}
+			{hasInfoStrip && (
+				<div className="flex-none overflow-x-auto px-5 pb-3">
+					<div className="flex items-center min-w-max">
+						{infoItems.map((item, i) => (
+							<React.Fragment key={item.label}>
+								<StatItem label={item.label} value={item.value} />
+								{(i < infoItems.length - 1 || zoningBadges.length > 0) && <VDivider />}
+							</React.Fragment>
+						))}
+						{zoningBadges.length > 0 && (
+							<div className="flex flex-col gap-1 flex-none">
+								<span className="text-[10px] font-bold tracking-widest uppercase text-muted-foreground">Zoning</span>
+								<div className="flex items-center gap-1 flex-wrap">
+									{zoningBadges.map((b, i) => (
+										<span
+											key={i}
+											className="text-xs font-bold px-1.5 py-0.5 rounded-md"
+											style={{ color: b.color, backgroundColor: b.bg, border: `1px solid ${b.color}40` }}
+										>
+											{b.code}
+										</span>
+									))}
+								</div>
+							</div>
+						)}
+					</div>
+				</div>
+			)}
+
+			{/* Tab navigation + content */}
+			<Tabs defaultValue="records" className="flex flex-col flex-1 min-h-0">
+				<div className="px-4 pb-2 flex-none">
+					<TabsList className="w-full">
+						<TabsTrigger value="records" className="flex-1 text-xs">Records</TabsTrigger>
+						<TabsTrigger value="owners" className="flex-1 text-xs">Owners</TabsTrigger>
+						<TabsTrigger value="mortgage" className="flex-1 text-xs">Mortgage</TabsTrigger>
+						<TabsTrigger value="permits" className="flex-1 text-xs">Permits</TabsTrigger>
+						<TabsTrigger value="violations" className="flex-1 text-xs">Violations</TabsTrigger>
+					</TabsList>
+				</div>
+
+				<TabsContent value="records" className="flex-1 m-0 overflow-y-auto px-3 pb-4">
+					<PropertyRecordGrid data={records} />
+				</TabsContent>
+
+				<TabsContent value="owners" className="flex-1 m-0 overflow-y-auto px-3 pb-4">
+					<Owners
+						currentOwners={getCurrentOwner()}
+						previousOwners={modal.propertyData.owners.previous_owners}
+					/>
+				</TabsContent>
+
+				<TabsContent value="mortgage" className="flex-1 m-0 overflow-y-auto px-3 pb-4">
+					{!isNull(modal.propertyData.mortgage) ? (
+						<Mortgage
+							borrower={modal.propertyData.mortgage.borrower}
+							lender={modal.propertyData.mortgage.lender}
+							amount={modal.propertyData.mortgage.amount}
+						/>
+					) : (
+						<div className="flex flex-col items-center justify-center py-12 text-center text-muted-foreground">
+							<p className="font-medium">No mortgage on record</p>
+						</div>
+					)}
+				</TabsContent>
+
+				<TabsContent value="permits" className="flex-1 m-0 overflow-y-auto px-3 pb-4">
+					<Jobs jobsFiled={modal.propertyData.job_filings} />
+				</TabsContent>
+
+				<TabsContent value="violations" className="flex-1 m-0 overflow-y-auto px-3 pb-4 space-y-4">
+					{isEmpty(modal.propertyData.violations) && isEmpty(modal.propertyData.complaints) ? (
+						<div className="flex flex-col items-center justify-center py-12 text-muted-foreground">
+							<p className="text-sm font-medium">No issues recorded.</p>
+						</div>
+					) : (
+						<>
+							<Violations violations={modal.propertyData.violations} />
+							<Complaints complaints={modal.propertyData.complaints} />
+						</>
+					)}
+				</TabsContent>
+			</Tabs>
+		</div>
 	)
 }

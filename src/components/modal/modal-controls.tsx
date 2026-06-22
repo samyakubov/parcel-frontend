@@ -13,13 +13,9 @@ export default function ModalControls({
 }: ModalControlsProps) {
 
 	return (
-		<div className={"flex gap-2 absolute top-4 right-4 z-10"}>
+		<div className="flex gap-0.5 absolute top-3 right-3 z-10 bg-black/35 backdrop-blur-sm rounded-lg px-1 py-0.5 text-white [&_button]:hover:bg-white/20 [&_button]:text-white">
 			<MinimizeButton currentModal={currentModal} />
-
-			<ExpandModalButton
-				currentModal={currentModal}
-			/>
-
+			<ExpandModalButton currentModal={currentModal} />
 			<CloseButton currentModal={currentModal} />
 		</div>
 	)
